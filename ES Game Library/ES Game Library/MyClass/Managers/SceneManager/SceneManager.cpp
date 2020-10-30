@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "../../Scenes/Main/MainScene.h"
+#include "../GameManager/GameManager.h"
 
 SceneManager::SceneManager()
 {
@@ -13,31 +14,91 @@ SceneManager::~SceneManager()
 
 bool SceneManager::FileInitialize()
 {
-	_main_scene->FileInitialize();
+	auto scene = GameManager::Instance().GetSceneState();
+
+	switch (scene)
+	{
+	case SceneState::TITLE:
+		break;
+	case SceneState::MAIN:
+		_main_scene->FileInitialize();
+		break;
+	case SceneState::RESULT:
+		break;
+	}
+
 
 	return true;
 }
 
 bool SceneManager::Initialize()
 {
-	_main_scene->Initialize();
+	auto scene = GameManager::Instance().GetSceneState();
+
+	switch (scene)
+	{
+	case SceneState::TITLE:
+		break;
+	case SceneState::MAIN:
+		_main_scene->Initialize();
+		break;
+	case SceneState::RESULT:
+		break;
+	}
+
 
 	return true;
 }
 
 int SceneManager::Update()
 {
-	_main_scene->Update();
+	auto scene = GameManager::Instance().GetSceneState();
+
+	switch (scene)
+	{
+	case SceneState::TITLE:
+		break;
+	case SceneState::MAIN:
+		_main_scene->Update();
+		break;
+	case SceneState::RESULT:
+		break;
+	}
+
 
 	return 0;
 }
 
 void SceneManager::Draw2D()
 {
-	_main_scene->Draw2D();
+	auto scene = GameManager::Instance().GetSceneState();
+
+	switch (scene)
+	{
+	case SceneState::TITLE:
+		break;
+	case SceneState::MAIN:
+		_main_scene->Draw2D();
+		break;
+	case SceneState::RESULT:
+		break;
+	}
+
 }
 
 void SceneManager::Draw3D()
 {
-	_main_scene->Draw3D();
+	auto scene = GameManager::Instance().GetSceneState();
+
+	switch (scene)
+	{
+	case SceneState::TITLE:
+		break;
+	case SceneState::MAIN:
+		_main_scene->Draw3D();
+		break;
+	case SceneState::RESULT:
+		break;
+	}
+
 }

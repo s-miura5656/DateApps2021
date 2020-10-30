@@ -1,8 +1,9 @@
 #include "GameManager.h"
-#include "../SceneManager/SceneManager.h"
 
 GameManager::GameManager()
 {
+	_scene_state = SceneState::TITLE;
+
 	_scene_manager = new SceneManager;
 }
 

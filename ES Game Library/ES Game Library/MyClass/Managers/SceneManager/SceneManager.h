@@ -4,6 +4,13 @@
 
 class MainScene;
 
+enum SceneState
+{
+	TITLE,
+	MAIN,
+	RESULT
+};
+
 class SceneManager
 {
 public:

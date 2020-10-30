@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../../ESGLib.h"
+#include "../SceneManager/SceneManager.h"
 
 class SceneManager;
 
@@ -21,9 +22,13 @@ public:
 		return instance;
 	};
 
+	SceneState GetSceneState() { return _scene_state; }
+
 private:
 	GameManager(const GameManager&) = delete;
 	void operator=(const GameManager&) = delete;
 
 	SceneManager* _scene_manager;
+
+	SceneState _scene_state;
 };
