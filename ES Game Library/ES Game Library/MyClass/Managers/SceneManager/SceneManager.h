@@ -3,6 +3,7 @@
 #include "../../../ESGLib.h"
 
 class MainScene;
+class TitleScene;
 
 enum SceneState
 {
@@ -25,4 +26,5 @@ public:
 
 private:
 	MainScene* _main_scene;
+	TitleScene* _title_scene;
 };

@@ -1,15 +1,18 @@
 #include "SceneManager.h"
 #include "../../Scenes/Main/MainScene.h"
 #include "../GameManager/GameManager.h"
+#include "../../Scenes/Title/TitleScene.h"
 
 SceneManager::SceneManager()
 {
+	_title_scene = new TitleScene;
 	_main_scene = new MainScene;
 }
 
 SceneManager::~SceneManager()
 {
 	delete _main_scene;
+	delete _title_scene;
 }
 
 bool SceneManager::FileInitialize()
@@ -19,6 +22,7 @@ bool SceneManager::FileInitialize()
 	switch (scene)
 	{
 	case SceneState::TITLE:
+		_title_scene->FileInitialize();
 		break;
 	case SceneState::MAIN:
 		_main_scene->FileInitialize();
@@ -38,6 +42,7 @@ bool SceneManager::Initialize()
 	switch (scene)
 	{
 	case SceneState::TITLE:
+		_title_scene->Initialize();
 		break;
 	case SceneState::MAIN:
 		_main_scene->Initialize();
@@ -57,6 +62,7 @@ int SceneManager::Update()
 	switch (scene)
 	{
 	case SceneState::TITLE:
+		_title_scene->Update();
 		break;
 	case SceneState::MAIN:
 		_main_scene->Update();
@@ -76,6 +82,7 @@ void SceneManager::Draw2D()
 	switch (scene)
 	{
 	case SceneState::TITLE:
+		_title_scene->Draw2D();
 		break;
 	case SceneState::MAIN:
 		_main_scene->Draw2D();
@@ -93,6 +100,7 @@ void SceneManager::Draw3D()
 	switch (scene)
 	{
 	case SceneState::TITLE:
+		_title_scene->Draw3D();
 		break;
 	case SceneState::MAIN:
 		_main_scene->Draw3D();
