@@ -2,7 +2,7 @@
 
 #include "ESGLib.h"
 #include "GameScene/GameScene.hpp"
-#include "MyClass/Managers/GameManager/GameManager.h"
+#include "MyClass/Managers/SceneManager/SceneManager.h"
 
 class GameMain : public CGameScene {
 public:
@@ -57,7 +57,7 @@ private:
 
 private:
 	// •Ï”éŒ¾
-	GameManager* _game_manager;
+	SceneManager* _scene_manager;
 	
 
 	// ŠÖ”éŒ¾

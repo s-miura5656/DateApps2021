@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../../../ESGLib.h"
+#include "../BaseScene.h"
 
-class ResultScene {
+class ResultScene : public BaseScene
+{
 public:
-	bool FileInitialize();
 	bool Initialize();
 	int Update();
 	void Draw2D();

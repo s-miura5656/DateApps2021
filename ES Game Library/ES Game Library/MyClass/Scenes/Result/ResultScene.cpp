@@ -1,12 +1,5 @@
-
 #include"ResultScene.h"
 
-bool ResultScene::FileInitialize()
-{
-	result = GraphicsDevice.CreateSpriteFromFile(_T("ResultSprite/Result.png"));
-
-	return true;
-}
 /*
 * @fn タイトルの初期化
 * @param　なし
@@ -14,7 +7,7 @@ bool ResultScene::FileInitialize()
 */
 bool ResultScene::Initialize()
 {
-
+	result = GraphicsDevice.CreateSpriteFromFile(_T("ResultSprite/Result.png"));
 	return true;
 }
 /*

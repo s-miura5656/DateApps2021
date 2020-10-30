@@ -1,12 +1,5 @@
 #include"TitleScene.h"
-#include "../../Managers/GameManager/GameManager.h"
 
-bool TitleScene::FileInitialize()
-{
-	_title = GraphicsDevice.CreateSpriteFromFile(_T("TitleSprite/Title.png"));
-
-	return true;
-}
 /*
 * @fn タイトルの初期化
 * @param　なし
@@ -14,6 +7,7 @@ bool TitleScene::FileInitialize()
 */
 bool TitleScene::Initialize()
 {
+	_title = GraphicsDevice.CreateSpriteFromFile(_T("TitleSprite/Title.png"));
 	return true;
 }
 /*

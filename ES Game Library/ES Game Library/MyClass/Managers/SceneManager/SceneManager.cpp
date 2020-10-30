@@ -1,119 +1,73 @@
 #include "SceneManager.h"
+
+//! 前方宣言
+//! 余計なインクルードを減らすための手法
 #include "../../Scenes/Main/MainScene.h"
-#include "../GameManager/GameManager.h"
 #include "../../Scenes/Title/TitleScene.h"
 #include"../../Scenes/Result/ResultScene.h"
+
+//! @brief コンストラクタ
+//! @detail SceneManager が作られたときに呼び出されるよ
 SceneManager::SceneManager()
 {
-	_title_scene = new TitleScene;
-	_main_scene = new MainScene;
-	_result_scene = new ResultScene;
+	_scene = nullptr;
 }
 
+//! @brief デストラクタ
+//! @detail SceneManager が消えるときに呼び出されるよ
 SceneManager::~SceneManager()
 {
-	delete _result_scene;
-	delete _main_scene;
-	delete _title_scene;
+	delete _scene;
 }
 
-bool SceneManager::FileInitialize()
+//! @brief シーンの切り替え関数
+//! @param (scene) 遷移したいシーン 
+void SceneManager::ChangeScene(SceneState scene)
 {
-	auto scene = GameManager::Instance().GetSceneState();
-
-	switch (scene)
-	{
+	//! 
+	if (_scene != nullptr) {
+		delete _scene;
+	}
+	
+	switch (scene) {
 	case SceneState::TITLE:
-		_title_scene->FileInitialize();
+		_scene = new TitleScene;
 		break;
 	case SceneState::MAIN:
-		_main_scene->FileInitialize();
+		_scene = new MainScene;
 		break;
 	case SceneState::RESULT:
-		_result_scene->FileInitialize();
+		_scene = new ResultScene;
 		break;
 	}
 
-
-	return true;
+	_scene->Initialize();
 }
 
 bool SceneManager::Initialize()
 {
-	auto scene = GameManager::Instance().GetSceneState();
-
-	switch (scene)
-	{
-	case SceneState::TITLE:
-		_title_scene->Initialize();
-		break;
-	case SceneState::MAIN:
-		_main_scene->Initialize();
-		break;
-	case SceneState::RESULT:
-		_result_scene->Initialize();
-		break;
-	}
-
+	//! 一番最初に読み込まれるシーン
+	ChangeScene(SceneState::TITLE);
 
 	return true;
 }
 
 int SceneManager::Update()
 {
-	auto scene = GameManager::Instance().GetSceneState();
-
-	switch (scene)
-	{
-	case SceneState::TITLE:
-		_title_scene->Update();
-		break;
-	case SceneState::MAIN:
-		_main_scene->Update();
-		break;
-	case SceneState::RESULT:
-		_result_scene->Update();
-		break;
-	}
-
+	_scene->Update();
 
 	return 0;
 }
 
 void SceneManager::Draw2D()
 {
-	auto scene = GameManager::Instance().GetSceneState();
-
-	switch (scene)
-	{
-	case SceneState::TITLE:
-		_title_scene->Draw2D();
-		break;
-	case SceneState::MAIN:
-		_main_scene->Draw2D();
-		break;
-	case SceneState::RESULT:
-		_result_scene->Draw2D();
-		break;
-	}
-
+	
+	_scene->Draw2D();
 }
 
 void SceneManager::Draw3D()
 {
-	auto scene = GameManager::Instance().GetSceneState();
-
-	switch (scene)
-	{
-	case SceneState::TITLE:
-		_title_scene->Draw3D();
-		break;
-	case SceneState::MAIN:
-		_main_scene->Draw3D();
-		break;
-	case SceneState::RESULT:
-		_result_scene->Draw3D();
-		break;
-	}
-
+	_scene->Draw3D();
 }
+
+

@@ -1,25 +1,48 @@
+//! @file   SceneManager.h
+//! @brief  Sceneを管理するマネージャークラス
+//! @author Souta_Miura
+//! @date   2020/10/30
 #pragma once
 
 #include "../../../ESGLib.h"
 
-class MainScene;
-class TitleScene;
-class ResultScene;
+//! 型宣言の時だけ使いたいのでここでBaseSceneの名前だけ使うよって宣言
+class BaseScene;
 
 class SceneManager
 {
 public:
+
+	//! @enum シーン名
+	enum SceneState
+	{
+		TITLE,
+		MAIN,
+		RESULT
+	};
+
+
 	SceneManager();
 	~SceneManager();
 
-	bool FileInitialize();
+	void ChangeScene(SceneState scene);
+
 	bool Initialize();
 	int Update();
 	void Draw2D();
 	void Draw3D();
 
+	//! シングルトンオブジェクトを他で呼び出す時の記述
+	static SceneManager& Instance() {
+		static SceneManager instance;
+		return instance;
+	};
+
 private:
-	MainScene* _main_scene;
-	TitleScene* _title_scene;
-	ResultScene* _result_scene;
+
+	//! シングルトンオブジェクトを他で作らせないための記述
+	SceneManager(const SceneManager&) = delete;
+	void operator=(const SceneManager&) = delete;
+
+	BaseScene* _scene;
 };
