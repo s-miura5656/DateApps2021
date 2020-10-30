@@ -1,3 +1,8 @@
+//! @file   BaseScene.h
+//! @brief  Scene—p‚ÌŠî’êƒNƒ‰ƒX
+//! @author Souta_Miura
+//! @date   2020/10/30
+
 #pragma once
 
 #include "../../ESGLib.h"

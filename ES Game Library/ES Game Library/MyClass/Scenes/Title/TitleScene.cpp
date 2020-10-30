@@ -1,5 +1,4 @@
 #include"TitleScene.h"
-#include "../../Managers/GameManager/GameManager.h"
 
 /*
 * @fn ƒ^ƒCƒgƒ‹‚Ì‰Šú‰»
