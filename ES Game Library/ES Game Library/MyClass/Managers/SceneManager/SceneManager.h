@@ -4,7 +4,7 @@
 
 class MainScene;
 class TitleScene;
-
+class ResultScene;
 enum SceneState
 {
 	TITLE,
@@ -27,4 +27,5 @@ public:
 private:
 	MainScene* _main_scene;
 	TitleScene* _title_scene;
+	ResultScene* _result_scene;
 };

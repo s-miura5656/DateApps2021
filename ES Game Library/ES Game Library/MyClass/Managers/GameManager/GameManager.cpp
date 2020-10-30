@@ -2,7 +2,8 @@
 
 GameManager::GameManager()
 {
-	_scene_state = SceneState::TITLE;
+	//! 最初にスタートシーンの切り替え
+	_scene_state = SceneState::RESULT;
 
 	_scene_manager = new SceneManager;
 }

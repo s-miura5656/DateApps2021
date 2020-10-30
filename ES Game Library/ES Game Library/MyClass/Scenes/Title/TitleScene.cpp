@@ -1,4 +1,5 @@
 #include"TitleScene.h"
+#include "../../Managers/GameManager/GameManager.h"
 
 bool TitleScene::FileInitialize()
 {

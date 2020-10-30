@@ -145,6 +145,9 @@
     <Filter Include="Myclass\Scenes\Title">
       <UniqueIdentifier>{fb3df2f1-2db7-406c-adcc-ba38e87c54d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Scenes\Result">
+      <UniqueIdentifier>{baa61e68-988c-4562-8dd8-f9d34258c2fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -300,6 +303,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Scenes\Title\TitleScene.cpp">
       <Filter>Myclass\Scenes\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Scenes\Result\ResultScene.cpp">
+      <Filter>Myclass\Scenes\Result</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -468,6 +474,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Scenes\Title\TitleScene.h">
       <Filter>Myclass\Scenes\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Scenes\Result\ResultScene.h">
+      <Filter>Myclass\Scenes\Result</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
