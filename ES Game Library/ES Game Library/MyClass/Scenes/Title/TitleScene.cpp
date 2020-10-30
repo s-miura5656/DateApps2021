@@ -14,7 +14,6 @@ bool TitleScene::FileInitialize()
 */
 bool TitleScene::Initialize()
 {
-
 	return true;
 }
 /*

@@ -5,12 +5,6 @@
 class MainScene;
 class TitleScene;
 class ResultScene;
-enum SceneState
-{
-	TITLE,
-	MAIN,
-	RESULT
-};
 
 class SceneManager
 {
