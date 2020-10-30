@@ -112,6 +112,36 @@
     <Filter Include="変換用アセット">
       <UniqueIdentifier>{82621faf-8306-44c1-bdbf-bfdd763ca17c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass">
+      <UniqueIdentifier>{333155ef-f7de-4862-95fd-ed59091a17ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Player">
+      <UniqueIdentifier>{cfadf0e0-9d8b-4ad4-84b6-696d6ebe7696}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Map">
+      <UniqueIdentifier>{941a0c22-b3ea-4d5e-acef-a2eb28198d4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Item">
+      <UniqueIdentifier>{9e19ebd1-c709-455f-8be8-51ceb3b7bae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Collision">
+      <UniqueIdentifier>{b71310af-825e-4d81-8fed-765872be25fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers">
+      <UniqueIdentifier>{719c900c-3fd2-4faf-bb34-a6d970246ff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\SceneManager">
+      <UniqueIdentifier>{d0590aa2-54f9-4cf9-b2cb-0df06260d55d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Scenes">
+      <UniqueIdentifier>{79a30ed6-bfdf-4bee-8f1f-4fe5309e4a18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Scenes\Main">
+      <UniqueIdentifier>{5e56a669-03c9-4bb3-982f-9f5b35850465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\GameManager">
+      <UniqueIdentifier>{4ae38e64-0823-40dd-a6e5-17f55e32ec8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -255,6 +285,15 @@
     </ClCompile>
     <ClCompile Include="Extension\Direct2D\Direct2D.cpp">
       <Filter>ソース ファイル\拡張\Direct2D</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Scenes\Main\MainScene.cpp">
+      <Filter>Myclass\Scenes\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\GameManager\GameManager.cpp">
+      <Filter>Myclass\Managers\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\SceneManager\SceneManager.cpp">
+      <Filter>Myclass\Managers\SceneManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -411,6 +450,15 @@
     </ClInclude>
     <ClInclude Include="Extension\Direct2D\Direct2D.hpp">
       <Filter>ヘッダー ファイル\拡張\Direct2D</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Scenes\Main\MainScene.h">
+      <Filter>Myclass\Scenes\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\GameManager\GameManager.h">
+      <Filter>Myclass\Managers\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\SceneManager\SceneManager.h">
+      <Filter>Myclass\Managers\SceneManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

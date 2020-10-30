@@ -11,7 +11,12 @@ bool GameMain::Initialize()
 {
 	// TODO: Add your initialization logic here
 	WindowTitle(_T("ES Game Library"));
+	
+	_game_manager = new GameManager;
 
+	_game_manager->FileInitialize();
+
+	_game_manager->Initialize();
 
 	return true;
 }
@@ -24,6 +29,7 @@ void GameMain::Finalize()
 {
 	// TODO: Add your finalization logic here
 
+	delete _game_manager;
 }
 
 /// <summary>
@@ -36,7 +42,7 @@ void GameMain::Finalize()
 int GameMain::Update()
 {
 	// TODO: Add your update logic here
-
+	_game_manager->Update();
 
 	return 0;
 }
@@ -51,9 +57,11 @@ void GameMain::Draw()
 
 	GraphicsDevice.BeginScene();
 
+	_game_manager->Draw3D();
 
 	SpriteBatch.Begin();
 
+	_game_manager->Draw2D();
 
 	SpriteBatch.End();
 
