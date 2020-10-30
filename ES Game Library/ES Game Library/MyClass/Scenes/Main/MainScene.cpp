@@ -8,12 +8,6 @@ MainScene::~MainScene()
 {
 }
 
-bool MainScene::FileInitialize()
-{
-
-	return true;
-}
-
 bool MainScene::Initialize()
 {
 	return true;
