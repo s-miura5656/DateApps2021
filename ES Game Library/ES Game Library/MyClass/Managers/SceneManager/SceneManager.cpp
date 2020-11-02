@@ -47,7 +47,7 @@ void SceneManager::ChangeScene(SceneState scene)
 bool SceneManager::Initialize()
 {
 	//! ˆê”ÔÅ‰‚É“Ç‚İ‚Ü‚ê‚éƒV[ƒ“
-	ChangeScene(SceneState::TITLE);
+	ChangeScene(SceneState::MAIN);
 
 	return true;
 }

@@ -165,6 +165,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="MyClass\Managers\SceneManager\SceneManager.cpp" />
+    <ClCompile Include="MyClass\Player\PlayerBase.cpp" />
     <ClCompile Include="MyClass\Scenes\Main\MainScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Result\ResultScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Title\TitleScene.cpp" />
@@ -221,7 +222,9 @@
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameScene\SceneShared.hpp" />
     <ClInclude Include="GameScene\TemplateScene.hpp" />
+    <ClInclude Include="MyClass\Enum\Enum.h" />
     <ClInclude Include="MyClass\Managers\SceneManager\SceneManager.h" />
+    <ClInclude Include="MyClass\Player\PlayerBase.h" />
     <ClInclude Include="MyClass\Scenes\BaseScene.h" />
     <ClInclude Include="MyClass\Scenes\Main\MainScene.h" />
     <ClInclude Include="MyClass\Scenes\Result\ResultScene.h" />
