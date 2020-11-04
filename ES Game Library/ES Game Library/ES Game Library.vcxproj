@@ -164,6 +164,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="MyClass\Item\Item.cpp" />
+    <ClCompile Include="MyClass\Item\ItemBase.cpp" />
+    <ClCompile Include="MyClass\Item\PoworDownItem\PoworDownItem.cpp" />
+    <ClCompile Include="MyClass\Item\PoworUpItem\PoworUpItem.cpp" />
+    <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp" />
     <ClCompile Include="MyClass\Managers\SceneManager\SceneManager.cpp" />
     <ClCompile Include="MyClass\Player\PlayerBase.cpp" />
     <ClCompile Include="MyClass\Scenes\Main\MainScene.cpp" />
@@ -223,6 +228,11 @@
     <ClInclude Include="GameScene\SceneShared.hpp" />
     <ClInclude Include="GameScene\TemplateScene.hpp" />
     <ClInclude Include="MyClass\Enum\Enum.h" />
+    <ClInclude Include="MyClass\Item\Item.hpp" />
+    <ClInclude Include="MyClass\Item\Itembase.hpp" />
+    <ClInclude Include="MyClass\Item\PoworDownItem\PoworDownItem.h" />
+    <ClInclude Include="MyClass\Item\PoworUpItem\PoworUpItem.h" />
+    <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h" />
     <ClInclude Include="MyClass\Managers\SceneManager\SceneManager.h" />
     <ClInclude Include="MyClass\Player\PlayerBase.h" />
     <ClInclude Include="MyClass\Scenes\BaseScene.h" />
