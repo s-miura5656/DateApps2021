@@ -6,6 +6,7 @@
 #pragma once
 
 #include "../BaseScene.h"
+#include "../../Player/PlayerBase.h"
 
 class MainScene : public BaseScene
 {
@@ -19,5 +20,13 @@ public:
 	void Draw3D();
 
 private:
+
+	CAMERA camera;
+
+	//ƒvƒŒƒCƒ„[
+	PlayerBase player1;
+	PlayerBase player2;
+	PlayerBase player3;
+	PlayerBase player4;
 
 };
