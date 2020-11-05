@@ -2,11 +2,12 @@
 //! @brief  MainScene‚ð“®‚©‚·ˆ×‚ÌƒNƒ‰ƒX
 //! @author Souta_Miura
 //! @date   2020/10/30
-
 #pragma once
 
 #include "../BaseScene.h"
 #include "../../Player/PlayerBase.h"
+
+class ItemManager;
 
 class MainScene : public BaseScene
 {
@@ -29,4 +30,5 @@ private:
 	PlayerBase player3;
 	PlayerBase player4;
 
+	ItemManager* item_manager;
 };

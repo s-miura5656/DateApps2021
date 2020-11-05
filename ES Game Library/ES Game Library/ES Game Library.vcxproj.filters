@@ -145,41 +145,23 @@
     <Filter Include="Myclass\Scenes\Result">
       <UniqueIdentifier>{baa61e68-988c-4562-8dd8-f9d34258c2fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Myclass">
-      <UniqueIdentifier>{d2399b95-45a3-47fc-b29a-e76b80546d82}</UniqueIdentifier>
+    <Filter Include="Myclass\Item\PoworUpItem">
+      <UniqueIdentifier>{4d38b879-2b50-4c82-8044-6bece2d92162}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Myclass\Scenes">
-      <UniqueIdentifier>{8c255f34-9f59-44db-83de-5b39f651a44a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Myclass\Scenes\Title">
-      <UniqueIdentifier>{40510414-268c-4b67-8870-338638d0807e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Myclass\Scenes\Result">
-      <UniqueIdentifier>{b8ee8a27-354f-4ac8-9e91-02fea83a3625}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Myclass\Scenes\Main">
-      <UniqueIdentifier>{7f560b43-db15-4d9a-a16d-628bd96c77e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Myclass\Collsion">
-      <UniqueIdentifier>{0bc5dff5-984f-4ff4-977b-427b8612e8cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Myclass\Item">
-      <UniqueIdentifier>{b34abd74-d349-44e8-ac5e-87166581aac9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Myclass\Managers">
-      <UniqueIdentifier>{1b62dcb2-ac47-47e8-90b2-6d0044fd763b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Myclass\Map">
-      <UniqueIdentifier>{ec7b3fc4-d572-4c66-87eb-41dd97489a4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Myclass\Player">
-      <UniqueIdentifier>{dc9b338b-ad20-4fdf-b638-41bf0dfc6367}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Myclass\Managers\SceneManager">
-      <UniqueIdentifier>{81b16fa5-aea6-49fc-b546-1d02f679545e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Myclass\Enum">
+    <Filter Include="Myclass\Enum">
       <UniqueIdentifier>{4b7f0dfe-2a3e-4c18-a68e-10350c986fb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Item\PoworDownItem">
+      <UniqueIdentifier>{c7b409f1-d66b-4d7e-86e5-9aa743f7fc08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\ItemManager">
+      <UniqueIdentifier>{9476a388-d1f5-47bf-ab46-a39c45649cc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\CollisionManager">
+      <UniqueIdentifier>{7b6d8d15-da4b-4272-8ec0-042e5809aeed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\PlayerManager">
+      <UniqueIdentifier>{3517be3f-12be-451b-8323-52c04d574b8c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -340,6 +322,33 @@
     <ClCompile Include="MyClass\Player\PlayerBase.cpp">
       <Filter>Myclass\Player</Filter>
     </ClCompile>
+    <ClCompile Include="MyClass\Item\Item.cpp">
+      <Filter>Myclass\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Item\ItemBase.cpp">
+      <Filter>Myclass\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Item\PoworUpItem\PoworUpItem.cpp">
+      <Filter>Myclass\Item\PoworUpItem</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Item\PoworDownItem\PoworDownItem.cpp">
+      <Filter>Myclass\Item\PoworDownItem</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp">
+      <Filter>Myclass\Managers\ItemManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Collision\Collision.cpp">
+      <Filter>Myclass\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Collision\CollisionBase.cpp">
+      <Filter>Myclass\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp">
+      <Filter>Myclass\Managers\PlayerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\CollisionManager\CollisionManager.cpp">
+      <Filter>Myclass\Managers\CollisionManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h">
@@ -496,26 +505,56 @@
     <ClInclude Include="Extension\Direct2D\Direct2D.hpp">
       <Filter>ヘッダー ファイル\拡張\Direct2D</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Scenes\Result\ResultScene.h">
-      <Filter>ヘッダー ファイル\Myclass\Scenes\Result</Filter>
+    <ClInclude Include="MyClass\Enum\Enum.h">
+      <Filter>Myclass\Enum</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Scenes\Title\TitleScene.h">
-      <Filter>ヘッダー ファイル\Myclass\Scenes\Title</Filter>
+    <ClInclude Include="MyClass\Item\Item.hpp">
+      <Filter>Myclass\Item</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Scenes\Main\MainScene.h">
-      <Filter>ヘッダー ファイル\Myclass\Scenes\Main</Filter>
+    <ClInclude Include="MyClass\Item\Itembase.hpp">
+      <Filter>Myclass\Item</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Scenes\BaseScene.h">
-      <Filter>ヘッダー ファイル\Myclass\Scenes</Filter>
+    <ClInclude Include="MyClass\Item\PoworUpItem\PoworUpItem.h">
+      <Filter>Myclass\Item\PoworUpItem</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Managers\SceneManager\SceneManager.h">
-      <Filter>ヘッダー ファイル\Myclass\Managers\SceneManager</Filter>
+      <Filter>Myclass\Managers\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Scenes\Main\MainScene.h">
+      <Filter>Myclass\Scenes\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Scenes\Result\ResultScene.h">
+      <Filter>Myclass\Scenes\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Scenes\Title\TitleScene.h">
+      <Filter>Myclass\Scenes\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Scenes\BaseScene.h">
+      <Filter>Myclass\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Player\PlayerBase.h">
-      <Filter>ヘッダー ファイル\Myclass\Player</Filter>
+      <Filter>Myclass\Player</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Enum\Enum.h">
-      <Filter>ヘッダー ファイル\Myclass\Enum</Filter>
+    <ClInclude Include="MyClass\Item\PoworDownItem\PoworDownItem.h">
+      <Filter>Myclass\Item\PoworDownItem</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h">
+      <Filter>Myclass\Managers\ItemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\ManagerBase.h">
+      <Filter>Myclass\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Collision\Collision.h">
+      <Filter>Myclass\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Collision\CollisionBase.h">
+      <Filter>Myclass\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h">
+      <Filter>Myclass\Managers\PlayerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\CollisionManager\CollisionManager.h">
+      <Filter>Myclass\Managers\CollisionManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
