@@ -331,6 +331,9 @@
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp">
       <Filter>Myclass\Managers\ItemManager</Filter>
     </ClCompile>
+    <ClCompile Include="MyClass\Collision\collision.cpp">
+      <Filter>Myclass\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h">
@@ -522,6 +525,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h">
       <Filter>Myclass\Managers\ItemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Collision\collision.h">
+      <Filter>Myclass\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

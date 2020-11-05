@@ -8,3 +8,7 @@ Collision::~Collision()
 {
 }
 
+void Collision::Initialize()
+{
+
+}

@@ -164,6 +164,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="MyClass\Collision\collision.cpp" />
     <ClCompile Include="MyClass\Item\Item.cpp" />
     <ClCompile Include="MyClass\Item\ItemBase.cpp" />
     <ClCompile Include="MyClass\Item\PoworDownItem\PoworDownItem.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameScene\SceneShared.hpp" />
     <ClInclude Include="GameScene\TemplateScene.hpp" />
+    <ClInclude Include="MyClass\Collision\collision.h" />
     <ClInclude Include="MyClass\Enum\Enum.h" />
     <ClInclude Include="MyClass\Item\Item.hpp" />
     <ClInclude Include="MyClass\Item\Itembase.hpp" />

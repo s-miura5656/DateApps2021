@@ -7,10 +7,13 @@ public:
 	Collision();
 	~Collision();
 
-	void SetSize(Vector3& scale) { box->SetScale(scale); }
-	void SetPos(Vector3& position) { box->SetPosition(position); }
-	OrientedBoundingBox GetCollision() { return hit_box = box->GetOBB(); }
+	void Initialize();
 
+	void SetHitBoxSize(Vector3& scale) { box->SetScale(scale); }
+	void SetHitBoxPos(Vector3& position) { box->SetPosition(position); }
+	void SetHitBoxMaterial(Material& mat) { box->SetMaterial(mat); }
+	
+	OrientedBoundingBox GetBoxCollision() { return hit_box = box->GetOBB(); }
 private:
 	
 };
