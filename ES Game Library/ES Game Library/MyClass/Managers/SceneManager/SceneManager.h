@@ -45,5 +45,6 @@ private:
 	SceneManager(const SceneManager&) = delete;
 	void operator=(const SceneManager&) = delete;
 
+	CAMERA _camera;
 	BaseScene* _scene;
 };

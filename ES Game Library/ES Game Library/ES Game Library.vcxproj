@@ -174,7 +174,8 @@
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp" />
     <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp" />
     <ClCompile Include="MyClass\Managers\SceneManager\SceneManager.cpp" />
-    <ClCompile Include="MyClass\Player\PlayerBase.cpp" />
+    <ClCompile Include="MyClass\Players\PlayerBase.cpp" />
+    <ClCompile Include="MyClass\Players\Player\Player.cpp" />
     <ClCompile Include="MyClass\Scenes\Main\MainScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Result\ResultScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Title\TitleScene.cpp" />
@@ -243,7 +244,8 @@
     <ClInclude Include="MyClass\Managers\ManagerBase.h" />
     <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h" />
     <ClInclude Include="MyClass\Managers\SceneManager\SceneManager.h" />
-    <ClInclude Include="MyClass\Player\PlayerBase.h" />
+    <ClInclude Include="MyClass\Players\PlayerBase.h" />
+    <ClInclude Include="MyClass\Players\Player\Player.h" />
     <ClInclude Include="MyClass\Scenes\BaseScene.h" />
     <ClInclude Include="MyClass\Scenes\Main\MainScene.h" />
     <ClInclude Include="MyClass\Scenes\Result\ResultScene.h" />

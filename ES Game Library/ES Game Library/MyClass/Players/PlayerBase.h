@@ -3,12 +3,22 @@
 
 class PlayerBase
 {
-public:	
-	bool FileInitialize(LPCTSTR file);
-	virtual bool Initialize(int pad_num, Vector3 pos , Material mat);
-	virtual void Update();
+public:
+	PlayerBase();
+	virtual ~PlayerBase();
 
-	void Draw();
+	void PlayerColor(Material& mat) {
+		player->SetMaterial(mat);
+		rocket_punch->SetMaterial(mat);
+	}
+
+	void PlayerStartPosition(Vector3& pos) { player->SetPosition(pos); }
+	void SetContorollerNumber(int& pad_num) { pad_number = pad_num; }
+	bool FileInitialize(LPCTSTR& file);
+	virtual bool Initialize() { return true; }
+	virtual int Update() { return 0; }
+	virtual void Draw2D();
+	virtual void Draw3D();
 
 	OrientedBoundingBox PlayerGetObb() { return player_obb; }
 	
@@ -18,7 +28,6 @@ public:
 
 protected:
 	MODEL player;
-	
 	MODEL rocket_punch;
 
 	Vector3 player_get_pos;
@@ -33,7 +42,7 @@ protected:
 	float angle;
 	float move_speed;
 
-	float punch_spped;
+	float punch_speed;
 
 	SimpleShape shape;
 

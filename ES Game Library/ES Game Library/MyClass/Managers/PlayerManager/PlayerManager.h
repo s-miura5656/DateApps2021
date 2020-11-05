@@ -6,11 +6,13 @@
 
 #include "../ManagerBase.h"
 
+class PlayerBase;
+
 class PlayerManager : public ManagerBase
 {
 public:
-	PlayerManager() {};
-	~PlayerManager() {};
+	PlayerManager();
+	~PlayerManager();
 
 	bool Initialize() override;
 	int Update() override;
@@ -18,5 +20,7 @@ public:
 	void Draw3D() override;
 
 private:
-	 
+	//ƒvƒŒƒCƒ„[
+	std::vector<PlayerBase*> players;
+	int const player_max_count = 4;
 };
