@@ -1,9 +1,13 @@
 #include "../../ESGLib.h"
 #include "../Enum/Enum.h"
 
+class IPlayerParametor;
+
 class PlayerBase
 {
 public:
+	friend IPlayerParametor;
+
 	PlayerBase();
 	virtual ~PlayerBase();
 
@@ -27,6 +31,8 @@ public:
 	MODEL GetPlayer() { return player; }
 
 protected:
+	void test() {}
+
 	MODEL player;
 	MODEL rocket_punch;
 
