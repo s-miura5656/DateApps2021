@@ -157,6 +157,12 @@
     <Filter Include="Myclass\Managers\ItemManager">
       <UniqueIdentifier>{9476a388-d1f5-47bf-ab46-a39c45649cc0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Managers\CollisionManager">
+      <UniqueIdentifier>{7b6d8d15-da4b-4272-8ec0-042e5809aeed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\PlayerManager">
+      <UniqueIdentifier>{3517be3f-12be-451b-8323-52c04d574b8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -331,8 +337,17 @@
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp">
       <Filter>Myclass\Managers\ItemManager</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Collision\collision.cpp">
+    <ClCompile Include="MyClass\Collision\Collision.cpp">
       <Filter>Myclass\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Collision\CollisionBase.cpp">
+      <Filter>Myclass\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp">
+      <Filter>Myclass\Managers\PlayerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\CollisionManager\CollisionManager.cpp">
+      <Filter>Myclass\Managers\CollisionManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -526,8 +541,20 @@
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h">
       <Filter>Myclass\Managers\ItemManager</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Collision\collision.h">
+    <ClInclude Include="MyClass\Managers\ManagerBase.h">
+      <Filter>Myclass\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Collision\Collision.h">
       <Filter>Myclass\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Collision\CollisionBase.h">
+      <Filter>Myclass\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h">
+      <Filter>Myclass\Managers\PlayerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\CollisionManager\CollisionManager.h">
+      <Filter>Myclass\Managers\CollisionManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

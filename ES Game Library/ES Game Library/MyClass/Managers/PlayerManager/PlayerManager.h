@@ -1,17 +1,16 @@
-//! @file   CollisionManager.h
-//! @brief  当たり判定用用の管理クラス
+//! @file   PlayerManager.h
+//! @brief  プレイヤー用の管理クラス
 //! @author Souta_Miura
 //! @date   2020/11/05
 #pragma once
 
 #include "../ManagerBase.h"
-#include "../../Collision/Collision.h"
 
-class CollisionManager : public ManagerBase
+class PlayerManager : public ManagerBase
 {
 public:
-	CollisionManager();
-	~CollisionManager();
+	PlayerManager() {};
+	~PlayerManager() {};
 
 	bool Initialize() override;
 	int Update() override;
@@ -19,5 +18,5 @@ public:
 	void Draw3D() override;
 
 private:
-
+	 
 };

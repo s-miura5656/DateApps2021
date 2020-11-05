@@ -1,5 +1,9 @@
+//! @file   Collision.h
+//! @brief  当たり判定用の子クラス
+//! @author Souta_Miura
+//! @date   2020/11/05
 #pragma once
-#include "CollisionBase/CollisionBase.h"
+#include "../Collision/CollisionBase.h"
 
 class Collision : public CollisionBase
 {
