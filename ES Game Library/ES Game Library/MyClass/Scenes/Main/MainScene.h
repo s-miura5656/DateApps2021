@@ -8,6 +8,8 @@
 #include "../BaseScene.h"
 #include "../../Player/PlayerBase.h"
 
+class ItemManager;
+
 class MainScene : public BaseScene
 {
 public:
@@ -29,4 +31,5 @@ private:
 	PlayerBase player3;
 	PlayerBase player4;
 
+	ItemManager* item_manager;
 };

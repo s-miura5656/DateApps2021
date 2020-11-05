@@ -1,11 +1,16 @@
 #include "MainScene.h"
+#include "../../Managers/ItemManager/ItemManager.h"
+
 
 MainScene::MainScene()
 {
+	item_manager = new ItemManager;
+
 }
 
 MainScene::~MainScene()
 {
+	delete item_manager;
 }
 
 bool MainScene::Initialize()
@@ -55,9 +60,12 @@ bool MainScene::Initialize()
 	player4.FileInitialize(_T("player/robot_02.X"));
 	player4.Initialize(PLAYER4, Vector3(17, 0, 1), player_mtrl);
 
+	
 
 	//ゲームパッド
 	InputDevice.CreateGamePad(PLAYER_MAX);
+
+	item_manager->Initialize();
 
 	return true;
 }
@@ -69,12 +77,14 @@ int MainScene::Update()
 	player3.Update();
 	player4.Update();
 
+	item_manager->Update();
+
 	return 0;
 }
 
 void MainScene::Draw2D()
 {
-
+	item_manager->Draw2D();
 }
 
 void MainScene::Draw3D()
@@ -85,4 +95,6 @@ void MainScene::Draw3D()
 	player2.Draw();
 	player3.Draw();
 	player4.Draw();
+
+	item_manager->Draw3D();
 }
