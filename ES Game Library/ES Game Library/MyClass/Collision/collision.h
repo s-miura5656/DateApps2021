@@ -1,27 +1,16 @@
 #pragma once
+#include "CollisionBase/CollisionBase.h"
 
-#include "../../ESGLib.h"
-
-class CollisionBase
+class Collision : public CollisionBase
 {
-private:
-
-
-protected:
-	MODEL hitbox;//ロボ
-	Vector3 pos;
-	//MODEL attack_box;//攻撃
-	//MODEL block_box;//ブロック
-	//MODEL Stone_box;
-
-
 public:
-	CollisionBase();
-	virtual ~CollisionBase();
+	Collision();
+	~Collision();
 
-	virtual void Initialize();
-	virtual void Update();
-	virtual void Draw3D();
+	void SetSize(Vector3& scale) { box->SetScale(scale); }
+	void SetPos(Vector3& position) { box->SetPosition(position); }
+	OrientedBoundingBox GetCollision() { return hit_box = box->GetOBB(); }
 
-
+private:
+	
 };

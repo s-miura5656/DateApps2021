@@ -1,5 +1,6 @@
 #include "../../ESGLib.h"
 #include "../Enum/Enum.h"
+
 class PlayerBase
 {
 public:	
