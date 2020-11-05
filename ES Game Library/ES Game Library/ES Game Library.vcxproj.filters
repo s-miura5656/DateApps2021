@@ -115,9 +115,6 @@
     <Filter Include="Myclass">
       <UniqueIdentifier>{333155ef-f7de-4862-95fd-ed59091a17ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Player">
-      <UniqueIdentifier>{cfadf0e0-9d8b-4ad4-84b6-696d6ebe7696}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Map">
       <UniqueIdentifier>{941a0c22-b3ea-4d5e-acef-a2eb28198d4c}</UniqueIdentifier>
     </Filter>
@@ -162,6 +159,12 @@
     </Filter>
     <Filter Include="Myclass\Managers\PlayerManager">
       <UniqueIdentifier>{3517be3f-12be-451b-8323-52c04d574b8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Players">
+      <UniqueIdentifier>{cfadf0e0-9d8b-4ad4-84b6-696d6ebe7696}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Players\Player">
+      <UniqueIdentifier>{1b983379-09f6-4f15-8af3-d529c40fdcbb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -319,9 +322,6 @@
     <ClCompile Include="MyClass\Scenes\Result\ResultScene.cpp">
       <Filter>Myclass\Scenes\Result</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Player\PlayerBase.cpp">
-      <Filter>Myclass\Player</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Item\Item.cpp">
       <Filter>Myclass\Item</Filter>
     </ClCompile>
@@ -348,6 +348,12 @@
     </ClCompile>
     <ClCompile Include="MyClass\Managers\CollisionManager\CollisionManager.cpp">
       <Filter>Myclass\Managers\CollisionManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Players\Player\Player.cpp">
+      <Filter>Myclass\Players\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Players\PlayerBase.cpp">
+      <Filter>Myclass\Players</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -532,9 +538,6 @@
     <ClInclude Include="MyClass\Scenes\BaseScene.h">
       <Filter>Myclass\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Player\PlayerBase.h">
-      <Filter>Myclass\Player</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Item\PoworDownItem\PoworDownItem.h">
       <Filter>Myclass\Item\PoworDownItem</Filter>
     </ClInclude>
@@ -555,6 +558,12 @@
     </ClInclude>
     <ClInclude Include="MyClass\Managers\CollisionManager\CollisionManager.h">
       <Filter>Myclass\Managers\CollisionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\Player\Player.h">
+      <Filter>Myclass\Players\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\PlayerBase.h">
+      <Filter>Myclass\Players</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

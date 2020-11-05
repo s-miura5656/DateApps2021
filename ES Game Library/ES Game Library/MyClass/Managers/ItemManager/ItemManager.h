@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../../../ESGLib.h"
+#include "../ManagerBase.h"
 
 class ItemBase;
 
-class ItemManager
+class ItemManager : public ManagerBase
 {
 public:
 	ItemManager();

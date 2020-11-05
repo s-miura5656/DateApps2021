@@ -1,33 +1,30 @@
-#include "PlayerBase.h"
+#include "Player.h"
 
-bool PlayerBase::FileInitialize(LPCTSTR file)
+Player::Player()
 {
-	player = GraphicsDevice.CreateModelFromFile(file);
-	rocket_punch = GraphicsDevice.CreateModelFromFile(_T("Player/sword_01.X"));
-	return 0;
+
 }
 
-bool PlayerBase::Initialize(int pad_num, Vector3 pos,Material mat)
+Player::~Player()
 {
-	//プレイヤーの状態
-	
+
+}
+
+bool Player::Initialize()
+{
 	//ゲームパッド
-	pad_number = pad_num;
+	move_speed = 0.05f;
 
-	move_speed = 0.05;
+	scale = 0.005f;
 
-	player->SetPosition(pos);
-	
-	player->SetMaterial(mat);
-
-	
-	rocket_punch->SetMaterial(mat);
-
-	scale = 0.005;
+	player->SetScale(scale);
 
 	punch_state = NO_PUNCH;
 
-	punch_spped = 0.1;
+	punch_speed = 0.1f;
+
+	rocket_punch->SetScale(0.01f);
+
 
 	// @brief プレイヤーの当たり判定用の箱
 	player_obb = player->GetOBB();
@@ -38,23 +35,23 @@ bool PlayerBase::Initialize(int pad_num, Vector3 pos,Material mat)
 	shape.Height = player_obb.Radius.y * 2.0f;
 	shape.Depth = player_obb.Radius.z * 2.0f;
 	player_hitbox = GraphicsDevice.CreateModelFromSimpleShape(shape);
-	
-	return 0;
+
+	return true;
 }
 
-void PlayerBase::Update()
+int Player::Update()
 {
-	pad_state  = GamePad(pad_number)->GetState();
+	pad_state = GamePad(pad_number)->GetState();
 	pad_buffer = GamePad(pad_number)->GetBuffer();
 
 	player_get_pos = player->GetPosition();
 	player_get_rot = player->GetRotation();
-	punch_get_pos  = rocket_punch->GetPosition();
-	punch_get_rot  = rocket_punch->GetRotation();
-	
+	punch_get_pos = rocket_punch->GetPosition();
+	punch_get_rot = rocket_punch->GetRotation();
+
 	float dist = Vector3_Distance(player_get_pos, punch_get_pos);
 
-	
+
 	//ロケットパンチ
 	if (pad_buffer.IsPressed(GamePad_Button1) && punch_state == NO_PUNCH)
 	{
@@ -63,7 +60,7 @@ void PlayerBase::Update()
 
 	if (punch_state == RETURN_PUNCH)
 	{
-		rocket_punch->Move(0, 0, -punch_spped);
+		rocket_punch->Move(0, 0, -punch_speed);
 		if (dist <= 0.5) {
 			punch_state = NO_PUNCH;
 			dist = 0;
@@ -71,7 +68,7 @@ void PlayerBase::Update()
 	}
 	else if (punch_state == PUNCH)
 	{
-		rocket_punch->Move(0, 0, punch_spped);
+		rocket_punch->Move(0, 0, punch_speed);
 		if (dist >= 5)
 		{
 			dist = 5;
@@ -83,10 +80,10 @@ void PlayerBase::Update()
 		rocket_punch->SetPosition(player_get_pos);
 	}
 
-	
+
 	//プレイヤー移動
 	if (pad_state.X != Axis_Center && punch_state == NO_PUNCH ||
-		pad_state.Y != Axis_Center && punch_state == NO_PUNCH )
+		pad_state.Y != Axis_Center && punch_state == NO_PUNCH)
 	{
 		angle = MathHelper_Atan2(double(pad_state.X - Axis_Center) / double(Axis_Max - Axis_Center),
 			-double(pad_state.Y - Axis_Center) / double(Axis_Max - Axis_Center));
@@ -97,28 +94,12 @@ void PlayerBase::Update()
 		rocket_punch->SetRotation(0, angle, 0);
 		rocket_punch->SetPosition(player_get_pos);
 	}
-	
+
 
 	// @brief プレイヤーとブロック・素材の当たり判定の座標補正
 	player_obb.Center = player_get_pos;
 	player_obb.Center.y = player_obb.Radius.y;
 	player_obb.SetAxis(player->GetDirectionQuaternion());
 
-}
-
-void PlayerBase::Draw()
-{
-	
-	player->SetScale(scale);
-	player->Draw();
-	
-	// @brief プレイヤーの当たり判定の描画
-	player_hitbox->SetPosition(player_obb.Center);
-	player_hitbox->SetDirection(player->GetDirectionQuaternion());
-	player_hitbox->SetScale(scale);
-	player_hitbox->Draw();
-
-	rocket_punch->SetScale(0.01);
-	rocket_punch->Draw();
-
+	return 0;
 }

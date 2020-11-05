@@ -5,9 +5,7 @@
 #pragma once
 
 #include "../BaseScene.h"
-#include "../../Player/PlayerBase.h"
-
-class ItemManager;
+#include "../../Managers/ManagerBase.h"
 
 class MainScene : public BaseScene
 {
@@ -22,13 +20,5 @@ public:
 
 private:
 
-	CAMERA camera;
-
-	//ƒvƒŒƒCƒ„[
-	PlayerBase player1;
-	PlayerBase player2;
-	PlayerBase player3;
-	PlayerBase player4;
-
-	ItemManager* item_manager;
+	std::vector<ManagerBase*> _managers;
 };
