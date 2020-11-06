@@ -1,13 +1,21 @@
 #include "Player.h"
+#include "../PlayerParametor/PlayerParametor.h"
 
-Player::Player()
+Player::Player(std::string name)
 {
-
+	PlayerParametor::Instance().CreateParametor(name);
 }
 
 Player::~Player()
 {
 
+}
+
+bool Player::FileInitialize(LPCTSTR& file)
+{
+	player = GraphicsDevice.CreateModelFromFile(file);
+	rocket_punch = GraphicsDevice.CreateModelFromFile(_T("Player/sword_01.X"));
+	return true;
 }
 
 bool Player::Initialize()

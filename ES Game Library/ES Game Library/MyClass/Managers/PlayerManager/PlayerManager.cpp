@@ -4,9 +4,11 @@
 
 PlayerManager::PlayerManager()
 {
+	std::string name = "PLAYER_";
+
 	for (int i = 0; i < player_max_count; i++)
 	{
-		players.push_back(new Player);
+		players.push_back(new Player(name + std::to_string(i + 1)));
 	}
 }
 

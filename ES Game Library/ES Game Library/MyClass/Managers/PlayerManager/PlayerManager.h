@@ -6,7 +6,7 @@
 
 #include "../ManagerBase.h"
 
-class PlayerBase;
+class Player;
 
 class PlayerManager : public ManagerBase
 {
@@ -21,6 +21,6 @@ public:
 
 private:
 	//ƒvƒŒƒCƒ„[
-	std::vector<PlayerBase*> players;
+	std::vector<Player*> players;
 	int const player_max_count = 4;
 };
