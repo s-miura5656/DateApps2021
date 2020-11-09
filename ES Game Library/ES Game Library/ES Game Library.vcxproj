@@ -234,6 +234,8 @@
     <ClInclude Include="GameScene\TemplateScene.hpp" />
     <ClInclude Include="MyClass\Collision\Collision.h" />
     <ClInclude Include="MyClass\Collision\CollisionBase.h" />
+    <ClInclude Include="MyClass\Data\IPlayerData.h" />
+    <ClInclude Include="MyClass\Data\StructList.h" />
     <ClInclude Include="MyClass\Enum\Enum.h" />
     <ClInclude Include="MyClass\Item\Item.hpp" />
     <ClInclude Include="MyClass\Item\Itembase.hpp" />
@@ -245,6 +247,7 @@
     <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h" />
     <ClInclude Include="MyClass\Managers\SceneManager\SceneManager.h" />
     <ClInclude Include="MyClass\Players\PlayerBase.h" />
+    <ClInclude Include="MyClass\Players\PlayerParametor\PlayerParametor.h" />
     <ClInclude Include="MyClass\Players\Player\Player.h" />
     <ClInclude Include="MyClass\Scenes\BaseScene.h" />
     <ClInclude Include="MyClass\Scenes\Main\MainScene.h" />

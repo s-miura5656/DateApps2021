@@ -166,6 +166,12 @@
     <Filter Include="Myclass\Players\Player">
       <UniqueIdentifier>{1b983379-09f6-4f15-8af3-d529c40fdcbb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Players\PlayerParametor">
+      <UniqueIdentifier>{e0a9ad9c-d4fa-4203-a2eb-563349eb164e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Data">
+      <UniqueIdentifier>{2031d2c9-764d-47b8-b8e2-4d6616267d02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -564,6 +570,15 @@
     </ClInclude>
     <ClInclude Include="MyClass\Players\PlayerBase.h">
       <Filter>Myclass\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\PlayerParametor\PlayerParametor.h">
+      <Filter>Myclass\Players\PlayerParametor</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Data\IPlayerData.h">
+      <Filter>Myclass\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Data\StructList.h">
+      <Filter>Myclass\Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
