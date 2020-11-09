@@ -5,7 +5,7 @@
 * @param　なし
 * @return　なし
 */
-void Stage::Initialize()
+bool Stage::Initialize()
 {
 	/**
 * @brief マップのマテリアルの初期設定
@@ -50,13 +50,16 @@ void Stage::Initialize()
 		}
 	}
 	map_position = map->GetPosition();
+
+	return true;
 }
+
 /*
 * @fn プレイヤー描画
 * @param　なし
 * @return　なし
 */
-void Stage::Draw()
+void Stage::Draw3D()
 {
 	/**
 * @brief ブロックの配置
@@ -85,3 +88,4 @@ void Stage::Draw()
 	}
 	map->Draw();
 }
+
