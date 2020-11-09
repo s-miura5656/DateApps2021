@@ -22,9 +22,9 @@ CollisionBase::~CollisionBase()
 
 }
 
-void CollisionBase::Initialize()
+bool CollisionBase::Initialize()
 {
-	
+	return true;
 }
 
 

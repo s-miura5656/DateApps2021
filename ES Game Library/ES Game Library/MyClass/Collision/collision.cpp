@@ -2,13 +2,15 @@
 
 Collision::Collision()
 {
+
 }
 
 Collision::~Collision()
 {
+
 }
 
-void Collision::Initialize()
+bool Collision::Initialize()
 {
-
+	return true;
 }

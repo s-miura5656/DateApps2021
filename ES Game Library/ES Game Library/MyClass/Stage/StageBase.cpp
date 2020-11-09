@@ -2,10 +2,12 @@
 
 StageBase::StageBase()
 {
+
 }
 
 StageBase::~StageBase()
 {
+
 }
 
 bool StageBase::Initialize()

@@ -11,7 +11,7 @@ public:
 	Collision();
 	~Collision();
 
-	void Initialize();
+	bool Initialize();
 
 	void SetHitBoxSize(Vector3& scale) { box->SetScale(scale); }
 	void SetHitBoxPos(Vector3& position) { box->SetPosition(position); }

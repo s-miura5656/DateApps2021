@@ -12,7 +12,7 @@ public:
 	CollisionBase();
 	virtual ~CollisionBase();
 
-	virtual void Initialize();
+	virtual bool Initialize();
 	virtual void Draw3D();
 
 protected:
