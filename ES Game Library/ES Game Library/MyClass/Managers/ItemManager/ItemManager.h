@@ -1,6 +1,9 @@
 #pragma once
 
 #include "../ManagerBase.h"
+#include "../../Item/SpeedItem/SpeedItem.h"
+#include "../../Item/AttackPowerItem/AttackPowerItem.h"
+#include "../../Item/HitPointItem/HitPointItem.h"
 
 class ItemBase;
 

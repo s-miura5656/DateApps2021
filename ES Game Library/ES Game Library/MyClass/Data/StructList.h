@@ -9,3 +9,10 @@ struct PlayerParam {
 	int speed		  = 100;
 	int weight        = 50;
 };
+
+struct ArmParam {
+	Vector3 position = Vector3_Zero;
+	int powor = 100;
+	int weight = 50;
+	int tunns = 5;
+};

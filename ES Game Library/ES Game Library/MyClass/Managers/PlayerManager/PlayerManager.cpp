@@ -26,7 +26,7 @@ PlayerManager::~PlayerManager()
 bool PlayerManager::Initialize()
 {
 	//ゲームパッド
-	InputDevice.CreateGamePad(PLAYER_MAX);
+	InputDevice.CreateGamePad(PLAYER_COUNT_MAX);
 
 	Material player_mtrl[4];
 
@@ -48,8 +48,7 @@ bool PlayerManager::Initialize()
 
 	LPCTSTR model_file_name = _T("player/robot.X");
 
-
-	//プレイヤー
+//プレイヤー
 	for (int i = 0; i < players.size(); ++i)
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
@@ -62,7 +61,7 @@ bool PlayerManager::Initialize()
 
 		PlayerParametor::Instance().CreateArmModel(ARM_TAG + std::to_string(i + 1));
 		i_player_data->SetPosition(name, players[i]->GetPos());
-		i_player_data->SetArmModelPos(arm_name, players[i]->GetArmPos());
+		//i_player_data->SetArmModelPos(arm_name, players[i]->GetArmPos());
 	}
 
     return true;
@@ -78,7 +77,7 @@ int PlayerManager::Update()
 		std::string arm_name = ARM_TAG + std::to_string(i + 1);
 		player[i]->Update();
 		i_player_data->SetPosition(name, player[i]->GetPos());
-		i_player_data->SetArmModelPos(arm_name, players[i]->GetArmPos());
+		//i_player_data->SetArmModelPos(arm_name, players[i]->GetArmPos());
 	}
 
     return 0;
