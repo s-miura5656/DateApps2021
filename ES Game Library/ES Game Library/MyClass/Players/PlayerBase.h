@@ -22,7 +22,7 @@ protected:
 	MODEL player;
 	MODEL rocket_punch;
 
-	float scale;
+	const float scale = 0.004f;
 	float angle;
 	
 	SimpleShape shape;

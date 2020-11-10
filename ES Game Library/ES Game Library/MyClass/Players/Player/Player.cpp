@@ -23,15 +23,13 @@ bool Player::Initialize()
 	//ゲームパッド
 	move_speed = 0.05f;
 
-	scale = 0.005f;
-
 	player->SetScale(scale);
 
 	punch_state = NO_PUNCH;
 
 	punch_speed = 0.1f;
 
-	rocket_punch->SetScale(0.01f);
+	rocket_punch->SetScale(scale);
 
 
 	// @brief プレイヤーの当たり判定用の箱

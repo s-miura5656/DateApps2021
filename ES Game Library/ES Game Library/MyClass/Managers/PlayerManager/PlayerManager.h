@@ -5,6 +5,7 @@
 #pragma once
 
 #include "../ManagerBase.h"
+#include "../../Data/IPlayerData.h"
 
 class Player;
 
@@ -23,4 +24,7 @@ private:
 	//ƒvƒŒƒCƒ„[
 	std::vector<Player*> players;
 	int const player_max_count = 4;
+
+	std::vector<std::string> name;
+	IPrayerData* i_player_data;
 };
