@@ -23,7 +23,7 @@ bool Player::Initialize()
 	//ゲームパッド
 	move_speed = 0.05f;
 
-	player->SetScale(scale);
+	player->SetScale(player_scale);
 
 	punch_state = NO_PUNCH;
 
@@ -33,14 +33,14 @@ bool Player::Initialize()
 
 
 	// @brief プレイヤーの当たり判定用の箱
-	player_obb = player->GetOBB();
-	player_obb.Radius.x *= 0.33333f;
-
-	shape.Type = Shape_Box;
-	shape.Width = player_obb.Radius.x * 2.0f;
-	shape.Height = player_obb.Radius.y * 2.0f;
-	shape.Depth = player_obb.Radius.z * 2.0f;
-	player_hitbox = GraphicsDevice.CreateModelFromSimpleShape(shape);
+	//player_obb = player->GetOBB();
+	//player_obb.Radius.x *= 0.33333f;
+	//
+	//shape.Type = Shape_Box;
+	//shape.Width = player_obb.Radius.x * 2.0f;
+	//shape.Height = player_obb.Radius.y * 2.0f;
+	//shape.Depth = player_obb.Radius.z * 2.0f;
+	//player_hitbox = GraphicsDevice.CreateModelFromSimpleShape(shape);
 
 	return true;
 }
@@ -103,9 +103,9 @@ int Player::Update()
 
 
 	// @brief プレイヤーとブロック・素材の当たり判定の座標補正
-	player_obb.Center = player_get_pos;
-	player_obb.Center.y = player_obb.Radius.y;
-	player_obb.SetAxis(player->GetDirectionQuaternion());
+	//player_obb.Center = player_get_pos;
+	//player_obb.Center.y = player_obb.Radius.y;
+	//player_obb.SetAxis(player->GetDirectionQuaternion());
 
 	return 0;
 }

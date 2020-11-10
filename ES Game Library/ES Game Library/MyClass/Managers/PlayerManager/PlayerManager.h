@@ -25,6 +25,5 @@ private:
 	std::vector<Player*> players;
 	int const player_max_count = 4;
 
-	std::vector<std::string> name;
 	IPrayerData* i_player_data;
 };

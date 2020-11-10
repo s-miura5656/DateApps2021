@@ -6,8 +6,8 @@ PlayerManager::PlayerManager()
 {
 	for (int i = 0; i < player_max_count; i++)
 	{
-		name.push_back("Player_" + std::to_string(i + 1));
-		players.push_back(new Player(name[i]));
+		std::string name = "Player_" + std::to_string(i + 1);
+		players.push_back(new Player(name));
 	}
 
 	i_player_data = new IPrayerData;
@@ -46,17 +46,23 @@ bool PlayerManager::Initialize()
 	_start_pos[2] = Vector3(-6.f, 0, -5.f);
 	_start_pos[3] = Vector3( 6.f, 0, -5.f);
 
-	LPCTSTR model_file_name = _T("player/robot_02.X");
+	LPCTSTR model_file_name = _T("player/robot.X");
+
 
 	//ƒvƒŒƒCƒ„[
 	for (int i = 0; i < players.size(); ++i)
 	{
+		std::string name = "Player_" + std::to_string(i + 1);
+		std::string arm_name = "Arm_" + std::to_string(i + 1);
 		players[i]->FileInitialize(model_file_name);
 		players[i]->PlayerColor(player_mtrl[i]);
 		players[i]->SetContorollerNumber(i);
 		players[i]->PlayerStartPosition(_start_pos[i]);
 		players[i]->Initialize();
-		i_player_data->SetPosition(name[i], players[i]->PlayerGetPos());
+
+		PlayerParametor::Instance().CreateArmModel("Arm_" + std::to_string(i + 1));
+		i_player_data->SetPosition(name, players[i]->GetPos());
+		i_player_data->SetArmModelPos(arm_name, players[i]->GetArmPos());
 	}
 
     return true;
@@ -68,8 +74,11 @@ int PlayerManager::Update()
 
 	for (int i = 0; i < players.size(); ++i)
 	{
+		std::string name = "Player_" + std::to_string(i + 1);
+		std::string arm_name = "Arm_" + std::to_string(i + 1);
 		player[i]->Update();
-		i_player_data->SetPosition(name[i], player[i]->PlayerGetPos());
+		i_player_data->SetPosition(name, player[i]->GetPos());
+		i_player_data->SetArmModelPos(arm_name, players[i]->GetArmPos());
 	}
 
     return 0;

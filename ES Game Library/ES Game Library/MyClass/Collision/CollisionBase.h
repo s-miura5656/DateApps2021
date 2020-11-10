@@ -18,4 +18,5 @@ public:
 protected:
 	MODEL box;
 	OrientedBoundingBox hit_box;
+	bool attack_hit = false;
 };
