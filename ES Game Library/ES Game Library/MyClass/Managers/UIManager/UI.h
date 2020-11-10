@@ -1,6 +1,5 @@
 #pragma once
-#include"../../MyClass/UI/UI.h"
-#include"../../ESGLib.h"
+#include"../../../ESGLib.h"
 
 class UiManager
 {

@@ -1,5 +1,5 @@
 #include "UI.h"
-#include"../../MyClass/Time/Time.h"
+#include"../TimeManager/Time.h"
 
 UiManager::UiManager()
 {

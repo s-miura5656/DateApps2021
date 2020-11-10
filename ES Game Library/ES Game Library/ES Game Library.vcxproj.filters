@@ -154,9 +154,6 @@
     <Filter Include="Myclass\Managers\CollisionManager">
       <UniqueIdentifier>{7b6d8d15-da4b-4272-8ec0-042e5809aeed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Managers\PlayerManager">
-      <UniqueIdentifier>{3517be3f-12be-451b-8323-52c04d574b8c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Players">
       <UniqueIdentifier>{cfadf0e0-9d8b-4ad4-84b6-696d6ebe7696}</UniqueIdentifier>
     </Filter>
@@ -183,6 +180,15 @@
     </Filter>
     <Filter Include="Myclass\Players\Player\ArmParametor">
       <UniqueIdentifier>{cf31082b-f15f-48c6-9024-e31b6dbcc36d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\TimeManager">
+      <UniqueIdentifier>{e8253687-54df-46bb-b0b1-4f5ff8c9bba2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\UiManager">
+      <UniqueIdentifier>{91e623c0-0e00-4b17-b6f2-01b9de535a31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\PlayerManager">
+      <UniqueIdentifier>{3517be3f-12be-451b-8323-52c04d574b8c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -387,6 +393,12 @@
     </ClCompile>
     <ClCompile Include="MyClass\Players\Arm\Arm.cpp">
       <Filter>Myclass\Players\Player\Arm</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\TimeManager\Time.cpp">
+      <Filter>Myclass\Managers\TimeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\UIManager\UI.cpp">
+      <Filter>Myclass\Managers\UiManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -627,6 +639,12 @@
     </ClInclude>
     <ClInclude Include="MyClass\Players\ArmParametor\ArmParametor.h">
       <Filter>Myclass\Players\Player\ArmParametor</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\TimeManager\Time.h">
+      <Filter>Myclass\Managers\TimeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\UIManager\UI.h">
+      <Filter>Myclass\Managers\UiManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

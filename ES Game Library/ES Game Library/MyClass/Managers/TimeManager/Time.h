@@ -1,6 +1,6 @@
 #pragma once
-#include "../../MyClass/Time/Time.h"
-#include "../../ESGLib.h"
+#include "../TimeManager/Time.h"
+#include "../../../ESGLib.h"
 
 class TimeManager
 {
