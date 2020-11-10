@@ -115,9 +115,6 @@
     <Filter Include="Myclass">
       <UniqueIdentifier>{333155ef-f7de-4862-95fd-ed59091a17ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Map">
-      <UniqueIdentifier>{941a0c22-b3ea-4d5e-acef-a2eb28198d4c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Item">
       <UniqueIdentifier>{9e19ebd1-c709-455f-8be8-51ceb3b7bae7}</UniqueIdentifier>
     </Filter>
@@ -171,6 +168,18 @@
     </Filter>
     <Filter Include="Myclass\Data">
       <UniqueIdentifier>{2031d2c9-764d-47b8-b8e2-4d6616267d02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage">
+      <UniqueIdentifier>{941a0c22-b3ea-4d5e-acef-a2eb28198d4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage\Stage_1">
+      <UniqueIdentifier>{f7c151a7-1ed8-4cc9-96bb-daf579389936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\StageManager">
+      <UniqueIdentifier>{51e603b4-46b5-4398-8973-9d025a8aa9ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Players\Player\Arm">
+      <UniqueIdentifier>{b480ede5-5cfb-4a2f-a45f-77ba21d1f1cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -360,6 +369,21 @@
     </ClCompile>
     <ClCompile Include="MyClass\Players\PlayerBase.cpp">
       <Filter>Myclass\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\StageBase.cpp">
+      <Filter>Myclass\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Stage_1\Stage.cpp">
+      <Filter>Myclass\Stage\Stage_1</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\StageManager\StageManager.cpp">
+      <Filter>Myclass\Managers\StageManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Players\Arm\Arm.cpp">
+      <Filter>Myclass\Players\Player\Arm</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Players\Arm\ArmBase.cpp">
+      <Filter>Myclass\Players\Player\Arm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -579,6 +603,21 @@
     </ClInclude>
     <ClInclude Include="MyClass\Data\StructList.h">
       <Filter>Myclass\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\StageBase.h">
+      <Filter>Myclass\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Stage_1\Stage.h">
+      <Filter>Myclass\Stage\Stage_1</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\StageManager\StageManager.h">
+      <Filter>Myclass\Managers\StageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\Arm\Arm.h">
+      <Filter>Myclass\Players\Player\Arm</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\Arm\ArmBase.h">
+      <Filter>Myclass\Players\Player\Arm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

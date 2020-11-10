@@ -2,13 +2,14 @@
 #include "../../Managers/ItemManager/ItemManager.h"
 #include "../../Managers/PlayerManager/PlayerManager.h"
 #include "../../Managers/CollisionManager/CollisionManager.h"
-
+#include "../../Managers/StageManager/StageManager.h"
 
 MainScene::MainScene()
 {
+	_managers.push_back(new StageManager);
 	_managers.push_back(new PlayerManager);
-	_managers.push_back(new CollisionManager);
 	_managers.push_back(new ItemManager);
+	_managers.push_back(new CollisionManager);
 }
 
 MainScene::~MainScene()

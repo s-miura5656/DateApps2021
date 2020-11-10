@@ -12,10 +12,11 @@ public:
 	CollisionBase();
 	virtual ~CollisionBase();
 
-	virtual void Initialize();
+	virtual bool Initialize();
 	virtual void Draw3D();
 
 protected:
 	MODEL box;
 	OrientedBoundingBox hit_box;
+	bool attack_hit = false;
 };

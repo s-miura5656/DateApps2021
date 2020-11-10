@@ -29,8 +29,8 @@ private:
 	Vector3 player_get_pos;
 	Vector3 player_get_rot;
 
-	//Vector3 punch_get_pos;
-	//Vector3 punch_get_rot;
+	/*Vector3 punch_get_pos;
+	Vector3 punch_get_rot;*/
 
 	//int   punch_state;
 	float move_speed;

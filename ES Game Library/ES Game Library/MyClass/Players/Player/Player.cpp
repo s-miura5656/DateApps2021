@@ -23,26 +23,30 @@ bool Player::Initialize()
 	//ゲームパッド
 	move_speed = 0.05f;
 
-	scale = 0.005f;
+	player->SetScale(player_scale);
 
-	player->SetScale(scale);
+	arm.Fileinitialize();
+	arm.Initialize();
 
-	//punch_state = NO_PUNCH;
 
-	//punch_speed = 0.1f;
+	/*punch_state = NO_PUNCH;
+
+	punch_speed = 0.1f;*/
+
 
 	//rocket_punch->SetScale(0.01f);
 
+	//rocket_punch->SetScale(scale);
 
 	// @brief プレイヤーの当たり判定用の箱
-	player_obb = player->GetOBB();
-	player_obb.Radius.x *= 0.33333f;
-
-	shape.Type = Shape_Box;
-	shape.Width = player_obb.Radius.x * 2.0f;
-	shape.Height = player_obb.Radius.y * 2.0f;
-	shape.Depth = player_obb.Radius.z * 2.0f;
-	player_hitbox = GraphicsDevice.CreateModelFromSimpleShape(shape);
+	//player_obb = player->GetOBB();
+	//player_obb.Radius.x *= 0.33333f;
+	//
+	//shape.Type = Shape_Box;
+	//shape.Width = player_obb.Radius.x * 2.0f;
+	//shape.Height = player_obb.Radius.y * 2.0f;
+	//shape.Depth = player_obb.Radius.z * 2.0f;
+	//player_hitbox = GraphicsDevice.CreateModelFromSimpleShape(shape);
 
 	return true;
 }
@@ -54,16 +58,19 @@ int Player::Update()
 
 	player_get_pos = player->GetPosition();
 	player_get_rot = player->GetRotation();
+
 	//punch_get_pos = rocket_punch->GetPosition();
 	//punch_get_rot = rocket_punch->GetRotation();
 
 	//float dist = Vector3_Distance(player_get_pos, punch_get_pos);
 
 
+	arm.Update(player_get_pos,angle);
+
 	//ロケットパンチ
-	if (pad_buffer.IsPressed(GamePad_Button1) /*&& punch_state == NO_PUNCH*/)
+	if (pad_buffer.IsPressed(GamePad_Button1) && arm.GetArmState() == NO_PUNCH)
 	{
-		//punch_state = PUNCH;
+		arm.ArmShoot(PUNCH);
 	}
 
 	/*if (punch_state == RETURN_PUNCH)
@@ -90,8 +97,8 @@ int Player::Update()
 
 
 	//プレイヤー移動
-	if (pad_state.X != Axis_Center /*&& punch_state == NO_PUNCH*/ ||
-		pad_state.Y != Axis_Center /*&& punch_state == NO_PUNCH*/)
+	if (pad_state.X != Axis_Center && arm.GetArmState() == NO_PUNCH ||
+		pad_state.Y != Axis_Center && arm.GetArmState() == NO_PUNCH)
 	{
 		angle = MathHelper_Atan2(double(pad_state.X - Axis_Center) / double(Axis_Max - Axis_Center),
 			-double(pad_state.Y - Axis_Center) / double(Axis_Max - Axis_Center));
@@ -99,15 +106,16 @@ int Player::Update()
 		player->SetRotation(0, angle, 0);
 		player->Move(0, 0, move_speed);
 
+		arm.SetPra(player_get_pos,angle);
 		/*rocket_punch->SetRotation(0, angle, 0);
 		rocket_punch->SetPosition(player_get_pos);*/
 	}
 
 
 	// @brief プレイヤーとブロック・素材の当たり判定の座標補正
-	player_obb.Center = player_get_pos;
-	player_obb.Center.y = player_obb.Radius.y;
-	player_obb.SetAxis(player->GetDirectionQuaternion());
+	//player_obb.Center = player_get_pos;
+	//player_obb.Center.y = player_obb.Radius.y;
+	//player_obb.SetAxis(player->GetDirectionQuaternion());
 
 	return 0;
 }
