@@ -16,5 +16,5 @@ void PlayerBase::Draw3D()
 {
 	player->Draw();
 
-	rocket_punch->Draw();
+	//rocket_punch->Draw();
 }

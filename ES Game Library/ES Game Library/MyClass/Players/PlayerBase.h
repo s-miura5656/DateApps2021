@@ -20,7 +20,7 @@ public:
 
 protected:
 	MODEL player;
-	MODEL rocket_punch;
+	//MODEL rocket_punch;
 
 	float scale;
 	float angle;
