@@ -14,7 +14,7 @@ Player::~Player()
 bool Player::FileInitialize(LPCTSTR& file)
 {
 	player = GraphicsDevice.CreateModelFromFile(file);
-	rocket_punch = GraphicsDevice.CreateModelFromFile(_T("Player/sword_01.X"));
+	//rocket_punch = GraphicsDevice.CreateModelFromFile(_T("Player/sword_01.X"));
 	return true;
 }
 
@@ -25,12 +25,18 @@ bool Player::Initialize()
 
 	player->SetScale(player_scale);
 
-	punch_state = NO_PUNCH;
+	arm.Fileinitialize();
+	arm.Initialize();
 
-	punch_speed = 0.1f;
 
-	rocket_punch->SetScale(scale);
+	/*punch_state = NO_PUNCH;
 
+	punch_speed = 0.1f;*/
+
+
+	//rocket_punch->SetScale(0.01f);
+
+	//rocket_punch->SetScale(scale);
 
 	// @brief プレイヤーの当たり判定用の箱
 	//player_obb = player->GetOBB();
@@ -52,19 +58,22 @@ int Player::Update()
 
 	player_get_pos = player->GetPosition();
 	player_get_rot = player->GetRotation();
-	punch_get_pos = rocket_punch->GetPosition();
-	punch_get_rot = rocket_punch->GetRotation();
 
-	float dist = Vector3_Distance(player_get_pos, punch_get_pos);
+	//punch_get_pos = rocket_punch->GetPosition();
+	//punch_get_rot = rocket_punch->GetRotation();
 
+	//float dist = Vector3_Distance(player_get_pos, punch_get_pos);
+
+
+	arm.Update(player_get_pos,angle);
 
 	//ロケットパンチ
-	if (pad_buffer.IsPressed(GamePad_Button1) && punch_state == NO_PUNCH)
+	if (pad_buffer.IsPressed(GamePad_Button1) && arm.GetArmState() == NO_PUNCH)
 	{
-		punch_state = PUNCH;
+		arm.ArmShoot(PUNCH);
 	}
 
-	if (punch_state == RETURN_PUNCH)
+	/*if (punch_state == RETURN_PUNCH)
 	{
 		rocket_punch->Move(0, 0, -punch_speed);
 		if (dist <= 0.5) {
@@ -84,12 +93,12 @@ int Player::Update()
 	else if (punch_state == NO_PUNCH)
 	{
 		rocket_punch->SetPosition(player_get_pos);
-	}
+	}*/
 
 
 	//プレイヤー移動
-	if (pad_state.X != Axis_Center && punch_state == NO_PUNCH ||
-		pad_state.Y != Axis_Center && punch_state == NO_PUNCH)
+	if (pad_state.X != Axis_Center && arm.GetArmState() == NO_PUNCH ||
+		pad_state.Y != Axis_Center && arm.GetArmState() == NO_PUNCH)
 	{
 		angle = MathHelper_Atan2(double(pad_state.X - Axis_Center) / double(Axis_Max - Axis_Center),
 			-double(pad_state.Y - Axis_Center) / double(Axis_Max - Axis_Center));
@@ -97,8 +106,9 @@ int Player::Update()
 		player->SetRotation(0, angle, 0);
 		player->Move(0, 0, move_speed);
 
-		rocket_punch->SetRotation(0, angle, 0);
-		rocket_punch->SetPosition(player_get_pos);
+		arm.SetPra(player_get_pos,angle);
+		/*rocket_punch->SetRotation(0, angle, 0);
+		rocket_punch->SetPosition(player_get_pos);*/
 	}
 
 
