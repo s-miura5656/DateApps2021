@@ -26,7 +26,7 @@ PlayerManager::~PlayerManager()
 bool PlayerManager::Initialize()
 {
 	//ゲームパッド
-	InputDevice.CreateGamePad(PLAYER_MAX);
+	InputDevice.CreateGamePad(PLAYER_COUNT_MAX);
 
 	Material player_mtrl[4];
 
@@ -47,7 +47,6 @@ bool PlayerManager::Initialize()
 	_start_pos[3] = Vector3( 6.f, 0, -5.f);
 
 	LPCTSTR model_file_name = _T("player/robot.X");
-
 
 	//プレイヤー
 	for (int i = 0; i < players.size(); ++i)
