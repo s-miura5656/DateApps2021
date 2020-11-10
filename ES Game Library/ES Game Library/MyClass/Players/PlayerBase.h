@@ -12,23 +12,24 @@ public:
 	virtual void Draw2D();
 	virtual void Draw3D();
 
-	OrientedBoundingBox PlayerGetObb() { return player_obb; }
+	//OrientedBoundingBox PlayerGetObb() { return player_obb; }
 	
-	Vector3 PlayerGetPos() { return player->GetPosition(); }
-
+	Vector3 GetPos() { return player->GetPosition(); }
+	Vector3 GetArmPos() { return rocket_punch->GetPosition(); }
 	MODEL GetPlayer() { return player; }
 
 protected:
 	MODEL player;
 	MODEL rocket_punch;
 
-	float scale;
+	const float scale = 0.004f;
+	const float player_scale = 1.f;
 	float angle;
 	
 	SimpleShape shape;
 
 	MODEL player_hitbox;
-	OrientedBoundingBox player_obb;
+	//OrientedBoundingBox player_obb;
 	
 	GamePadState  pad_state;
 	GamePadBuffer pad_buffer;

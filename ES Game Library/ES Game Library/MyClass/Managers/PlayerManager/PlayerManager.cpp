@@ -4,16 +4,19 @@
 
 PlayerManager::PlayerManager()
 {
-	std::string name = "PLAYER_";
-
 	for (int i = 0; i < player_max_count; i++)
 	{
-		players.push_back(new Player(name + std::to_string(i + 1)));
+		std::string name = "Player_" + std::to_string(i + 1);
+		players.push_back(new Player(name));
 	}
+
+	i_player_data = new IPrayerData;
 }
 
 PlayerManager::~PlayerManager()
 {
+	delete i_player_data;
+
 	for (int i = players.size() - 1; i >= 0; --i)
 	{
 		delete players[i];
@@ -38,21 +41,28 @@ bool PlayerManager::Initialize()
 
 	Vector3 _start_pos[4];
 
-	_start_pos[0] = Vector3(1.f, 0, 13.f);
-	_start_pos[1] = Vector3(17, 0, 13);
-	_start_pos[2] = Vector3(1, 0, 1);
-	_start_pos[3] = Vector3(17, 0, 1);
+	_start_pos[0] = Vector3(-6.f, 0,  5.f);
+	_start_pos[1] = Vector3( 6.f, 0,  5.f);
+	_start_pos[2] = Vector3(-6.f, 0, -5.f);
+	_start_pos[3] = Vector3( 6.f, 0, -5.f);
 
-	LPCTSTR model_file_name = _T("player/robot_02.X");
+	LPCTSTR model_file_name = _T("player/robot.X");
+
 
 	//ÉvÉåÉCÉÑÅ[
 	for (int i = 0; i < players.size(); ++i)
 	{
+		std::string name = "Player_" + std::to_string(i + 1);
+		std::string arm_name = "Arm_" + std::to_string(i + 1);
 		players[i]->FileInitialize(model_file_name);
 		players[i]->PlayerColor(player_mtrl[i]);
 		players[i]->SetContorollerNumber(i);
 		players[i]->PlayerStartPosition(_start_pos[i]);
 		players[i]->Initialize();
+
+		PlayerParametor::Instance().CreateArmModel("Arm_" + std::to_string(i + 1));
+		i_player_data->SetPosition(name, players[i]->GetPos());
+		i_player_data->SetArmModelPos(arm_name, players[i]->GetArmPos());
 	}
 
     return true;
@@ -60,9 +70,15 @@ bool PlayerManager::Initialize()
 
 int PlayerManager::Update()
 {
+	auto player = players;
+
 	for (int i = 0; i < players.size(); ++i)
 	{
-		players[i]->Update();
+		std::string name = "Player_" + std::to_string(i + 1);
+		std::string arm_name = "Arm_" + std::to_string(i + 1);
+		player[i]->Update();
+		i_player_data->SetPosition(name, player[i]->GetPos());
+		i_player_data->SetArmModelPos(arm_name, players[i]->GetArmPos());
 	}
 
     return 0;
@@ -70,16 +86,20 @@ int PlayerManager::Update()
 
 void PlayerManager::Draw2D()
 {
+	auto player = players;
+
 	for (int i = 0; i < players.size(); ++i)
 	{
-		players[i]->Draw2D();
+		player[i]->Draw2D();
 	}
 }
 
 void PlayerManager::Draw3D()
 {
+	auto player = players;
+
 	for (int i = 0; i < players.size(); ++i)
 	{
-		players[i]->Draw3D();
+		player[i]->Draw3D();
 	}
 }

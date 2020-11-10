@@ -20,11 +20,12 @@ public:
 
 protected:
 	const float scale = 0.0254f;
-	MODEL block;//壊れない
-	MODEL pillar;//壊れる
-	MODEL map;//床
-	int xz[15][19];//ファイルの読み込み
-	char comma;//カンマ読み込み
+	MODEL block;   //!壊れない
+	MODEL pillar;  //! 壊れる
+	MODEL map;     //! 床
+	MODEL metal;   //! 外壁
+	int xz[13][15];//!ファイルの読み込み
+	char comma;	   //!カンマ読み込み
 private:
 
 };
