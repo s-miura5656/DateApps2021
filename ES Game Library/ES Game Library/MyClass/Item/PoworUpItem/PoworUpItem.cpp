@@ -24,12 +24,3 @@ int PoworUpItem::Update()
 {
 	return 0;
 }
-
-void PoworUpItem::Draw2D()
-{
-}
-
-void PoworUpItem::Draw3D()
-{
-	model->Draw();
-}
