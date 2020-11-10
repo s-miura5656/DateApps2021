@@ -16,7 +16,7 @@ public:
 	virtual void Draw3D();
 
 protected:
-	MODEL box;
-	OrientedBoundingBox hit_box;
-	bool attack_hit = false;
+	MODEL _box;
+	OrientedBoundingBox _hit_box;
+	bool _attack_hit = false;
 };

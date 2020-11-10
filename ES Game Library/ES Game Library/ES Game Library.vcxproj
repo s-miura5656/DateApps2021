@@ -237,6 +237,7 @@
     <ClInclude Include="GameScene\TemplateScene.hpp" />
     <ClInclude Include="MyClass\Collision\Collision.h" />
     <ClInclude Include="MyClass\Collision\CollisionBase.h" />
+    <ClInclude Include="MyClass\Data\GameData.h" />
     <ClInclude Include="MyClass\Data\IPlayerData.h" />
     <ClInclude Include="MyClass\Data\StructList.h" />
     <ClInclude Include="MyClass\Enum\Enum.h" />

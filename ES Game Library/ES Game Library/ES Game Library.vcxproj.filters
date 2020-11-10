@@ -604,6 +604,9 @@
     <ClInclude Include="MyClass\Managers\StageManager\StageManager.h">
       <Filter>Myclass\Managers\StageManager</Filter>
     </ClInclude>
+    <ClInclude Include="MyClass\Data\GameData.h">
+      <Filter>Myclass\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\DirectX.ico">

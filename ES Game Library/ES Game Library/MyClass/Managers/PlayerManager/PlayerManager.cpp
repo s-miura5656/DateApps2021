@@ -1,12 +1,12 @@
 #include "PlayerManager.h"
-
 #include "../../Players/Player/Player.h"
+#include "../../Data/GameData.h"
 
 PlayerManager::PlayerManager()
 {
 	for (int i = 0; i < player_max_count; i++)
 	{
-		std::string name = "Player_" + std::to_string(i + 1);
+		std::string name = PLAYER_TAG + std::to_string(i + 1);
 		players.push_back(new Player(name));
 	}
 
@@ -52,15 +52,15 @@ bool PlayerManager::Initialize()
 	//ƒvƒŒƒCƒ„[
 	for (int i = 0; i < players.size(); ++i)
 	{
-		std::string name = "Player_" + std::to_string(i + 1);
-		std::string arm_name = "Arm_" + std::to_string(i + 1);
+		std::string name = PLAYER_TAG + std::to_string(i + 1);
+		std::string arm_name = ARM_TAG + std::to_string(i + 1);
 		players[i]->FileInitialize(model_file_name);
 		players[i]->PlayerColor(player_mtrl[i]);
 		players[i]->SetContorollerNumber(i);
 		players[i]->PlayerStartPosition(_start_pos[i]);
 		players[i]->Initialize();
 
-		PlayerParametor::Instance().CreateArmModel("Arm_" + std::to_string(i + 1));
+		PlayerParametor::Instance().CreateArmModel(ARM_TAG + std::to_string(i + 1));
 		i_player_data->SetPosition(name, players[i]->GetPos());
 		i_player_data->SetArmModelPos(arm_name, players[i]->GetArmPos());
 	}
@@ -74,8 +74,8 @@ int PlayerManager::Update()
 
 	for (int i = 0; i < players.size(); ++i)
 	{
-		std::string name = "Player_" + std::to_string(i + 1);
-		std::string arm_name = "Arm_" + std::to_string(i + 1);
+		std::string name = PLAYER_TAG + std::to_string(i + 1);
+		std::string arm_name = ARM_TAG + std::to_string(i + 1);
 		player[i]->Update();
 		i_player_data->SetPosition(name, player[i]->GetPos());
 		i_player_data->SetArmModelPos(arm_name, players[i]->GetArmPos());

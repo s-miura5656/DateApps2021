@@ -27,8 +27,6 @@ public:
 	void UpdateArmHitBoxs();
 	void DrawArmHitBoxs();
 
-	
-
 	void CreateHitBox(std::string& collision_name);
 
 	static CollisionManager& Instance() {

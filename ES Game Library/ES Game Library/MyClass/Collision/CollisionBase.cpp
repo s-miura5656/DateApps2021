@@ -25,7 +25,7 @@ void CollisionBase::Draw3D()
 {
 #ifdef DEBUG
 	GraphicsDevice.BeginAlphaBlend();
-	box->DrawAlpha(0.5f);
+	_box->DrawAlpha(0.5f);
 	GraphicsDevice.EndAlphaBlend();
 #endif
 }

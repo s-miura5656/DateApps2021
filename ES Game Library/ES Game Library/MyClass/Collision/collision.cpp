@@ -19,7 +19,7 @@ bool Collision::Initialize()
 	shape_box.Height = 1;
 	shape_box.Width = 1;
 
-	box = GraphicsDevice.CreateModelFromSimpleShape(shape_box);
+	_box = GraphicsDevice.CreateModelFromSimpleShape(shape_box);
 
 	return true;
 }

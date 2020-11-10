@@ -13,14 +13,14 @@ public:
 
 	bool Initialize();
 
-	void SetHitBoxSize(Vector3& scale) { box->SetScale(scale); }
-	void SetHitBoxPos(Vector3& position) { box->SetPosition(position + Vector3(0, box->GetScale().y / 2, 0)); }
-	void SetHitBoxMaterial(Material& mat) { box->SetMaterial(mat); }
-	void SetAttackHit(bool& hit) { attack_hit = hit; }
+	void SetHitBoxSize(Vector3& scale) { _box->SetScale(scale); }
+	void SetHitBoxPos(Vector3& position) { _box->SetPosition(position + Vector3(0, _box->GetScale().y / 2, 0)); }
+	void SetHitBoxMaterial(Material& mat) { _box->SetMaterial(mat); }
+	void SetAttackHit(bool& hit) { _attack_hit = hit; }
 
-	bool GetAttackHit() { return attack_hit; }
+	bool GetAttackHit() { return _attack_hit; }
 
-	OrientedBoundingBox GetBoxCollision() { return hit_box = box->GetOBB(); }
+	OrientedBoundingBox GetBoxCollision() { return _hit_box = _box->GetOBB(); }
 private:
 	
 };
