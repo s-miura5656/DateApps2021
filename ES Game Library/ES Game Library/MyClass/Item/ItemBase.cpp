@@ -5,9 +5,9 @@ bool ItemBase::Initialize()
 	return true;
 }
 
-int ItemBase::Update()
+void ItemBase::Update()
 {
-	return 0;
+	
 }
 
 void ItemBase::Draw2D()
@@ -17,5 +17,5 @@ void ItemBase::Draw2D()
 
 void ItemBase::Draw3D()
 {
-	model->Draw();
+	
 }
