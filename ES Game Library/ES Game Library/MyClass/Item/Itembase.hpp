@@ -2,8 +2,9 @@
 
 
 #include "../../ESGLib.h"
-
-class ItemBase {
+//#include"PoworUpItem/PoworUpItem.h"
+class ItemBase 
+{
 public:
 	virtual bool Initialize();
 
@@ -13,7 +14,6 @@ public:
 
 protected:
 	MODEL model;
-
 
 private:
 

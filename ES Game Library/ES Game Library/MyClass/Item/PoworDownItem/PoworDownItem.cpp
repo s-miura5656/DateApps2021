@@ -23,12 +23,3 @@ int PoworDownItem::Update()
 {
 	return 0;
 }
-
-void PoworDownItem::Draw2D()
-{
-}
-
-void PoworDownItem::Draw3D()
-{
-	model->Draw();
-}
