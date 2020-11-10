@@ -1,10 +1,10 @@
 #include "ItemManager.h"
-#include "../../Item/PoworUpItem/PoworUpItem.h"
-#include "../../Item/PoworDownItem/PoworDownItem.h"
+
+
 ItemManager::ItemManager()
 {
-	item_base[0] = new PoworUpItem;
-	item_base[1] = new PoworDownItem;
+	item_base[0] = new SpeedItem;
+	item_base[1] = new AttackPowerItem;
 }
 
 ItemManager::~ItemManager()
