@@ -48,7 +48,7 @@ bool PlayerManager::Initialize()
 
 	LPCTSTR model_file_name = _T("player/robot.X");
 
-	//プレイヤー
+//プレイヤー
 	for (int i = 0; i < players.size(); ++i)
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
