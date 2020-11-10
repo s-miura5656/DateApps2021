@@ -178,11 +178,8 @@
     <Filter Include="Myclass\Managers\StageManager">
       <UniqueIdentifier>{51e603b4-46b5-4398-8973-9d025a8aa9ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Managers\UiManager">
-      <UniqueIdentifier>{7bd9cb10-b7d0-4c5f-a367-b9e9194bd787}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Managers\TimeManager">
-      <UniqueIdentifier>{5d0abba9-c3f0-43c6-bdfd-d9e5b5a66883}</UniqueIdentifier>
+    <Filter Include="Myclass\Players\Player\Arm">
+      <UniqueIdentifier>{3cbbabb0-3cd3-414b-9f98-80a05f53017c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -382,11 +379,11 @@
     <ClCompile Include="MyClass\Managers\StageManager\StageManager.cpp">
       <Filter>Myclass\Managers\StageManager</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\UI\UI.cpp">
-      <Filter>Myclass\Managers\UiManager</Filter>
+    <ClCompile Include="MyClass\Players\Arm\ArmBase.cpp">
+      <Filter>Myclass\Players\Player\Arm</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Time\Time.cpp">
-      <Filter>Myclass\Managers\TimeManager</Filter>
+    <ClCompile Include="MyClass\Players\Arm\Arm.cpp">
+      <Filter>Myclass\Players\Player\Arm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -619,11 +616,11 @@
     <ClInclude Include="MyClass\Data\GameData.h">
       <Filter>Myclass\Data</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\UI\UI.h">
-      <Filter>Myclass\Managers\UiManager</Filter>
+    <ClInclude Include="MyClass\Players\Arm\Arm.h">
+      <Filter>Myclass\Players\Player\Arm</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Time\Time.h">
-      <Filter>Myclass\Managers\TimeManager</Filter>
+    <ClInclude Include="MyClass\Players\Arm\ArmBase.h">
+      <Filter>Myclass\Players\Player\Arm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
