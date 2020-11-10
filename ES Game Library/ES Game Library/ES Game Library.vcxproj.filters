@@ -178,6 +178,9 @@
     <Filter Include="Myclass\Managers\StageManager">
       <UniqueIdentifier>{51e603b4-46b5-4398-8973-9d025a8aa9ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Players\Player\Arm">
+      <UniqueIdentifier>{3cbbabb0-3cd3-414b-9f98-80a05f53017c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -375,6 +378,12 @@
     </ClCompile>
     <ClCompile Include="MyClass\Managers\StageManager\StageManager.cpp">
       <Filter>Myclass\Managers\StageManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Players\Arm\ArmBase.cpp">
+      <Filter>Myclass\Players\Player\Arm</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Players\Arm\Arm.cpp">
+      <Filter>Myclass\Players\Player\Arm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -606,6 +615,12 @@
     </ClInclude>
     <ClInclude Include="MyClass\Data\GameData.h">
       <Filter>Myclass\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\Arm\Arm.h">
+      <Filter>Myclass\Players\Player\Arm</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\Arm\ArmBase.h">
+      <Filter>Myclass\Players\Player\Arm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
