@@ -2,13 +2,10 @@
 //! @brief  MainSceneを動かす為のクラス
 //! @author Souta_Miura
 //! @date   2020/10/30
-
 #pragma once
 
 #include "../BaseScene.h"
-#include "../../Player/PlayerBase.h"
-
-class ItemManager;
+#include "../../Managers/ManagerBase.h"
 
 class MainScene : public BaseScene
 {
@@ -23,13 +20,5 @@ public:
 
 private:
 
-	CAMERA camera;
-
-	//プレイヤー
-	PlayerBase player1;
-	PlayerBase player2;
-	PlayerBase player3;
-	PlayerBase player4;
-
-	ItemManager* item_manager;
+	std::vector<ManagerBase*> _managers;
 };

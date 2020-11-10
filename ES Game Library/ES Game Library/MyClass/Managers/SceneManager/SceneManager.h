@@ -5,11 +5,12 @@
 #pragma once
 
 #include "../../../ESGLib.h"
+#include "../ManagerBase.h"
 
 //! 型宣言の時だけ使いたいのでここでBaseSceneの名前だけ使うよって宣言
 class BaseScene;
 
-class SceneManager
+class SceneManager : public ManagerBase
 {
 public:
 
@@ -27,10 +28,10 @@ public:
 
 	void ChangeScene(SceneState scene);
 
-	bool Initialize();
-	int Update();
-	void Draw2D();
-	void Draw3D();
+	bool Initialize() override;
+	int Update() override;
+	void Draw2D() override;
+	void Draw3D() override;
 
 	//! シングルトンオブジェクトを他で呼び出す時の記述
 	static SceneManager& Instance() {
@@ -44,5 +45,6 @@ private:
 	SceneManager(const SceneManager&) = delete;
 	void operator=(const SceneManager&) = delete;
 
+	CAMERA _camera;
 	BaseScene* _scene;
 };

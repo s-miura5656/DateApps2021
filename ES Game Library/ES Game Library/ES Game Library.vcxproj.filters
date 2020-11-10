@@ -115,12 +115,6 @@
     <Filter Include="Myclass">
       <UniqueIdentifier>{333155ef-f7de-4862-95fd-ed59091a17ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Player">
-      <UniqueIdentifier>{cfadf0e0-9d8b-4ad4-84b6-696d6ebe7696}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Map">
-      <UniqueIdentifier>{941a0c22-b3ea-4d5e-acef-a2eb28198d4c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Item">
       <UniqueIdentifier>{9e19ebd1-c709-455f-8be8-51ceb3b7bae7}</UniqueIdentifier>
     </Filter>
@@ -156,6 +150,33 @@
     </Filter>
     <Filter Include="Myclass\Managers\ItemManager">
       <UniqueIdentifier>{9476a388-d1f5-47bf-ab46-a39c45649cc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\CollisionManager">
+      <UniqueIdentifier>{7b6d8d15-da4b-4272-8ec0-042e5809aeed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\PlayerManager">
+      <UniqueIdentifier>{3517be3f-12be-451b-8323-52c04d574b8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Players">
+      <UniqueIdentifier>{cfadf0e0-9d8b-4ad4-84b6-696d6ebe7696}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Players\Player">
+      <UniqueIdentifier>{1b983379-09f6-4f15-8af3-d529c40fdcbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Players\PlayerParametor">
+      <UniqueIdentifier>{e0a9ad9c-d4fa-4203-a2eb-563349eb164e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Data">
+      <UniqueIdentifier>{2031d2c9-764d-47b8-b8e2-4d6616267d02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage">
+      <UniqueIdentifier>{941a0c22-b3ea-4d5e-acef-a2eb28198d4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage\Stage_1">
+      <UniqueIdentifier>{f7c151a7-1ed8-4cc9-96bb-daf579389936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\StageManager">
+      <UniqueIdentifier>{51e603b4-46b5-4398-8973-9d025a8aa9ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -313,9 +334,6 @@
     <ClCompile Include="MyClass\Scenes\Result\ResultScene.cpp">
       <Filter>Myclass\Scenes\Result</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Player\PlayerBase.cpp">
-      <Filter>Myclass\Player</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Item\Item.cpp">
       <Filter>Myclass\Item</Filter>
     </ClCompile>
@@ -330,6 +348,33 @@
     </ClCompile>
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp">
       <Filter>Myclass\Managers\ItemManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Collision\Collision.cpp">
+      <Filter>Myclass\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Collision\CollisionBase.cpp">
+      <Filter>Myclass\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp">
+      <Filter>Myclass\Managers\PlayerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\CollisionManager\CollisionManager.cpp">
+      <Filter>Myclass\Managers\CollisionManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Players\Player\Player.cpp">
+      <Filter>Myclass\Players\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Players\PlayerBase.cpp">
+      <Filter>Myclass\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\StageBase.cpp">
+      <Filter>Myclass\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Stage_1\Stage.cpp">
+      <Filter>Myclass\Stage\Stage_1</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\StageManager\StageManager.cpp">
+      <Filter>Myclass\Managers\StageManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -514,14 +559,50 @@
     <ClInclude Include="MyClass\Scenes\BaseScene.h">
       <Filter>Myclass\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Player\PlayerBase.h">
-      <Filter>Myclass\Player</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Item\PoworDownItem\PoworDownItem.h">
       <Filter>Myclass\Item\PoworDownItem</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h">
       <Filter>Myclass\Managers\ItemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\ManagerBase.h">
+      <Filter>Myclass\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Collision\Collision.h">
+      <Filter>Myclass\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Collision\CollisionBase.h">
+      <Filter>Myclass\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h">
+      <Filter>Myclass\Managers\PlayerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\CollisionManager\CollisionManager.h">
+      <Filter>Myclass\Managers\CollisionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\Player\Player.h">
+      <Filter>Myclass\Players\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\PlayerBase.h">
+      <Filter>Myclass\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\PlayerParametor\PlayerParametor.h">
+      <Filter>Myclass\Players\PlayerParametor</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Data\IPlayerData.h">
+      <Filter>Myclass\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Data\StructList.h">
+      <Filter>Myclass\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\StageBase.h">
+      <Filter>Myclass\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Stage_1\Stage.h">
+      <Filter>Myclass\Stage\Stage_1</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\StageManager\StageManager.h">
+      <Filter>Myclass\Managers\StageManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
