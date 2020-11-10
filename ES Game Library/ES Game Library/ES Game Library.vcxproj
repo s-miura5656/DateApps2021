@@ -253,6 +253,7 @@
     <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h" />
     <ClInclude Include="MyClass\Managers\SceneManager\SceneManager.h" />
     <ClInclude Include="MyClass\Managers\StageManager\StageManager.h" />
+    <ClInclude Include="MyClass\Players\ArmParametor\ArmParametor.h" />
     <ClInclude Include="MyClass\Players\Arm\Arm.h" />
     <ClInclude Include="MyClass\Players\Arm\ArmBase.h" />
     <ClInclude Include="MyClass\Players\PlayerBase.h" />
