@@ -181,6 +181,9 @@
     <Filter Include="Myclass\Players\Player\Arm">
       <UniqueIdentifier>{3cbbabb0-3cd3-414b-9f98-80a05f53017c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Players\Player\ArmParametor">
+      <UniqueIdentifier>{cf31082b-f15f-48c6-9024-e31b6dbcc36d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -621,6 +624,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Players\Arm\ArmBase.h">
       <Filter>Myclass\Players\Player\Arm</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\ArmParametor\ArmParametor.h">
+      <Filter>Myclass\Players\Player\ArmParametor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
