@@ -19,4 +19,5 @@ protected:
 	MODEL _box;
 	OrientedBoundingBox _hit_box;
 	bool _attack_hit = false;
+	bool _item_hit = false;
 };

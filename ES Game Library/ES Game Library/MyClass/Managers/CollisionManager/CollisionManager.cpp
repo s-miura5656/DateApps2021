@@ -21,7 +21,9 @@ bool CollisionManager::Initialize()
 
 int CollisionManager::Update()
 {
-	UpdatePlayerHitBoxs();
+	UpdateHitBoxs(PLAYER_TAG, PLAYER_COUNT_MAX);
+	UpdateHitBoxs(ARM_TAG, PLAYER_COUNT_MAX);
+
 	UpdateArmHitBoxs();
 
 	return 0;
@@ -33,8 +35,8 @@ void CollisionManager::Draw2D()
 
 void CollisionManager::Draw3D()
 {
-	DrawPlayerHitBoxs();
-	DrawArmHitBoxs();
+	DrawHitBoxs(PLAYER_TAG, PLAYER_COUNT_MAX);
+	DrawHitBoxs(ARM_TAG, PLAYER_COUNT_MAX);
 }
 
 void CollisionManager::InitializePlayerHitBoxs()
@@ -44,7 +46,7 @@ void CollisionManager::InitializePlayerHitBoxs()
 	mat.Ambient = Color(1.f, 1.f, 1.f);
 	mat.Specular = Color(1.f, 1.f, 1.f);
 
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
 	{
 		std::string player_num = PLAYER_TAG + std::to_string(i + 1);
 		CreateHitBox(player_num);
@@ -55,21 +57,21 @@ void CollisionManager::InitializePlayerHitBoxs()
 	}
 }
 
-void CollisionManager::UpdatePlayerHitBoxs()
+void CollisionManager::UpdateHitBoxs(std::string tag, int max_loop_count)
 {
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	for (int i = 0; i < max_loop_count; ++i)
 	{
-		std::string player_num = PLAYER_TAG + std::to_string(i + 1);
-		collisions[player_num]->SetHitBoxPos(i_player_data->GetPosition(player_num));
+		std::string num = tag + std::to_string(i + 1);
+		collisions[num]->SetHitBoxPos(i_player_data->GetPosition(num));
 	}
 }
 
-void CollisionManager::DrawPlayerHitBoxs()
+void CollisionManager::DrawHitBoxs(std::string tag, int max_loop_count)
 {
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	for (int i = 0; i < max_loop_count; ++i)
 	{
-		std::string player_num = PLAYER_TAG + std::to_string(i + 1);
-		collisions[player_num]->Draw3D();
+		std::string num = tag + std::to_string(i + 1);
+		collisions[num]->Draw3D();
 	}
 }
 
@@ -80,7 +82,7 @@ void CollisionManager::InitializeArmHitBoxs()
 	mat.Ambient = Color(1.f, 1.f, 1.f);
 	mat.Specular = Color(1.f, 1.f, 1.f);
 
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
 	{
 		std::string arm_num = ARM_TAG + std::to_string(i + 1);
 		CreateHitBox(arm_num);
@@ -95,10 +97,6 @@ void CollisionManager::UpdateArmHitBoxs()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
 	{
-		//! 判定の位置を指定
-		std::string arm_num = ARM_TAG + std::to_string(i + 1);
-		collisions[arm_num]->SetHitBoxPos(i_player_data->GetArmModelPos(arm_num));
-
 		//! 判定初期化
 		std::string player_num = PLAYER_TAG + std::to_string(i + 1);
 		bool reset = false;
@@ -110,51 +108,26 @@ void CollisionManager::UpdateArmHitBoxs()
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
 	{
-		std::string arm_num = ARM_TAG + std::to_string(i + 1);
-
-		for (int j = 0; j < PLAYER_COUNT_MAX; ++j)
+		std::string player_num = PLAYER_TAG + std::to_string(i + 1);
+#pragma omp sections
 		{
-			if (i == j)
-				continue;
-
-			std::string player_num = PLAYER_TAG + std::to_string(j + 1);
-
-			bool hit = collisions[arm_num]->GetBoxCollision().Intersects(collisions[player_num]->GetBoxCollision());
-
-			if (!collisions[player_num]->GetAttackHit())
-				collisions[player_num]->SetAttackHit(hit);
-
-			if (collisions[player_num]->GetAttackHit())
+#pragma omp section
+			for (int j = 0; j < PLAYER_COUNT_MAX; ++j)
 			{
-				//! TODO: アームがプレイヤーに当たった時の処理
-				Material hit_mat;
-				hit_mat.Diffuse = Color(1.f, 0.f, 0.f);
-				hit_mat.Ambient = Color(1.f, 0.f, 0.f);
-				hit_mat.Specular = Color(1.f, 0.f, 0.f);
+				if (i == j)
+					continue;
 
-				collisions[player_num]->SetHitBoxMaterial(hit_mat);
+				std::string arm_num = ARM_TAG + std::to_string(j + 1);
 
-				continue;
+				bool hit = collisions[arm_num]->GetBoxCollision().Intersects(collisions[player_num]->GetBoxCollision());
+
+				if (!collisions[player_num]->GetAttackHit())
+					collisions[player_num]->SetAttackHit(hit);
 			}
+#pragma omp section
 
-			//! TODO: アームがプレイヤーに当たってない時の処理
-			Material mat;
-			mat.Diffuse = Color(1.f, 1.f, 1.f);
-			mat.Ambient = Color(1.f, 1.f, 1.f);
-			mat.Specular = Color(1.f, 1.f, 1.f);
-
-			collisions[player_num]->SetHitBoxMaterial(mat);
 		}
-	}
-}
-
-void CollisionManager::DrawArmHitBoxs()
-{
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		std::string arm_num = ARM_TAG + std::to_string(i + 1);
-
-		collisions[arm_num]->Draw3D();
+		
 	}
 }
 

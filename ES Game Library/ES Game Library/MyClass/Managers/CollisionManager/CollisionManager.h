@@ -19,14 +19,14 @@ public:
 	void Draw2D() override;
 	void Draw3D() override;
 
+	void UpdateHitBoxs(std::string tag, int max_loop_count);
+	void DrawHitBoxs(std::string tag, int max_loop_count);
+	
+	
 	void InitializePlayerHitBoxs();
-	void UpdatePlayerHitBoxs();
-	void DrawPlayerHitBoxs();
-
 	void InitializeArmHitBoxs();
+	
 	void UpdateArmHitBoxs();
-	void DrawArmHitBoxs();
-
 	void CreateHitBox(std::string& collision_name);
 
 	static CollisionManager& Instance() {

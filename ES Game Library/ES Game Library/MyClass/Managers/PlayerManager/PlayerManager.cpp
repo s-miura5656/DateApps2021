@@ -77,6 +77,7 @@ int PlayerManager::Update()
 		std::string arm_name = ARM_TAG + std::to_string(i + 1);
 		player[i]->Update();
 		i_player_data->SetPosition(name, player[i]->GetPos());
+		i_player_data->SetAngle(name, player[i]->GetAngle());
 		//i_player_data->SetArmModelPos(arm_name, players[i]->GetArmPos());
 	}
 
