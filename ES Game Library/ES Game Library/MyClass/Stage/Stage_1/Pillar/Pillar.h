@@ -1,7 +1,8 @@
 #pragma once
 
-#include"../../../ESGLib.h"
-#include"../StageBase.h"
+#include"../../../../ESGLib.h"
+#include"../../StageBase.h"
+
 class Pillar :public StageBase
 {
 public:

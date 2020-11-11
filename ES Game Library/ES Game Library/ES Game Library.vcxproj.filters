@@ -190,6 +190,18 @@
     <Filter Include="Myclass\Item\AttackPoworItem">
       <UniqueIdentifier>{3d91bd96-9e23-4a1d-b8d4-d31942299724}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Stage\Stage_1\Metal">
+      <UniqueIdentifier>{846f067b-ed58-4dae-8348-8e11d31eb243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage\Stage_1\Block">
+      <UniqueIdentifier>{86846442-c0b1-442e-8238-643612c5990c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage\Stage_1\Floor">
+      <UniqueIdentifier>{a40b6061-4caf-4d71-bf9c-e3c3c50278c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage\Stage_1\Piller">
+      <UniqueIdentifier>{d7edd38a-d77c-47ec-a91f-7a0a64734f54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -376,9 +388,6 @@
     <ClCompile Include="MyClass\Stage\StageBase.cpp">
       <Filter>Myclass\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Stage\Stage_1\Stage.cpp">
-      <Filter>Myclass\Stage\Stage_1</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Managers\StageManager\StageManager.cpp">
       <Filter>Myclass\Managers\StageManager</Filter>
     </ClCompile>
@@ -402,6 +411,18 @@
     </ClCompile>
     <ClCompile Include="MyClass\Collision\HitBox.cpp">
       <Filter>Myclass\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Stage_1\Block\Block.cpp">
+      <Filter>Myclass\Stage\Stage_1\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Stage_1\Floor\Floor.cpp">
+      <Filter>Myclass\Stage\Stage_1\Floor</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Stage_1\Metal\Metal.cpp">
+      <Filter>Myclass\Stage\Stage_1\Metal</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Stage_1\Pillar\Pillar.cpp">
+      <Filter>Myclass\Stage\Stage_1\Piller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -619,9 +640,6 @@
     <ClInclude Include="MyClass\Stage\StageBase.h">
       <Filter>Myclass\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Stage\Stage_1\Stage.h">
-      <Filter>Myclass\Stage\Stage_1</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Managers\StageManager\StageManager.h">
       <Filter>Myclass\Managers\StageManager</Filter>
     </ClInclude>
@@ -651,6 +669,18 @@
     </ClInclude>
     <ClInclude Include="MyClass\Collision\HitBox.h">
       <Filter>Myclass\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Stage_1\Block\Block.h">
+      <Filter>Myclass\Stage\Stage_1\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Stage_1\Floor\Floor.h">
+      <Filter>Myclass\Stage\Stage_1\Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Stage_1\Metal\Metal.h">
+      <Filter>Myclass\Stage\Stage_1\Metal</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Stage_1\Pillar\Pillar.h">
+      <Filter>Myclass\Stage\Stage_1\Piller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

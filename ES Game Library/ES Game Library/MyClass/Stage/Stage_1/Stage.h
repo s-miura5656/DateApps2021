@@ -1,7 +1,8 @@
 #pragma once
 
 #include "../StageBase.h"
-#include"../Block/Block.h"
+#include"../../Stage/Stage_1/Block/Block.h"
+
 class Stage : public StageBase
 {
 public:

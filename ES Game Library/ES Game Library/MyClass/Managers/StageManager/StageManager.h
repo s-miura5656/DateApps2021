@@ -5,11 +5,12 @@
 
 #pragma once
 
-#include"../ManagerBase.h"
-#include"../../Stage/Block/Block.h"
-#include"../../Stage/Pillar/Pillar.h"
-#include"../../Stage/Metal/Metal.h"
-#include"../../Stage/Floor/Floor.h"
+#include"../../Managers/ManagerBase.h"
+#include"../../Stage/Stage_1/Block/Block.h"
+#include"../../Stage/Stage_1/Pillar/Pillar.h"
+#include"../../Stage/Stage_1/Metal/Metal.h"
+#include"../../Stage/Stage_1/Floor/Floor.h"
+
 class StageBase;
 
 class StageManager : public ManagerBase
