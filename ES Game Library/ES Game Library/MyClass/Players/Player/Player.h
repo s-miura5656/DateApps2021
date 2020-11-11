@@ -6,6 +6,7 @@
 #pragma once
 
 #include "../PlayerBase.h"
+#include "../../Collision/HitBox.h"
 
 class Player : public PlayerBase
 {
@@ -30,6 +31,8 @@ private:
 	Vector3 player_get_rot;
 
 	float move_speed;
+
+	std::unique_ptr<HitBox> hit_box;
 	
 	int   pad_number;
 };

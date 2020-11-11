@@ -35,6 +35,6 @@ protected:
 
 	GamePadState  pad_state;
 	GamePadBuffer pad_buffer;
-
+	std::string _tag;
 	ArmBase* arm;
 };

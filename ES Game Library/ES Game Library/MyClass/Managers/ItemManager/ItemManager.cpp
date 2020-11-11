@@ -1,15 +1,20 @@
 #include "ItemManager.h"
-
+#include "../../Factorys/ItemFactory/ItemFactory.h"
 
 ItemManager::ItemManager()
 {
-	item_base[0] = new SpeedItem;
-	item_base[1] = new AttackPowerItem;
+	CItemFactory* citemfactory = new ItemStationeryFactory;
+
+	item_base.push_back(citemfactory->Create("スピードアイテム", Vector3(0.0f,0.0f,-5.0f)));
+	item_base.push_back(citemfactory->Create("体力アイテム", Vector3(0.0f, 0.0f, 5.0f)));
+	item_base.push_back(citemfactory->Create("アタックアイテム", Vector3(0.0f, 0.0f, 0.0f)));
+
+	delete citemfactory;
 }
 
 ItemManager::~ItemManager()
 {
-	for (auto&& item : item_base)
+	for (auto& item : item_base)
 	{
 		delete item;
 	}
@@ -18,7 +23,7 @@ ItemManager::~ItemManager()
 bool ItemManager::Initialize()
 {
 
-	for (auto&& item : item_base)
+	for (auto& item : item_base)
 	{
 		item->Initialize();
 	}
@@ -28,7 +33,7 @@ bool ItemManager::Initialize()
 
 int ItemManager::Update()
 {
-	for (auto&& item : item_base)
+	for (auto& item : item_base)
 	{
 		item->Update();
 	}
@@ -37,7 +42,7 @@ int ItemManager::Update()
 
 void ItemManager::Draw2D()
 {
-	for (auto&& item : item_base)
+	for (auto& item : item_base)
 	{
 		item->Draw2D();
 	}
@@ -45,7 +50,7 @@ void ItemManager::Draw2D()
 
 void ItemManager::Draw3D()
 {
-	for (auto&& item : item_base)
+	for (auto& item : item_base)
 	{
 		item->Draw3D();
 	}
