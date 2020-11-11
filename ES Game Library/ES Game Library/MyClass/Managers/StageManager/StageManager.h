@@ -6,7 +6,10 @@
 #pragma once
 
 #include"../ManagerBase.h"
-
+#include"../../Stage/Block/Block.h"
+#include"../../Stage/Pillar/Pillar.h"
+#include"../../Stage/Metal/Metal.h"
+#include"../../Stage/Floor/Floor.h"
 class StageBase;
 
 class StageManager : public ManagerBase
@@ -21,5 +24,10 @@ public:
 	void Draw3D() override;
 
 private:
-	StageBase* _stage;
+	Block* block;
+	Pillar* pillar;
+	Metal* metal;
+	Floor*floor;
+	char comma;	   //!カンマ読み込み
+	int xz[13][15];//!ファイルの読み込み
 };

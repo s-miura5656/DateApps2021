@@ -15,17 +15,21 @@ public:
 
 	virtual bool Initialize();
 	virtual int Update();
-	virtual void Draw2D();
 	virtual void Draw3D();
+	Material GetMaterial();
 
+	void SetPosition(Vector3& position) { _position = position; }
+
+	Vector3 GetPosition() { return _position; }
+
+	void SetDestructionFlag(bool& destruction_flag) { _destruction_flag = destruction_flag; }
+
+	bool GetDestructionFlag() { return _destruction_flag; }
 protected:
 	const float scale = 0.0254f;
-	MODEL block;   //!壊れない
-	MODEL pillar;  //! 壊れる
-	MODEL map;     //! 床
-	MODEL metal;   //! 外壁
-	int xz[13][15];//!ファイルの読み込み
-	char comma;	   //!カンマ読み込み
+	bool _destruction_flag;
+	MODEL block_base;
+	Vector3 _position;
 private:
 
 };
