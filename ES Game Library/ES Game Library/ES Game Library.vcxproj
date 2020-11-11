@@ -180,6 +180,10 @@
     <ClCompile Include="MyClass\Scenes\Main\MainScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Result\ResultScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Title\TitleScene.cpp" />
+    <ClCompile Include="MyClass\Stage\Block\Block.cpp" />
+    <ClCompile Include="MyClass\Stage\Floor\Floor.cpp" />
+    <ClCompile Include="MyClass\Stage\Metal\Metal.cpp" />
+    <ClCompile Include="MyClass\Stage\Pillar\Pillar.cpp" />
     <ClCompile Include="MyClass\Stage\StageBase.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Stage.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -257,6 +261,10 @@
     <ClInclude Include="MyClass\Scenes\Main\MainScene.h" />
     <ClInclude Include="MyClass\Scenes\Result\ResultScene.h" />
     <ClInclude Include="MyClass\Scenes\Title\TitleScene.h" />
+    <ClInclude Include="MyClass\Stage\Block\Block.h" />
+    <ClInclude Include="MyClass\Stage\Floor\Floor.h" />
+    <ClInclude Include="MyClass\Stage\Metal\Metal.h" />
+    <ClInclude Include="MyClass\Stage\Pillar\Pillar.h" />
     <ClInclude Include="MyClass\Stage\StageBase.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Stage.h" />
     <ClInclude Include="StdAfx.h" />

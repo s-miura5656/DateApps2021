@@ -178,6 +178,18 @@
     <Filter Include="Myclass\Managers\StageManager">
       <UniqueIdentifier>{51e603b4-46b5-4398-8973-9d025a8aa9ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Stage\Block">
+      <UniqueIdentifier>{eb14fc57-b21a-4677-89de-d52093f2af9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage\Pillar">
+      <UniqueIdentifier>{01957dd3-c198-4bef-8221-39e9fadb50eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage\Metal">
+      <UniqueIdentifier>{6384f3fd-cfd6-45fe-809c-3e656aa6a2a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage\Floor">
+      <UniqueIdentifier>{3b28cdb9-bee5-4b3b-a3d9-caa6c1e6287b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -375,6 +387,18 @@
     </ClCompile>
     <ClCompile Include="MyClass\Managers\StageManager\StageManager.cpp">
       <Filter>Myclass\Managers\StageManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Block\Block.cpp">
+      <Filter>Myclass\Stage\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Pillar\Pillar.cpp">
+      <Filter>Myclass\Stage\Pillar</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Metal\Metal.cpp">
+      <Filter>Myclass\Stage\Metal</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Floor\Floor.cpp">
+      <Filter>Myclass\Stage\Floor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -603,6 +627,18 @@
     </ClInclude>
     <ClInclude Include="MyClass\Managers\StageManager\StageManager.h">
       <Filter>Myclass\Managers\StageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Block\Block.h">
+      <Filter>Myclass\Stage\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Pillar\Pillar.h">
+      <Filter>Myclass\Stage\Pillar</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Metal\Metal.h">
+      <Filter>Myclass\Stage\Metal</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Floor\Floor.h">
+      <Filter>Myclass\Stage\Floor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
