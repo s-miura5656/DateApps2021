@@ -22,6 +22,7 @@ public:
 	void SetWeight(std::string& player_name, int weight) { PlayerParametor::Instance()._player_params[player_name].weight = weight; }
 	void SetPosition(std::string& player_name, Vector3 pos) { PlayerParametor::Instance()._player_params[player_name].position = pos; }
 	void SetArmModelPos(std::string& arm_name, Vector3 pos) { PlayerParametor::Instance()._arms_pos[arm_name] = pos; }
+	void SetAngle(std::string& player_name, float angle) { PlayerParametor::Instance()._player_params[player_name].angle = angle; }
 
 	//! ÉQÉbÉ^Å[
 	PlayerParam GetPlayerPram(std::string& player_name) { return PlayerParametor::Instance()._player_params[player_name]; }
@@ -29,6 +30,7 @@ public:
 	int GetAttackPowor(std::string& player_name) { return PlayerParametor::Instance()._player_params[player_name].attack_powor; }
 	int GetSpeed(std::string& player_name) { return PlayerParametor::Instance()._player_params[player_name].speed; }
 	int GetWeight(std::string& player_name) { return PlayerParametor::Instance()._player_params[player_name].weight; }
+	float GetAngle(std::string& player_name) { return PlayerParametor::Instance()._player_params[player_name].angle; }
 	Vector3 GetPosition(std::string& player_name) { return PlayerParametor::Instance()._player_params[player_name].position; }
 	Vector3 GetArmModelPos(std::string& arm_name) { return PlayerParametor::Instance()._arms_pos[arm_name]; }
 private:

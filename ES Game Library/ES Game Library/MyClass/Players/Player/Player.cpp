@@ -1,14 +1,16 @@
 #include "Player.h"
 #include "../PlayerParametor/PlayerParametor.h"
 
+
 Player::Player(std::string name)
 {
 	PlayerParametor::Instance().CreateParametor(name);
+	arm = new Arm(name);
 }
 
 Player::~Player()
 {
-
+	delete arm;
 }
 
 bool Player::FileInitialize(LPCTSTR& file)
@@ -24,8 +26,7 @@ bool Player::Initialize()
 
 	player->SetScale(player_scale);
 
-	arm.Fileinitialize();
-	arm.Initialize();
+	arm->Initialize();
 
 
 	// @brief プレイヤーの当たり判定用の箱
@@ -50,17 +51,17 @@ int Player::Update()
 	player_get_rot = player->GetRotation();
 
 
-	arm.Update(player_get_pos,angle);
+	arm->Update();
 
 	//ロケットパンチ
-	if (pad_buffer.IsPressed(GamePad_Button1) && arm.GetArmState() == NO_PUNCH)
+	if (pad_buffer.IsPressed(GamePad_Button1) && arm->GetArmState() == NO_PUNCH)
 	{
-		arm.ArmShoot(PUNCH);
+		arm->ArmShoot(PUNCH);
 	}
 
 	//プレイヤー移動
-	if (pad_state.X != Axis_Center && arm.GetArmState() == NO_PUNCH ||
-		pad_state.Y != Axis_Center && arm.GetArmState() == NO_PUNCH)
+	if (pad_state.X != Axis_Center && arm->GetArmState() == NO_PUNCH ||
+		pad_state.Y != Axis_Center && arm->GetArmState() == NO_PUNCH)
 	{
 		angle = MathHelper_Atan2(double(pad_state.X - Axis_Center) / double(Axis_Max - Axis_Center),
 			-double(pad_state.Y - Axis_Center) / double(Axis_Max - Axis_Center));
@@ -68,8 +69,11 @@ int Player::Update()
 		player->SetRotation(0, angle, 0);
 		player->Move(0, 0, move_speed);
 
-		arm.SetPra(player_get_pos,angle);
+		arm->SetPra(player_get_pos,angle);
 	}
+
+	
+
 
 
 	// @brief プレイヤーとブロック・素材の当たり判定の座標補正
