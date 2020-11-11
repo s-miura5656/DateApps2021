@@ -1,9 +1,6 @@
 #pragma once
 
 #include "../ManagerBase.h"
-#include "../../Item/SpeedItem/SpeedItem.h"
-#include "../../Item/AttackPowerItem/AttackPowerItem.h"
-#include "../../Item/HitPointItem/HitPointItem.h"
 
 class ItemBase;
 
@@ -20,5 +17,7 @@ public:
 
 private:
 
-	ItemBase* item_base[2];
+	std::vector<ItemBase*> item_base;
+
+
 };

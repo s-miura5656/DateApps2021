@@ -166,10 +166,12 @@
     </ClCompile>
     <ClCompile Include="MyClass\Collision\Collision.cpp" />
     <ClCompile Include="MyClass\Collision\CollisionBase.cpp" />
+    <ClCompile Include="MyClass\ItemFactory\ItemFactory.cpp" />
+    <ClCompile Include="MyClass\Item\AttackPowerItem\AttackPowerItem.cpp" />
+    <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp" />
     <ClCompile Include="MyClass\Item\Item.cpp" />
     <ClCompile Include="MyClass\Item\ItemBase.cpp" />
-    <ClCompile Include="MyClass\Item\PoworDownItem\PoworDownItem.cpp" />
-    <ClCompile Include="MyClass\Item\PoworUpItem\PoworUpItem.cpp" />
+    <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp" />
     <ClCompile Include="MyClass\Managers\CollisionManager\CollisionManager.cpp" />
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp" />
     <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp" />
@@ -240,10 +242,12 @@
     <ClInclude Include="MyClass\Data\IPlayerData.h" />
     <ClInclude Include="MyClass\Data\StructList.h" />
     <ClInclude Include="MyClass\Enum\Enum.h" />
+    <ClInclude Include="MyClass\ItemFactory\ItemFactory.h" />
+    <ClInclude Include="MyClass\Item\AttackPowerItem\AttackPowerItem.h" />
+    <ClInclude Include="MyClass\Item\HitPointItem\HitPointItem.h" />
     <ClInclude Include="MyClass\Item\Item.hpp" />
     <ClInclude Include="MyClass\Item\Itembase.hpp" />
-    <ClInclude Include="MyClass\Item\PoworDownItem\PoworDownItem.h" />
-    <ClInclude Include="MyClass\Item\PoworUpItem\PoworUpItem.h" />
+    <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h" />
     <ClInclude Include="MyClass\Managers\CollisionManager\CollisionManager.h" />
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h" />
     <ClInclude Include="MyClass\Managers\ManagerBase.h" />
