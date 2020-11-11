@@ -167,7 +167,9 @@
     <ClCompile Include="MyClass\Collision\Collision.cpp" />
     <ClCompile Include="MyClass\Collision\CollisionBase.cpp" />
     <ClCompile Include="MyClass\Collision\HitBox.cpp" />
+    <ClCompile Include="MyClass\Factorys\ItemFactory\ItemFactory.cpp" />
     <ClCompile Include="MyClass\Item\AttackPowerItem\AttackPowerItem.cpp" />
+    <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp" />
     <ClCompile Include="MyClass\Item\Item.cpp" />
     <ClCompile Include="MyClass\Item\ItemBase.cpp" />
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp" />
@@ -250,7 +252,9 @@
     <ClInclude Include="MyClass\Data\IPlayerData.h" />
     <ClInclude Include="MyClass\Data\StructList.h" />
     <ClInclude Include="MyClass\Enum\Enum.h" />
+    <ClInclude Include="MyClass\Factorys\ItemFactory\ItemFactory.h" />
     <ClInclude Include="MyClass\Item\AttackPowerItem\AttackPowerItem.h" />
+    <ClInclude Include="MyClass\Item\HitPointItem\HitPointItem.h" />
     <ClInclude Include="MyClass\Item\Item.hpp" />
     <ClInclude Include="MyClass\Item\Itembase.hpp" />
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h" />

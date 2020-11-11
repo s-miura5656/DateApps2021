@@ -1,5 +1,5 @@
 #include "ItemManager.h"
-#include "../../ItemFactory/ItemFactory.h"
+#include "../../Factorys/ItemFactory/ItemFactory.h"
 
 ItemManager::ItemManager()
 {

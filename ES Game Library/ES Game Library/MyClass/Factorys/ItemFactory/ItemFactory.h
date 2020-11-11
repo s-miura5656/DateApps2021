@@ -2,13 +2,13 @@
 #pragma once
 
 //ヘッダーファイル追加
-#include "../../ESGLib.h"
-#include "../Managers/ItemManager/ItemManager.h"
+#include "../../../ESGLib.h"
+#include "../../Managers/ItemManager/ItemManager.h"
 
 //アイテムヘッダーファイル追加
-#include "../Item/SpeedItem/SpeedItem.h"
-#include "../Item/AttackPowerItem/AttackPowerItem.h"
-#include"../Item/HitPointItem/HitPointItem.h"
+#include "../../Item/SpeedItem/SpeedItem.h"
+#include "../../Item/AttackPowerItem/AttackPowerItem.h"
+#include "../../Item/HitPointItem/HitPointItem.h"
 
 
 /**

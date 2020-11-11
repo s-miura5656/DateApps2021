@@ -202,6 +202,15 @@
     <Filter Include="Myclass\Stage\Stage_1\Piller">
       <UniqueIdentifier>{d7edd38a-d77c-47ec-a91f-7a0a64734f54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Item\HitPointItem">
+      <UniqueIdentifier>{7756fb5d-bfdf-49ae-98ee-e835a5f980ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Factory">
+      <UniqueIdentifier>{1581982e-8180-4ba6-9da8-74d92b85b20c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Factory\ItemFactory">
+      <UniqueIdentifier>{69fd894e-92fd-41cd-9d97-556047c173c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -423,6 +432,12 @@
     </ClCompile>
     <ClCompile Include="MyClass\Stage\Stage_1\Pillar\Pillar.cpp">
       <Filter>Myclass\Stage\Stage_1\Piller</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp">
+      <Filter>Myclass\Item\HitPointItem</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Factorys\ItemFactory\ItemFactory.cpp">
+      <Filter>Myclass\Factory\ItemFactory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -681,6 +696,12 @@
     </ClInclude>
     <ClInclude Include="MyClass\Stage\Stage_1\Pillar\Pillar.h">
       <Filter>Myclass\Stage\Stage_1\Piller</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Item\HitPointItem\HitPointItem.h">
+      <Filter>Myclass\Item\HitPointItem</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Factorys\ItemFactory\ItemFactory.h">
+      <Filter>Myclass\Factory\ItemFactory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
