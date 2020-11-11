@@ -19,31 +19,31 @@
  *  @brief 抽象_ENEMY_FACTORYクラス
  */
 
-class CItemFactory
+class ItemFactory
 {
 public:
-	CItemFactory() {};
-	virtual ~CItemFactory() {};
+	ItemFactory() {};
+	virtual ~ItemFactory() {};
 
 	/**
 	 *  @brief objectを生成し、そのインスタンスを返す関数
 	 */
-	ItemBase* Create(std::string _type, Vector3 _position);
+	ItemBase* Create(std::string tag, Vector3 position);
 
 	/**
 	 *  @brief Productを作成する純粋仮想関数
 	 *  @param type Productの種類
 	 *  @param name Productの所有者の名前
 	 */
-	virtual ItemBase* CreateProduct(std::string _type, Vector3 _position) = 0;
+	virtual ItemBase* CreateProduct(std::string tag, Vector3 position) = 0;
 
 };
 
-class ItemStationeryFactory : public CItemFactory
+class ItemStationeryFactory : public ItemFactory
 {
 public:
 	/**
 	 * @brief Productを作成する関数
 	 */
-	ItemBase* CreateProduct(std::string _type, Vector3 _position);
+	ItemBase* CreateProduct(std::string tag, Vector3 position);
 };
