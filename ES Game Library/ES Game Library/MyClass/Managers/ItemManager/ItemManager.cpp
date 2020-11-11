@@ -1,22 +1,23 @@
 #include "ItemManager.h"
 #include "../../Factorys/ItemFactory/ItemFactory.h"
+#include "../../Data/GameData.h"
 
 ItemManager::ItemManager()
 {
-	CItemFactory* citemfactory = new ItemStationeryFactory;
+	ItemFactory* itemfactory = new ItemStationeryFactory;
 
-	item_base.push_back(citemfactory->Create("スピードアイテム", Vector3(0.0f,0.0f,-5.0f)));
-	item_base.push_back(citemfactory->Create("体力アイテム", Vector3(0.0f, 0.0f, 5.0f)));
-	item_base.push_back(citemfactory->Create("アタックアイテム", Vector3(0.0f, 0.0f, 0.0f)));
+	item_base.push_back(itemfactory->Create(SPEED_ITEM_TAG, Vector3(0.0f,0.0f,-5.0f)));
+	item_base.push_back(itemfactory->Create(HITPOINT_ITEM_TAG, Vector3(0.0f, 0.0f, 5.0f)));
+	item_base.push_back(itemfactory->Create(POWOR_ITEM_TAG, Vector3(0.0f, 0.0f, 0.0f)));
 
-	delete citemfactory;
+	delete itemfactory;
 }
 
 ItemManager::~ItemManager()
 {
-	for (auto& item : item_base)
+	for (int i = item_base.size() - 1; i >= 0; --i)
 	{
-		delete item;
+		delete item_base[i];
 	}
 }
 
@@ -33,10 +34,16 @@ bool ItemManager::Initialize()
 
 int ItemManager::Update()
 {
-	for (auto& item : item_base)
+	auto item = item_base;
+
+	for (int i = 0; i < item_base.size(); i++)
 	{
-		item->Update();
+		if (!item[i]->Update())
+		{
+			item_base.erase(item_base.begin() + i);
+		}
 	}
+
 	return 0;
 }
 

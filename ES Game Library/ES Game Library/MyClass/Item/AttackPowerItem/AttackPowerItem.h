@@ -1,17 +1,16 @@
 #pragma once
 
-
 #include "../Itembase.hpp"
 
 class AttackPowerItem : public ItemBase
 {
 public:
-	AttackPowerItem(Vector3 position) { this->position = position; };
-	~AttackPowerItem() {};
-
-	bool Initialize();
-	float itemEffect(float player_attack_powor) { return player_attack_powor + attack_powor; }
-	void Update();
+	AttackPowerItem(Vector3 position, std::string name);
+	~AttackPowerItem();
+	
+	bool Initialize() override;
+	void ItemEffect(std::string name) override { _iplayer_data->SetAttackPowor(name, _iplayer_data->GetAttackPowor(name) + _attack_powor); }
+	bool Update() override;
 
 private:
 

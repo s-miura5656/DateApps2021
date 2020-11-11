@@ -2,7 +2,7 @@
 
 bool HitPointItem::Initialize()
 {
-	hit_point = 1000.f;
+	_hit_point = 1000.f;
 
 	Material material;
 	material.Diffuse = Color(0.0f, 1.0f, 0.0f);
@@ -10,12 +10,12 @@ bool HitPointItem::Initialize()
 
 	SphereShape();
 
-	sphere->SetMaterial(material);
+	_sphere->SetMaterial(material);
 	
 	return true;
 }
 
-void HitPointItem::Update()
+bool HitPointItem::Update()
 {
-
+	return true;
 }

@@ -1,19 +1,20 @@
 #include "ItemFactory.h"
+#include "../../Data/GameData.h"
 
-ItemBase* CItemFactory::Create(std::string _type, Vector3 _position)
+ItemBase* ItemFactory::Create(std::string tag, Vector3 position)
 {
-	ItemBase* itembase = CreateProduct(_type, _position);
+	ItemBase* itembase = CreateProduct(tag, position);
 	itembase->Initialize();
 	return itembase;
 }
 
-ItemBase* ItemStationeryFactory::CreateProduct(std::string _type, Vector3 _position)
+ItemBase* ItemStationeryFactory::CreateProduct(std::string tag, Vector3 position)
 {
-	if (_type == "スピードアイテム") { return new SpeedItem(_position); }
+	if (tag == SPEED_ITEM_TAG) { return new SpeedItem(position); }
 
-	if (_type == "アタックアイテム") { return new AttackPowerItem(_position); }
+	if (tag == POWOR_ITEM_TAG) { return new AttackPowerItem(position, tag); }
 
-	if (_type == "体力アイテム") { return new HitPointItem(_position); }
+	if (tag == HITPOINT_ITEM_TAG) { return new HitPointItem(position); }
 
 
 	ASSERT(FALSE && "アイテムの名前が違う!");

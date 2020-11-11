@@ -2,13 +2,17 @@
 
 //static
 std::list<HitBox*> HitBox::_HitBox_list;
+
 //デストラクタ
-HitBox::~HitBox() {
+HitBox::~HitBox() 
+{
 	OnReMove();
 }
+
 void HitBox::Init() {
 	//HitBox生成
 	SetHitBox(1.f, 1.f, 1.f);
+
 	//自分をリストに挿入
 	_HitBox_list.push_back(this);
 
@@ -16,26 +20,33 @@ void HitBox::Init() {
 	tag = "HitBox";
 };
 
-void HitBox::Draw3D() {
+void HitBox::Draw3D() 
+{
 	_model->SetScale(scale);
 #if _DEBUG
-	//_model->Draw();
+	GraphicsDevice.BeginAlphaBlend();
+	_model->DrawAlpha(0.5f);
+	GraphicsDevice.EndAlphaBlend();
 #endif
 }
-void HitBox::DrawAlpha3D() {
+
+void HitBox::DrawAlpha3D() 
+{
 	//
 }
 
-void HitBox::Settags(string tags) {
+void HitBox::Settags(string tags) 
+{
 	tag = tags;
 }
 
 //ヒットボックス生成
-void HitBox::SetHitBox(float width, float height, float depth) {
+void HitBox::SetHitBox(float width, float height, float depth) 
+{
 	//パラメータ設定
-	_width = width;
+	_width  = width;
 	_height = height;
-	_depth = depth ;
+	_depth  = depth ;
 	//Model設定
 	SimpleShape   shape;
 	shape.Type = Shape_Box;

@@ -2,7 +2,7 @@
 
 bool SpeedItem::Initialize()
 {
-	speed = 50.f;
+	_speed = 50.f;
 
 	Material material;
 	material.Diffuse = Color(0.0f, 0.0f, 1.0f);
@@ -10,12 +10,12 @@ bool SpeedItem::Initialize()
 
 	SphereShape();
 
-	sphere->SetMaterial(material);
+	_sphere->SetMaterial(material);
 
 	return true;
 }
 
-void SpeedItem::Update()
+bool SpeedItem::Update()
 {
-
+	return true;
 }
