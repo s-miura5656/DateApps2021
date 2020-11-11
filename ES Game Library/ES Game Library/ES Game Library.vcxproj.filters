@@ -400,6 +400,9 @@
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp">
       <Filter>Myclass\Item\SpeedItem</Filter>
     </ClCompile>
+    <ClCompile Include="MyClass\Collision\HitBox.cpp">
+      <Filter>Myclass\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h">
@@ -645,6 +648,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h">
       <Filter>Myclass\Item\SpeedItem</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Collision\HitBox.h">
+      <Filter>Myclass\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

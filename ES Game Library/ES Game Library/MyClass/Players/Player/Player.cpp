@@ -1,11 +1,16 @@
 #include "Player.h"
 #include "../PlayerParametor/PlayerParametor.h"
-
+#include "../../Data/GameData.h"
 
 Player::Player(std::string name)
 {
 	PlayerParametor::Instance().CreateParametor(name);
 	arm = new Arm(name);
+	_tag = name;
+	hit_box.reset(new HitBox());
+	hit_box->Init();
+	hit_box->Settags(name);
+	hit_box->SetHitBox(1, 1, 1);
 }
 
 Player::~Player()
@@ -50,6 +55,7 @@ int Player::Update()
 	player_get_pos = player->GetPosition();
 	player_get_rot = player->GetRotation();
 
+	hit_box->SetHitBoxPosition(player->GetPosition());
 
 	arm->Update();
 
@@ -72,9 +78,15 @@ int Player::Update()
 		arm->SetPra(player_get_pos,angle);
 	}
 
-	
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string name = PLAYER_TAG + std::to_string(i + 1);
 
-
+		if (hit_box->IsHitObjects(name))
+		{
+			exit(0);
+		}
+	}
 
 	// @brief プレイヤーとブロック・素材の当たり判定の座標補正
 	//player_obb.Center = player_get_pos;
