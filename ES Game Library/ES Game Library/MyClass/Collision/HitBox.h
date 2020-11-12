@@ -53,9 +53,9 @@ private:
 	MODEL _model = nullptr;
 
 	//ƒpƒ‰ƒ[ƒ^
-	float _width = 1.0f;
+	float _width  = 1.0f;
 	float _height = 1.0f;
-	float _depth = 1.0f;
+	float _depth  = 1.0f;
 
 	Vector3 position;
 	Vector3    scale;

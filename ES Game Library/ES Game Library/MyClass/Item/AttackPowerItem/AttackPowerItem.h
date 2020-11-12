@@ -10,7 +10,7 @@ public:
 	
 	bool Initialize() override;
 	void ItemEffect(std::string name) override { _iplayer_data->SetAttackPowor(name, _iplayer_data->GetAttackPowor(name) + _attack_powor); }
-	bool Update() override;
+	int Update() override;
 
 private:
 

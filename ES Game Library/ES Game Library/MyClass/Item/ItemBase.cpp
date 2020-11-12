@@ -5,9 +5,9 @@ bool ItemBase::Initialize()
 	return true;
 }
 
-bool ItemBase::Update()
+int ItemBase::Update()
 {
-	return true;
+	return 0;
 }
 
 void ItemBase::Draw2D()

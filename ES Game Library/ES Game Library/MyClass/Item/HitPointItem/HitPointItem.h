@@ -11,7 +11,7 @@ public:
 
 	bool Initialize();
 	float itemEffect(float player_hit_point) { return player_hit_point + _hit_point; }
-	bool Update();
+	int Update();
 
 private:
 
