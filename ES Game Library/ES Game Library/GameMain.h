@@ -3,6 +3,8 @@
 #include "ESGLib.h"
 #include "GameScene/GameScene.hpp"
 #include "MyClass/Managers/SceneManager/SceneManager.h"
+#include "MyClass/Managers/TimeManager/Time.h"
+#include "MyClass/Managers/UIManager/UI.h"
 
 class GameMain : public CGameScene {
 public:
@@ -58,8 +60,7 @@ private:
 private:
 	// •Ï”éŒ¾
 	SceneManager* _scene_manager;
-	
-
+	UiManager* _ui_manager;
 	// ŠÖ”éŒ¾
 
 };

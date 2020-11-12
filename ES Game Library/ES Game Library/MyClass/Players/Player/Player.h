@@ -6,6 +6,7 @@
 #pragma once
 
 #include "../PlayerBase.h"
+#include "../../Controller/ContorollerManager.h"
 
 class Player : public PlayerBase
 {
@@ -16,6 +17,7 @@ public:
 	bool FileInitialize(LPCTSTR& file);
 	bool Initialize() override;
 	int Update() override;
+	void Move();
 
 	void PlayerColor(Material& mat) {
 		player->SetMaterial(mat);
@@ -32,4 +34,7 @@ private:
 	float move_speed;
 	
 	int   pad_number;
+
+	ControllerManager controller;
+
 };

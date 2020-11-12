@@ -139,23 +139,14 @@
     <Filter Include="Myclass\Scenes\Result">
       <UniqueIdentifier>{baa61e68-988c-4562-8dd8-f9d34258c2fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Item\PoworUpItem">
-      <UniqueIdentifier>{4d38b879-2b50-4c82-8044-6bece2d92162}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Enum">
       <UniqueIdentifier>{4b7f0dfe-2a3e-4c18-a68e-10350c986fb1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Item\PoworDownItem">
-      <UniqueIdentifier>{c7b409f1-d66b-4d7e-86e5-9aa743f7fc08}</UniqueIdentifier>
     </Filter>
     <Filter Include="Myclass\Managers\ItemManager">
       <UniqueIdentifier>{9476a388-d1f5-47bf-ab46-a39c45649cc0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Myclass\Managers\CollisionManager">
       <UniqueIdentifier>{7b6d8d15-da4b-4272-8ec0-042e5809aeed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Managers\PlayerManager">
-      <UniqueIdentifier>{3517be3f-12be-451b-8323-52c04d574b8c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Myclass\Players">
       <UniqueIdentifier>{cfadf0e0-9d8b-4ad4-84b6-696d6ebe7696}</UniqueIdentifier>
@@ -181,8 +172,23 @@
     <Filter Include="Myclass\Players\Player\Arm">
       <UniqueIdentifier>{3cbbabb0-3cd3-414b-9f98-80a05f53017c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Players\Player\ArmParametor">
-      <UniqueIdentifier>{cf31082b-f15f-48c6-9024-e31b6dbcc36d}</UniqueIdentifier>
+    <Filter Include="Myclass\Managers\TimeManager">
+      <UniqueIdentifier>{e8253687-54df-46bb-b0b1-4f5ff8c9bba2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\UiManager">
+      <UniqueIdentifier>{91e623c0-0e00-4b17-b6f2-01b9de535a31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\PlayerManager">
+      <UniqueIdentifier>{3517be3f-12be-451b-8323-52c04d574b8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Item\SpeedItem">
+      <UniqueIdentifier>{47aeec0b-af71-4dfe-b30b-37afda797e37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Item\AttackPoworItem">
+      <UniqueIdentifier>{3d91bd96-9e23-4a1d-b8d4-d31942299724}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Controller">
+      <UniqueIdentifier>{ea22578b-b882-4c8f-9d63-773cf6f0e069}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -346,12 +352,6 @@
     <ClCompile Include="MyClass\Item\ItemBase.cpp">
       <Filter>Myclass\Item</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Item\PoworUpItem\PoworUpItem.cpp">
-      <Filter>Myclass\Item\PoworUpItem</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Item\PoworDownItem\PoworDownItem.cpp">
-      <Filter>Myclass\Item\PoworDownItem</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp">
       <Filter>Myclass\Managers\ItemManager</Filter>
     </ClCompile>
@@ -387,6 +387,21 @@
     </ClCompile>
     <ClCompile Include="MyClass\Players\Arm\Arm.cpp">
       <Filter>Myclass\Players\Player\Arm</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\TimeManager\Time.cpp">
+      <Filter>Myclass\Managers\TimeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\UIManager\UI.cpp">
+      <Filter>Myclass\Managers\UiManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Item\AttackPowerItem\AttackPowerItem.cpp">
+      <Filter>Myclass\Item\AttackPoworItem</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp">
+      <Filter>Myclass\Item\SpeedItem</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Controller\ContorollerManager.cpp">
+      <Filter>Myclass\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -553,9 +568,6 @@
     <ClInclude Include="MyClass\Item\Itembase.hpp">
       <Filter>Myclass\Item</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Item\PoworUpItem\PoworUpItem.h">
-      <Filter>Myclass\Item\PoworUpItem</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Managers\SceneManager\SceneManager.h">
       <Filter>Myclass\Managers\SceneManager</Filter>
     </ClInclude>
@@ -570,9 +582,6 @@
     </ClInclude>
     <ClInclude Include="MyClass\Scenes\BaseScene.h">
       <Filter>Myclass\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Item\PoworDownItem\PoworDownItem.h">
-      <Filter>Myclass\Item\PoworDownItem</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h">
       <Filter>Myclass\Managers\ItemManager</Filter>
@@ -625,8 +634,20 @@
     <ClInclude Include="MyClass\Players\Arm\ArmBase.h">
       <Filter>Myclass\Players\Player\Arm</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Players\ArmParametor\ArmParametor.h">
-      <Filter>Myclass\Players\Player\ArmParametor</Filter>
+    <ClInclude Include="MyClass\Managers\TimeManager\Time.h">
+      <Filter>Myclass\Managers\TimeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\UIManager\UI.h">
+      <Filter>Myclass\Managers\UiManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Item\AttackPowerItem\AttackPowerItem.h">
+      <Filter>Myclass\Item\AttackPoworItem</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h">
+      <Filter>Myclass\Item\SpeedItem</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Controller\ContorollerManager.h">
+      <Filter>Myclass\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

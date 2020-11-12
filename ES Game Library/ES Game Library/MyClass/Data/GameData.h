@@ -8,3 +8,4 @@ static const auto PLAYER_COUNT_MAX = 4;
 //! 連想配列用タグ
 static const std::string PLAYER_TAG = "Player_";
 static const std::string ARM_TAG	= "Arm_";
+static const std::string ITEM_TAG	= "Item_";

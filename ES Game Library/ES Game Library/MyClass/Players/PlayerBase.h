@@ -16,6 +16,7 @@ public:
 	//OrientedBoundingBox PlayerGetObb() { return player_obb; }
 	
 	Vector3 GetPos() { return player->GetPosition(); }
+	float GetAngle() { return angle; }
 	//Vector3 GetArmPos() { return rocket_punch->GetPosition(); }
 	MODEL GetPlayer() { return player; }
 
@@ -32,9 +33,8 @@ protected:
 	MODEL player_hitbox;
 	//OrientedBoundingBox player_obb;
 
-	GamePadState  pad_state;
-	GamePadBuffer pad_buffer;
+	/*GamePadState  pad_state;
+	GamePadBuffer pad_buffer;*/
 
-	Arm arm;
-
+	ArmBase* arm;
 };
