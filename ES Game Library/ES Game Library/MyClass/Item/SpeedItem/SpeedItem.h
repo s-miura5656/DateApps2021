@@ -1,17 +1,16 @@
 #pragma once
 
-
 #include "../Itembase.hpp"
 
 class SpeedItem : public ItemBase
 {
 public:
-	SpeedItem(Vector3 position) { this->_position = position; };
-	~SpeedItem() {};
+	SpeedItem(Vector3 position, std::string name);
+	~SpeedItem();
 
-	bool Initialize();
-	float itemEffect(float player_speed) { return player_speed + _speed; }
-	int Update();
+	bool Initialize() override;
+	void ItemEffect(std::string name) override { _iplayer_data->SetSpeed(name, _iplayer_data->GetSpeed(name) + _speed); }
+	int Update() override;
 
 private:
 

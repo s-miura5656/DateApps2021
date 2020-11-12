@@ -6,12 +6,12 @@
 class HitPointItem : public ItemBase
 {
 public:
-	HitPointItem(Vector3 position) { this->_position = position; };
-	~HitPointItem() {};
+	HitPointItem(Vector3 position, std::string name);
+	~HitPointItem();
 
-	bool Initialize();
-	float itemEffect(float player_hit_point) { return player_hit_point + _hit_point; }
-	int Update();
+	bool Initialize() override;
+	void ItemEffect(std::string name) override { _iplayer_data->SetHitPoint(name, _iplayer_data->GetHitPoint(name) + _hit_point); }
+	int Update() override;
 
 private:
 

@@ -44,5 +44,7 @@ int AttackPowerItem::Update()
 		}
 	}
 
+	Removeflag = true;
+
 	return OK;
 }

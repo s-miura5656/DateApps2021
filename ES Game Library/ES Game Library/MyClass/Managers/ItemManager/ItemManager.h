@@ -19,5 +19,5 @@ private:
 
 	std::vector<ItemBase*> item_base;
 
-
+	void AddItemBase(std::string name, Vector3 position);
 };
