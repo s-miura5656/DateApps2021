@@ -7,7 +7,9 @@ PlayerManager::PlayerManager()
 	for (int i = 0; i < player_max_count; i++)
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
-		players.push_back(new Player(name));
+		std::string arm_name = ARM_TAG + std::to_string(i + 1);
+
+		players.push_back(new Player(name, arm_name));
 	}
 
 	i_player_data = new IPrayerData;

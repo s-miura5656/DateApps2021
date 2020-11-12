@@ -7,12 +7,12 @@
 
 #include "../PlayerBase.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
-#include "../../Collision/HitBox.h"
+
 
 class Player : public PlayerBase
 {
 public:
-	Player (std::string name);
+	Player (std::string name, std::string arm_name);
 	~Player ();
 
 	bool FileInitialize(LPCTSTR& file);
@@ -34,5 +34,4 @@ private:
 
 	float move_speed;
 	int   pad_number;
-	std::unique_ptr<HitBox> _hit_box;
 };

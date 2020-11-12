@@ -2,14 +2,11 @@
 #include "../PlayerParametor/PlayerParametor.h"
 
 
-Player::Player(std::string name)
+Player::Player(std::string name, std::string arm_name)
 {
 	PlayerParametor::Instance().CreateParametor(name);
-	arm = new Arm(name);
-	_hit_box.reset(new HitBox());
-	_hit_box->Init();
-	_hit_box->Settags(name);
-	_hit_box->SetHitBox(1, 1, 1);
+	arm = new Arm(name, arm_name);
+	
 }
 
 Player::~Player()
