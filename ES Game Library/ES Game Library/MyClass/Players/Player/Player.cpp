@@ -1,16 +1,11 @@
 #include "Player.h"
 #include "../PlayerParametor/PlayerParametor.h"
-#include "../../Data/GameData.h"
+
 
 Player::Player(std::string name)
 {
 	PlayerParametor::Instance().CreateParametor(name);
 	arm = new Arm(name);
-	_tag = name;
-	hit_box.reset(new HitBox());
-	hit_box->Init();
-	hit_box->Settags(name);
-	hit_box->SetHitBox(1, 1, 1);
 }
 
 Player::~Player()
@@ -33,6 +28,7 @@ bool Player::Initialize()
 
 	arm->Initialize();
 
+	
 
 	// @brief プレイヤーの当たり判定用の箱
 	//player_obb = player->GetOBB();
@@ -49,44 +45,27 @@ bool Player::Initialize()
 
 int Player::Update()
 {
-	pad_state = GamePad(pad_number)->GetState();
-	pad_buffer = GamePad(pad_number)->GetBuffer();
+	/*pad_state = GamePad(pad_number)->GetState();
+	pad_buffer = GamePad(pad_number)->GetBuffer();*/
 
 	player_get_pos = player->GetPosition();
 	player_get_rot = player->GetRotation();
 
-	hit_box->SetHitBoxPosition(player->GetPosition());
-
 	arm->Update();
 
 	//ロケットパンチ
-	if (pad_buffer.IsPressed(GamePad_Button1) && arm->GetArmState() == NO_PUNCH)
+	if (controller.PadBuffer().IsPressed(GamePad_Button1) && arm->GetArmState() == NO_PUNCH)
 	{
 		arm->ArmShoot(PUNCH);
 	}
 
 	//プレイヤー移動
-	if (pad_state.X != Axis_Center && arm->GetArmState() == NO_PUNCH ||
-		pad_state.Y != Axis_Center && arm->GetArmState() == NO_PUNCH)
+	if (controller.PadState().X != Axis_Center && arm->GetArmState() == NO_PUNCH ||
+		controller.PadState().Y != Axis_Center && arm->GetArmState() == NO_PUNCH)
 	{
-		angle = MathHelper_Atan2(double(pad_state.X - Axis_Center) / double(Axis_Max - Axis_Center),
-			-double(pad_state.Y - Axis_Center) / double(Axis_Max - Axis_Center));
-
-		player->SetRotation(0, angle, 0);
-		player->Move(0, 0, move_speed);
-
-		arm->SetPra(player_get_pos,angle);
+		Move();
 	}
 
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		std::string name = PLAYER_TAG + std::to_string(i + 1);
-
-		if (hit_box->IsHitObjects(name))
-		{
-			exit(0);
-		}
-	}
 
 	// @brief プレイヤーとブロック・素材の当たり判定の座標補正
 	//player_obb.Center = player_get_pos;
@@ -94,4 +73,15 @@ int Player::Update()
 	//player_obb.SetAxis(player->GetDirectionQuaternion());
 
 	return 0;
+}
+
+void Player::Move() 
+{
+	angle = MathHelper_Atan2(double(controller.PadState().X - Axis_Center) / double(Axis_Max - Axis_Center),
+		-double(controller.PadState().Y - Axis_Center) / double(Axis_Max - Axis_Center));
+
+	player->SetRotation(0, angle, 0);
+	player->Move(0, 0, move_speed);
+
+	arm->SetPra(player_get_pos, angle);
 }

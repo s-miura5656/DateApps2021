@@ -6,6 +6,7 @@
 #include "../../Scenes/Title/TitleScene.h"
 #include"../../Scenes/Result/ResultScene.h"
 
+
 //! @brief コンストラクタ
 //! @detail SceneManager が作られたときに呼び出されるよ
 SceneManager::SceneManager()
@@ -63,6 +64,8 @@ bool SceneManager::Initialize()
 	Viewport view = GraphicsDevice.GetViewport();
 	_camera->SetView(Vector3(0, 17, -3), Vector3(81, 0, 0));
 	_camera->SetPerspectiveFieldOfView(45.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
+
+	controller.Initialize();
 
 	//! 一番最初に読み込まれるシーン
 	ChangeScene(SceneState::MAIN);

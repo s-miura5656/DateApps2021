@@ -39,5 +39,6 @@ private:
 	void operator=(const CollisionManager&) = delete;
 
 	IPrayerData* i_player_data;
+	IArmData* i_arm_data;
 	std::map<std::string, Collision*> collisions;
 };

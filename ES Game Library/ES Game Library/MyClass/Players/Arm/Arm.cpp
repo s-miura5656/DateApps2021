@@ -18,7 +18,6 @@ bool Arm::Fileinitialize()
 
 bool Arm::Initialize()
 {
-
 	arm_model = GraphicsDevice.CreateModelFromFile(_T("Player/sword_01.X"));
 
 	arm_state = NO_PUNCH;
@@ -26,8 +25,6 @@ bool Arm::Initialize()
 	arm_speed = 0.1f;
 
 	arm_model->SetScale(0.005f);
-
-
 
 	return 0;
 }
