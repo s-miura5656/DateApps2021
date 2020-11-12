@@ -33,7 +33,6 @@ private:
 	Vector3 player_get_rot;
 
 	float move_speed;
-	
 	int   pad_number;
 	std::unique_ptr<HitBox> _hit_box;
 };
