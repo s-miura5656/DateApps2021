@@ -5,7 +5,7 @@
 class Arm :public ArmBase
 {
 public:
-	Arm(std::string name);
+	Arm(std::string name, std::string arm_name);
 	~Arm();
 
 	bool Fileinitialize();

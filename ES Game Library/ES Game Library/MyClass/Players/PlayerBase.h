@@ -1,5 +1,4 @@
 #include "../../ESGLib.h"
-//#include "../Enum/Enum.h"
 #include "Arm/Arm.h"
 
 class PlayerBase

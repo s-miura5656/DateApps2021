@@ -1,9 +1,13 @@
 #include "Arm.h"
 
-Arm::Arm(std::string name)
+Arm::Arm(std::string name, std::string arm_name)
 {
 	_iplayer_data = new IPrayerData;
-	player_name = name;
+	_player_name = name;
+	_hit_box.reset(new HitBox());
+	_hit_box->Init();
+	_hit_box->Settags(arm_name);
+	_hit_box->SetHitBox(1, 1, 1);
 }
 
 Arm::~Arm()
@@ -25,6 +29,8 @@ bool Arm::Initialize()
 	arm_speed = 0.1f;
 
 	arm_model->SetScale(0.005f);
+
+	hit_flag = false;
 
 	return 0;
 }

@@ -1,7 +1,9 @@
 #pragma once
 
 #include"../../../ESGLib.h"
-#include "../../../MyClass/Enum/Enum.h"
+#include "../../Data/GameData.h"
+
+using namespace PlayerEnum;
 
 class ControllerManager
 {
