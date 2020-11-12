@@ -11,9 +11,9 @@ ItemManager::ItemManager()
 
 ItemManager::~ItemManager()
 {
-	for (int i = item_base.size() - 1; i >= 0; --i)
+	for (auto& it = item_base.rbegin(); it != item_base.rend(); ++it)
 	{
-		delete item_base[i];
+		delete (*it);
 	}
 }
 
