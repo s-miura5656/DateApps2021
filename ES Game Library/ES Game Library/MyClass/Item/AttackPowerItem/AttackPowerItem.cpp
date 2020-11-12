@@ -31,7 +31,7 @@ bool AttackPowerItem::Initialize()
 	return true;
 }
 
-bool AttackPowerItem::Update()
+int AttackPowerItem::Update()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
@@ -40,9 +40,9 @@ bool AttackPowerItem::Update()
 		if (_hit_box->IsHitObjects(name))
 		{
 			ItemEffect(name);
-			return false;
+			return END;
 		}
 	}
 
-	return true;
+	return OK;
 }

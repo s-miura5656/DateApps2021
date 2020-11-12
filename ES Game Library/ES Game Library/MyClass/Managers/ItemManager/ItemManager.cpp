@@ -36,12 +36,10 @@ int ItemManager::Update()
 {
 	auto item = item_base;
 
-	for (int i = 0; i < item_base.size(); i++)
+	for (int i = 0; i < item.size(); ++i)
 	{
-		if (!item[i]->Update())
-		{
+		if (item[i]->Update() == END) 
 			item_base.erase(item_base.begin() + i);
-		}
 	}
 
 	return 0;

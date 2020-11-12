@@ -10,7 +10,7 @@ public:
 	ItemBase() {};
 	virtual ~ItemBase() {}
 	virtual bool Initialize();
-	virtual bool Update();
+	virtual int Update();
 	virtual void Draw2D();
 	virtual void Draw3D();
 	virtual void ItemEffect(std::string name) { name; }

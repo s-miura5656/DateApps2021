@@ -15,7 +15,7 @@ bool SpeedItem::Initialize()
 	return true;
 }
 
-bool SpeedItem::Update()
+int SpeedItem::Update()
 {
-	return true;
+	return 0;
 }

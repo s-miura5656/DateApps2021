@@ -15,7 +15,7 @@ bool HitPointItem::Initialize()
 	return true;
 }
 
-bool HitPointItem::Update()
+int HitPointItem::Update()
 {
-	return true;
+	return 0;
 }

@@ -11,8 +11,7 @@ public:
 
 	bool Initialize();
 	float itemEffect(float player_speed) { return player_speed + _speed; }
-	bool Update();
-
+	int Update();
 
 private:
 
