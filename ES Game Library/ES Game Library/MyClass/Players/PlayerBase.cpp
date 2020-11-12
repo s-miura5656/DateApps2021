@@ -17,5 +17,4 @@ void PlayerBase::Draw3D()
 	player->Draw();
 
 	arm->Draw();
-	//rocket_punch->Draw();
 }

@@ -4,59 +4,52 @@
 
 ItemManager::ItemManager()
 {
-	ItemFactory* itemfactory = new ItemStationeryFactory;
-
-	item_base.push_back(itemfactory->Create(SPEED_ITEM_TAG, Vector3(0.0f,0.0f,-5.0f)));
-	item_base.push_back(itemfactory->Create(HITPOINT_ITEM_TAG, Vector3(0.0f, 0.0f, 5.0f)));
-	item_base.push_back(itemfactory->Create(POWOR_ITEM_TAG, Vector3(0.0f, 0.0f, 0.0f)));
-
-	delete itemfactory;
+	AddItemBase(SPEED_ITEM_TAG,    Vector3(0.0f,0.0f,-5.0f));
+	AddItemBase(HITPOINT_ITEM_TAG, Vector3(0.0f, 0.0f, 5.0f));
+	AddItemBase(POWOR_ITEM_TAG,    Vector3(0.0f, 0.0f, 0.0f));
 }
 
 ItemManager::~ItemManager()
 {
-	for (int i = item_base.size() - 1; i >= 0; --i)
+	for (auto& it = item_base.rbegin(); it != item_base.rend(); ++it)
 	{
-		delete item_base[i];
+		delete (*it);
 	}
 }
 
 bool ItemManager::Initialize()
 {
 
-	for (auto& item : item_base)
-	{
-		item->Initialize();
-	}
+	std::for_each(item_base.begin(), item_base.end(), [](ItemBase* itembase) { itembase->Initialize(); });
 
 	return true;
 }
 
 int ItemManager::Update()
 {
-	auto item = item_base;
+	std::for_each(item_base.begin(), item_base.end(), [](ItemBase* itembase) { itembase->Update(); });
 
-	for (int i = 0; i < item.size(); ++i)
-	{
-		if (item[i]->Update() == END) 
-			item_base.erase(item_base.begin() + i);
-	}
+	auto end = std::remove_if(item_base.begin(), item_base.end(), [](ItemBase* itembase) {return itembase->IsFlag() == true; });
+	item_base.erase(end, item_base.end());
 
 	return 0;
 }
 
 void ItemManager::Draw2D()
 {
-	for (auto& item : item_base)
-	{
-		item->Draw2D();
-	}
+	std::for_each(item_base.begin(), item_base.end(), [](ItemBase* itembase) { itembase->Draw2D(); });
 }
 
 void ItemManager::Draw3D()
 {
-	for (auto& item : item_base)
-	{
-		item->Draw3D();
-	}
+	std::for_each(item_base.begin(), item_base.end(), [](ItemBase* itembase) { itembase->Draw3D(); });
+}
+
+void ItemManager::AddItemBase(std::string name, Vector3 position)
+{
+	ItemFactory* itemfactory = new ItemStationeryFactory;
+
+	item_base.push_back(itemfactory->Create(name, position));
+
+	delete itemfactory;
 }

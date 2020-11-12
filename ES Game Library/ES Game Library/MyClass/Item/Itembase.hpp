@@ -15,7 +15,8 @@ public:
 	virtual void Draw3D();
 	virtual void ItemEffect(std::string name) { name; }
 	void SphereShape();
-		
+	
+	bool IsFlag() const { return Removeflag; };
 
 protected:
 	int _hit_point    = 1000;
@@ -26,6 +27,8 @@ protected:
 	Vector3 _position;
 	IPrayerData* _iplayer_data;
 	std::unique_ptr<HitBox> _hit_box;
+
+	bool Removeflag = FALSE;
 private:
 	
 };
