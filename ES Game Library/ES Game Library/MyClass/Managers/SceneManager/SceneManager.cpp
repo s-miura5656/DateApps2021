@@ -6,6 +6,7 @@
 #include "../../Scenes/Title/TitleScene.h"
 #include"../../Scenes/Result/ResultScene.h"
 
+
 //! @brief コンストラクタ
 //! @detail SceneManager が作られたときに呼び出されるよ
 SceneManager::SceneManager()

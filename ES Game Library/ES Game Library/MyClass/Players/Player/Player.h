@@ -6,6 +6,7 @@
 #pragma once
 
 #include "../PlayerBase.h"
+#include "../../Managers/ControllerManager/ContorollerManager.h"
 #include "../../Collision/HitBox.h"
 
 class Player : public PlayerBase
@@ -17,6 +18,7 @@ public:
 	bool FileInitialize(LPCTSTR& file);
 	bool Initialize() override;
 	int Update() override;
+	void Move();
 
 	void PlayerColor(Material& mat) {
 		player->SetMaterial(mat);
@@ -31,8 +33,7 @@ private:
 	Vector3 player_get_rot;
 
 	float move_speed;
-
-	std::unique_ptr<HitBox> hit_box;
 	
 	int   pad_number;
+	std::unique_ptr<HitBox> _hit_box;
 };

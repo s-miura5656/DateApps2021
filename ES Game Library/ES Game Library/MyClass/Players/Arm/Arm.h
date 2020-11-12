@@ -11,13 +11,9 @@ public:
 	bool Fileinitialize();
 	bool Initialize();
 
-
 	void ArmColor(Material& mat) {
 		arm_model->SetMaterial(mat);
 	}
-
-
-	
 
 private:
 	

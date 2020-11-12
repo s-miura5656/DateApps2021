@@ -33,8 +33,8 @@ protected:
 	MODEL player_hitbox;
 	//OrientedBoundingBox player_obb;
 
-	GamePadState  pad_state;
-	GamePadBuffer pad_buffer;
-	std::string _tag;
+	/*GamePadState  pad_state;
+	GamePadBuffer pad_buffer;*/
+
 	ArmBase* arm;
 };
