@@ -166,6 +166,7 @@
     </ClCompile>
     <ClCompile Include="MyClass\Collision\Collision.cpp" />
     <ClCompile Include="MyClass\Collision\CollisionBase.cpp" />
+    <ClCompile Include="MyClass\Controller\ContorollerManager.cpp" />
     <ClCompile Include="MyClass\Item\AttackPowerItem\AttackPowerItem.cpp" />
     <ClCompile Include="MyClass\Item\Item.cpp" />
     <ClCompile Include="MyClass\Item\ItemBase.cpp" />
@@ -241,6 +242,7 @@
     <ClInclude Include="GameScene\TemplateScene.hpp" />
     <ClInclude Include="MyClass\Collision\Collision.h" />
     <ClInclude Include="MyClass\Collision\CollisionBase.h" />
+    <ClInclude Include="MyClass\Controller\ContorollerManager.h" />
     <ClInclude Include="MyClass\Data\GameData.h" />
     <ClInclude Include="MyClass\Data\IPlayerData.h" />
     <ClInclude Include="MyClass\Data\StructList.h" />
@@ -257,7 +259,6 @@
     <ClInclude Include="MyClass\Managers\StageManager\StageManager.h" />
     <ClInclude Include="MyClass\Managers\TimeManager\Time.h" />
     <ClInclude Include="MyClass\Managers\UIManager\UI.h" />
-    <ClInclude Include="MyClass\Players\ArmParametor\ArmParametor.h" />
     <ClInclude Include="MyClass\Players\Arm\Arm.h" />
     <ClInclude Include="MyClass\Players\Arm\ArmBase.h" />
     <ClInclude Include="MyClass\Players\PlayerBase.h" />

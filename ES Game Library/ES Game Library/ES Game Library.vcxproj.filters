@@ -172,9 +172,6 @@
     <Filter Include="Myclass\Players\Player\Arm">
       <UniqueIdentifier>{3cbbabb0-3cd3-414b-9f98-80a05f53017c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Players\Player\ArmParametor">
-      <UniqueIdentifier>{cf31082b-f15f-48c6-9024-e31b6dbcc36d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Managers\TimeManager">
       <UniqueIdentifier>{e8253687-54df-46bb-b0b1-4f5ff8c9bba2}</UniqueIdentifier>
     </Filter>
@@ -189,6 +186,9 @@
     </Filter>
     <Filter Include="Myclass\Item\AttackPoworItem">
       <UniqueIdentifier>{3d91bd96-9e23-4a1d-b8d4-d31942299724}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Controller">
+      <UniqueIdentifier>{ea22578b-b882-4c8f-9d63-773cf6f0e069}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -399,6 +399,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp">
       <Filter>Myclass\Item\SpeedItem</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Controller\ContorollerManager.cpp">
+      <Filter>Myclass\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -631,9 +634,6 @@
     <ClInclude Include="MyClass\Players\Arm\ArmBase.h">
       <Filter>Myclass\Players\Player\Arm</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Players\ArmParametor\ArmParametor.h">
-      <Filter>Myclass\Players\Player\ArmParametor</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Managers\TimeManager\Time.h">
       <Filter>Myclass\Managers\TimeManager</Filter>
     </ClInclude>
@@ -645,6 +645,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h">
       <Filter>Myclass\Item\SpeedItem</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Controller\ContorollerManager.h">
+      <Filter>Myclass\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -88,7 +88,7 @@ void CollisionManager::InitializeArmHitBoxs()
 		CreateHitBox(arm_num);
 		collisions[arm_num]->Initialize();
 		collisions[arm_num]->SetHitBoxMaterial(mat);
-		collisions[arm_num]->SetHitBoxPos(i_player_data->GetArmModelPos(arm_num));
+		collisions[arm_num]->SetHitBoxPos(i_arm_data->GetPosition(arm_num));
 		collisions[arm_num]->SetHitBoxSize(Vector3(1.f, 2.f, 1.f) * 0.5f);
 	}
 }
