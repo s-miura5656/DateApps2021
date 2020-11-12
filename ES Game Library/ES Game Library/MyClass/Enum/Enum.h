@@ -1,3 +1,4 @@
+#pragma once
 #include "../../ESGLib.h"
 
 //プレイヤーのアニメーション

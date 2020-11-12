@@ -6,7 +6,8 @@
 #pragma once
 
 #include "../PlayerBase.h"
-#include "../../Controller/ContorollerManager.h"
+#include "../../Managers/ControllerManager/ContorollerManager.h"
+#include "../../Collision/HitBox.h"
 
 class Player : public PlayerBase
 {
@@ -34,7 +35,5 @@ private:
 	float move_speed;
 	
 	int   pad_number;
-
-	ControllerManager controller;
-
+	std::unique_ptr<HitBox> _hit_box;
 };

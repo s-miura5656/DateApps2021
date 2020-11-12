@@ -6,7 +6,6 @@
 
 #include "../../../ESGLib.h"
 #include "../ManagerBase.h"
-#include "../../Controller/ContorollerManager.h"
 
 //! Œ^éŒ¾‚Ì‚¾‚¯g‚¢‚½‚¢‚Ì‚Å‚±‚±‚ÅBaseScene‚Ì–¼‘O‚¾‚¯g‚¤‚æ‚Á‚ÄéŒ¾
 class BaseScene;
@@ -48,6 +47,4 @@ private:
 
 	CAMERA _camera;
 	BaseScene* _scene;
-
-	ControllerManager controller;
 };

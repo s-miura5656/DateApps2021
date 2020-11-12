@@ -211,6 +211,12 @@
     <Filter Include="Myclass\Factory\ItemFactory">
       <UniqueIdentifier>{69fd894e-92fd-41cd-9d97-556047c173c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Managers\ControllerManager">
+      <UniqueIdentifier>{cc293e60-72d0-4f57-8ce0-c22a34510d69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Controller">
+      <UniqueIdentifier>{9a6a0ddd-5308-48f6-8e6f-fbe6dbd184e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -376,17 +382,8 @@
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp">
       <Filter>Myclass\Managers\ItemManager</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Collision\Collision.cpp">
-      <Filter>Myclass\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Collision\CollisionBase.cpp">
-      <Filter>Myclass\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp">
       <Filter>Myclass\Managers\PlayerManager</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Managers\CollisionManager\CollisionManager.cpp">
-      <Filter>Myclass\Managers\CollisionManager</Filter>
     </ClCompile>
     <ClCompile Include="MyClass\Players\Player\Player.cpp">
       <Filter>Myclass\Players\Player</Filter>
@@ -438,6 +435,12 @@
     </ClCompile>
     <ClCompile Include="MyClass\Factorys\ItemFactory\ItemFactory.cpp">
       <Filter>Myclass\Factory\ItemFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp">
+      <Filter>Myclass\Managers\ControllerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Controller\ControllerConfig.cpp">
+      <Filter>Myclass\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -625,17 +628,8 @@
     <ClInclude Include="MyClass\Managers\ManagerBase.h">
       <Filter>Myclass\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Collision\Collision.h">
-      <Filter>Myclass\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Collision\CollisionBase.h">
-      <Filter>Myclass\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h">
       <Filter>Myclass\Managers\PlayerManager</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Managers\CollisionManager\CollisionManager.h">
-      <Filter>Myclass\Managers\CollisionManager</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Players\Player\Player.h">
       <Filter>Myclass\Players\Player</Filter>
@@ -702,6 +696,12 @@
     </ClInclude>
     <ClInclude Include="MyClass\Factorys\ItemFactory\ItemFactory.h">
       <Filter>Myclass\Factory\ItemFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h">
+      <Filter>Myclass\Managers\ControllerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Controller\ControllerConfig.h">
+      <Filter>Myclass\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,13 +1,13 @@
 #pragma once
 
-#include"../../ESGLib.h"
-#include "../../MyClass/Enum/Enum.h"
+#include"../../../ESGLib.h"
+#include "../../../MyClass/Enum/Enum.h"
 
 class ControllerManager
 {
 public:
-	ControllerManager();
-	~ControllerManager();
+	ControllerManager() {};
+	~ControllerManager() {};
 
 	static ControllerManager & Instance() {
 		static ControllerManager instance;
@@ -21,7 +21,10 @@ public:
 	GamePadBuffer PadBuffer() { return *pad_buffer; }
 	
 
-protected:
+private:
+	ControllerManager(const ControllerManager&) = delete;
+	void operator=(const ControllerManager&) = delete;
+
 	GamePadState  pad_state[PLAYER_MAX];
 	GamePadBuffer pad_buffer[PLAYER_MAX];
 

@@ -6,6 +6,10 @@ Player::Player(std::string name)
 {
 	PlayerParametor::Instance().CreateParametor(name);
 	arm = new Arm(name);
+	_hit_box.reset(new HitBox());
+	_hit_box->Init();
+	_hit_box->Settags(name);
+	_hit_box->SetHitBox(1, 1, 1);
 }
 
 Player::~Player()
@@ -54,14 +58,14 @@ int Player::Update()
 	arm->Update();
 
 	//ロケットパンチ
-	if (controller.PadBuffer().IsPressed(GamePad_Button1) && arm->GetArmState() == NO_PUNCH)
+	if (ControllerManager::Instance().PadBuffer().IsPressed(GamePad_Button1) && arm->GetArmState() == NO_PUNCH)
 	{
 		arm->ArmShoot(PUNCH);
 	}
 
 	//プレイヤー移動
-	if (controller.PadState().X != Axis_Center && arm->GetArmState() == NO_PUNCH ||
-		controller.PadState().Y != Axis_Center && arm->GetArmState() == NO_PUNCH)
+	if (ControllerManager::Instance().PadState().X != Axis_Center && arm->GetArmState() == NO_PUNCH ||
+		ControllerManager::Instance().PadState().Y != Axis_Center && arm->GetArmState() == NO_PUNCH)
 	{
 		Move();
 	}
@@ -77,8 +81,8 @@ int Player::Update()
 
 void Player::Move() 
 {
-	angle = MathHelper_Atan2(double(controller.PadState().X - Axis_Center) / double(Axis_Max - Axis_Center),
-		-double(controller.PadState().Y - Axis_Center) / double(Axis_Max - Axis_Center));
+	angle = MathHelper_Atan2(double(ControllerManager::Instance().PadState().X - Axis_Center) / double(Axis_Max - Axis_Center),
+		-double(ControllerManager::Instance().PadState().Y - Axis_Center) / double(Axis_Max - Axis_Center));
 
 	player->SetRotation(0, angle, 0);
 	player->Move(0, 0, move_speed);

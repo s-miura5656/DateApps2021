@@ -65,8 +65,6 @@ bool SceneManager::Initialize()
 	_camera->SetView(Vector3(0, 17, -3), Vector3(81, 0, 0));
 	_camera->SetPerspectiveFieldOfView(45.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 
-	controller.Initialize();
-
 	//! ˆê”ÔÅ‰‚É“Ç‚İ‚Ü‚ê‚éƒV[ƒ“
 	ChangeScene(SceneState::MAIN);
 
