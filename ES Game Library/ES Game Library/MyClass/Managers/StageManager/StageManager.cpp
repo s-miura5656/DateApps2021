@@ -1,6 +1,8 @@
 #include "StageManager.h"
 #include "../../Stage/Stage_1/Stage.h"
 #include <fstream>
+#include <cstdio>
+
 StageManager::StageManager()
 {
 	block = nullptr;
@@ -40,19 +42,46 @@ bool StageManager::Initialize()
 		return false;
 	}
 	// CSV読み込み
-	std::ifstream infile("MapSprite/map.csv");
-	std::string line;
-	for (int z = 0; z < _countof(xz); ++z) {
-		for (int x = 0; x < _countof(xz[z]); ++x) {
-			infile >> xz[z][x];
-			if (x != _countof(xz[z]) - 1) {
-				infile >> comma;
-			}
-			else {
-				getline(infile, line);
+	//std::ifstream infile("MapSprite/mapenglish.csv");
+	//std::string line;
+	//int z = 0, x = 0;
+	//while (getline(infile, line))
+	//{
+	//	for (int i = 0; i < line.length(); ++i)
+	//	{
+	//		if (line[i] != ',') {
+	//			xz[z][x] = line[i];
+	//			x++;
+	//			if (x >= _countof(xz[z])) {
+	//				++z;
+	//				x = 0;
+	//			}
+	//		}
+	//	}
+	//}
+
+	FILE* fp = fopen("MapSprite/mapenglish.csv","r");
+	//マップデータを読み込む
+	char lordchar[CHAR_MAX + 1];
+
+	while (fgets(lordchar,sizeof lordchar -1 ,fp) !=  NULL)
+	{
+		mapdate.push_back(lordchar);
+	}
+
+	for (int z = 0; z < mapdate.size(); z++)
+	{
+		for (int x = 0; x < mapdate[z].size(); x++)
+		{
+			if (mapdate[z][x] == ',')
+			{
+				mapdate[z].erase(mapdate[z].begin() + x);
 			}
 		}
 	}
+	//ファイルを閉じる
+	fclose(fp);
+
 	floor->SetPosition(Vector3(0, 0, 0));
 	return true;
 }
@@ -70,22 +99,20 @@ void StageManager::Draw2D()
 void StageManager::Draw3D()
 {
 	// 読み込んだ座標データをもとに描画
-	for (int z = 0; z < _countof(xz); z++)
+	for (int z = 0; z < mapdate.size(); z++)
 	{
-		for (int x = 0; x < _countof(xz[0]); x++)
+		for (int x = 0; x < mapdate[z].size(); x++)
 		{
-			switch (xz[z][x]) {
-			case 0:
-				break;
-			case 1:
+			switch (mapdate[z][x]) {
+			case 'b':
 				block->SetPosition(Vector3(x - 7, 0, -z + 6));
 				block->Draw3D();
 				break;
-			case 2:
+			case 'i':
 				pillar->SetPosition(Vector3(x - 7, 0, -z + 6));
 				pillar->Draw3D();
 				break;
-			case 3:
+			case 'o':
 				metal->SetPosition(Vector3(x - 7, 0, -z + 6));
 				metal->Draw3D();
 				break;

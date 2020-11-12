@@ -8,7 +8,5 @@ public:
 	Block();
 	~Block();
 	bool Initialize();
-
-
 private:
 };
