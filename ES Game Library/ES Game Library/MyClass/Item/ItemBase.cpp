@@ -7,8 +7,6 @@ bool ItemBase::Initialize()
 
 int ItemBase::Update()
 {
-	RotationItem();
-
 	return 0;
 }
 

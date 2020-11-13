@@ -29,7 +29,7 @@ protected:
 	std::unique_ptr<HitBox> _hit_box;
 
 	bool Removeflag = false;
-	float _rotation;
+	float _rotation = 0.f;
 private:
 	
 };

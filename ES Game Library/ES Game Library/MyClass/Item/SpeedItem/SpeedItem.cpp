@@ -9,8 +9,6 @@ SpeedItem::SpeedItem(Vector3 position, std::string name)
 	_hit_box->Settags(name);
 	_hit_box->SetHitBox(1, 1, 1);
 	_iplayer_data = new IPrayerData;
-
-	_rotation = 0.0f;
 }
 
 SpeedItem::~SpeedItem()

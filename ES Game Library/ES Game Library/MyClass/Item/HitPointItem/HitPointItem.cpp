@@ -8,8 +8,6 @@ HitPointItem::HitPointItem(Vector3 position, std::string name)
 	_hit_box->Init();
 	_hit_box->Settags(name);
 	_iplayer_data = new IPrayerData;
-
-	_rotation = 0.0f;
 }
 
 HitPointItem::~HitPointItem()
