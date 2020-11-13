@@ -186,6 +186,9 @@
     <ClCompile Include="MyClass\Scenes\Title\TitleScene.cpp" />
     <ClCompile Include="MyClass\Stage\StageBase.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Stage.cpp" />
+    <ClCompile Include="MyClass\Ui\MaineUi.cpp" />
+    <ClCompile Include="MyClass\Ui\ResultUi.cpp" />
+    <ClCompile Include="MyClass\Ui\TitleUi.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -269,6 +272,10 @@
     <ClInclude Include="MyClass\Scenes\Title\TitleScene.h" />
     <ClInclude Include="MyClass\Stage\StageBase.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Stage.h" />
+    <ClInclude Include="MyClass\Ui\BaseUi.h" />
+    <ClInclude Include="MyClass\Ui\MaineUi.h" />
+    <ClInclude Include="MyClass\Ui\ResultUi.h" />
+    <ClInclude Include="MyClass\Ui\TitleUi.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="ESGLib.h" />
     <ClInclude Include="DirectX\Audio\DXAudio8.hpp" />

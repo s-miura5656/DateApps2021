@@ -3,6 +3,7 @@
 #include "../../Managers/PlayerManager/PlayerManager.h"
 #include "../../Managers/CollisionManager/CollisionManager.h"
 #include "../../Managers/StageManager/StageManager.h"
+#include "../../Managers/UIManager/UI.h"
 
 MainScene::MainScene()
 {
@@ -10,6 +11,7 @@ MainScene::MainScene()
 	_managers.push_back(new PlayerManager);
 	_managers.push_back(new ItemManager);
 	_managers.push_back(new CollisionManager);
+	_managers.push_back(new MainUiManager);
 }
 
 MainScene::~MainScene()

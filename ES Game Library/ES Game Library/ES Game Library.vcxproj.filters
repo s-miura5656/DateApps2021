@@ -190,6 +190,9 @@
     <Filter Include="Myclass\Item\AttackPoworItem">
       <UniqueIdentifier>{3d91bd96-9e23-4a1d-b8d4-d31942299724}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Ui">
+      <UniqueIdentifier>{edba6358-1bbe-482e-a81c-245c51b7343e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -399,6 +402,15 @@
     </ClCompile>
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp">
       <Filter>Myclass\Item\SpeedItem</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Ui\TitleUi.cpp">
+      <Filter>Myclass\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Ui\MaineUi.cpp">
+      <Filter>Myclass\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Ui\ResultUi.cpp">
+      <Filter>Myclass\Ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -645,6 +657,18 @@
     </ClInclude>
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h">
       <Filter>Myclass\Item\SpeedItem</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Ui\TitleUi.h">
+      <Filter>Myclass\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Ui\MaineUi.h">
+      <Filter>Myclass\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Ui\ResultUi.h">
+      <Filter>Myclass\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Ui\BaseUi.h">
+      <Filter>Myclass\Ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
