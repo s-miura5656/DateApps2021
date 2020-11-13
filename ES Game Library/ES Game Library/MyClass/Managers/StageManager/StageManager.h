@@ -2,7 +2,6 @@
 //! @brief  ステージ用の管理クラス
 //! @author Souta_Miura
 //! @date   2020/11/09
-
 #pragma once
 
 #include"../../Managers/ManagerBase.h"
@@ -25,10 +24,6 @@ public:
 	void Draw3D() override;
 
 private:
-	Block* block;
-	Pillar* pillar;
-	Metal* metal;
-	Floor*floor;
-	char comma;	   //!カンマ読み込み
-	int xz[13][15];//!ファイルの読み込み
+	std::map<std::string, StageBase*> stages;
+	std::vector<cstring> mapdate;//!マップデータの読み込み
 };

@@ -28,7 +28,7 @@ int ArmBase::Update()
 		SetPra(player_pos, player_angle);
 	}
 
-	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
+	/*for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
 
@@ -37,9 +37,9 @@ int ArmBase::Update()
 
 		if (_hit_box->IsHitObjects(name))
 		{
-			//exit(0);
+			exit(0);
 		}
-	}
+	}*/
 	
 
 	if (hit_flag) {
@@ -51,7 +51,7 @@ int ArmBase::Update()
 		}
 	}
 
-	/*if (arm_state == RETURN_PUNCH)
+	if (arm_state == RETURN_PUNCH)
 	{
 		arm_model->Move(0, 0, -arm_speed);
 		if (dist <= 0.5) {
@@ -67,11 +67,24 @@ int ArmBase::Update()
 			dist = 5;
 			arm_state = RETURN_PUNCH;
 		}
+
+		for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
+		{
+			std::string name = PLAYER_TAG + std::to_string(i + 1);
+
+			if (_player_tag == name)
+				continue;
+
+			if (_hit_box->IsHitObjects(name))
+			{
+				exit(0);
+			}
+		}
 	}
 	else if (arm_state == NO_PUNCH)
 	{
 		SetPra(player_pos, player_angle);
-	}*/
+	}
 
 	return 0;
 }
@@ -97,7 +110,7 @@ void ArmBase::ArmShoot(int flag)
 
 void ArmBase::Move(float speed)
 {
-	auto pad = ControllerManager::Instance().GetController(_tag);
+	auto pad = ControllerManager::Instance().GetController(_player_tag);
 
 	player_angle = MathHelper_Atan2(double(pad->GetPadStateX() - Axis_Center) / double(Axis_Max - Axis_Center),
 		-double(pad->GetPadStateY() - Axis_Center) / double(Axis_Max - Axis_Center));
