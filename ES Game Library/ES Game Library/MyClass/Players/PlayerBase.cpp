@@ -23,16 +23,27 @@ void PlayerBase::Draw3D()
 	arm->Draw();
 }
 
-void PlayerBase::ChangePlayerSpeed()
+float PlayerBase::PlayerSpeed()
 {
-	auto data = _iplayer_data;
+	auto p_data = _iplayer_data;
 
-	if (_move_speed == data->GetSpeed(_tag) && _weight == data->GetWeight(_tag))
-		return;
+	auto a_data = _iarm_data;
 
-	_move_speed = (float)data->GetSpeed(_tag) / (float)data->GetWeight(_tag);
+	if (_weight != p_data->GetWeight(_tag))
+	{
+		_weight = p_data->GetWeight(_tag) + a_data->GetWeight(_arm_tag);
+		_iplayer_data->SetWeight(_tag, _weight);
+		_move_speed = (float)p_data->GetSpeed(_tag) / (float)p_data->GetWeight(_tag);
+	}
+
+	if (_speed != p_data->GetSpeed(_tag))
+	{
+		_move_speed = (float)p_data->GetSpeed(_tag) / (float)p_data->GetWeight(_tag);
+	}
 
 	_move_speed /= 100.f;
 
 	_move_speed *= 5.f;
+
+	return _move_speed;
 }

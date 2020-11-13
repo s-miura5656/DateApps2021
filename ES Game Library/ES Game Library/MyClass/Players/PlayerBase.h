@@ -18,19 +18,22 @@ public:
 	float GetAngle() { return angle; }
 	MODEL GetPlayer() { return player; }
 	
-	void ChangePlayerSpeed();
+	float PlayerSpeed();
 
 protected:
 	MODEL player;
 
 	const float scale = 0.004f;
 	const float player_scale = 1.f;
-	float angle = 0.f;
-	float _move_speed;
-	float _weight;
+	float angle   = 0.f;
+	float _speed  = 0.f;
+	float _weight = 0.f;
+	float _move_speed = 0.f;
 
 	ArmBase* arm;
 	IPrayerData* _iplayer_data;
+	IArmData* _iarm_data;
 	std::unique_ptr<HitBox> _hit_box;
 	std::string _tag;
+	std::string _arm_tag;
 };

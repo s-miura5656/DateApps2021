@@ -7,15 +7,19 @@ Player::Player(std::string name)
 	PlayerParametor::Instance().CreateParametor(name);
 	arm = new Arm(name);
 	_tag = name;
+	_arm_tag = ARM_TAG + std::to_string(GetTagNum(_tag));
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_hit_box->Settags(name);
 	_hit_box->SetHitBoxScale(0.7f);
 	_iplayer_data = new IPrayerData;
+	_iarm_data = new IArmData;
 }
 
 Player::~Player()
 {
+	delete _iarm_data;
+	delete _iplayer_data;
 	delete arm;
 }
 
@@ -27,11 +31,6 @@ bool Player::FileInitialize(LPCTSTR& file)
 
 bool Player::Initialize()
 {
-	auto data = _iplayer_data;
-
-	_move_speed = (float)data->GetSpeed(_tag) - (float)data->GetWeight(_tag) / 1000.f;
-	_weight = data->GetWeight(_tag);
-
 	player->SetScale(player_scale);
 
 	arm->Initialize();
@@ -67,8 +66,6 @@ int Player::Update()
 		Move();
 	}
 
-	
-
 	return 0;
 }
 
@@ -81,9 +78,7 @@ void Player::Move()
 
 	player->SetRotation(0, angle, 0);
 
-	ChangePlayerSpeed();
-
-	player->Move(0, 0, _move_speed);
+	player->Move(0, 0, PlayerSpeed());
 
 	arm->SetPra(player_get_pos, angle);
 }
