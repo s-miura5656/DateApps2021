@@ -4,9 +4,10 @@
 
 PlayerManager::PlayerManager()
 {
-	for (int i = 0; i < player_max_count; i++)
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
+
 		players.push_back(new Player(name));
 	}
 
@@ -25,10 +26,7 @@ PlayerManager::~PlayerManager()
 
 bool PlayerManager::Initialize()
 {
-	//ゲームパッド
-	InputDevice.CreateGamePad(PLAYER_COUNT_MAX);
-
-	Material player_mtrl[4];
+	Material player_mtrl[PLAYER_COUNT_MAX];
 
 	player_mtrl[0].Diffuse = Color(1.0f, 0.0f, 0.0f, 1.0f);
 	player_mtrl[0].Ambient = Color(1.0f, 0.0f, 0.0f, 1.0f);
@@ -55,13 +53,12 @@ bool PlayerManager::Initialize()
 		std::string arm_name = ARM_TAG + std::to_string(i + 1);
 		players[i]->FileInitialize(model_file_name);
 		players[i]->PlayerColor(player_mtrl[i]);
-		players[i]->SetContorollerNumber(i);
 		players[i]->PlayerStartPosition(_start_pos[i]);
 		players[i]->Initialize();
 
-		PlayerParametor::Instance().CreateArmModel(ARM_TAG + std::to_string(i + 1));
+		ArmParametor::Instance().CreateParametor(ARM_TAG + std::to_string(i + 1));
 		i_player_data->SetPosition(name, players[i]->GetPos());
-		//i_player_data->SetArmModelPos(arm_name, players[i]->GetArmPos());
+		i_arm_data->SetPosition(arm_name, players[i]->GetPos());
 	}
 
     return true;
@@ -69,15 +66,14 @@ bool PlayerManager::Initialize()
 
 int PlayerManager::Update()
 {
-	auto player = players;
-
 	for (int i = 0; i < players.size(); ++i)
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
 		std::string arm_name = ARM_TAG + std::to_string(i + 1);
-		player[i]->Update();
-		i_player_data->SetPosition(name, player[i]->GetPos());
-		//i_player_data->SetArmModelPos(arm_name, players[i]->GetArmPos());
+		players[i]->Update();
+		i_player_data->SetPosition(name, players[i]->GetPos());
+		i_player_data->SetAngle(name, players[i]->GetAngle());
+		i_arm_data->SetPosition(arm_name, players[i]->GetPos());
 	}
 
     return 0;

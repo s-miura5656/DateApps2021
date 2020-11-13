@@ -164,13 +164,15 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="MyClass\Collision\Collision.cpp" />
-    <ClCompile Include="MyClass\Collision\CollisionBase.cpp" />
+    <ClCompile Include="MyClass\Collision\HitBox.cpp" />
+    <ClCompile Include="MyClass\Controller\ControllerConfig.cpp" />
+    <ClCompile Include="MyClass\Factorys\ItemFactory\ItemFactory.cpp" />
     <ClCompile Include="MyClass\Item\AttackPowerItem\AttackPowerItem.cpp" />
+    <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp" />
     <ClCompile Include="MyClass\Item\Item.cpp" />
     <ClCompile Include="MyClass\Item\ItemBase.cpp" />
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp" />
-    <ClCompile Include="MyClass\Managers\CollisionManager\CollisionManager.cpp" />
+    <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp" />
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp" />
     <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp" />
     <ClCompile Include="MyClass\Managers\SceneManager\SceneManager.cpp" />
@@ -185,7 +187,13 @@
     <ClCompile Include="MyClass\Scenes\Result\ResultScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Title\TitleScene.cpp" />
     <ClCompile Include="MyClass\Stage\StageBase.cpp" />
-    <ClCompile Include="MyClass\Stage\Stage_1\Stage.cpp" />
+    <ClCompile Include="MyClass\Stage\Stage_1\Block\Block.cpp" />
+    <ClCompile Include="MyClass\Stage\Stage_1\Floor\Floor.cpp" />
+    <ClCompile Include="MyClass\Stage\Stage_1\Metal\Metal.cpp" />
+    <ClCompile Include="MyClass\Stage\Stage_1\Pillar\Pillar.cpp" />
+    <ClCompile Include="MyClass\Ui\MaineUi.cpp" />
+    <ClCompile Include="MyClass\Ui\ResultUi.cpp" />
+    <ClCompile Include="MyClass\Ui\TitleUi.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -239,17 +247,19 @@
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameScene\SceneShared.hpp" />
     <ClInclude Include="GameScene\TemplateScene.hpp" />
-    <ClInclude Include="MyClass\Collision\Collision.h" />
-    <ClInclude Include="MyClass\Collision\CollisionBase.h" />
+    <ClInclude Include="MyClass\Collision\HitBox.h" />
+    <ClInclude Include="MyClass\Controller\ControllerConfig.h" />
     <ClInclude Include="MyClass\Data\GameData.h" />
     <ClInclude Include="MyClass\Data\IPlayerData.h" />
     <ClInclude Include="MyClass\Data\StructList.h" />
     <ClInclude Include="MyClass\Enum\Enum.h" />
+    <ClInclude Include="MyClass\Factorys\ItemFactory\ItemFactory.h" />
     <ClInclude Include="MyClass\Item\AttackPowerItem\AttackPowerItem.h" />
+    <ClInclude Include="MyClass\Item\HitPointItem\HitPointItem.h" />
     <ClInclude Include="MyClass\Item\Item.hpp" />
     <ClInclude Include="MyClass\Item\Itembase.hpp" />
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h" />
-    <ClInclude Include="MyClass\Managers\CollisionManager\CollisionManager.h" />
+    <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h" />
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h" />
     <ClInclude Include="MyClass\Managers\ManagerBase.h" />
     <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h" />
@@ -268,7 +278,14 @@
     <ClInclude Include="MyClass\Scenes\Result\ResultScene.h" />
     <ClInclude Include="MyClass\Scenes\Title\TitleScene.h" />
     <ClInclude Include="MyClass\Stage\StageBase.h" />
-    <ClInclude Include="MyClass\Stage\Stage_1\Stage.h" />
+    <ClInclude Include="MyClass\Stage\Stage_1\Block\Block.h" />
+    <ClInclude Include="MyClass\Stage\Stage_1\Floor\Floor.h" />
+    <ClInclude Include="MyClass\Stage\Stage_1\Metal\Metal.h" />
+    <ClInclude Include="MyClass\Stage\Stage_1\Pillar\Pillar.h" />
+    <ClInclude Include="MyClass\Ui\BaseUi.h" />
+    <ClInclude Include="MyClass\Ui\MaineUi.h" />
+    <ClInclude Include="MyClass\Ui\ResultUi.h" />
+    <ClInclude Include="MyClass\Ui\TitleUi.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="ESGLib.h" />
     <ClInclude Include="DirectX\Audio\DXAudio8.hpp" />

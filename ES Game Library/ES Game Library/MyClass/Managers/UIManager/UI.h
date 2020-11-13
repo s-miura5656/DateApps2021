@@ -1,19 +1,31 @@
 #pragma once
 #include"../../../ESGLib.h"
+#include "../ManagerBase.h"
 
-class UiManager
+class BaseUi;
+
+class MainUiManager : public ManagerBase
 {
-private:
 
 
 public:
-    UiManager();
-    ~UiManager();
 
+    //! @enum ÉVÅ[Éìñº
+    enum UiState
+    {
+        TITLE,
+        MAIN,
+        RESULT
+    };
 
-    void Initialize();
-    void Update();
-    void Draw();
+    MainUiManager();
+    ~MainUiManager();
 
-    FONT time_limit_font;
+    bool Initialize() override;
+    int Update() override;
+    void Draw2D() override;
+    void Draw3D() override {}
+
+private:
+    BaseUi*_ui;
 };

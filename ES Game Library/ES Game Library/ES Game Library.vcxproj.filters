@@ -190,6 +190,36 @@
     <Filter Include="Myclass\Item\AttackPoworItem">
       <UniqueIdentifier>{3d91bd96-9e23-4a1d-b8d4-d31942299724}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Stage\Stage_1\Metal">
+      <UniqueIdentifier>{846f067b-ed58-4dae-8348-8e11d31eb243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage\Stage_1\Block">
+      <UniqueIdentifier>{86846442-c0b1-442e-8238-643612c5990c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage\Stage_1\Floor">
+      <UniqueIdentifier>{a40b6061-4caf-4d71-bf9c-e3c3c50278c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage\Stage_1\Piller">
+      <UniqueIdentifier>{d7edd38a-d77c-47ec-a91f-7a0a64734f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Item\HitPointItem">
+      <UniqueIdentifier>{7756fb5d-bfdf-49ae-98ee-e835a5f980ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Factory">
+      <UniqueIdentifier>{1581982e-8180-4ba6-9da8-74d92b85b20c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Factory\ItemFactory">
+      <UniqueIdentifier>{69fd894e-92fd-41cd-9d97-556047c173c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\ControllerManager">
+      <UniqueIdentifier>{cc293e60-72d0-4f57-8ce0-c22a34510d69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Controller">
+      <UniqueIdentifier>{9a6a0ddd-5308-48f6-8e6f-fbe6dbd184e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Ui">
+      <UniqueIdentifier>{54aad0ac-4238-4349-b700-20af82a6ef51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -355,17 +385,8 @@
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp">
       <Filter>Myclass\Managers\ItemManager</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Collision\Collision.cpp">
-      <Filter>Myclass\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Collision\CollisionBase.cpp">
-      <Filter>Myclass\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp">
       <Filter>Myclass\Managers\PlayerManager</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Managers\CollisionManager\CollisionManager.cpp">
-      <Filter>Myclass\Managers\CollisionManager</Filter>
     </ClCompile>
     <ClCompile Include="MyClass\Players\Player\Player.cpp">
       <Filter>Myclass\Players\Player</Filter>
@@ -375,9 +396,6 @@
     </ClCompile>
     <ClCompile Include="MyClass\Stage\StageBase.cpp">
       <Filter>Myclass\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Stage\Stage_1\Stage.cpp">
-      <Filter>Myclass\Stage\Stage_1</Filter>
     </ClCompile>
     <ClCompile Include="MyClass\Managers\StageManager\StageManager.cpp">
       <Filter>Myclass\Managers\StageManager</Filter>
@@ -399,6 +417,42 @@
     </ClCompile>
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp">
       <Filter>Myclass\Item\SpeedItem</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Collision\HitBox.cpp">
+      <Filter>Myclass\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Stage_1\Block\Block.cpp">
+      <Filter>Myclass\Stage\Stage_1\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Stage_1\Floor\Floor.cpp">
+      <Filter>Myclass\Stage\Stage_1\Floor</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Stage_1\Metal\Metal.cpp">
+      <Filter>Myclass\Stage\Stage_1\Metal</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Stage_1\Pillar\Pillar.cpp">
+      <Filter>Myclass\Stage\Stage_1\Piller</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp">
+      <Filter>Myclass\Item\HitPointItem</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Factorys\ItemFactory\ItemFactory.cpp">
+      <Filter>Myclass\Factory\ItemFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp">
+      <Filter>Myclass\Managers\ControllerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Controller\ControllerConfig.cpp">
+      <Filter>Myclass\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Ui\MaineUi.cpp">
+      <Filter>Myclass\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Ui\ResultUi.cpp">
+      <Filter>Myclass\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Ui\TitleUi.cpp">
+      <Filter>Myclass\Ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -586,17 +640,8 @@
     <ClInclude Include="MyClass\Managers\ManagerBase.h">
       <Filter>Myclass\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Collision\Collision.h">
-      <Filter>Myclass\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Collision\CollisionBase.h">
-      <Filter>Myclass\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h">
       <Filter>Myclass\Managers\PlayerManager</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Managers\CollisionManager\CollisionManager.h">
-      <Filter>Myclass\Managers\CollisionManager</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Players\Player\Player.h">
       <Filter>Myclass\Players\Player</Filter>
@@ -615,9 +660,6 @@
     </ClInclude>
     <ClInclude Include="MyClass\Stage\StageBase.h">
       <Filter>Myclass\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Stage\Stage_1\Stage.h">
-      <Filter>Myclass\Stage\Stage_1</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Managers\StageManager\StageManager.h">
       <Filter>Myclass\Managers\StageManager</Filter>
@@ -645,6 +687,45 @@
     </ClInclude>
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h">
       <Filter>Myclass\Item\SpeedItem</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Collision\HitBox.h">
+      <Filter>Myclass\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Stage_1\Block\Block.h">
+      <Filter>Myclass\Stage\Stage_1\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Stage_1\Floor\Floor.h">
+      <Filter>Myclass\Stage\Stage_1\Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Stage_1\Metal\Metal.h">
+      <Filter>Myclass\Stage\Stage_1\Metal</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Stage_1\Pillar\Pillar.h">
+      <Filter>Myclass\Stage\Stage_1\Piller</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Item\HitPointItem\HitPointItem.h">
+      <Filter>Myclass\Item\HitPointItem</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Factorys\ItemFactory\ItemFactory.h">
+      <Filter>Myclass\Factory\ItemFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h">
+      <Filter>Myclass\Managers\ControllerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Controller\ControllerConfig.h">
+      <Filter>Myclass\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Ui\BaseUi.h">
+      <Filter>Myclass\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Ui\MaineUi.h">
+      <Filter>Myclass\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Ui\ResultUi.h">
+      <Filter>Myclass\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Ui\TitleUi.h">
+      <Filter>Myclass\Ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

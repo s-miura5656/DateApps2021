@@ -1,6 +1,7 @@
 #include "../../ESGLib.h"
-//#include "../Enum/Enum.h"
 #include "Arm/Arm.h"
+#include "../Collision/HitBox.h"
+#include "../Data/IPlayerData.h"
 
 class PlayerBase
 {
@@ -13,28 +14,26 @@ public:
 	virtual void Draw2D();
 	virtual void Draw3D();
 
-	//OrientedBoundingBox PlayerGetObb() { return player_obb; }
-	
 	Vector3 GetPos() { return player->GetPosition(); }
-	//Vector3 GetArmPos() { return rocket_punch->GetPosition(); }
+	float GetAngle() { return angle; }
 	MODEL GetPlayer() { return player; }
+	
+	float PlayerSpeed();
 
 protected:
 	MODEL player;
-	//MODEL rocket_punch;
 
 	const float scale = 0.004f;
 	const float player_scale = 1.f;
-	float angle;
+	float angle   = 0.f;
+	float _speed  = 0.f;
+	float _weight = 0.f;
+	float _move_speed = 0.f;
 
-	SimpleShape shape;
-
-	MODEL player_hitbox;
-	//OrientedBoundingBox player_obb;
-
-	GamePadState  pad_state;
-	GamePadBuffer pad_buffer;
-
-	Arm arm;
-
+	ArmBase* arm;
+	IPrayerData* _iplayer_data;
+	IArmData* _iarm_data;
+	std::unique_ptr<HitBox> _hit_box;
+	std::string _tag;
+	std::string _arm_tag;
 };
