@@ -10,6 +10,8 @@ Player::Player(std::string name)
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_hit_box->Settags(name);
+	_hit_box->SetHitBoxScale(0.7f);
+	_iplayer_data = new IPrayerData;
 }
 
 Player::~Player()
@@ -25,8 +27,10 @@ bool Player::FileInitialize(LPCTSTR& file)
 
 bool Player::Initialize()
 {
-	//ゲームパッド
-	move_speed = 0.05f;
+	auto data = _iplayer_data;
+
+	_move_speed = (float)data->GetSpeed(_tag) - (float)data->GetWeight(_tag) / 1000.f;
+	_weight = data->GetWeight(_tag);
 
 	player->SetScale(player_scale);
 
@@ -47,9 +51,13 @@ int Player::Update()
 	auto pad = ControllerManager::Instance().GetController(_tag);
 
 	//ロケットパンチ
-	if (pad->GetButtonBuffer(GamePad_Button1) && arm->GetArmState() == NO_PUNCH)
+	if (pad->GetButtonState(GamePad_Button1) && arm->GetArmState() == NO_PUNCH)
 	{
 		arm->ArmShoot(PUNCH);
+	}
+	else if (!pad->GetButtonState(GamePad_Button1) && arm->GetArmState() == PUNCH)
+	{
+		arm->ArmShoot(RETURN_PUNCH);
 	}
 
 	//プレイヤー移動
@@ -72,7 +80,11 @@ void Player::Move()
 		-double(pad->GetPadStateY() - Axis_Center) / double(Axis_Max - Axis_Center));
 
 	player->SetRotation(0, angle, 0);
-	player->Move(0, 0, move_speed);
+
+	ChangePlayerSpeed();
+
+	player->Move(0, 0, _move_speed);
 
 	arm->SetPra(player_get_pos, angle);
 }
+

@@ -29,5 +29,4 @@ private:
 	Vector3 player_get_pos;
 	Vector3 player_get_rot;
 
-	float move_speed;
 };

@@ -21,7 +21,7 @@ public:
 protected:
 	int _hit_point    = 1000;
 	int _attack_powor = 100;
-	int _speed		  = 50;
+	int _speed		  = 10;
 
 	MODEL _box;
 	Vector3 _position;

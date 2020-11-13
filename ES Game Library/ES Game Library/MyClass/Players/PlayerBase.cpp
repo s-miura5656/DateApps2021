@@ -22,3 +22,17 @@ void PlayerBase::Draw3D()
 	_hit_box->Draw3D();
 	arm->Draw();
 }
+
+void PlayerBase::ChangePlayerSpeed()
+{
+	auto data = _iplayer_data;
+
+	if (_move_speed == data->GetSpeed(_tag) && _weight == data->GetWeight(_tag))
+		return;
+
+	_move_speed = (float)data->GetSpeed(_tag) / (float)data->GetWeight(_tag);
+
+	_move_speed /= 100.f;
+
+	_move_speed *= 5.f;
+}
