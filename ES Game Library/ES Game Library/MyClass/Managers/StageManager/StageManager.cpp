@@ -15,10 +15,6 @@ StageManager::~StageManager()
 
 bool StageManager::Initialize()
 {
-	stages.emplace("FieldBase", new Floor);
-	stages["FieldBase"]->Initialize();
-	stages["FieldBase"]->SetPosition(Vector3_Zero);
-
 	FILE* fp = fopen("MapSprite/mapenglish.csv","r");
 
 	//マップデータを読み込む
@@ -43,6 +39,10 @@ bool StageManager::Initialize()
 	//ファイルを閉じる
 	fclose(fp);
 	
+	stages.emplace("Field", new Floor);
+	stages["Field"]->Initialize();
+	stages["Field"]->SetPosition(Vector3_Zero);
+
 	for (int z = 0; z < mapdate.size(); z++)
 	{
 		for (int x = 0; x < mapdate[z].size(); x++)
@@ -111,5 +111,5 @@ void StageManager::Draw3D()
 		}
 	}
 
-	stages["FieldBase"]->Draw3D();
+	stages["Field"]->Draw3D();
 }

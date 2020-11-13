@@ -28,7 +28,7 @@ public:
 	bool GetDestructionFlag() { return _destruction_flag; }
 protected:
 	const float scale = 0.0254f;//!基準のスケールを設定する
-	bool _destruction_flag;//!falseで破壊される破壊フラグ
+	bool _destruction_flag = true;//!falseで破壊される破壊フラグ
 	MODEL block_base;//!継承されるモデルのベース
 	Vector3 _position;//!継承されるモデルのポジション
 private:
