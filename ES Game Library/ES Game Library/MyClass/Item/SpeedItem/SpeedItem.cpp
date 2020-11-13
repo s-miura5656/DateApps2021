@@ -24,7 +24,7 @@ bool SpeedItem::Initialize()
 	material.Diffuse = Color(0.0f, 0.0f, 1.0f);
 	material.Ambient = Color(0.0f, 0.0f, 0.75f);
 
-	SphereShape();
+	BoxShape();
 
 	_box->SetMaterial(material);
 

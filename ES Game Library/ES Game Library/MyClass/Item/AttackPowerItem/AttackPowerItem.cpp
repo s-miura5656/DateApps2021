@@ -24,7 +24,7 @@ bool AttackPowerItem::Initialize()
 	material.Diffuse = Color(1.0f, 0.0f, 0.0f);
 	material.Ambient = Color(0.75f, 0.0f, 0.0f);
 
-	SphereShape();
+	BoxShape();
 
 	_box->SetMaterial(material);
 
