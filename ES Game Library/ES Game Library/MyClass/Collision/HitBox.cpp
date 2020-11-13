@@ -30,11 +30,6 @@ void HitBox::Draw3D()
 #endif
 }
 
-void HitBox::DrawAlpha3D() 
-{
-	//
-}
-
 void HitBox::Settags(string tags) 
 {
 	tag = tags;
@@ -56,13 +51,17 @@ void HitBox::SetHitBox(float width, float height, float depth)
 	_model = GraphicsDevice.CreateModelFromSimpleShape(shape);
 	//Materialİ’è
 	Material _mtrl;
-	_mtrl.Emissive = Color(color);
+	_mtrl.Diffuse = Color(1.f, 1.f, 1.f);
+	_mtrl.Ambient = Color(1.f, 1.f, 1.f);
+	_mtrl.Specular = Color(1.f, 1.f, 1.f);
 	_model->SetMaterial(_mtrl);
 }
 
 void HitBox::SetColor(Vector3 colors) {
 	Material _mtrl;
-	_mtrl.Emissive = Color(colors);
+	_mtrl.Diffuse = Color(1.f, 1.f, 1.f);
+	_mtrl.Ambient = Color(1.f, 1.f, 1.f);
+	_mtrl.Specular = Color(1.f, 1.f, 1.f);
 	_model->SetMaterial(_mtrl);
 }
 
@@ -182,11 +181,12 @@ HitBox* HitBox::Get_Tag_HitBox(std::string tag)
 bool HitBox::IsHitObjects(std::string tags) {
 	ASSERT(Tag_Sarch(tags) && "tag‚ª‘¶İ‚µ‚Ä‚¢‚È‚¢!");
 	bool result = false;
+	_HitBox_list;
 	std::list<HitBox*> HitList = HitHitBoxlist();
-	for (auto&& other : HitList) {
-		if (other->tag == tags) {
+	for (auto&& other : HitList) 
+	{
+		if (other->tag == tags)
 			result = true;
-		}
 	}
 	return result;
 }

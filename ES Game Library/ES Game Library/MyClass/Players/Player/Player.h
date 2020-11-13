@@ -6,13 +6,11 @@
 #pragma once
 
 #include "../PlayerBase.h"
-#include "../../Managers/ControllerManager/ContorollerManager.h"
-
 
 class Player : public PlayerBase
 {
 public:
-	Player (std::string name, std::string arm_name);
+	Player (std::string name);
 	~Player ();
 
 	bool FileInitialize(LPCTSTR& file);
@@ -26,12 +24,10 @@ public:
 	}
 
 	void PlayerStartPosition(Vector3& pos) { player->SetPosition(pos); }
-	void SetContorollerNumber(int& pad_num) { pad_number = pad_num; }
 
 private:
 	Vector3 player_get_pos;
 	Vector3 player_get_rot;
 
 	float move_speed;
-	int   pad_number;
 };

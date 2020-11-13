@@ -27,7 +27,7 @@ public:
 	MODEL   GetArm()      { return arm_model; }
 
 protected:
-	std::string _player_name;
+	std::string _player_tag;
 	MODEL arm_model;
 
 	int arm_state;
@@ -51,5 +51,5 @@ protected:
 	//MODEL arm_hitbox;
 	//OrientedBoundingBox arm_obb;
 	std::unique_ptr<HitBox> _hit_box;
-
+	std::string _tag;
 };

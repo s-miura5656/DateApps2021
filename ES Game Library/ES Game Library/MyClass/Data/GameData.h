@@ -1,6 +1,18 @@
 #pragma once
 
 #include "../../ESGLib.h"
+#include <sstream>
+
+static int GetTagNum(std::string tag) 
+{
+	int num = tag.find("_");
+
+	tag.erase(0, num + 1);
+
+	std::istringstream(tag) >> num;
+
+	return num;
+}
 
 //! プレイヤーの最大数
 static const auto PLAYER_COUNT_MAX = 4;
@@ -14,9 +26,6 @@ static const std::string ITEM_TAG	= "Item_";
 static const std::string POWOR_ITEM_TAG    = "AttackItem_";
 static const std::string SPEED_ITEM_TAG	   = "SpeedItem_";
 static const std::string HITPOINT_ITEM_TAG = "HitPointItem_";
-
-//! アイテムの状態ステート
-enum { OK, END };
 
 namespace PlayerEnum {
 	//プレイヤーのアニメーション

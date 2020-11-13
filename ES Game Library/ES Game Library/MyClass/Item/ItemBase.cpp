@@ -17,6 +17,7 @@ void ItemBase::Draw2D()
 
 void ItemBase::Draw3D()
 {
+	_hit_box->SetHitBoxPosition(_position);
 	_sphere->SetPosition(_position);
 	_sphere->Draw();
 }

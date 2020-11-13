@@ -1,12 +1,15 @@
 #include "Player.h"
 #include "../PlayerParametor/PlayerParametor.h"
+#include "../../Managers/ControllerManager/ContorollerManager.h"
 
-
-Player::Player(std::string name, std::string arm_name)
+Player::Player(std::string name)
 {
 	PlayerParametor::Instance().CreateParametor(name);
-	arm = new Arm(name, arm_name);
-	
+	arm = new Arm(name);
+	_tag = name;
+	_hit_box.reset(new HitBox());
+	_hit_box->Init();
+	_hit_box->Settags(name);
 }
 
 Player::~Player()
@@ -29,6 +32,8 @@ bool Player::Initialize()
 
 	arm->Initialize();
 
+	ControllerManager::Instance().CreateGamePad(_tag);
+
 	return true;
 }
 
@@ -39,26 +44,32 @@ int Player::Update()
 
 	arm->Update();
 
+	auto pad = ControllerManager::Instance().GetController(_tag);
+
 	//ロケットパンチ
-	if (ControllerManager::Instance().PadBuffer().IsPressed(GamePad_Button1) && arm->GetArmState() == NO_PUNCH)
+	if (ControllerManager::Instance().GetController(_tag)->GetButtonBuffer(GamePad_Button1) && arm->GetArmState() == NO_PUNCH)
 	{
 		arm->ArmShoot(PUNCH);
 	}
 
 	//プレイヤー移動
-	if (ControllerManager::Instance().PadState().X != Axis_Center && arm->GetArmState() == NO_PUNCH ||
-		ControllerManager::Instance().PadState().Y != Axis_Center && arm->GetArmState() == NO_PUNCH)
+	if (pad->GetPadStateX() != Axis_Center && arm->GetArmState() == NO_PUNCH ||
+		pad->GetPadStateY() != Axis_Center && arm->GetArmState() == NO_PUNCH)
 	{
 		Move();
 	}
+
+	
 
 	return 0;
 }
 
 void Player::Move() 
 {
-	angle = MathHelper_Atan2(double(ControllerManager::Instance().PadState().X - Axis_Center) / double(Axis_Max - Axis_Center),
-		-double(ControllerManager::Instance().PadState().Y - Axis_Center) / double(Axis_Max - Axis_Center));
+	auto pad = ControllerManager::Instance().GetController(_tag);
+
+	angle = MathHelper_Atan2(double(pad->GetPadStateX() - Axis_Center) / double(Axis_Max - Axis_Center),
+		-double(pad->GetPadStateY() - Axis_Center) / double(Axis_Max - Axis_Center));
 
 	player->SetRotation(0, angle, 0);
 	player->Move(0, 0, move_speed);

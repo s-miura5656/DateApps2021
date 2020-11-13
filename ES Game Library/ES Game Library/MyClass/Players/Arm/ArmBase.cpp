@@ -1,4 +1,5 @@
 #include "ArmBase.h"
+#include "../../Managers/ControllerManager/ContorollerManager.h"
 
 ArmBase::ArmBase()
 {
@@ -15,8 +16,8 @@ int ArmBase::Update()
 	arm_get_pos = arm_model->GetPosition();
 	arm_get_rot = arm_model->GetRotation();
 
-	auto player_pos = _iplayer_data->GetPosition(_player_name);
-	player_angle = _iplayer_data->GetAngle(_player_name);
+	auto player_pos = _iplayer_data->GetPosition(_player_tag);
+	player_angle = _iplayer_data->GetAngle(_player_tag);
 
 	dist = Vector3_Distance(player_pos, arm_get_pos);
 
@@ -31,12 +32,12 @@ int ArmBase::Update()
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
 
-		if (_player_name == name)
+		if (_player_tag == name)
 			continue;
 
 		if (_hit_box->IsHitObjects(name))
 		{
-			exit(0);
+			//exit(0);
 		}
 	}
 	
@@ -49,8 +50,6 @@ int ArmBase::Update()
 			arm_state = NO_PUNCH;
 		}
 	}
-
-
 
 	/*if (arm_state == RETURN_PUNCH)
 	{
@@ -79,6 +78,9 @@ int ArmBase::Update()
 
 void ArmBase::Draw()
 {
+	auto collision_pos = arm_model->GetPosition();
+	collision_pos.y = arm_model->GetScale().y / 2;
+	_hit_box->SetHitBoxPosition(collision_pos);
 	arm_model->Draw();
 }
 
@@ -95,8 +97,10 @@ void ArmBase::ArmShoot(int flag)
 
 void ArmBase::Move(float speed)
 {
-	player_angle = MathHelper_Atan2(double(ControllerManager::Instance().PadState().X2 - Axis_Center) / double(Axis_Max - Axis_Center),
-		-double(ControllerManager::Instance().PadState().Y3 - Axis_Center) / double(Axis_Max - Axis_Center));
+	auto pad = ControllerManager::Instance().GetController(_tag);
+
+	player_angle = MathHelper_Atan2(double(pad->GetPadStateX() - Axis_Center) / double(Axis_Max - Axis_Center),
+		-double(pad->GetPadStateY() - Axis_Center) / double(Axis_Max - Axis_Center));
 
 	arm_model->SetRotation(0, player_angle, 0);
 	arm_model->Move(0, 0, speed);

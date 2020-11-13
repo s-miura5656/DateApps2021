@@ -1,12 +1,14 @@
 #include"ControllerConfig.h"
 
-::KeyboardBuffer ControllerConfig::keyboardBuffer;
+::KeyboardBuffer Controller::keyboardBuffer;
 
 
-bool ControllerConfig::Initialize()
+bool Controller::Initialize()
 {
 	return true;
 }
-void  ControllerConfig::Update()
+
+void  Controller::Update()
 {
+
 }
