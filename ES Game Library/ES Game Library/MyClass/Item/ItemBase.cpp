@@ -7,8 +7,6 @@ bool ItemBase::Initialize()
 
 int ItemBase::Update()
 {
-	RotationItem();
-
 	return 0;
 }
 
@@ -27,7 +25,7 @@ void ItemBase::Draw3D()
 	_box->Draw();
 }
 
-void ItemBase::SphereShape()
+void ItemBase::BoxShape()
 {
 	SimpleShape shape_box;
 

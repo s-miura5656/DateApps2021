@@ -13,7 +13,7 @@ struct PlayerParam {
 
 struct ArmParam {
 	Vector3 position = Vector3_Zero;
-	float   angle = 0;
+	float   angle = 0.f;
 	int     attack_powor = 100;
 	int     weight = 50;
 	int     tunns = 5;

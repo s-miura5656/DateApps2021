@@ -9,8 +9,6 @@ AttackPowerItem::AttackPowerItem(Vector3 position, std::string name)
 	_hit_box->Settags(name);
 	_hit_box->SetHitBox(1, 1, 1);
 	_iplayer_data = new IPrayerData;
-
-	_rotation = 0.0f;
 }
 
 AttackPowerItem::~AttackPowerItem()
@@ -26,7 +24,7 @@ bool AttackPowerItem::Initialize()
 	material.Diffuse = Color(1.0f, 0.0f, 0.0f);
 	material.Ambient = Color(0.75f, 0.0f, 0.0f);
 
-	SphereShape();
+	BoxShape();
 
 	_box->SetMaterial(material);
 
@@ -35,6 +33,7 @@ bool AttackPowerItem::Initialize()
 
 int AttackPowerItem::Update()
 {
+	RotationItem();
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{

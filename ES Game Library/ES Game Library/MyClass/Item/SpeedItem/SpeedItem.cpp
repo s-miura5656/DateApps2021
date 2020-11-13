@@ -9,8 +9,6 @@ SpeedItem::SpeedItem(Vector3 position, std::string name)
 	_hit_box->Settags(name);
 	_hit_box->SetHitBox(1, 1, 1);
 	_iplayer_data = new IPrayerData;
-
-	_rotation = 0.0f;
 }
 
 SpeedItem::~SpeedItem()
@@ -20,13 +18,13 @@ SpeedItem::~SpeedItem()
 
 bool SpeedItem::Initialize()
 {
-	_speed = 50.f;
+	_speed = 10;
 
 	Material material;
 	material.Diffuse = Color(0.0f, 0.0f, 1.0f);
 	material.Ambient = Color(0.0f, 0.0f, 0.75f);
 
-	SphereShape();
+	BoxShape();
 
 	_box->SetMaterial(material);
 

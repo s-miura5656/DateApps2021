@@ -1,26 +1,31 @@
 #include "UI.h"
-#include"../TimeManager/Time.h"
+#include"../../Ui/MaineUi.h"
+#include"../../Ui/ResultUi.h"
+#include"../../Ui/TitleUi.h"
 
-UiManager::UiManager()
+MainUiManager::MainUiManager()
 {
-
+	_ui = new MaineUi;
 }
 
-UiManager::~UiManager()
+MainUiManager::~MainUiManager()
 {
-
+	delete _ui;
 }
 
-void UiManager::Initialize()
+bool MainUiManager::Initialize()
 {
-	time_limit_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
+	_ui->Initialize();
+	return true;
 }
-void UiManager::Update()
+
+int MainUiManager::Update()
 {
-
-
+	_ui->Update();
+	return 0;
 }
-void UiManager::Draw()
+
+void MainUiManager::Draw2D()
 {
-	SpriteBatch.DrawString(time_limit_font, Vector2(0, 100), Color(0, 0, 255), _T("ƒŠƒAƒ‹ƒ^ƒCƒ€:%d"), (TimeManager::Instance().time));
+	_ui->Draw2D();
 }

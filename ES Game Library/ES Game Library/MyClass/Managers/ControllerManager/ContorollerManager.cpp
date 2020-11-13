@@ -12,7 +12,7 @@ ControllerManager::~ControllerManager()
 
 void ControllerManager::SetGamePadMaxCount(int pad_count)
 {
-	InputDevice.CreateGamePad(PLAYER_COUNT_MAX);
+	InputDevice.CreateGamePad(pad_count);
 }
 
 void ControllerManager::CreateGamePad(std::string player_tag)

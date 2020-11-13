@@ -8,8 +8,6 @@ HitPointItem::HitPointItem(Vector3 position, std::string name)
 	_hit_box->Init();
 	_hit_box->Settags(name);
 	_iplayer_data = new IPrayerData;
-
-	_rotation = 0.0f;
 }
 
 HitPointItem::~HitPointItem()
@@ -26,7 +24,7 @@ bool HitPointItem::Initialize()
 	material.Diffuse = Color(0.0f, 1.0f, 0.0f);
 	material.Ambient = Color(0.0f, 0.75f, 0.0f);
 
-	SphereShape();
+	BoxShape();
 
 	_box->SetMaterial(material);
 	

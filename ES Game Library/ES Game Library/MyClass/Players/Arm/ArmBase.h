@@ -17,11 +17,10 @@ public:
 	virtual int  Update();
 	virtual void Draw();
 
-	//OrientedBoundingBox ArmGetObb() { return arm_obb; }
 	void    SetPra(Vector3 pos, float angle);
 	void    ArmShoot(int flag);
 	void    Move(float speed);
-
+	void    MoveProtoType();
 	int     GetArmState() { return arm_state; }
 	Vector3 ArmGetPos()   { return arm_model->GetPosition(); }
 	MODEL   GetArm()      { return arm_model; }
@@ -40,16 +39,13 @@ protected:
 
 	float dist;
 
-	SimpleShape shape;
-
 	Vector3 arm_get_pos;
 	Vector3 arm_get_rot;
 
 	IPrayerData* _iplayer_data;
 
 	float player_angle;
-	//MODEL arm_hitbox;
-	//OrientedBoundingBox arm_obb;
+	
 	std::unique_ptr<HitBox> _hit_box;
 	std::string _tag;
 };
