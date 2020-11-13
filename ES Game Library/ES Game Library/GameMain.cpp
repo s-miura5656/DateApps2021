@@ -12,11 +12,9 @@ bool GameMain::Initialize()
 	// TODO: Add your initialization logic here
 	WindowTitle(_T("ES Game Library"));
 	_scene_manager = new SceneManager;
-	_ui_manager = new UiManager;
 
 	TimeManager::Instance().Initialize();
 	_scene_manager->Initialize();
-	_ui_manager->Initialize();
 	return true;
 }
 
@@ -27,7 +25,6 @@ bool GameMain::Initialize()
 void GameMain::Finalize()
 {
 	// TODO: Add your finalization logic here
-	delete _ui_manager;
 	delete _scene_manager;
 }
 
@@ -44,7 +41,6 @@ int GameMain::Update()
 	//_time_manager->Update();
 	TimeManager::Instance().Update();
 	_scene_manager->Update();
-
 	return 0;
 }
 
@@ -63,7 +59,6 @@ void GameMain::Draw()
 	SpriteBatch.Begin();
 
 	_scene_manager->Draw2D();
-	_ui_manager->Draw();
 
 	SpriteBatch.End();
 

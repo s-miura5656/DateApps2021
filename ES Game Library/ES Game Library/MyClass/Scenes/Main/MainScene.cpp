@@ -1,14 +1,17 @@
 #include "MainScene.h"
 #include "../../Managers/ItemManager/ItemManager.h"
 #include "../../Managers/PlayerManager/PlayerManager.h"
+#include "../../Managers/CollisionManager/CollisionManager.h"
 #include "../../Managers/StageManager/StageManager.h"
-#include "../../Managers/ControllerManager/ContorollerManager.h"
+#include "../../Managers/UIManager/UI.h"
 
 MainScene::MainScene()
 {
 	_managers.push_back(new StageManager);
 	_managers.push_back(new PlayerManager);
 	_managers.push_back(new ItemManager);
+	_managers.push_back(new CollisionManager);
+	_managers.push_back(new MainUiManager);
 }
 
 MainScene::~MainScene()
@@ -21,11 +24,6 @@ MainScene::~MainScene()
 
 bool MainScene::Initialize()
 {	
-	/**
-	* @brief コントローラーの使用最大数設定
-	*/
-	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
-
 	auto _temporary_managers = _managers;
 
 	for (auto&& manager : _temporary_managers)
