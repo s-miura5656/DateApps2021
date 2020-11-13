@@ -13,6 +13,6 @@ class Floor :public StageBase
 public:
 	Floor();
 	~Floor();
-	bool Initialize();
+	bool Initialize() override;
 private:
 };

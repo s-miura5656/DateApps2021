@@ -13,6 +13,6 @@ class Block :public StageBase
 public:
 	Block();
 	~Block();
-	bool Initialize();
+	bool Initialize() override;
 private:
 };

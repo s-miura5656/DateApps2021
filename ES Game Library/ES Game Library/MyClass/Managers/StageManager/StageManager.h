@@ -23,9 +23,6 @@ public:
 	void Draw3D() override;
 
 private:
-	Block* block;//!破壊できるブロックのクラス
-	Pillar* pillar;//!破壊できないブロックのクラス
-	Metal* metal;//!外壁のクラス
-	Floor*floor;//!床のクラス
+	std::map<std::string, StageBase*> stages;
 	std::vector<cstring> mapdate;//!マップデータの読み込み
 };

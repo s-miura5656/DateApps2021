@@ -13,7 +13,7 @@ class Pillar :public StageBase
 public:
 	Pillar();
 	~Pillar();
-	bool Initialize();
+	bool Initialize() override;
 
 
 private:

@@ -13,7 +13,7 @@ class Metal :public StageBase
 public:
 	Metal();
 	~Metal();
-	bool Initialize();
+	bool Initialize() override;
 
 
 private:

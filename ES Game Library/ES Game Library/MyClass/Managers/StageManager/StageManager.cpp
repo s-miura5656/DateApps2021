@@ -5,43 +5,22 @@
 
 StageManager::StageManager()
 {
-	block = nullptr;
-	pillar = nullptr;
-	metal = nullptr;
-	floor = nullptr;
+	
 }
 
 StageManager::~StageManager()
 {
-	delete floor;
-	delete metal;
-	delete pillar;
-	delete block;
+	
 }
 
 bool StageManager::Initialize()
 {
-	block = new Block();
-	if (!(block->Initialize()))
-	{
-		return false;
-	}
-	pillar = new Pillar();
-	if (!(pillar->Initialize()))
-	{
-		return false;
-	}
-	metal = new Metal();
-	if (!(metal->Initialize()))
-	{
-		return false;
-	}
-	floor = new Floor();
-	if (!(floor->Initialize()))
-	{
-		return false;
-	}
+	stages.emplace("FieldBase", new Floor);
+	stages["FieldBase"]->Initialize();
+	stages["FieldBase"]->SetPosition(Vector3_Zero);
+
 	FILE* fp = fopen("MapSprite/mapenglish.csv","r");
+
 	//マップデータを読み込む
 	char lordchar[CHAR_MAX + 1];
 
@@ -49,6 +28,7 @@ bool StageManager::Initialize()
 	{
 		mapdate.push_back(lordchar);
 	}
+
 	//カンマを探索してカンマを消す
 	for (int z = 0; z < mapdate.size(); z++)
 	{
@@ -62,8 +42,34 @@ bool StageManager::Initialize()
 	}
 	//ファイルを閉じる
 	fclose(fp);
-	//床のpositoinを設定する
-	floor->SetPosition(Vector3(0, 0, 0));
+	
+	for (int z = 0; z < mapdate.size(); z++)
+	{
+		for (int x = 0; x < mapdate[z].size(); x++)
+		{
+			switch (mapdate[z][x]) {
+			case 'b':
+				stages.emplace("Block" + std::to_string(z) + std::to_string(x), new Block);
+				stages["Block" + std::to_string(z) + std::to_string(x)]->Initialize();
+				break;
+			case 'i':
+				stages.emplace("Pillar" + std::to_string(z) + std::to_string(x), new Pillar);
+				stages["Pillar" + std::to_string(z) + std::to_string(x)]->Initialize();
+				break;
+			case 'o':
+				stages.emplace("Metal" + std::to_string(z) + std::to_string(x), new Metal);
+				stages["Metal" + std::to_string(z) + std::to_string(x)]->Initialize();
+				break;
+			default:
+				//どれも該当しないとき
+				//今回は何もしない
+				break;
+			}
+		}
+	}
+
+	int size = stages.size();
+
 	return true;
 }
 
@@ -86,16 +92,16 @@ void StageManager::Draw3D()
 		{
 			switch (mapdate[z][x]) {
 			case 'b':
-				block->SetPosition(Vector3(x - 7, 0, -z + 6));
-				block->Draw3D();
+				stages["Block" + std::to_string(z) + std::to_string(x)]->SetPosition(Vector3(x - 7, 0, -z + 6));
+				stages["Block" + std::to_string(z) + std::to_string(x)]->Draw3D();
 				break;
 			case 'i':
-				pillar->SetPosition(Vector3(x - 7, 0, -z + 6));
-				pillar->Draw3D();
+				stages["Pillar" + std::to_string(z) + std::to_string(x)]->SetPosition(Vector3(x - 7, 0, -z + 6));
+				stages["Pillar" + std::to_string(z) + std::to_string(x)]->Draw3D();
 				break;
 			case 'o':
-				metal->SetPosition(Vector3(x - 7, 0, -z + 6));
-				metal->Draw3D();
+				stages["Metal" + std::to_string(z) + std::to_string(x)]->SetPosition(Vector3(x - 7, 0, -z + 6));
+				stages["Metal" + std::to_string(z) + std::to_string(x)]->Draw3D();
 				break;
 			default:
 				//どれも該当しないとき
@@ -104,5 +110,6 @@ void StageManager::Draw3D()
 			}
 		}
 	}
-	floor->Draw3D();
+
+	stages["FieldBase"]->Draw3D();
 }

@@ -13,7 +13,7 @@ public:
 	StageBase();
 	virtual ~StageBase();
 
-	virtual bool Initialize();
+	virtual bool Initialize() { return true; };
 	virtual int Update();
 	virtual void Draw3D();
 	Material GetMaterial();
