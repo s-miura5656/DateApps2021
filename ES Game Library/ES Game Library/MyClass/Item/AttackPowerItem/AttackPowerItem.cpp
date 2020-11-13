@@ -40,11 +40,10 @@ int AttackPowerItem::Update()
 		if (_hit_box->IsHitObjects(name))
 		{
 			ItemEffect(name);
-			return END;
+			Removeflag = true;
+			break;
 		}
 	}
 
-	Removeflag = true;
-
-	return OK;
+	return 0;
 }

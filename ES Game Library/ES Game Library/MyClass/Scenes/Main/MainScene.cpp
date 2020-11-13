@@ -2,6 +2,7 @@
 #include "../../Managers/ItemManager/ItemManager.h"
 #include "../../Managers/PlayerManager/PlayerManager.h"
 #include "../../Managers/StageManager/StageManager.h"
+#include "../../Managers/ControllerManager/ContorollerManager.h"
 
 MainScene::MainScene()
 {
@@ -20,6 +21,11 @@ MainScene::~MainScene()
 
 bool MainScene::Initialize()
 {	
+	/**
+	* @brief コントローラーの使用最大数設定
+	*/
+	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
+
 	auto _temporary_managers = _managers;
 
 	for (auto&& manager : _temporary_managers)

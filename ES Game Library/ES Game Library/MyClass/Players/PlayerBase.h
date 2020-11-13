@@ -1,6 +1,6 @@
 #include "../../ESGLib.h"
-//#include "../Enum/Enum.h"
 #include "Arm/Arm.h"
+#include "../Collision/HitBox.h"
 
 class PlayerBase
 {
@@ -28,4 +28,7 @@ protected:
 
 	MODEL player_hitbox;
 	ArmBase* arm;
+	std::unique_ptr<HitBox> _hit_box;
+	Controller* controller;
+	std::string _tag;
 };

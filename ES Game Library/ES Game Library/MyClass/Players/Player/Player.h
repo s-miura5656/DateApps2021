@@ -6,8 +6,6 @@
 #pragma once
 
 #include "../PlayerBase.h"
-#include "../../Managers/ControllerManager/ContorollerManager.h"
-#include "../../Collision/HitBox.h"
 
 class Player : public PlayerBase
 {
@@ -26,13 +24,10 @@ public:
 	}
 
 	void PlayerStartPosition(Vector3& pos) { player->SetPosition(pos); }
-	void SetContorollerNumber(int& pad_num) { pad_number = pad_num; }
 
 private:
 	Vector3 player_get_pos;
 	Vector3 player_get_rot;
 
 	float move_speed;
-	int   pad_number;
-	std::unique_ptr<HitBox> _hit_box;
 };

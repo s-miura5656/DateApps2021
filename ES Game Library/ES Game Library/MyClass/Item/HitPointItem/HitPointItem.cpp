@@ -7,7 +7,6 @@ HitPointItem::HitPointItem(Vector3 position, std::string name)
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_hit_box->Settags(name);
-	_hit_box->SetHitBox(1, 1, 1);
 	_iplayer_data = new IPrayerData;
 }
 
@@ -41,11 +40,9 @@ int HitPointItem::Update()
 		if (_hit_box->IsHitObjects(name))
 		{
 			ItemEffect(name);
-			return END;
+			Removeflag = true;
 		}
 	}
-
-	Removeflag = true;
 
 	return 0;
 }

@@ -28,7 +28,7 @@ protected:
 	IPrayerData* _iplayer_data;
 	std::unique_ptr<HitBox> _hit_box;
 
-	bool Removeflag = FALSE;
+	bool Removeflag = false;
 private:
 	
 };

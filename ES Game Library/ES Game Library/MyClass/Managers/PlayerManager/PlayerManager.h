@@ -23,7 +23,6 @@ public:
 private:
 	//ƒvƒŒƒCƒ„[
 	std::vector<Player*> players;
-	int const player_max_count = 4;
 
 	IPrayerData* i_player_data;
 	IArmData* i_arm_data;

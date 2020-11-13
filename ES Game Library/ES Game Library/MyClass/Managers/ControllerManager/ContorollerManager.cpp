@@ -1,15 +1,28 @@
 #include "ContorollerManager.h"
+#include "../../Data/GameData.h"
 
-void ControllerManager::Initialize() 
+
+ControllerManager::~ControllerManager()
 {
-	InputDevice.CreateGamePad(PLAYER_MAX);
+	for (auto& it = controller.rbegin(); it != controller.rend(); ++it)
+	{
+		delete (*it).second;
+	}
 }
 
-void ControllerManager::Update() 
+void ControllerManager::SetGamePadMaxCount(int pad_count)
 {
-	for (int i = 0; i < PLAYER_MAX; i++)
-	{
-		pad_state[i] = GamePad(i)->GetState();
-		pad_buffer[i] = GamePad(i)->GetBuffer();
-	}
+	InputDevice.CreateGamePad(PLAYER_COUNT_MAX);
+}
+
+void ControllerManager::CreateGamePad(std::string player_tag)
+{
+	auto pad_num = GetTagNum(player_tag);
+
+	controller.emplace(player_tag, new Controller(pad_num - 1));
+}
+
+Controller* ControllerManager::GetController(std::string player_tag)
+{
+	return controller[player_tag];
 }

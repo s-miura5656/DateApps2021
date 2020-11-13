@@ -12,7 +12,6 @@ public:
 
 	//描画
 	virtual void HitBox::Draw3D();
-	virtual void HitBox::DrawAlpha3D();
 
 	//パラメータを設定
 	virtual void HitBox::SetHitBox(float width, float height, float depth);
@@ -44,10 +43,12 @@ public:
 
 	bool HitBox::IsHitObjects(std::string tags);
 
-	string tag;
+	
 private:
 	//全てのHitBoxを格納しておくリスト
 	static std::list<HitBox*> _HitBox_list;
+
+	string tag;
 
 	//判定用のモデル
 	MODEL _model = nullptr;
@@ -58,7 +59,7 @@ private:
 	float _depth  = 1.0f;
 
 	Vector3 position;
-	Vector3    scale;
+	Vector3    scale = Vector3_One;
 
 	Vector3 color = Vector3(1.0f, 0.0f, 0.0f);
 
