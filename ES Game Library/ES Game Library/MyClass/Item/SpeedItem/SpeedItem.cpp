@@ -9,6 +9,8 @@ SpeedItem::SpeedItem(Vector3 position, std::string name)
 	_hit_box->Settags(name);
 	_hit_box->SetHitBox(1, 1, 1);
 	_iplayer_data = new IPrayerData;
+
+	_rotation = 0.0f;
 }
 
 SpeedItem::~SpeedItem()
@@ -22,17 +24,20 @@ bool SpeedItem::Initialize()
 
 	Material material;
 	material.Diffuse = Color(0.0f, 0.0f, 1.0f);
-	material.Ambient = Color(0.0f, 0.0f, 1.0f);
+	material.Ambient = Color(0.0f, 0.0f, 0.75f);
 
 	SphereShape();
 
-	_sphere->SetMaterial(material);
+	_box->SetMaterial(material);
 
 	return true;
 }
 
 int SpeedItem::Update()
 {
+	_rotation += 1.0f;
+	if (_rotation >= 360.0f)
+		_rotation -= 360.0f;
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
@@ -48,4 +53,13 @@ int SpeedItem::Update()
 	Removeflag = true;
 
 	return OK;
+}
+
+void SpeedItem::Draw3D()
+{
+	Matrix rotation = Matrix_CreateFromYawPitchRoll(0.0f, 45.0f, 45.0f);
+	rotation *= Matrix_CreateRotationY(_rotation);
+	_box->SetDirection(Quaternion_CreateFromRotationMatrix(rotation));
+
+	ItemBase::Draw3D();
 }

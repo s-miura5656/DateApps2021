@@ -23,7 +23,7 @@ protected:
 	int _attack_powor = 100;
 	int _speed		  = 50;
 
-	MODEL _sphere;
+	MODEL _box;
 	Vector3 _position;
 	IPrayerData* _iplayer_data;
 	std::unique_ptr<HitBox> _hit_box;

@@ -4,9 +4,9 @@
 
 ItemManager::ItemManager()
 {
-	AddItemBase(SPEED_ITEM_TAG,    Vector3(0.0f,0.0f,-5.0f));
-	AddItemBase(HITPOINT_ITEM_TAG, Vector3(0.0f, 0.0f, 5.0f));
-	AddItemBase(POWOR_ITEM_TAG,    Vector3(0.0f, 0.0f, 0.0f));
+	AddItemBase(SPEED_ITEM_TAG,    Vector3(0.0f, 0.5f,-5.0f));
+	AddItemBase(HITPOINT_ITEM_TAG, Vector3(0.0f, 0.5f, 5.0f));
+	AddItemBase(POWOR_ITEM_TAG,    Vector3(0.0f, 0.5f, 0.0f));
 }
 
 ItemManager::~ItemManager()

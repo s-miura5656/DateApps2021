@@ -11,7 +11,8 @@ public:
 	bool Initialize() override;
 	void ItemEffect(std::string name) override { _iplayer_data->SetAttackPowor(name, _iplayer_data->GetAttackPowor(name) + _attack_powor); }
 	int Update() override;
+	void Draw3D() override;
 
 private:
-
+	float _rotation;
 };
