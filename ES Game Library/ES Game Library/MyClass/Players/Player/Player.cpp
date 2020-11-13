@@ -47,7 +47,7 @@ int Player::Update()
 	auto pad = ControllerManager::Instance().GetController(_tag);
 
 	//ロケットパンチ
-	if (ControllerManager::Instance().GetController(_tag)->GetButtonBuffer(GamePad_Button1) && arm->GetArmState() == NO_PUNCH)
+	if (pad->GetButtonBuffer(GamePad_Button1) && arm->GetArmState() == NO_PUNCH)
 	{
 		arm->ArmShoot(PUNCH);
 	}
