@@ -42,7 +42,7 @@ int ArmBase::Update()
 	}*/
 	
 
-	if (hit_flag) {
+	/*if (hit_flag) {
 		Move(-arm_speed);
 		if (dist <= 0.5) {
 			dist = 0;
@@ -84,6 +84,49 @@ int ArmBase::Update()
 	else if (arm_state == NO_PUNCH)
 	{
 		SetPra(player_pos, player_angle);
+	}*/
+
+	arm_get_pos = arm_model->GetPosition();
+	arm_get_rot = arm_model->GetRotation();
+
+	auto player_get_pos = _iplayer_data->GetPosition(_player_tag);
+	auto player_get_angle = _iplayer_data->GetAngle(_player_tag);
+
+	dist = Vector3_Distance(player_get_pos, arm_get_pos);
+
+	if (arm_state == RETURN_PUNCH)
+	{
+		arm_model->Move(0, 0, -arm_speed);
+		if (dist <= 0.5) {
+			arm_state = NO_PUNCH;
+			dist = 0;
+		}
+	}
+	else if (arm_state == PUNCH)
+	{
+		arm_model->Move(0, 0, arm_speed);
+		if (dist >= 5)
+		{
+			dist = 5;
+			arm_state = RETURN_PUNCH;
+		}
+
+		for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
+		{
+			std::string name = PLAYER_TAG + std::to_string(i + 1);
+
+			if (_player_tag == name)
+				continue;
+
+			if (_hit_box->IsHitObjects(name))
+			{
+				exit(0);
+			}
+		}
+	}
+	else if (arm_state == NO_PUNCH)
+	{
+		SetPra(player_get_pos, player_get_angle);
 	}
 
 	return 0;
