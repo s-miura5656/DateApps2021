@@ -11,7 +11,6 @@ public:
 	bool Initialize() override;
 	void ItemEffect(std::string name) override { _iplayer_data->SetSpeed(name, _iplayer_data->GetSpeed(name) + _speed); }
 	int Update() override;
-	void Draw3D() override;
 
 private:
 	float _rotation;

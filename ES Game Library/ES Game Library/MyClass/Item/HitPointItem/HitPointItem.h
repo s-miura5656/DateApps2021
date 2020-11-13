@@ -12,7 +12,6 @@ public:
 	bool Initialize() override;
 	void ItemEffect(std::string name) override { _iplayer_data->SetHitPoint(name, _iplayer_data->GetHitPoint(name) + _hit_point); }
 	int  Update() override;
-	void Draw3D() override;
 
 private:
 	float _rotation;

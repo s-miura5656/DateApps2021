@@ -35,9 +35,7 @@ bool HitPointItem::Initialize()
 
 int HitPointItem::Update()
 {
-	_rotation += 1.0f;
-	if (_rotation >= 360.0f)
-		_rotation -= 360.0f;
+	RotationItem();
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
@@ -51,13 +49,4 @@ int HitPointItem::Update()
 	}
 
 	return 0;
-}
-
-void HitPointItem::Draw3D()
-{
-	Matrix rotation = Matrix_CreateFromYawPitchRoll(0.0f, 45.0f, 45.0f);
-	rotation *= Matrix_CreateRotationY(_rotation);
-	_box->SetDirection(Quaternion_CreateFromRotationMatrix(rotation));
-
-	ItemBase::Draw3D();
 }

@@ -15,7 +15,7 @@ public:
 	virtual void Draw3D();
 	virtual void ItemEffect(std::string name) { name; }
 	void SphereShape();
-	
+	void RotationItem();
 	bool IsFlag() const { return Removeflag; };
 
 protected:
@@ -29,6 +29,7 @@ protected:
 	std::unique_ptr<HitBox> _hit_box;
 
 	bool Removeflag = false;
+	float _rotation;
 private:
 	
 };

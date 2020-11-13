@@ -35,9 +35,6 @@ bool AttackPowerItem::Initialize()
 
 int AttackPowerItem::Update()
 {
-	_rotation += 1.0f;
-	if (_rotation >= 360.0f)
-		_rotation -= 360.0f;
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
@@ -46,20 +43,10 @@ int AttackPowerItem::Update()
 		if (_hit_box->IsHitObjects(name))
 		{
 			ItemEffect(name);
-			return END;
+			Removeflag = true;
 		}
 	}
 
-	Removeflag = true;
-
-	return OK;
+	return 0;
 }
 
-void AttackPowerItem::Draw3D()
-{
-	Matrix rotation = Matrix_CreateFromYawPitchRoll(0.0f, 45.0f, 45.0f);
-	rotation *= Matrix_CreateRotationY(_rotation);
-	_box->SetDirection(Quaternion_CreateFromRotationMatrix(rotation));
-
-	ItemBase::Draw3D();
-}

@@ -35,9 +35,7 @@ bool SpeedItem::Initialize()
 
 int SpeedItem::Update()
 {
-	_rotation += 1.0f;
-	if (_rotation >= 360.0f)
-		_rotation -= 360.0f;
+	RotationItem();
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
@@ -46,20 +44,9 @@ int SpeedItem::Update()
 		if (_hit_box->IsHitObjects(name))
 		{
 			ItemEffect(name);
-			return END;
+			Removeflag = true;
 		}
 	}
 
-	Removeflag = true;
-
-	return OK;
-}
-
-void SpeedItem::Draw3D()
-{
-	Matrix rotation = Matrix_CreateFromYawPitchRoll(0.0f, 45.0f, 45.0f);
-	rotation *= Matrix_CreateRotationY(_rotation);
-	_box->SetDirection(Quaternion_CreateFromRotationMatrix(rotation));
-
-	ItemBase::Draw3D();
+	return 0;
 }
