@@ -9,6 +9,8 @@ AttackPowerItem::AttackPowerItem(Vector3 position, std::string name)
 	_hit_box->Settags(name);
 	_hit_box->SetHitBox(1, 1, 1);
 	_iplayer_data = new IPrayerData;
+
+	_rotation = 0.0f;
 }
 
 AttackPowerItem::~AttackPowerItem()
@@ -22,17 +24,18 @@ bool AttackPowerItem::Initialize()
 	
 	Material material;
 	material.Diffuse = Color(1.0f, 0.0f, 0.0f);
-	material.Ambient = Color(1.0f, 0.0f, 0.0f);
+	material.Ambient = Color(0.75f, 0.0f, 0.0f);
 
 	SphereShape();
 
-	_sphere->SetMaterial(material);
+	_box->SetMaterial(material);
 
 	return true;
 }
 
 int AttackPowerItem::Update()
 {
+
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
@@ -41,9 +44,9 @@ int AttackPowerItem::Update()
 		{
 			ItemEffect(name);
 			Removeflag = true;
-			break;
 		}
 	}
 
 	return 0;
 }
+

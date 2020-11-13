@@ -13,5 +13,5 @@ public:
 	int Update() override;
 
 private:
-
+	float _rotation;
 };
