@@ -19,7 +19,7 @@ public:
 
 	void    SetPra(Vector3 pos, float angle);
 	void    ArmShoot(int flag);
-	void    Move(float speed);
+	void    Move();
 	void    MoveProtoType();
 	int     GetArmState() { return arm_state; }
 	Vector3 ArmGetPos()   { return arm_model->GetPosition(); }
