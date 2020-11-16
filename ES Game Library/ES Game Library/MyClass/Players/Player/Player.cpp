@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "../PlayerParametor/PlayerParametor.h"
+#include "../../Data/Parametor.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
 
 Player::Player(std::string name)

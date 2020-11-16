@@ -1,7 +1,7 @@
 #include "../../ESGLib.h"
 #include "Arm/Arm.h"
 #include "../Collision/HitBox.h"
-#include "../Data/IPlayerData.h"
+#include "../Data/IData.h"
 
 class PlayerBase
 {

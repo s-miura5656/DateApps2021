@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../ManagerBase.h"
-#include "../../Data/IPlayerData.h"
+#include "../../Data/IData.h"
 
 class Player;
 

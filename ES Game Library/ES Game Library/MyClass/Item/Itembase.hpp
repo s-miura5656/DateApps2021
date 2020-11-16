@@ -2,7 +2,7 @@
 
 #include "../../ESGLib.h"
 #include "../Collision/HitBox.h"
-#include "../Data/IPlayerData.h"
+#include "../Data/IData.h"
 
 class ItemBase
 {
