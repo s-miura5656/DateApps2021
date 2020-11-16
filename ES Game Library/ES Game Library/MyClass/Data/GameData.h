@@ -28,10 +28,10 @@ static const std::string SPEED_ITEM_TAG	   = "SpeedItem_";
 static const std::string HITPOINT_ITEM_TAG = "HitPointItem_";
 
 //! ブロックの種類判別用
-static const std::string DESTRUCTION_BLOCK_TAG = "DestructionBlock_";
+static const std::string DESTRUCTION_BLOCK_TAG    = "DestructionBlock_";
 static const std::string INDESTRUCTIBIEPILLAR_TAG = "InDestructiblePillar_";
-static const std::string WALL_METAL_TAG = "WallMetal_";
-static const std::string FLOOR_TAG = "Floor_";
+static const std::string WALL_METAL_TAG           = "WallMetal_";
+static const std::string FLOOR_TAG                = "Floor_";
 
 namespace PlayerEnum {
 	//プレイヤーのアニメーション
