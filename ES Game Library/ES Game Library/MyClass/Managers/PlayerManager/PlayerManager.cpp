@@ -1,6 +1,6 @@
 #include "PlayerManager.h"
 #include "../../Players/Player/Player.h"
-#include "../../Data/GameData.h"
+#include "../../Data/WordsTable.h"
 
 PlayerManager::PlayerManager()
 {

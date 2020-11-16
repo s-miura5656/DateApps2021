@@ -1,5 +1,5 @@
 #include "Arm.h"
-
+#include "../../Data/MyAlgorithm.h"
 
 Arm::Arm(std::string name)
 {

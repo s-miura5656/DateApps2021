@@ -1,6 +1,6 @@
 #include "ContorollerManager.h"
-#include "../../Data/GameData.h"
-
+#include "../../Data/WordsTable.h"
+#include "../../Data/MyAlgorithm.h"
 
 ControllerManager::~ControllerManager()
 {

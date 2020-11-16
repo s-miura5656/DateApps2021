@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "../../Data/Parametor.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
+#include "../../Data/MyAlgorithm.h"
 
 Player::Player(std::string name)
 {

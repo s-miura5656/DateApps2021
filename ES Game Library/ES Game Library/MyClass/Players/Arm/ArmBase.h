@@ -1,6 +1,6 @@
 #pragma once
 #include "../../../ESGLib.h"
-#include "../../Data/GameData.h"
+#include "../../Data/WordsTable.h"
 #include "../../Data/IData.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
 #include "../../Collision/HitBox.h"

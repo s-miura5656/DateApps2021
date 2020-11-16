@@ -631,9 +631,6 @@
     <ClInclude Include="MyClass\Managers\StageManager\StageManager.h">
       <Filter>Myclass\Managers\StageManager</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Data\GameData.h">
-      <Filter>Myclass\Data</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Players\Arm\Arm.h">
       <Filter>Myclass\Players\Player\Arm</Filter>
     </ClInclude>
@@ -699,6 +696,12 @@
     </ClInclude>
     <ClInclude Include="MyClass\Item\Itembase.hpp">
       <Filter>Myclass\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Data\MyAlgorithm.h">
+      <Filter>Myclass\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Data\WordsTable.h">
+      <Filter>Myclass\Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -248,10 +248,11 @@
     <ClInclude Include="GameScene\TemplateScene.hpp" />
     <ClInclude Include="MyClass\Collision\HitBox.h" />
     <ClInclude Include="MyClass\Controller\ControllerConfig.h" />
-    <ClInclude Include="MyClass\Data\GameData.h" />
     <ClInclude Include="MyClass\Data\IData.h" />
+    <ClInclude Include="MyClass\Data\MyAlgorithm.h" />
     <ClInclude Include="MyClass\Data\Parametor.h" />
     <ClInclude Include="MyClass\Data\StructList.h" />
+    <ClInclude Include="MyClass\Data\WordsTable.h" />
     <ClInclude Include="MyClass\Item\AttackPowerItem\AttackPowerItem.h" />
     <ClInclude Include="MyClass\Item\HitPointItem\HitPointItem.h" />
     <ClInclude Include="MyClass\Item\Itembase.hpp" />

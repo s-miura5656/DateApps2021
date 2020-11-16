@@ -1,5 +1,5 @@
 #include "SpeedItem.h"
-#include "../../Data/GameData.h"
+#include "../../Data/WordsTable.h"
 
 SpeedItem::SpeedItem(Vector3 position, std::string name)
 {

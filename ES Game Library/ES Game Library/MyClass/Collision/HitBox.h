@@ -65,7 +65,6 @@ private:
 
 	//Õ“Ë”»’èŠÖ”
 	bool HitBox::IsHit(HitBox* other);
-
 protected:
 	
 };

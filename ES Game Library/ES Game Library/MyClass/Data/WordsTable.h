@@ -1,18 +1,6 @@
 #pragma once
 
 #include "../../ESGLib.h"
-#include <sstream>
-
-static int GetTagNum(std::string tag) 
-{
-	int num = tag.find("_");
-
-	tag.erase(0, num + 1);
-
-	std::istringstream(tag) >> num;
-
-	return num;
-}
 
 //! ƒvƒŒƒCƒ„[‚ÌÅ‘å”
 static const auto PLAYER_COUNT_MAX = 4;
