@@ -2,7 +2,6 @@
 //! @brief  ステージ用の基底クラス
 //! @author Souta_Miura
 //! @date   2020/11/09
-
 #pragma once
 
 #include "../../ESGLib.h"
@@ -24,8 +23,8 @@ public:
 	//ステージを構成するブロックのポジションを取得する
 	Vector3 GetPosition() { return _position; }
 protected:
-	const float scale = 0.0254f;//!基準のスケールを設定する
-	MODEL block_base;//!継承されるモデルのベース
+	const float _scale = 0.0254f;//!基準のスケールを設定する
+	MODEL _model;//!継承されるモデルのベース
 	Vector3 _position;//!継承されるモデルのポジション
 	std::unique_ptr<HitBox> _hit_box;
 	std::string _tag;

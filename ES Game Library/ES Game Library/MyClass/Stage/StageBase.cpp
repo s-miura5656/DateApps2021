@@ -17,18 +17,19 @@ int StageBase::Update()
 
 void StageBase::Draw3D()
 {
-	block_base->SetPosition(_position);
-	block_base->SetRotation(0, 0, 0);
+	_model->SetPosition(_position);
+	_model->SetRotation(0, 0, 0);
+	_model->Draw();
 }
 
 Material StageBase::GetMaterial()
 {
     Material temp = Material();
 
-	temp.Diffuse = Color(1.0f, 1.0f, 1.0f);
-	temp.Ambient = Color(1.0f, 1.0f, 1.0f);
+	temp.Diffuse  = Color(1.0f, 1.0f, 1.0f);
+	temp.Ambient  = Color(1.0f, 1.0f, 1.0f);
 	temp.Specular = Color(1.0f, 1.0f, 1.0f);
-	temp.Power = 0.0f;
+	temp.Power	  = 0.0f;
 
 	return temp;
 }
