@@ -5,16 +5,16 @@
 class HitBox {
 public:
 	//デストラクタ
-	virtual HitBox::~HitBox();
+	virtual ~HitBox();
 
 	//初期化
-	virtual void HitBox::Init();
+	virtual void Init();
 
 	//描画
-	virtual void HitBox::Draw3D();
+	virtual void Draw3D();
 
 	//パラメータを設定
-	virtual void HitBox::SetHitBox(float width, float height, float depth);
+	virtual void SetHitBox(float width, float height, float depth);
 
 	//消去時に呼ばれる処理
 	void HitBox::OnReMove();
@@ -25,7 +25,7 @@ public:
 	void SetHitBoxPosition(Vector3 pos);
 
 	//自身を返す
-	HitBox* HitBox::GetThisHitBox() { return this; };
+	HitBox* GetThisHitBox() { return this; };
 
 	//衝突しているHitBoxのリストを取得
 	std::list<HitBox*> HitBox::HitHitBoxlist();
@@ -36,19 +36,19 @@ public:
 
 	Vector3 GetHitBoxPosition()const { return _model->GetPosition(); };
 
-	HitBox* HitBox::TypeRayRange(std::string tag, Vector3 position, Vector3 angle, float& range);
-	HitBox* HitBox::Get_Tag_HitBox(std::string tag);
-	MODEL   HitBox::Get_Tag_Model() const { return _model; };
-	bool    HitBox::Tag_Sarch(string _tag);
+	HitBox* TypeRayRange(std::string tag, Vector3 position, Vector3 angle, float& range);
+	HitBox* GetHitBoxTag(std::string tag);
+	MODEL   GetModelTag() const { return _model; };
+	bool    Tag_Sarch(string _tag);
 
-	bool HitBox::IsHitObjects(std::string tags);
+	bool IsHitObjects(std::string tags);
+	bool OnHitObjects(std::string tags, MODEL model);
 
-	
 private:
 	//全てのHitBoxを格納しておくリスト
 	static std::list<HitBox*> _HitBox_list;
 
-	string tag;
+	string _tag;
 
 	//判定用のモデル
 	MODEL _model = nullptr;
@@ -58,10 +58,10 @@ private:
 	float _height = 1.0f;
 	float _depth  = 1.0f;
 
-	Vector3 position;
-	Vector3 scale = Vector3_One;
+	Vector3 _position;
+	Vector3 _scale = Vector3_One;
 
-	Vector3 color = Vector3(1.0f, 0.0f, 0.0f);
+	Vector3 _color = Vector3(1.0f, 0.0f, 0.0f);
 
 	//衝突判定関数
 	bool HitBox::IsHit(HitBox* other);
