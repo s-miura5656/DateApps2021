@@ -39,26 +39,30 @@ bool StageManager::Initialize()
 	//ƒtƒ@ƒCƒ‹‚ð•Â‚¶‚é
 	fclose(fp);
 	
-	stages.emplace("Field", new Floor);
-	stages["Field"]->Initialize();
-	stages["Field"]->SetPosition(Vector3_Zero);
+	stages.emplace(FLOOR_TAG, new Floor);
+	stages[FLOOR_TAG]->Initialize();
+	stages[FLOOR_TAG]->SetPosition(Vector3_Zero);
 
 	for (int z = 0; z < mapdate.size(); z++)
 	{
 		for (int x = 0; x < mapdate[z].size(); x++)
 		{
+			std::string tag;
 			switch (mapdate[z][x]) {
 			case 'b':
-				stages.emplace("Block" + std::to_string(z) + std::to_string(x), new Block);
-				stages["Block" + std::to_string(z) + std::to_string(x)]->Initialize();
+				tag = DESTRUCTION_BLOCK_TAG + std::to_string(z) + std::to_string(x);
+				stages.emplace(tag, new Block);
+				stages[tag]->Initialize();
 				break;
 			case 'i':
-				stages.emplace("Pillar" + std::to_string(z) + std::to_string(x), new Pillar);
-				stages["Pillar" + std::to_string(z) + std::to_string(x)]->Initialize();
+				tag = INDESTRUCTIBIEPILLAR_TAG + std::to_string(z) + std::to_string(x);
+				stages.emplace(tag, new Pillar);
+				stages[tag]->Initialize();
 				break;
 			case 'o':
-				stages.emplace("Metal" + std::to_string(z) + std::to_string(x), new Metal);
-				stages["Metal" + std::to_string(z) + std::to_string(x)]->Initialize();
+				tag = WALL_METAL_TAG + std::to_string(z) + std::to_string(x);
+				stages.emplace(tag, new Metal);
+				stages[tag]->Initialize();
 				break;
 			default:
 				//‚Ç‚ê‚àŠY“–‚µ‚È‚¢‚Æ‚«
@@ -67,9 +71,7 @@ bool StageManager::Initialize()
 			}
 		}
 	}
-
 	int size = stages.size();
-
 	return true;
 }
 
@@ -90,18 +92,22 @@ void StageManager::Draw3D()
 	{
 		for (int x = 0; x < mapdate[z].size(); x++)
 		{
+			std::string tag;
 			switch (mapdate[z][x]) {
 			case 'b':
-				stages["Block" + std::to_string(z) + std::to_string(x)]->SetPosition(Vector3(x - 7, 0, -z + 6));
-				stages["Block" + std::to_string(z) + std::to_string(x)]->Draw3D();
+				tag = DESTRUCTION_BLOCK_TAG + std::to_string(z) + std::to_string(x);
+				stages[tag]->SetPosition(Vector3(x - 7, 0, -z + 6));
+				stages[tag]->Draw3D();
 				break;
 			case 'i':
-				stages["Pillar" + std::to_string(z) + std::to_string(x)]->SetPosition(Vector3(x - 7, 0, -z + 6));
-				stages["Pillar" + std::to_string(z) + std::to_string(x)]->Draw3D();
+				tag = INDESTRUCTIBIEPILLAR_TAG + std::to_string(z) + std::to_string(x);
+				stages[tag]->SetPosition(Vector3(x - 7, 0, -z + 6));
+				stages[tag]->Draw3D();
 				break;
 			case 'o':
-				stages["Metal" + std::to_string(z) + std::to_string(x)]->SetPosition(Vector3(x - 7, 0, -z + 6));
-				stages["Metal" + std::to_string(z) + std::to_string(x)]->Draw3D();
+				tag = WALL_METAL_TAG + std::to_string(z) + std::to_string(x);
+				stages[tag]->SetPosition(Vector3(x - 7, 0, -z + 6));
+				stages[tag]->Draw3D();
 				break;
 			default:
 				//‚Ç‚ê‚àŠY“–‚µ‚È‚¢‚Æ‚«
@@ -111,5 +117,5 @@ void StageManager::Draw3D()
 		}
 	}
 
-	stages["Field"]->Draw3D();
+	stages[FLOOR_TAG]->Draw3D();
 }

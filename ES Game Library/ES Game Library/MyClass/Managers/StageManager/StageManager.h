@@ -9,7 +9,7 @@
 #include"../../Stage/Stage_1/Pillar/Pillar.h"
 #include"../../Stage/Stage_1/Metal/Metal.h"
 #include"../../Stage/Stage_1/Floor/Floor.h"
-
+#include "../../Data/WordsTable.h"
 class StageBase;
 
 class StageManager : public ManagerBase

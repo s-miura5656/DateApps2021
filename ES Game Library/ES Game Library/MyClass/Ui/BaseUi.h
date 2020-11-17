@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../ESGLib.h"
-#include "../Data/IPlayerData.h"
+#include "../Data/IData.h"
 
 class BaseUi {
 public:

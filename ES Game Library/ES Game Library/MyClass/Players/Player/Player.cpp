@@ -1,6 +1,7 @@
 #include "Player.h"
-#include "../PlayerParametor/PlayerParametor.h"
+#include "../../Data/Parametor.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
+#include "../../Data/MyAlgorithm.h"
 
 Player::Player(std::string name)
 {
@@ -73,8 +74,15 @@ void Player::Move()
 {
 	auto pad = ControllerManager::Instance().GetController(_tag);
 
-	angle = MathHelper_Atan2(double(pad->GetPadStateX() - Axis_Center) / double(Axis_Max - Axis_Center),
-		-double(pad->GetPadStateY() - Axis_Center) / double(Axis_Max - Axis_Center));
+	auto a = double(pad->GetPadStateX() - Axis_Center) / double(Axis_Max);
+
+	auto b = -double(pad->GetPadStateY() - Axis_Center) / double(Axis_Max);
+
+	auto x = pad->GetPadStateX();
+
+	auto y = pad->GetPadStateY();
+
+	angle = MathHelper_Atan2(a, b);
 
 	player->SetRotation(0, angle, 0);
 

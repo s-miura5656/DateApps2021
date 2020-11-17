@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../../ESGLib.h"
 #include"../Ui/BaseUi.h"
-#include "../Data/GameData.h"
+#include "../Data/WordsTable.h"
 
 class MaineUi : public BaseUi
 {

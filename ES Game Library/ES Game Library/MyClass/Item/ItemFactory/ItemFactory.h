@@ -6,9 +6,9 @@
 #include "../../Managers/ItemManager/ItemManager.h"
 
 //アイテムヘッダーファイル追加
-#include "../../Item/SpeedItem/SpeedItem.h"
-#include "../../Item/AttackPowerItem/AttackPowerItem.h"
-#include "../../Item/HitPointItem/HitPointItem.h"
+#include "../AttackPowerItem/AttackPowerItem.h"
+#include "../SpeedItem/SpeedItem.h"
+#include "../HitPointItem/HitPointItem.h"
 
 
 /**

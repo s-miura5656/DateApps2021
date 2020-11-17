@@ -1,6 +1,6 @@
 #include "ItemManager.h"
-#include "../../Factorys/ItemFactory/ItemFactory.h"
-#include "../../Data/GameData.h"
+#include "../../Item/ItemFactory/ItemFactory.h"
+#include "../../Data/WordsTable.h"
 
 ItemManager::ItemManager()
 {

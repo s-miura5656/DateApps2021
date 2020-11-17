@@ -166,11 +166,10 @@
     </ClCompile>
     <ClCompile Include="MyClass\Collision\HitBox.cpp" />
     <ClCompile Include="MyClass\Controller\ControllerConfig.cpp" />
-    <ClCompile Include="MyClass\Factorys\ItemFactory\ItemFactory.cpp" />
     <ClCompile Include="MyClass\Item\AttackPowerItem\AttackPowerItem.cpp" />
     <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp" />
-    <ClCompile Include="MyClass\Item\Item.cpp" />
     <ClCompile Include="MyClass\Item\ItemBase.cpp" />
+    <ClCompile Include="MyClass\Item\ItemFactory\ItemFactory.cpp" />
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp" />
     <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp" />
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp" />
@@ -249,15 +248,15 @@
     <ClInclude Include="GameScene\TemplateScene.hpp" />
     <ClInclude Include="MyClass\Collision\HitBox.h" />
     <ClInclude Include="MyClass\Controller\ControllerConfig.h" />
-    <ClInclude Include="MyClass\Data\GameData.h" />
-    <ClInclude Include="MyClass\Data\IPlayerData.h" />
+    <ClInclude Include="MyClass\Data\IData.h" />
+    <ClInclude Include="MyClass\Data\MyAlgorithm.h" />
+    <ClInclude Include="MyClass\Data\Parametor.h" />
     <ClInclude Include="MyClass\Data\StructList.h" />
-    <ClInclude Include="MyClass\Enum\Enum.h" />
-    <ClInclude Include="MyClass\Factorys\ItemFactory\ItemFactory.h" />
+    <ClInclude Include="MyClass\Data\WordsTable.h" />
     <ClInclude Include="MyClass\Item\AttackPowerItem\AttackPowerItem.h" />
     <ClInclude Include="MyClass\Item\HitPointItem\HitPointItem.h" />
-    <ClInclude Include="MyClass\Item\Item.hpp" />
     <ClInclude Include="MyClass\Item\Itembase.hpp" />
+    <ClInclude Include="MyClass\Item\ItemFactory\ItemFactory.h" />
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h" />
     <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h" />
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h" />
@@ -267,11 +266,9 @@
     <ClInclude Include="MyClass\Managers\StageManager\StageManager.h" />
     <ClInclude Include="MyClass\Managers\TimeManager\Time.h" />
     <ClInclude Include="MyClass\Managers\UIManager\UI.h" />
-    <ClInclude Include="MyClass\Players\ArmParametor\ArmParametor.h" />
     <ClInclude Include="MyClass\Players\Arm\Arm.h" />
     <ClInclude Include="MyClass\Players\Arm\ArmBase.h" />
     <ClInclude Include="MyClass\Players\PlayerBase.h" />
-    <ClInclude Include="MyClass\Players\PlayerParametor\PlayerParametor.h" />
     <ClInclude Include="MyClass\Players\Player\Player.h" />
     <ClInclude Include="MyClass\Scenes\BaseScene.h" />
     <ClInclude Include="MyClass\Scenes\Main\MainScene.h" />

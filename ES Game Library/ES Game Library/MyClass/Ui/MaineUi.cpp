@@ -1,5 +1,5 @@
 #include"MaineUi.h"
-#include "../Data/GameData.h"
+#include "../Data/WordsTable.h"
 #include "../Managers/TimeManager/Time.h"
 
 MaineUi::MaineUi()

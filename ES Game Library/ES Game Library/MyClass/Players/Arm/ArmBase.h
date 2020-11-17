@@ -1,7 +1,7 @@
 #pragma once
 #include "../../../ESGLib.h"
-#include "../../Data/GameData.h"
-#include "../../Data/IPlayerData.h"
+#include "../../Data/WordsTable.h"
+#include "../../Data/IData.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
 #include "../../Collision/HitBox.h"
 
@@ -19,7 +19,7 @@ public:
 
 	void    SetPra(Vector3 pos, float angle);
 	void    ArmShoot(int flag);
-	void    Move(float speed);
+	void    Move();
 	void    MoveProtoType();
 	int     GetArmState() { return arm_state; }
 	Vector3 ArmGetPos()   { return arm_model->GetPosition(); }

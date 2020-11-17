@@ -1,12 +1,12 @@
-//! @file   PlayerParametor.h
-//! @brief  プレイヤーのパラメーターのクラス
+//! @file   Parametor.h
+//! @brief  各キャラクターのパラメーターのクラス
 //! @author Souta_Miura
 //! @date   2020/11/06
 
 #pragma once
 
-#include "../../../ESGLib.h"
-#include "../../Data/StructList.h"
+#include "../../ESGLib.h"
+#include "StructList.h"
 
 class PlayerParametor
 {
