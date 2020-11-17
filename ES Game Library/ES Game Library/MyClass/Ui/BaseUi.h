@@ -3,6 +3,8 @@
 #include "../../ESGLib.h"
 #include "../Data/IData.h"
 
+class PlayerBase;
+
 class BaseUi {
 public:
 	BaseUi() {}
@@ -11,6 +13,9 @@ public:
 	virtual bool Initialize() = 0;
 	virtual int Update() = 0;
 	virtual void Draw2D() = 0;
+#ifdef _DEBUG
+	virtual void DebugDraw(PlayerBase* player) {}
+#endif
 
 protected:
 	FONT time_limit_font;

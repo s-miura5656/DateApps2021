@@ -20,6 +20,9 @@ public:
 	
 	float PlayerSpeed();
 
+	std::string GetTag() const { return _tag; }
+	int GetPlayerNumber() const { return (*_tag.rbegin()) - '0'; }
+
 protected:
 	MODEL _player;
 	FONT _font;
