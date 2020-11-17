@@ -38,11 +38,10 @@ public:
 
 	HitBox* TypeRayRange(std::string tag, Vector3 position, Vector3 angle, float& range);
 	HitBox* GetHitBoxTag(std::string tag);
-	MODEL   GetModelTag() const { return _model; };
+	MODEL   GetModelTag() const { return _model; }
 	bool    Tag_Sarch(string _tag);
 
 	bool IsHitObjects(std::string tags);
-	bool OnHitObjects(std::string tags, MODEL model);
 
 private:
 	//‘S‚Ä‚ÌHitBox‚ðŠi”[‚µ‚Ä‚¨‚­ƒŠƒXƒg

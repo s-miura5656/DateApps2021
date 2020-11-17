@@ -59,11 +59,11 @@ static Vector3 Vector3_Lerp(Vector3 A, Vector3 B, float t)
 //! @param (pos) 壁ずりさせたいモデルの座標
 //! @param (dir) 壁ずりさせたいモデルのベクトル
 //! @return 壁ずりベクトル
-Vector3 SlidingOnWallCreation(MODEL model, Vector3 pos, Vector3 dir)
+Vector3 SlidingOnWallVectorCreate(MODEL model, Vector3 pos, Vector3 move_dir)
 {
 	Vector3 _normal;
 
-	model->IntersectRay(pos, dir, nullptr, &_normal);
+	model->IntersectRay(pos, move_dir, nullptr, &_normal);
 
-	return dir + Vector3_Dot(-dir, _normal) * _normal;
+	return move_dir + Vector3_Dot(-move_dir, _normal) * _normal;
 }
