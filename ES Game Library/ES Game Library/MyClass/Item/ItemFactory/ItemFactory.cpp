@@ -1,5 +1,5 @@
 #include "ItemFactory.h"
-#include "../../Data/GameData.h"
+#include "../../Data/WordsTable.h"
 
 ItemBase* ItemFactory::Create(std::string tag, Vector3 position)
 {

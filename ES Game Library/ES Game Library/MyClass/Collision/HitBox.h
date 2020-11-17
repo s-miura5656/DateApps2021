@@ -59,13 +59,12 @@ private:
 	float _depth  = 1.0f;
 
 	Vector3 position;
-	Vector3    scale = Vector3_One;
+	Vector3 scale = Vector3_One;
 
 	Vector3 color = Vector3(1.0f, 0.0f, 0.0f);
 
 	//è’ìÀîªíËä÷êî
 	bool HitBox::IsHit(HitBox* other);
-
 protected:
 	
 };

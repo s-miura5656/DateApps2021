@@ -139,23 +139,14 @@
     <Filter Include="Myclass\Scenes\Result">
       <UniqueIdentifier>{baa61e68-988c-4562-8dd8-f9d34258c2fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Enum">
-      <UniqueIdentifier>{4b7f0dfe-2a3e-4c18-a68e-10350c986fb1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Managers\ItemManager">
       <UniqueIdentifier>{9476a388-d1f5-47bf-ab46-a39c45649cc0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Managers\CollisionManager">
-      <UniqueIdentifier>{7b6d8d15-da4b-4272-8ec0-042e5809aeed}</UniqueIdentifier>
     </Filter>
     <Filter Include="Myclass\Players">
       <UniqueIdentifier>{cfadf0e0-9d8b-4ad4-84b6-696d6ebe7696}</UniqueIdentifier>
     </Filter>
     <Filter Include="Myclass\Players\Player">
       <UniqueIdentifier>{1b983379-09f6-4f15-8af3-d529c40fdcbb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Players\PlayerParametor">
-      <UniqueIdentifier>{e0a9ad9c-d4fa-4203-a2eb-563349eb164e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Myclass\Data">
       <UniqueIdentifier>{2031d2c9-764d-47b8-b8e2-4d6616267d02}</UniqueIdentifier>
@@ -171,9 +162,6 @@
     </Filter>
     <Filter Include="Myclass\Players\Player\Arm">
       <UniqueIdentifier>{3cbbabb0-3cd3-414b-9f98-80a05f53017c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Players\Player\ArmParametor">
-      <UniqueIdentifier>{cf31082b-f15f-48c6-9024-e31b6dbcc36d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Myclass\Managers\TimeManager">
       <UniqueIdentifier>{e8253687-54df-46bb-b0b1-4f5ff8c9bba2}</UniqueIdentifier>
@@ -205,12 +193,6 @@
     <Filter Include="Myclass\Item\HitPointItem">
       <UniqueIdentifier>{7756fb5d-bfdf-49ae-98ee-e835a5f980ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Factory">
-      <UniqueIdentifier>{1581982e-8180-4ba6-9da8-74d92b85b20c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Factory\ItemFactory">
-      <UniqueIdentifier>{69fd894e-92fd-41cd-9d97-556047c173c5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Managers\ControllerManager">
       <UniqueIdentifier>{cc293e60-72d0-4f57-8ce0-c22a34510d69}</UniqueIdentifier>
     </Filter>
@@ -219,6 +201,9 @@
     </Filter>
     <Filter Include="Myclass\Ui">
       <UniqueIdentifier>{54aad0ac-4238-4349-b700-20af82a6ef51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Item\ItemFactory">
+      <UniqueIdentifier>{69fd894e-92fd-41cd-9d97-556047c173c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -376,12 +361,6 @@
     <ClCompile Include="MyClass\Scenes\Result\ResultScene.cpp">
       <Filter>Myclass\Scenes\Result</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Item\Item.cpp">
-      <Filter>Myclass\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Item\ItemBase.cpp">
-      <Filter>Myclass\Item</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp">
       <Filter>Myclass\Managers\ItemManager</Filter>
     </ClCompile>
@@ -436,9 +415,6 @@
     <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp">
       <Filter>Myclass\Item\HitPointItem</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Factorys\ItemFactory\ItemFactory.cpp">
-      <Filter>Myclass\Factory\ItemFactory</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp">
       <Filter>Myclass\Managers\ControllerManager</Filter>
     </ClCompile>
@@ -453,6 +429,12 @@
     </ClCompile>
     <ClCompile Include="MyClass\Ui\TitleUi.cpp">
       <Filter>Myclass\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Item\ItemFactory\ItemFactory.cpp">
+      <Filter>Myclass\Item\ItemFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Item\ItemBase.cpp">
+      <Filter>Myclass\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -610,15 +592,6 @@
     <ClInclude Include="Extension\Direct2D\Direct2D.hpp">
       <Filter>ヘッダー ファイル\拡張\Direct2D</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Enum\Enum.h">
-      <Filter>Myclass\Enum</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Item\Item.hpp">
-      <Filter>Myclass\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Item\Itembase.hpp">
-      <Filter>Myclass\Item</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Managers\SceneManager\SceneManager.h">
       <Filter>Myclass\Managers\SceneManager</Filter>
     </ClInclude>
@@ -649,12 +622,6 @@
     <ClInclude Include="MyClass\Players\PlayerBase.h">
       <Filter>Myclass\Players</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Players\PlayerParametor\PlayerParametor.h">
-      <Filter>Myclass\Players\PlayerParametor</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Data\IPlayerData.h">
-      <Filter>Myclass\Data</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Data\StructList.h">
       <Filter>Myclass\Data</Filter>
     </ClInclude>
@@ -664,17 +631,11 @@
     <ClInclude Include="MyClass\Managers\StageManager\StageManager.h">
       <Filter>Myclass\Managers\StageManager</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Data\GameData.h">
-      <Filter>Myclass\Data</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Players\Arm\Arm.h">
       <Filter>Myclass\Players\Player\Arm</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Players\Arm\ArmBase.h">
       <Filter>Myclass\Players\Player\Arm</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Players\ArmParametor\ArmParametor.h">
-      <Filter>Myclass\Players\Player\ArmParametor</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Managers\TimeManager\Time.h">
       <Filter>Myclass\Managers\TimeManager</Filter>
@@ -706,9 +667,6 @@
     <ClInclude Include="MyClass\Item\HitPointItem\HitPointItem.h">
       <Filter>Myclass\Item\HitPointItem</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Factorys\ItemFactory\ItemFactory.h">
-      <Filter>Myclass\Factory\ItemFactory</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h">
       <Filter>Myclass\Managers\ControllerManager</Filter>
     </ClInclude>
@@ -726,6 +684,24 @@
     </ClInclude>
     <ClInclude Include="MyClass\Ui\TitleUi.h">
       <Filter>Myclass\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Data\IData.h">
+      <Filter>Myclass\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Data\Parametor.h">
+      <Filter>Myclass\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Item\ItemFactory\ItemFactory.h">
+      <Filter>Myclass\Item\ItemFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Item\Itembase.hpp">
+      <Filter>Myclass\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Data\MyAlgorithm.h">
+      <Filter>Myclass\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Data\WordsTable.h">
+      <Filter>Myclass\Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

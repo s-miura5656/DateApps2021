@@ -1,5 +1,5 @@
 #include "HitPointItem.h"
-#include "../../Data/GameData.h"
+#include "../../Data/WordsTable.h"
 
 HitPointItem::HitPointItem(Vector3 position, std::string name)
 {

@@ -1,5 +1,5 @@
 #include "Arm.h"
-
+#include "../../Data/MyAlgorithm.h"
 
 Arm::Arm(std::string name)
 {
@@ -32,7 +32,7 @@ bool Arm::Initialize()
 
 	arm_state = NO_PUNCH;
 
-	arm_speed = 0.1f;
+	arm_speed = 0.07f;
 
 	arm_model->SetScale(0.005f);
 

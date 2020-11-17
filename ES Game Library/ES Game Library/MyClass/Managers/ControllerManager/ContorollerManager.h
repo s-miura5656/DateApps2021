@@ -1,7 +1,7 @@
 #pragma once
 
 #include"../../../ESGLib.h"
-#include "../../Data/GameData.h"
+#include "../../Data/WordsTable.h"
 #include "../../Controller/ControllerConfig.h"
 
 class ControllerManager

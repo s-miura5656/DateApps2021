@@ -1,6 +1,6 @@
 #include "MainScene.h"
 
-#include "../../Data/GameData.h"
+#include "../../Data/WordsTable.h"
 
 #include "../../Managers/ItemManager/ItemManager.h"
 #include "../../Managers/PlayerManager/PlayerManager.h"
