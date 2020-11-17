@@ -2,11 +2,13 @@
 #include "../../Item/ItemFactory/ItemFactory.h"
 #include "../../Data/WordsTable.h"
 
+std::vector<ItemBase*> ItemManager::item_base;
+
 ItemManager::ItemManager()
 {
-	AddItemBase(SPEED_ITEM_TAG,    Vector3(0.0f, 0.5f,-5.0f));
-	AddItemBase(HITPOINT_ITEM_TAG, Vector3(0.0f, 0.5f, 5.0f));
-	AddItemBase(POWOR_ITEM_TAG,    Vector3(0.0f, 0.5f, 0.0f));
+	//AddItemBase(SPEED_ITEM_TAG,    Vector3(0.0f, 0.5f,-5.0f));
+	//AddItemBase(HITPOINT_ITEM_TAG, Vector3(0.0f, 0.5f, 5.0f));
+	//AddItemBase(POWOR_ITEM_TAG,    Vector3(0.0f, 0.5f, 0.0f));
 }
 
 ItemManager::~ItemManager()
@@ -47,9 +49,9 @@ void ItemManager::Draw3D()
 
 void ItemManager::AddItemBase(std::string name, Vector3 position)
 {
-	//ItemFactory* itemfactory = new ItemStationeryFactory;
+	ItemFactory* itemfactory = new ItemStationeryFactory;
 
-	////item_base.push_back(itemfactory->Create(name, position));
+	item_base.push_back(itemfactory->Create(name, position));
 
-	//delete itemfactory;
+	delete itemfactory;
 }

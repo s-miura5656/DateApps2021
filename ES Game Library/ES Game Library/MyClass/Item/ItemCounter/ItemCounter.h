@@ -10,9 +10,7 @@ public:
 
 	void SetItem(std::string tag, Vector3 pos)
 	{ 
-		ItemManager* im = new ItemManager;
-		im->AddItemBase(tag, pos);
-		delete im;
+		ItemManager::AddItemBase(tag, pos);
 	}
 private:
 };

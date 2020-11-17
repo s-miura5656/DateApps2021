@@ -43,6 +43,8 @@ bool StageManager::Initialize()
 	stages[FLOOR_TAG]->Initialize();
 	stages[FLOOR_TAG]->SetPosition(Vector3_Zero);
 
+	ItemCounter* itemcounter = new ItemCounter;
+
 	for (int z = 0; z < mapdate.size(); z++)
 	{
 		for (int x = 0; x < mapdate[z].size(); x++)
@@ -52,17 +54,27 @@ bool StageManager::Initialize()
 			case 'b':
 				tag = DESTRUCTION_BLOCK_TAG + tag;
 				stages.emplace(tag, new Block);
+				stages[tag]->SetPosition(Vector3(x - 7, 0, -z + 6));
 				stages[tag]->Initialize();
+				itemcounter->SetItem(POWOR_ITEM_TAG, stages[tag]->GetPosition());
+
+				tags.push_back(tag);
 				break;
 			case 'i':
 				tag = INDESTRUCTIBIEPILLAR_TAG + tag;
 				stages.emplace(tag, new Pillar);
+				stages[tag]->SetPosition(Vector3(x - 7, 0, -z + 6));
 				stages[tag]->Initialize();
+
+				tags.push_back(tag);
 				break;
 			case 'o':
 				tag = WALL_METAL_TAG + tag;
 				stages.emplace(tag, new Metal);
+				stages[tag]->SetPosition(Vector3(x - 7, 0, -z + 6));
 				stages[tag]->Initialize();
+
+				tags.push_back(tag);
 				break;
 			default:
 				//どれも該当しないとき
@@ -71,6 +83,8 @@ bool StageManager::Initialize()
 			}
 		}
 	}
+
+	delete itemcounter;
 	int size = stages.size();
 	return true;
 }
@@ -88,6 +102,7 @@ void StageManager::Draw2D()
 void StageManager::Draw3D()
 {
 	// 読み込んだ座標データをもとに描画
+	/*
 	for (int z = 0; z < mapdate.size(); z++)
 	{
 		for (int x = 0; x < mapdate[z].size(); x++)
@@ -96,7 +111,6 @@ void StageManager::Draw3D()
 			switch (mapdate[z][x]) {
 			case 'b':
 				tag = DESTRUCTION_BLOCK_TAG + std::to_string(z) + std::to_string(x);
-				stages[tag]->SetPosition(Vector3(x - 7, 0, -z + 6));
 				stages[tag]->Draw3D();
 				break;
 			case 'i':
@@ -115,6 +129,15 @@ void StageManager::Draw3D()
 				break;
 			}
 		}
+	}
+
+	
+	*/
+
+	for (const auto& tag : tags)
+	{
+		Vector3 pos = stages[tag]->GetPosition();
+		stages[tag]->Draw3D();
 	}
 
 	stages[FLOOR_TAG]->Draw3D();

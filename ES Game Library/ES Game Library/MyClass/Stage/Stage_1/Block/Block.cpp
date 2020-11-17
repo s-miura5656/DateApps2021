@@ -7,7 +7,7 @@ Block::Block()
 
 Block::~Block()
 {
-
+	
 }
 
 bool Block::Initialize()
@@ -18,7 +18,16 @@ bool Block::Initialize()
 	_model->SetScale(_scale);
 	//ƒ}ƒeƒŠƒAƒ‹‚ÌÝ’è
 	_model->SetMaterial(GetMaterial());
-
+	//
+	SetDestructiveFlag(true);
 	return _model != nullptr;
+}
+
+void Block::Draw3D()
+{
+	if (_destructiveflag)
+	{
+		StageBase::Draw3D();
+	}
 }
 
