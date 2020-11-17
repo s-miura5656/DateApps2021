@@ -37,8 +37,8 @@ public:
 	Vector3 GetHitBoxPosition()const { return _model->GetPosition(); };
 
 	HitBox* HitBox::TypeRayRange(std::string tag, Vector3 position, Vector3 angle, float& range);
-	HitBox* HitBox::Get_Tag_HitBox(std::string tag);
-	MODEL   HitBox::Get_Tag_Model() const { return _model; };
+	HitBox* HitBox::GetHitBoxTag(std::string tag);
+	MODEL   HitBox::GetModelTag() const { return _model; };
 	bool    HitBox::Tag_Sarch(string _tag);
 
 	bool HitBox::IsHitObjects(std::string tags);

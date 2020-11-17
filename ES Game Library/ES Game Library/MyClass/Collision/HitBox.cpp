@@ -157,7 +157,7 @@ HitBox* HitBox::TypeRayRange(std::string tag, Vector3 position, Vector3 angle, f
  * @return 戻り値の説明　ヒットボックスを取得返す
  * @detail 詳細な説明　外部にあるヒットボックスを取得できる
  */
-HitBox* HitBox::Get_Tag_HitBox(std::string tag)
+HitBox* HitBox::GetHitBoxTag(std::string tag)
 {
 	ASSERT(Tag_Sarch(tag) && "tagが存在していない!");
 	HitBox* hitbox = nullptr;
