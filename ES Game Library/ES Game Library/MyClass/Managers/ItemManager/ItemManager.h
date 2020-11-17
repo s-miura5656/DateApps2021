@@ -7,8 +7,11 @@ class ItemBase;
 class ItemManager : public ManagerBase
 {
 public:
+	friend class ItemCounter;
+
 	ItemManager();
 	~ItemManager();
+
 
 	bool Initialize();
 	int  Update();
@@ -19,5 +22,5 @@ private:
 
 	std::vector<ItemBase*> item_base;
 
-	void AddItemBase(std::string name, Vector3 position);
+	static void AddItemBase(std::string name, Vector3 position);
 };

@@ -256,6 +256,7 @@
     <ClInclude Include="MyClass\Item\AttackPowerItem\AttackPowerItem.h" />
     <ClInclude Include="MyClass\Item\HitPointItem\HitPointItem.h" />
     <ClInclude Include="MyClass\Item\Itembase.hpp" />
+    <ClInclude Include="MyClass\Item\ItemCounter\ItemCounter.h" />
     <ClInclude Include="MyClass\Item\ItemFactory\ItemFactory.h" />
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h" />
     <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h" />
