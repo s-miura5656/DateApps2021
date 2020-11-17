@@ -181,7 +181,6 @@ HitBox* HitBox::GetHitBoxTag(std::string tag)
 bool HitBox::IsHitObjects(std::string tags) {
 	ASSERT(Tag_Sarch(tags) && "tag‚ª‘¶İ‚µ‚Ä‚¢‚È‚¢!");
 	bool result = false;
-	_HitBox_list;
 	std::list<HitBox*> HitList = HitHitBoxlist();
 	for (auto&& other : HitList) 
 	{
@@ -189,4 +188,26 @@ bool HitBox::IsHitObjects(std::string tags) {
 			result = true;
 	}
 	return result;
+}
+
+std::list<HitBox*> HitBox::IsHitBoxList() {
+	std::list<HitBox*> HitList = HitHitBoxlist();
+	return HitList;
+}
+
+std::list<HitBox*> HitBox::IsHitBoxList(std::string tag)
+{
+	std::list<HitBox*> HitList = HitHitBoxlist();
+	
+	auto&& it = HitList.begin();
+	while (it != HitList.end())
+	{
+		if ((*it)->_tag == tag)
+		{
+			it = HitList.erase(it);
+			continue;
+		}
+		it++;
+	}
+	return HitList;
 }

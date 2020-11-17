@@ -19,11 +19,11 @@ public:
 	void Move();
 
 	void PlayerColor(Material& mat) {
-		player->SetMaterial(mat);
+		_player->SetMaterial(mat);
 		//rocket_punch->SetMaterial(mat);
 	}
 
-	void PlayerStartPosition(Vector3& pos) { player->SetPosition(pos); }
+	void PlayerStartPosition(Vector3& pos) { _player->SetPosition(pos); }
 
 private:
 	Vector3 player_get_pos;

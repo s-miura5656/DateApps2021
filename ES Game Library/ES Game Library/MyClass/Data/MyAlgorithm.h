@@ -61,7 +61,7 @@ static Vector3 Vector3_Lerp(Vector3 A, Vector3 B, float t)
 //! @return •Ç‚¸‚èƒxƒNƒgƒ‹
 static Vector3 SlidingOnWallVectorCreate(MODEL model, Vector3 pos, Vector3 move_dir)
 {
-	Vector3 _normal;
+	Vector3 _normal = Vector3_Zero;
 
 	model->IntersectRay(pos, move_dir, nullptr, &_normal);
 

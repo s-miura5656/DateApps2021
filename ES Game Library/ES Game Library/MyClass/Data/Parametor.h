@@ -29,7 +29,6 @@ private:
 
 	std::map<std::string, PlayerParam> _player_params;
 	PlayerParam _player_param;
-	
 };
 
 class ArmParametor

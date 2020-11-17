@@ -42,6 +42,9 @@ public:
 	bool    Tag_Sarch(string _tag);
 
 	bool IsHitObjects(std::string tags);
+	std::list<HitBox*> IsHitBoxList();
+	std::list<HitBox*> IsHitBoxList(std::string tag);
+	float _dist = FLT_MAX;
 
 private:
 	//‘S‚Ä‚ÌHitBox‚ðŠi”[‚µ‚Ä‚¨‚­ƒŠƒXƒg
