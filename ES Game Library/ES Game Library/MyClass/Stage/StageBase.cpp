@@ -19,9 +19,6 @@ void StageBase::Draw3D()
 {
 	block_base->SetPosition(_position);
 	block_base->SetRotation(0, 0, 0);
-
-	if (_destruction_flag)
-		block_base->Draw();
 }
 
 Material StageBase::GetMaterial()
