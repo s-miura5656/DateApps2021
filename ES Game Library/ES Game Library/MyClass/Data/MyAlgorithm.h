@@ -59,7 +59,7 @@ static Vector3 Vector3_Lerp(Vector3 A, Vector3 B, float t)
 //! @param (pos) 壁ずりさせたいモデルの座標
 //! @param (dir) 壁ずりさせたいモデルのベクトル
 //! @return 壁ずりベクトル
-Vector3 SlidingOnWallVectorCreate(MODEL model, Vector3 pos, Vector3 move_dir)
+static Vector3 SlidingOnWallVectorCreate(MODEL model, Vector3 pos, Vector3 move_dir)
 {
 	Vector3 _normal;
 

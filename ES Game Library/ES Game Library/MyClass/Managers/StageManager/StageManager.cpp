@@ -47,20 +47,20 @@ bool StageManager::Initialize()
 	{
 		for (int x = 0; x < mapdate[z].size(); x++)
 		{
-			std::string tag;
+			std::string tag = std::to_string(z) + std::to_string(x);
 			switch (mapdate[z][x]) {
 			case 'b':
-				tag = DESTRUCTION_BLOCK_TAG + std::to_string(z) + std::to_string(x);
+				tag = DESTRUCTION_BLOCK_TAG + tag;
 				stages.emplace(tag, new Block);
 				stages[tag]->Initialize();
 				break;
 			case 'i':
-				tag = INDESTRUCTIBIEPILLAR_TAG + std::to_string(z) + std::to_string(x);
+				tag = INDESTRUCTIBIEPILLAR_TAG + tag;
 				stages.emplace(tag, new Pillar);
 				stages[tag]->Initialize();
 				break;
 			case 'o':
-				tag = WALL_METAL_TAG + std::to_string(z) + std::to_string(x);
+				tag = WALL_METAL_TAG + tag;
 				stages.emplace(tag, new Metal);
 				stages[tag]->Initialize();
 				break;
