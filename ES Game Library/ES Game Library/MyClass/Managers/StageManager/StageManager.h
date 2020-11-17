@@ -25,5 +25,5 @@ public:
 
 private:
 	std::map<std::string, StageBase*> stages;
-	std::vector<cstring> mapdate;//!マップデータの読み込み
+	std::vector<cstring>			  mapdate; //! マップデータの読み込み
 };

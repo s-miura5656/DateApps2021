@@ -17,12 +17,12 @@ void HitBox::Init() {
 	_HitBox_list.push_back(this);
 
 	//タグ設定
-	tag = "HitBox";
+	_tag = "HitBox";
 };
 
 void HitBox::Draw3D() 
 {
-	_model->SetScale(scale);
+	_model->SetScale(_scale);
 #if _DEBUG
 	GraphicsDevice.BeginAlphaBlend();
 	_model->DrawAlpha(0.5f);
@@ -32,7 +32,7 @@ void HitBox::Draw3D()
 
 void HitBox::Settags(string tags) 
 {
-	tag = tags;
+	_tag = tags;
 }
 
 //ヒットボックス生成
@@ -106,7 +106,7 @@ bool HitBox::Tag_Sarch(string _tag)
 {
 	bool f = false;
 	for (auto&& h : _HitBox_list) {
-		if (h->tag == _tag) { f = true; };
+		if (h->_tag == _tag) { f = true; };
 	}
 	return f;
 }
@@ -116,12 +116,12 @@ void HitBox::SetHitBoxPosition(Vector3 pos) {
 }
 
 void HitBox::SetHitBoxScale(float sca) {
-	scale = Vector3_One * sca;
+	_scale = Vector3_One * sca;
 }
 
 void HitBox::SetHitBoxScale(Vector3 sca)
 {
-	scale = sca;
+	_scale = sca;
 }
 
 
@@ -133,7 +133,7 @@ HitBox* HitBox::TypeRayRange(std::string tag, Vector3 position, Vector3 angle, f
 
 	for (auto&& other : _HitBox_list) {
 		//タグが異なる場合処理をカット
-		if (other->tag != tag) continue;
+		if (other->_tag != tag) continue;
 		//自身とは判定を行わない
 		if (this == other->GetThisHitBox())  continue;
 		//距離を取得
@@ -157,13 +157,13 @@ HitBox* HitBox::TypeRayRange(std::string tag, Vector3 position, Vector3 angle, f
  * @return 戻り値の説明　ヒットボックスを取得返す
  * @detail 詳細な説明　外部にあるヒットボックスを取得できる
  */
-HitBox* HitBox::Get_Tag_HitBox(std::string tag)
+HitBox* HitBox::GetHitBoxTag(std::string tag)
 {
 	ASSERT(Tag_Sarch(tag) && "tagが存在していない!");
 	HitBox* hitbox = nullptr;
 	for (auto&& other_hitbox : _HitBox_list)
 	{
-		if (other_hitbox->tag != tag) continue;
+		if (other_hitbox->_tag != tag) continue;
 		//タグ以外を弾く
 		if (this == other_hitbox->GetThisHitBox()) continue;
 		//自分を弾く
@@ -185,7 +185,7 @@ bool HitBox::IsHitObjects(std::string tags) {
 	std::list<HitBox*> HitList = HitHitBoxlist();
 	for (auto&& other : HitList) 
 	{
-		if (other->tag == tags)
+		if (other->_tag == tags)
 			result = true;
 	}
 	return result;

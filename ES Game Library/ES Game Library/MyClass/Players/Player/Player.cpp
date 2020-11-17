@@ -3,15 +3,15 @@
 #include "../../Managers/ControllerManager/ContorollerManager.h"
 #include "../../Data/MyAlgorithm.h"
 
-Player::Player(std::string name)
+Player::Player(std::string tag)
 {
-	PlayerParametor::Instance().CreateParametor(name);
-	arm = new Arm(name);
-	_tag = name;
-	_arm_tag = ARM_TAG + std::to_string(GetTagNum(_tag));
+	PlayerParametor::Instance().CreateParametor(tag);
+	arm = new Arm(tag);
+	_tag = tag;
+	_arm_tag = ARM_TAG + std::to_string(GetTagNum(tag));
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
-	_hit_box->Settags(name);
+	_hit_box->Settags(tag);
 	_hit_box->SetHitBoxScale(0.7f);
 	_iplayer_data = new IPrayerData;
 	_iarm_data = new IArmData;
