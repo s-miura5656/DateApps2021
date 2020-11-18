@@ -55,3 +55,5 @@ float PlayerBase::PlayerSpeed()
 
 	return _move_speed;
 }
+
+

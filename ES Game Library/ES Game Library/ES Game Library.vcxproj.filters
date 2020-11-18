@@ -421,9 +421,6 @@
     <ClCompile Include="MyClass\Controller\ControllerConfig.cpp">
       <Filter>Myclass\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Ui\MaineUi.cpp">
-      <Filter>Myclass\Ui</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Ui\ResultUi.cpp">
       <Filter>Myclass\Ui</Filter>
     </ClCompile>
@@ -438,6 +435,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp">
       <Filter>Myclass\Managers\ItemManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Ui\MainUi.cpp">
+      <Filter>Myclass\Ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -679,9 +679,6 @@
     <ClInclude Include="MyClass\Ui\BaseUi.h">
       <Filter>Myclass\Ui</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Ui\MaineUi.h">
-      <Filter>Myclass\Ui</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Ui\ResultUi.h">
       <Filter>Myclass\Ui</Filter>
     </ClInclude>
@@ -708,6 +705,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Item\ItemCounter\ItemCounter.h">
       <Filter>Myclass\Item\ItemCounter</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Ui\MainUi.h">
+      <Filter>Myclass\Ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 #include "Arm/Arm.h"
 #include "../Collision/HitBox.h"
 #include "../Data/IData.h"
+#include "../Managers/ControllerManager/ContorollerManager.h"
 
 class PlayerBase
 {
@@ -27,13 +28,14 @@ protected:
 	MODEL _player;
 	FONT _font;
 
-	const float scale = 0.004f;
+	const float scale		 = 0.004f;
 	const float player_scale = 1.f;
-	float _angle   = 0.f;
-	float _speed  = 0.f;
-	float _weight = 0.f;
-	float _move_speed = 0.f;
-
+	float _angle			 = 0.f;
+	float _speed			 = 0.f;
+	float _weight			 = 0.f;
+	float _move_speed		 = 0.f;
+	Vector3 _position		 = Vector3_Zero;
+	
 	ArmBase* _arm;
 	IPrayerData* _iplayer_data;
 	IArmData* _iarm_data;

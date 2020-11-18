@@ -56,13 +56,13 @@ bool StageManager::Initialize()
 				stages.emplace(tag, new Block);
 				stages[tag]->SetPosition(Vector3(x - 7, 0, -z + 6));
 				stages[tag]->Initialize();
-				itemcounter->SetItem(POWOR_ITEM_TAG, stages[tag]->GetPosition());
+				//itemcounter->SetItem(POWOR_ITEM_TAG, stages[tag]->GetPosition());
 
 				tags.push_back(tag);
 				break;
 			case 'i':
 				tag = INDESTRUCTIBIEPILLAR_TAG + tag;
-				stages.emplace(tag, new Pillar);
+				stages.emplace(tag, new Pillar(tag));
 				stages[tag]->SetPosition(Vector3(x - 7, 0, -z + 6));
 				stages[tag]->Initialize();
 
@@ -70,7 +70,7 @@ bool StageManager::Initialize()
 				break;
 			case 'o':
 				tag = WALL_METAL_TAG + tag;
-				stages.emplace(tag, new Metal);
+				stages.emplace(tag, new Metal(tag));
 				stages[tag]->SetPosition(Vector3(x - 7, 0, -z + 6));
 				stages[tag]->Initialize();
 

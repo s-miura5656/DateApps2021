@@ -1,5 +1,5 @@
-#include"MainUi.h"
-#include "../Data/GameData.h"
+#include "MainUi.h"
+#include "../Data/IData.h"
 #include "../Managers/TimeManager/Time.h"
 #include "../Players/PlayerBase.h"
 

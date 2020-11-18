@@ -16,7 +16,7 @@ public:
 	bool FileInitialize(LPCTSTR& file);
 	bool Initialize() override;
 	int Update() override;
-	void Move();
+	Vector3 Move(float pad_x, float pad_y);
 
 	void PlayerColor(Material& mat) {
 		_player->SetMaterial(mat);
@@ -26,7 +26,4 @@ public:
 	void PlayerStartPosition(Vector3& pos) { _player->SetPosition(pos); }
 
 private:
-	Vector3 player_get_pos;
-	Vector3 player_get_rot;
-
 };

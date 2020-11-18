@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "../../Data/Parametor.h"
-#include "../../Managers/ControllerManager/ContorollerManager.h"
 #include "../../Data/MyAlgorithm.h"
 
 Player::Player(std::string tag)
@@ -45,9 +44,6 @@ bool Player::Initialize()
 
 int Player::Update()
 {
-	player_get_pos = _player->GetPosition();
-	player_get_rot = _player->GetRotation();
-
 	_arm->Update();
 
 	auto pad = ControllerManager::Instance().GetController(_tag);
@@ -70,42 +66,37 @@ int Player::Update()
 
 		if (list.empty())
 		{
-			Move();
+			_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+			_player->SetRotation(0, _angle, 0);
+			_position = Move(pad->GetPadStateX(), pad->GetPadStateY());
+			_player->SetPosition(_position);
+			_arm->SetPra(_position, _angle);
 		}
 		else
 		{
+			_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+			_player->SetRotation(0, _angle, 0);
 			auto it = list.begin();
-			Vector3  P = Vector3(0.0f,0.0f,0.0f);
-			P = SlidingOnWallVectorCreate((*it)->GetModelTag(), _player->GetPosition(), _player->GetFrontVector());
-			Vector3 pos = _player->GetPosition();
-			pos += P * 0.02f;
-			_player->SetPosition(pos);
+			_position = SlidingOnWallVectorCreate((*it)->GetModelTag(), _player->GetPosition(), _player->GetFrontVector());
+			_position = _player->GetPosition() + _position * 0.1f;
+			_player->SetPosition(_position);
+			_arm->SetPra(_position, _angle);
 		}
 	}
 
 	return 0;
 }
 
-void Player::Move() 
+Vector3 Player::Move(float pad_x, float pad_y)
 {
-	auto pad = ControllerManager::Instance().GetController(_tag);
+	auto x = Clamp(pad_x, -0.1f, 0.1f);
 
-	auto a = double(pad->GetPadStateX() - Axis_Center) / double(Axis_Max);
-
-	auto b = -double(pad->GetPadStateY() - Axis_Center) / double(Axis_Max);
-
-	auto x = Clamp(pad->GetPadStateX(), -0.1f, 0.1f);
-
-	auto z = -Clamp(pad->GetPadStateY(), -0.1f, 0.1f);
-
-	_angle = MathHelper_Atan2(a, b);
-
-	_player->SetRotation(0, _angle, 0);
+	auto z = -Clamp(pad_y, -0.1f, 0.1f);
 
 	auto pos = _iplayer_data->GetPosition(_tag) + Vector3(x, 0, z);
 
-	_player->SetPosition(pos);
+	
 
-	_arm->SetPra(player_get_pos, _angle);
+	return pos;
 }
 
