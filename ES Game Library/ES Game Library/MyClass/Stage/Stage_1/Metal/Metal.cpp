@@ -6,8 +6,8 @@ Metal::Metal(std::string tag)
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_tag = tag;
-	_hit_box->Settags(tag);
-	_hit_box->SetHitBoxScale(1.1f);
+	_hit_box->Settags(_tag);
+	_hit_box->SetHitBoxScale(1.0f);
 }
 
 Metal::~Metal()
@@ -23,8 +23,7 @@ bool Metal::Initialize()
 	_model->SetScale(_scale);
 	//ƒ}ƒeƒŠƒAƒ‹‚ÌÝ’è
 	_model->SetMaterial(GetMaterial());
-	
-	_hit_box->SetHitBoxPosition(_position);
 
+	_hit_box->SetHitBoxPosition(_position);
 	return _model != nullptr;
 }

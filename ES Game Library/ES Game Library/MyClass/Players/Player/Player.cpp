@@ -37,6 +37,8 @@ bool Player::Initialize()
 
 	_arm->Initialize();
 
+	_player->SetPosition(_iplayer_data->GetPosition(_tag));
+
 	ControllerManager::Instance().CreateGamePad(_tag);
 
 	return true;
@@ -62,26 +64,25 @@ int Player::Update()
 	if (pad->GetPadStateX() != Axis_Center && _arm->GetArmState() == NO_PUNCH ||
 		pad->GetPadStateY() != Axis_Center && _arm->GetArmState() == NO_PUNCH)
 	{
-		auto list = _hit_box->IsHitBoxList(_arm_tag);
+		_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+		_player->SetRotation(0, _angle, 0);
 
-		if (list.empty())
+		auto hit_list = _hit_box->IsHitBoxList(_arm_tag);
+
+		if (!hit_list.empty())
 		{
-			_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-			_player->SetRotation(0, _angle, 0);
-			_position = Move(pad->GetPadStateX(), pad->GetPadStateY());
+			_position = _player->GetPosition() + _hit_box->WallShavingObjects(hit_list, _position, _player->GetFrontVector()) * 0.05f;
 			_player->SetPosition(_position);
 			_arm->SetPra(_position, _angle);
 		}
 		else
 		{
-			_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-			_player->SetRotation(0, _angle, 0);
-			auto it = list.begin();
-			_position = SlidingOnWallVectorCreate((*it)->GetModelTag(), _player->GetPosition(), _player->GetFrontVector());
-			_position = _player->GetPosition() + _position * 0.1f;
+			_position = Move(pad->GetPadStateX(), pad->GetPadStateY());
 			_player->SetPosition(_position);
 			_arm->SetPra(_position, _angle);
 		}
+
+		_old_pos = _position;
 	}
 
 	return 0;
@@ -94,8 +95,6 @@ Vector3 Player::Move(float pad_x, float pad_y)
 	auto z = -Clamp(pad_y, -0.1f, 0.1f);
 
 	auto pos = _iplayer_data->GetPosition(_tag) + Vector3(x, 0, z);
-
-	
 
 	return pos;
 }

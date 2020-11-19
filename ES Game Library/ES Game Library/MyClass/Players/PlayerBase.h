@@ -26,6 +26,7 @@ public:
 
 protected:
 	MODEL _player;
+	MODEL _model = nullptr;
 	FONT _font;
 
 	const float scale		 = 0.004f;
@@ -34,8 +35,9 @@ protected:
 	float _speed			 = 0.f;
 	float _weight			 = 0.f;
 	float _move_speed		 = 0.f;
+	float _distance			 = FLT_MAX;
 	Vector3 _position		 = Vector3_Zero;
-	
+	Vector3 _old_pos		 = Vector3_Zero;
 	ArmBase* _arm;
 	IPrayerData* _iplayer_data;
 	IArmData* _iarm_data;
