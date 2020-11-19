@@ -1,8 +1,13 @@
 #include"Pillar.h"
 
-Pillar::Pillar()
+Pillar::Pillar(std::string tag)
 {
 	_model = nullptr;
+	_hit_box.reset(new HitBox());
+	_hit_box->Init();
+	_tag = tag;
+	_hit_box->Settags(_tag);
+	_hit_box->SetHitBoxScale(1.1f);
 }
 
 Pillar::~Pillar()
@@ -18,6 +23,7 @@ bool Pillar::Initialize()
 	_model->SetScale(_scale);
 	//ƒ}ƒeƒŠƒAƒ‹‚ÌÝ’è
 	_model->SetMaterial(GetMaterial());
-	
+
+	_hit_box->SetHitBoxPosition(_position);
 	return _model != nullptr;
 }

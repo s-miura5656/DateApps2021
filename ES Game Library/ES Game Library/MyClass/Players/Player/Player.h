@@ -16,17 +16,14 @@ public:
 	bool FileInitialize(LPCTSTR& file);
 	bool Initialize() override;
 	int Update() override;
-	void Move();
+	Vector3 Move(float pad_x, float pad_y);
 
 	void PlayerColor(Material& mat) {
-		player->SetMaterial(mat);
+		_player->SetMaterial(mat);
 		//rocket_punch->SetMaterial(mat);
 	}
 
-	void PlayerStartPosition(Vector3& pos) { player->SetPosition(pos); }
+	void PlayerStartPosition(Vector3& pos) { _player->SetPosition(pos); }
 
 private:
-	Vector3 player_get_pos;
-	Vector3 player_get_rot;
-
 };

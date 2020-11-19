@@ -37,13 +37,6 @@ bool PlayerManager::Initialize()
 	player_mtrl[3].Diffuse = Color(1.0f, 1.0f, 0.0f, 0.3f);
 	player_mtrl[3].Ambient = Color(1.0f, 1.0f, 0.0f, 0.3f);
 
-	Vector3 _start_pos[4];
-
-	_start_pos[0] = Vector3(-6.f, 0,  5.f);
-	_start_pos[1] = Vector3( 6.f, 0,  5.f);
-	_start_pos[2] = Vector3(-6.f, 0, -5.f);
-	_start_pos[3] = Vector3( 6.f, 0, -5.f);
-
 	LPCTSTR model_file_name = _T("player/robot.X");
 
 //ƒvƒŒƒCƒ„[
@@ -53,7 +46,6 @@ bool PlayerManager::Initialize()
 		std::string arm_name = ARM_TAG + std::to_string(i + 1);
 		players[i]->FileInitialize(model_file_name);
 		players[i]->PlayerColor(player_mtrl[i]);
-		players[i]->PlayerStartPosition(_start_pos[i]);
 		players[i]->Initialize();
 
 		ArmParametor::Instance().CreateParametor(ARM_TAG + std::to_string(i + 1));

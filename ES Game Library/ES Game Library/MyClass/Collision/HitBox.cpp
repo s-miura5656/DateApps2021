@@ -94,7 +94,6 @@ std::list<HitBox*> HitBox::HitHitBoxlist() {
 	std::list<HitBox*>  result;
 	for (auto&& h : _HitBox_list) {
 		//自分とは判定しない
-		
 		if (h->GetThisHitBox() == this) continue;
 		if (h->IsHit(this)) result.push_back(h->GetThisHitBox());
 	}
@@ -112,6 +111,7 @@ bool HitBox::Tag_Sarch(string _tag)
 }
 
 void HitBox::SetHitBoxPosition(Vector3 pos) {
+	_position = pos;
 	_model->SetPosition(pos);
 }
 
@@ -131,6 +131,11 @@ HitBox* HitBox::TypeRayRange(std::string tag, Vector3 position, Vector3 angle, f
 	range = 99999.0f;
 	HitBox* p_result = nullptr;
 
+	if (tag == "WallMetal_0")
+	{
+		int i = 0;
+	}
+
 	for (auto&& other : _HitBox_list) {
 		//タグが異なる場合処理をカット
 		if (other->_tag != tag) continue;
@@ -148,6 +153,7 @@ HitBox* HitBox::TypeRayRange(std::string tag, Vector3 position, Vector3 angle, f
 			p_result = other->GetThisHitBox();
 		}
 	}
+
 	return  p_result;
 }
 
@@ -181,7 +187,6 @@ HitBox* HitBox::GetHitBoxTag(std::string tag)
 bool HitBox::IsHitObjects(std::string tags) {
 	ASSERT(Tag_Sarch(tags) && "tagが存在していない!");
 	bool result = false;
-	_HitBox_list;
 	std::list<HitBox*> HitList = HitHitBoxlist();
 	for (auto&& other : HitList) 
 	{
@@ -189,4 +194,67 @@ bool HitBox::IsHitObjects(std::string tags) {
 			result = true;
 	}
 	return result;
+}
+
+/**
+ * @fn 壁ずりベクトルの取得
+ * @param (is_hit_list) 当たっているヒットボックスのリストを取得
+ * @param (pos) 壁ずりさせたい対象の座標
+ * @param (move_dir) 壁ずりさせたい対象の向きベクトル
+ * @return 戻り値の説明　壁ずりのベクトル
+ */
+Vector3 HitBox::WallShavingObjects(std::list<HitBox*> is_hit_list, Vector3 pos, Vector3 move_dir)
+{
+	float dist = FLT_MAX;
+
+	std::vector<float> dists;
+
+	for (auto it = is_hit_list.begin(); it != is_hit_list.end(); ++it)
+	{
+		(*it)->GetModelTag()->IntersectRay(pos, move_dir, &dist);
+		dists.push_back(dist);
+	}
+
+	auto it = std::min_element(dists.begin(), dists.end());
+
+	int index = std::distance(dists.begin(), it);
+
+	auto box = std::next(is_hit_list.begin(), index);
+
+	Vector3 _normal = Vector3_Zero;
+
+	(*box)->GetModelTag()->IntersectRay(pos, move_dir, nullptr, &_normal);
+
+	return move_dir + Vector3_Dot(-move_dir, _normal) * _normal;
+}
+
+/**
+ * @fn 当たっているヒットボックスを取得
+ * @return 当たっているヒットボックスをリストとして返す
+ */
+std::list<HitBox*> HitBox::IsHitBoxList() {
+	std::list<HitBox*> HitList = HitHitBoxlist();
+	return HitList;
+}
+
+/**
+ * @fn 当たっているヒットボックスを取得
+ * @param (tag) タグのヒットボックスを除外する
+ * @return 当たっているヒットボックスをリストとして返す
+ */
+std::list<HitBox*> HitBox::IsHitBoxList(std::string tag)
+{
+	std::list<HitBox*> HitList = HitHitBoxlist();
+	
+	auto&& it = HitList.begin();
+	while (it != HitList.end())
+	{
+		if ((*it)->_tag == tag)
+		{
+			it = HitList.erase(it);
+			continue;
+		}
+		it++;
+	}
+	return HitList;
 }

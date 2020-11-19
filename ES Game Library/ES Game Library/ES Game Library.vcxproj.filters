@@ -115,9 +115,6 @@
     <Filter Include="Myclass">
       <UniqueIdentifier>{333155ef-f7de-4862-95fd-ed59091a17ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Item">
-      <UniqueIdentifier>{9e19ebd1-c709-455f-8be8-51ceb3b7bae7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Collision">
       <UniqueIdentifier>{b71310af-825e-4d81-8fed-765872be25fa}</UniqueIdentifier>
     </Filter>
@@ -172,12 +169,6 @@
     <Filter Include="Myclass\Managers\PlayerManager">
       <UniqueIdentifier>{3517be3f-12be-451b-8323-52c04d574b8c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Item\SpeedItem">
-      <UniqueIdentifier>{47aeec0b-af71-4dfe-b30b-37afda797e37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Item\AttackPoworItem">
-      <UniqueIdentifier>{3d91bd96-9e23-4a1d-b8d4-d31942299724}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Stage\Stage_1\Metal">
       <UniqueIdentifier>{846f067b-ed58-4dae-8348-8e11d31eb243}</UniqueIdentifier>
     </Filter>
@@ -190,9 +181,6 @@
     <Filter Include="Myclass\Stage\Stage_1\Piller">
       <UniqueIdentifier>{d7edd38a-d77c-47ec-a91f-7a0a64734f54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Item\HitPointItem">
-      <UniqueIdentifier>{7756fb5d-bfdf-49ae-98ee-e835a5f980ea}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Managers\ControllerManager">
       <UniqueIdentifier>{cc293e60-72d0-4f57-8ce0-c22a34510d69}</UniqueIdentifier>
     </Filter>
@@ -202,8 +190,23 @@
     <Filter Include="Myclass\Ui">
       <UniqueIdentifier>{54aad0ac-4238-4349-b700-20af82a6ef51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Item">
+      <UniqueIdentifier>{9e19ebd1-c709-455f-8be8-51ceb3b7bae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Item\SpeedItem">
+      <UniqueIdentifier>{47aeec0b-af71-4dfe-b30b-37afda797e37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Item\AttackPoworItem">
+      <UniqueIdentifier>{3d91bd96-9e23-4a1d-b8d4-d31942299724}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Item\HitPointItem">
+      <UniqueIdentifier>{7756fb5d-bfdf-49ae-98ee-e835a5f980ea}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Myclass\Item\ItemFactory">
       <UniqueIdentifier>{69fd894e-92fd-41cd-9d97-556047c173c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Item\ItemCounter">
+      <UniqueIdentifier>{ad802b2a-6a26-4517-84d9-c15e91d9b1d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -361,9 +364,6 @@
     <ClCompile Include="MyClass\Scenes\Result\ResultScene.cpp">
       <Filter>Myclass\Scenes\Result</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp">
-      <Filter>Myclass\Managers\ItemManager</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp">
       <Filter>Myclass\Managers\PlayerManager</Filter>
     </ClCompile>
@@ -421,9 +421,6 @@
     <ClCompile Include="MyClass\Controller\ControllerConfig.cpp">
       <Filter>Myclass\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Ui\MaineUi.cpp">
-      <Filter>Myclass\Ui</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Ui\ResultUi.cpp">
       <Filter>Myclass\Ui</Filter>
     </ClCompile>
@@ -435,6 +432,12 @@
     </ClCompile>
     <ClCompile Include="MyClass\Item\ItemBase.cpp">
       <Filter>Myclass\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp">
+      <Filter>Myclass\Managers\ItemManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Ui\MainUi.cpp">
+      <Filter>Myclass\Ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -676,9 +679,6 @@
     <ClInclude Include="MyClass\Ui\BaseUi.h">
       <Filter>Myclass\Ui</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Ui\MaineUi.h">
-      <Filter>Myclass\Ui</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Ui\ResultUi.h">
       <Filter>Myclass\Ui</Filter>
     </ClInclude>
@@ -702,6 +702,12 @@
     </ClInclude>
     <ClInclude Include="MyClass\Data\WordsTable.h">
       <Filter>Myclass\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Item\ItemCounter\ItemCounter.h">
+      <Filter>Myclass\Item\ItemCounter</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Ui\MainUi.h">
+      <Filter>Myclass\Ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

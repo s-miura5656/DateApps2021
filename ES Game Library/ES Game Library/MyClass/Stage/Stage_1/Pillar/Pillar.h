@@ -12,7 +12,7 @@
 class Pillar :public StageBase
 {
 public:
-	Pillar();
+	Pillar(std::string tag);
 	~Pillar();
 	bool Initialize() override;
 

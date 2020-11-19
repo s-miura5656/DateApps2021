@@ -1,12 +1,11 @@
 #include "Player.h"
 #include "../../Data/Parametor.h"
-#include "../../Managers/ControllerManager/ContorollerManager.h"
 #include "../../Data/MyAlgorithm.h"
 
 Player::Player(std::string tag)
 {
 	PlayerParametor::Instance().CreateParametor(tag);
-	arm = new Arm(tag);
+	_arm = new Arm(tag);
 	_tag = tag;
 	_arm_tag = ARM_TAG + std::to_string(GetTagNum(tag));
 	_hit_box.reset(new HitBox());
@@ -21,20 +20,24 @@ Player::~Player()
 {
 	delete _iarm_data;
 	delete _iplayer_data;
-	delete arm;
+	delete _arm;
 }
 
 bool Player::FileInitialize(LPCTSTR& file)
 {
-	player = GraphicsDevice.CreateModelFromFile(file);
+	_player = GraphicsDevice.CreateModelFromFile(file);
 	return true;
 }
 
 bool Player::Initialize()
 {
-	player->SetScale(player_scale);
+	_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
 
-	arm->Initialize();
+	_player->SetScale(player_scale);
+
+	_arm->Initialize();
+
+	_player->SetPosition(_iplayer_data->GetPosition(_tag));
 
 	ControllerManager::Instance().CreateGamePad(_tag);
 
@@ -43,51 +46,56 @@ bool Player::Initialize()
 
 int Player::Update()
 {
-	player_get_pos = player->GetPosition();
-	player_get_rot = player->GetRotation();
-
-	arm->Update();
+	_arm->Update();
 
 	auto pad = ControllerManager::Instance().GetController(_tag);
 
 	//ロケットパンチ
-	if (pad->GetButtonState(GamePad_Button1) && arm->GetArmState() == NO_PUNCH)
+	if (pad->GetButtonState(GamePad_Button1) && _arm->GetArmState() == NO_PUNCH)
 	{
-		arm->ArmShoot(PUNCH);
+		_arm->ArmShoot(PUNCH);
 	}
-	else if (!pad->GetButtonState(GamePad_Button1) && arm->GetArmState() == PUNCH)
+	else if (!pad->GetButtonState(GamePad_Button1) && _arm->GetArmState() == PUNCH)
 	{
-		arm->ArmShoot(RETURN_PUNCH);
+		_arm->ArmShoot(RETURN_PUNCH);
 	}
 
 	//プレイヤー移動
-	if (pad->GetPadStateX() != Axis_Center && arm->GetArmState() == NO_PUNCH ||
-		pad->GetPadStateY() != Axis_Center && arm->GetArmState() == NO_PUNCH)
+	if (pad->GetPadStateX() != Axis_Center && _arm->GetArmState() == NO_PUNCH ||
+		pad->GetPadStateY() != Axis_Center && _arm->GetArmState() == NO_PUNCH)
 	{
-		Move();
+		_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+		_player->SetRotation(0, _angle, 0);
+
+		auto hit_list = _hit_box->IsHitBoxList(_arm_tag);
+
+		if (!hit_list.empty())
+		{
+			_position = _player->GetPosition() + _hit_box->WallShavingObjects(hit_list, _position, _player->GetFrontVector()) * 0.05f;
+			_player->SetPosition(_position);
+			_arm->SetPra(_position, _angle);
+		}
+		else
+		{
+			_position = Move(pad->GetPadStateX(), pad->GetPadStateY());
+			_player->SetPosition(_position);
+			_arm->SetPra(_position, _angle);
+		}
+
+		_old_pos = _position;
 	}
 
 	return 0;
 }
 
-void Player::Move() 
+Vector3 Player::Move(float pad_x, float pad_y)
 {
-	auto pad = ControllerManager::Instance().GetController(_tag);
+	auto x = Clamp(pad_x, -0.1f, 0.1f);
 
-	auto a = double(pad->GetPadStateX() - Axis_Center) / double(Axis_Max);
+	auto z = -Clamp(pad_y, -0.1f, 0.1f);
 
-	auto b = -double(pad->GetPadStateY() - Axis_Center) / double(Axis_Max);
+	auto pos = _iplayer_data->GetPosition(_tag) + Vector3(x, 0, z);
 
-	auto x = pad->GetPadStateX();
-
-	auto y = pad->GetPadStateY();
-
-	angle = MathHelper_Atan2(a, b);
-
-	player->SetRotation(0, angle, 0);
-
-	player->Move(0, 0, PlayerSpeed());
-
-	arm->SetPra(player_get_pos, angle);
+	return pos;
 }
 

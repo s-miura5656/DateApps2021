@@ -34,7 +34,8 @@ public:
 	void    SetColor(Vector3 colors);
 	void    HitBoxMove(Vector3 move);
 
-	Vector3 GetHitBoxPosition()const { return _model->GetPosition(); };
+	Vector3 GetHitBoxPosition() const { return _model->GetPosition(); };
+	Vector3 GetHitBoxScale() const { return _model->GetScale(); }
 
 	HitBox* TypeRayRange(std::string tag, Vector3 position, Vector3 angle, float& range);
 	HitBox* GetHitBoxTag(std::string tag);
@@ -42,13 +43,18 @@ public:
 	bool    Tag_Sarch(string _tag);
 
 	bool IsHitObjects(std::string tags);
+	Vector3 WallShavingObjects(std::list<HitBox*> is_hit_list, Vector3 pos, Vector3 move_dir);
+
+	std::list<HitBox*> IsHitBoxList();
+	std::list<HitBox*> IsHitBoxList(std::string tag);
+	std::list<HitBox*> GetHitBoxList() const { return _HitBox_list; }
+	std::string GetTag() const { return _tag; }
 
 private:
 	//全てのHitBoxを格納しておくリスト
 	static std::list<HitBox*> _HitBox_list;
 
 	string _tag;
-
 	//判定用のモデル
 	MODEL _model = nullptr;
 

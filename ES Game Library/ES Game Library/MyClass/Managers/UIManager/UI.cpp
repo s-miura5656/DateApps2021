@@ -1,11 +1,11 @@
 #include "UI.h"
-#include"../../Ui/MaineUi.h"
+#include"../../Ui/MainUi.h"
 #include"../../Ui/ResultUi.h"
 #include"../../Ui/TitleUi.h"
 
 MainUiManager::MainUiManager()
 {
-	_ui = new MaineUi;
+	_ui = new MainUi;
 }
 
 MainUiManager::~MainUiManager()

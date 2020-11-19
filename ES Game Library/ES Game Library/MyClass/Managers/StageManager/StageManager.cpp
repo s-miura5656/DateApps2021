@@ -2,6 +2,7 @@
 #include "../../Stage/Stage_1/Stage.h"
 #include <fstream>
 #include <cstdio>
+#include "../../Data/IData.h"
 
 StageManager::StageManager()
 {
@@ -41,7 +42,12 @@ bool StageManager::Initialize()
 	
 	stages.emplace(FLOOR_TAG, new Floor);
 	stages[FLOOR_TAG]->Initialize();
-	stages[FLOOR_TAG]->SetPosition(Vector3_Zero);
+	stages[FLOOR_TAG]->SetPosition(Vector3(7, 0, -6));
+
+	ItemCounter* itemcounter = new ItemCounter;
+	IPrayerData* iplayer_data = new IPrayerData;
+	int player_num = 1;
+	std::vector<Vector3> pos;
 
 	for (int z = 0; z < mapdate.size(); z++)
 	{
@@ -52,17 +58,31 @@ bool StageManager::Initialize()
 			case 'b':
 				tag = DESTRUCTION_BLOCK_TAG + tag;
 				stages.emplace(tag, new Block);
+				stages[tag]->SetPosition(Vector3(x, 0, -z));
 				stages[tag]->Initialize();
+				//itemcounter->SetItem(POWOR_ITEM_TAG, stages[tag]->GetPosition());
+				tags.push_back(tag);
 				break;
 			case 'i':
 				tag = INDESTRUCTIBIEPILLAR_TAG + tag;
-				stages.emplace(tag, new Pillar);
+				stages.emplace(tag, new Pillar(tag));
+				stages[tag]->SetPosition(Vector3(x, 0, -z));
 				stages[tag]->Initialize();
+
+				tags.push_back(tag);
 				break;
 			case 'o':
 				tag = WALL_METAL_TAG + tag;
-				stages.emplace(tag, new Metal);
+				stages.emplace(tag, new Metal(tag));
+				stages[tag]->SetPosition(Vector3(x, 0, -z));
 				stages[tag]->Initialize();
+				pos.push_back(Vector3(x, 0, -z));
+				tags.push_back(tag);
+				break;
+			case 'p':
+				tag = PLAYER_TAG + std::to_string(player_num);
+				iplayer_data->SetPosition(tag, Vector3(x, 0, -z));
+				player_num++;
 				break;
 			default:
 				//‚Ç‚ê‚àŠY“–‚µ‚È‚¢‚Æ‚«
@@ -71,6 +91,10 @@ bool StageManager::Initialize()
 			}
 		}
 	}
+
+	delete iplayer_data;
+	delete itemcounter;
+
 	int size = stages.size();
 	return true;
 }
@@ -87,34 +111,9 @@ void StageManager::Draw2D()
 
 void StageManager::Draw3D()
 {
-	// “Ç‚İ‚ñ‚¾À•Wƒf[ƒ^‚ğ‚à‚Æ‚É•`‰æ
-	for (int z = 0; z < mapdate.size(); z++)
+	for (const auto& tag : tags)
 	{
-		for (int x = 0; x < mapdate[z].size(); x++)
-		{
-			std::string tag;
-			switch (mapdate[z][x]) {
-			case 'b':
-				tag = DESTRUCTION_BLOCK_TAG + std::to_string(z) + std::to_string(x);
-				stages[tag]->SetPosition(Vector3(x - 7, 0, -z + 6));
-				stages[tag]->Draw3D();
-				break;
-			case 'i':
-				tag = INDESTRUCTIBIEPILLAR_TAG + std::to_string(z) + std::to_string(x);
-				stages[tag]->SetPosition(Vector3(x - 7, 0, -z + 6));
-				stages[tag]->Draw3D();
-				break;
-			case 'o':
-				tag = WALL_METAL_TAG + std::to_string(z) + std::to_string(x);
-				stages[tag]->SetPosition(Vector3(x - 7, 0, -z + 6));
-				stages[tag]->Draw3D();
-				break;
-			default:
-				//‚Ç‚ê‚àŠY“–‚µ‚È‚¢‚Æ‚«
-				//¡‰ñ‚Í‰½‚à‚µ‚È‚¢
-				break;
-			}
-		}
+		stages[tag]->Draw3D();
 	}
 
 	stages[FLOOR_TAG]->Draw3D();
