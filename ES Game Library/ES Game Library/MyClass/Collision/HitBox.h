@@ -45,6 +45,8 @@ public:
 	bool IsHitObjects(std::string tags);
 	Vector3 WallShavingObjects(std::list<HitBox*> is_hit_list, Vector3 pos, Vector3 move_dir);
 
+	MODEL IshitNearestObject(std::list<HitBox*> is_hit_list, Vector3 pos, Vector3 move_dir);
+
 	std::list<HitBox*> IsHitBoxList();
 	std::list<HitBox*> IsHitBoxList(std::string tag);
 	std::list<HitBox*> GetHitBoxList() const { return _HitBox_list; }

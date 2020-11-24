@@ -1,8 +1,10 @@
 #pragma once
 
 #include "../../ESGLib.h"
+#include "WordsTable.h"
 
 struct PlayerParam {
+	int state		  = PlayerEnum::WAIT;
 	Vector3 position  = Vector3_Zero;
 	float angle		  = 0.f;
 	int hit_point	  = 1000;

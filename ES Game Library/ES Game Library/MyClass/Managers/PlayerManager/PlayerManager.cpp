@@ -48,9 +48,8 @@ bool PlayerManager::Initialize()
 		players[i]->PlayerColor(player_mtrl[i]);
 		players[i]->Initialize();
 
-		ArmParametor::Instance().CreateParametor(ARM_TAG + std::to_string(i + 1));
-		i_player_data->SetPosition(name, players[i]->GetPos());
-		i_arm_data->SetPosition(arm_name, players[i]->GetPos());
+		PlayerParametor::Instance().CreateParametor(name);
+		ArmParametor::Instance().CreateParametor(arm_name);
 	}
 
     return true;
@@ -65,7 +64,6 @@ int PlayerManager::Update()
 		players[i]->Update();
 		i_player_data->SetPosition(name, players[i]->GetPos());
 		i_player_data->SetAngle(name, players[i]->GetAngle());
-		i_arm_data->SetPosition(arm_name, players[i]->GetPos());
 	}
 
     return 0;
@@ -73,12 +71,14 @@ int PlayerManager::Update()
 
 void PlayerManager::Draw2D()
 {
+#if _DEBUG
 	auto player = players;
 
 	for (int i = 0; i < players.size(); ++i)
 	{
 		player[i]->Draw2D();
 	}
+#endif
 }
 
 void PlayerManager::Draw3D()

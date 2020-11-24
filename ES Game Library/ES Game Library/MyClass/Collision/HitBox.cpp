@@ -223,10 +223,39 @@ Vector3 HitBox::WallShavingObjects(std::list<HitBox*> is_hit_list, Vector3 pos, 
 
 	Vector3 _normal = Vector3_Zero;
 
-	(*box)->GetModelTag()->IntersectRay(pos, move_dir, nullptr, &_normal);
+	auto model = (*box)->GetModelTag();
 
-	return move_dir + Vector3_Dot(-move_dir, _normal) * _normal;
+	pos = model->GetPosition();
+
+	model->IntersectRay(pos, move_dir, nullptr, &_normal);
+
+	Vector3 dir = move_dir + Vector3_Dot(-move_dir, _normal) * _normal;
+
+	return dir;
 }
+
+MODEL HitBox::IshitNearestObject(std::list<HitBox*> is_hit_list, Vector3 pos, Vector3 move_dir)
+{
+	float dist = FLT_MAX;
+
+	std::vector<float> dists;
+
+	for (auto it = is_hit_list.begin(); it != is_hit_list.end(); ++it)
+	{
+		(*it)->GetModelTag()->IntersectRay(pos, move_dir, &dist);
+		dists.push_back(dist);
+	}
+
+	auto it = std::min_element(dists.begin(), dists.end());
+
+	int index = std::distance(dists.begin(), it);
+
+	auto box = std::next(is_hit_list.begin(), index);
+
+	return (*box)->GetModelTag();
+}
+
+
 
 /**
  * @fn 当たっているヒットボックスを取得
