@@ -18,8 +18,6 @@ bool Block::Initialize()
 	_model->SetScale(_scale);
 	//ƒ}ƒeƒŠƒAƒ‹‚ÌÝ’è
 	_model->SetMaterial(GetMaterial());
-	//
-	SetDestructiveFlag(true);
 	return _model != nullptr;
 }
 
