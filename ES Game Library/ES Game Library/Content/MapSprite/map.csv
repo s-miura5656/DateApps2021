@@ -1,5 +1,5 @@
 c,o,o,o,o,o,o,o,o,o,o,o,o,o,c
-o, , , , ,b, , , ,b, ,b, , ,o
+o,p, , , ,b, , , ,b, ,b, ,p,o
 o, ,i,b,i,b,i, ,i, ,i, ,i, ,o
 o,b, ,b, , , ,b, ,b,b, , , ,o
 o,b,i, ,i, ,i, ,i, ,i, ,i,b,o
@@ -9,5 +9,5 @@ o,,b, , ,b, ,b, ,b, , , , ,o
 o,b,i,b,i,,i,,i,,i,b,i,b,o
 o,b, , , ,b, ,b, ,b, ,b, ,b,o
 o, ,i, ,i, ,i, ,i, ,i, ,i, ,o
-o, , , ,b,b, ,b,b,b, , , , ,o
+o,p, , ,b,b, ,b,b,b, , , ,p,o
 c,o,o,o,o,o,o,o,o,o,o,o,o,o,c
