@@ -55,7 +55,6 @@ void MainUi::Draw2D()
 	DebugDraw();
 }
 
-#ifdef _DEBUG
 void MainUi::DebugDraw()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
@@ -70,5 +69,4 @@ void MainUi::DebugDraw()
 		SpriteBatch.DrawString(player_date, power_pos + Vector2(0, 60), text_color, _T("PLAYER_SPD : %d"), iplayer_data->GetSpeed(tag));
 	}
 }
-#endif
 //攻撃、hp、スピード

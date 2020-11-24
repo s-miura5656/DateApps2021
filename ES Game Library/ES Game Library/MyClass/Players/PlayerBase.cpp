@@ -26,7 +26,7 @@ void PlayerBase::Draw2D()
 void PlayerBase::Draw3D()
 {
 	_model->SetPosition(_iplayer_data->GetPosition(_tag));
-	_model->SetRotation(Vector3(10, _angle - 180, 0));
+	_model->SetRotation(Vector3(15, _angle - 180, 0));
 	_model->Draw();
 	_model->SetRotation(Vector3(0, _angle, 0));
 
