@@ -18,7 +18,7 @@ Pillar::~Pillar()
 bool Pillar::Initialize()
 {
 	//Xファイルの読み込み
-	_model = GraphicsDevice.CreateModelFromFile(_T("MapSprite/Pillar.X"));
+	_model = GraphicsDevice.CreateModelFromFile(_T("MapSprite/Indestructible.X"));
 	//スケールの設定
 	_model->SetScale(_scale);
 	//マテリアルの設定
