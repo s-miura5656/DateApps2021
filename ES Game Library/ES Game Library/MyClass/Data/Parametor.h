@@ -53,3 +53,20 @@ private:
 	ArmParam _arm_param;
 
 };
+
+class MapPosition {
+public:
+	friend class IMapData;
+	MapPosition() {}
+	~MapPosition() {}
+
+	static MapPosition& Instance() {
+		static MapPosition instance;
+		return instance;
+	};
+private:
+	MapPosition(const MapPosition&) = delete;
+	void operator=(const MapPosition&) = delete;
+
+	std::vector<Vector3> _position;
+};

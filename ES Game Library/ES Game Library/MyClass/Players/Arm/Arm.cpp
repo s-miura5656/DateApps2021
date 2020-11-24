@@ -3,7 +3,6 @@
 
 Arm::Arm(std::string name)
 {
-	_iplayer_data = new IPrayerData;
 	_player_tag = name;
 
 	int arm_num = GetTagNum(name);
@@ -13,12 +12,16 @@ Arm::Arm(std::string name)
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_hit_box->Settags(_tag);
-	_hit_box->SetHitBox(1, 1, 1);
+	_hit_box->SetHitBoxScale(0.5f);
+
+	_iplayer_data = new IPrayerData;
+	_iarm_Data = new IArmData;
 }
 
 Arm::~Arm()
 {
-
+	delete _iarm_Data;
+	delete _iplayer_data;
 }
 
 bool Arm::Fileinitialize()
@@ -28,13 +31,22 @@ bool Arm::Fileinitialize()
 
 bool Arm::Initialize()
 {
-	arm_model = GraphicsDevice.CreateModelFromFile(_T("Player/sword_01.X"));
+	_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
+	_model = GraphicsDevice.CreateModelFromFile(_T("Player/sword_01.X"));
 
-	arm_state = NO_PUNCH;
+	_model->SetRotation(0, _iplayer_data->GetAngle(_player_tag), 0);
+	_position = _iplayer_data->GetPosition(_player_tag);
+	_old_pos = _position;
+	_model->SetPosition(_position);
+	_angle_point.push_back(_position);
+
+	_angle = _iplayer_data->GetAngle(_player_tag);
+	_old_angle = _angle;
+	arm_state = ArmEnum::PunchState::PUNCH;
 
 	arm_speed = 0.07f;
 
-	arm_model->SetScale(0.005f);
+	_model->SetScale(0.005f);
 
 	hit_flag = false;
 

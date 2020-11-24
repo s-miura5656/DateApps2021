@@ -23,16 +23,16 @@ static int GetTagNum(std::string tag)
 //! @param (max) é˚ÇﬂÇÈílÇÃè„å¿íl
 static float Clamp(float value, float min, float max)
 {
-	float ratio = max - min;
+	/*float ratio = max - min;
 
 	ratio /= 100.f;
 
-	value *= ratio;
+	value *= ratio;*/
 
-	if (value < min)
+	if (value <= min)
 		value = min;
 
-	if (value > max)
+	if (value >= max)
 		value = max;
 
 	return value;
@@ -81,4 +81,15 @@ static float AngleCalculating(float pad_x, float pad_y)
 	float angle = MathHelper_Atan2(a, b);
 
 	return angle;
+}
+
+static Vector3 MoveDirection(float pad_x, float pad_y)
+{
+	auto x = Clamp(pad_x, -0.1f, 0.1f);
+
+	auto z = -Clamp(pad_y, -0.1f, 0.1f);
+
+	auto pos = Vector3(x, 0, z);
+
+	return Vector3_Normalize(pos);
 }

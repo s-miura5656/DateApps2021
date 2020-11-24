@@ -12,7 +12,7 @@ public:
 	bool Initialize();
 
 	void ArmColor(Material& mat) {
-		arm_model->SetMaterial(mat);
+		_model->SetMaterial(mat);
 	}
 
 private:

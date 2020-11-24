@@ -15,9 +15,7 @@ public:
 	bool Initialize() override;
 	int Update() override { return 0; }
 	void Draw2D() override;
-#ifdef _DEBUG
-	void DebugDraw(PlayerBase* player) override;
-#endif
+	void DebugDraw();
 
 	FONT player_date;//各プレイヤーのステータス表記
 	Vector2 powor_ui_pos[PLAYER_COUNT_MAX];//各プレイヤーのパワー

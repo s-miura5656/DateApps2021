@@ -49,6 +49,8 @@ bool StageManager::Initialize()
 	int player_num = 1;
 	std::vector<Vector3> pos;
 
+	IMapData* imap_data = new IMapData;
+
 	for (int z = 0; z < mapdate.size(); z++)
 	{
 		for (int x = 0; x < mapdate[z].size(); x++)
@@ -62,14 +64,16 @@ bool StageManager::Initialize()
 				stages[tag]->Initialize();
 				//itemcounter->SetItem(POWOR_ITEM_TAG, stages[tag]->GetPosition());
 				tags.push_back(tag);
+				imap_data->SetPosition(Vector3(x, 0, -z));
 				break;
 			case 'i':
 				tag = INDESTRUCTIBIEPILLAR_TAG + tag;
 				stages.emplace(tag, new Pillar(tag));
 				stages[tag]->SetPosition(Vector3(x, 0, -z));
 				stages[tag]->Initialize();
-
 				tags.push_back(tag);
+				imap_data->SetPosition(Vector3(x, 0, -z));
+
 				break;
 			case 'o':
 				tag = WALL_METAL_TAG + tag;
@@ -83,6 +87,12 @@ bool StageManager::Initialize()
 				tag = PLAYER_TAG + std::to_string(player_num);
 				iplayer_data->SetPosition(tag, Vector3(x, 0, -z));
 				player_num++;
+				imap_data->SetPosition(Vector3(x, 0, -z));
+
+				break;
+			case ' ':
+				imap_data->SetPosition(Vector3(x, 0, -z));
+
 				break;
 			default:
 				//‚Ç‚ê‚àŠY“–‚µ‚È‚¢‚Æ‚«
@@ -92,6 +102,7 @@ bool StageManager::Initialize()
 		}
 	}
 
+	delete imap_data;
 	delete iplayer_data;
 	delete itemcounter;
 

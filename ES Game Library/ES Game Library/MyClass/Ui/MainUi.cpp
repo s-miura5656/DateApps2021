@@ -1,5 +1,6 @@
 #include "MainUi.h"
 #include "../Data/IData.h"
+#include "../Data/WordsTable.h"
 #include "../Managers/TimeManager/Time.h"
 #include "../Players/PlayerBase.h"
 
@@ -51,20 +52,23 @@ bool MainUi::Initialize()
 void MainUi::Draw2D()
 {
 	SpriteBatch.DrawString(time_limit_font, Vector2(530, 0), Color(1.f, 1.f, 1.f), _T("TIME : %d"), int(TimeManager::Instance().GetTimeLeft()));
+	DebugDraw();
 }
 
 #ifdef _DEBUG
-void MainUi::DebugDraw(PlayerBase* player)
+void MainUi::DebugDraw()
 {
-	std::string& tag = player->GetTag();
-	const int player_index = player->GetPlayerNumber() - 1;
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string& tag = PLAYER_TAG + std::to_string(i + 1);
+		
+		const auto power_pos = powor_ui_pos[i];
+		const auto text_color = color[i];
 
-	const auto power_pos  = powor_ui_pos[player_index];
-	const auto text_color = color[player_index];
-
-	SpriteBatch.DrawString(player_date, power_pos, text_color, _T("PLAYER_ATK : %d"), iplayer_data->GetAttackPowor(tag));
-	SpriteBatch.DrawString(player_date, power_pos + Vector2(0,30), text_color, _T("PLAYER_HP  : %d"),  iplayer_data->GetHitPoint(tag));
-	SpriteBatch.DrawString(player_date, power_pos + Vector2(0, 60), text_color, _T("PLAYER_SPD : %d"), iplayer_data->GetSpeed(tag));
+		SpriteBatch.DrawString(player_date, power_pos, text_color, _T("PLAYER_ATK : %d"), iplayer_data->GetAttackPowor(tag));
+		SpriteBatch.DrawString(player_date, power_pos + Vector2(0, 30), text_color, _T("PLAYER_HP  : %d"), iplayer_data->GetHitPoint(tag));
+		SpriteBatch.DrawString(player_date, power_pos + Vector2(0, 60), text_color, _T("PLAYER_SPD : %d"), iplayer_data->GetSpeed(tag));
+	}
 }
 #endif
 //攻撃、hp、スピード
