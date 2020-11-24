@@ -74,42 +74,55 @@ int ArmBase::Update()
 
 void ArmBase::Draw2D()
 {
-	/*if (_tag == "Arm_1")
+	if (_tag == "Arm_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 1.f, 1.f), _T("ANGLE:%f"), _angle);
+		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 1.f, 1.f), _T("ANGLE:%d"), _count);
 		SpriteBatch.DrawString(_font, Vector2(0, 350), Color(1.f, 1.f, 1.f), _T("POS_X:%f"), _model->GetPosition().x);
 		SpriteBatch.DrawString(_font, Vector2(0, 400), Color(1.f, 1.f, 1.f), _T("POS_Z:%f"), _model->GetPosition().z);
-	}*/
+	}
 }
 
 void ArmBase::Draw3D()
 {
+	_model->SetRotation(90, _angle, 180);
 	_model->Draw();
+	_model->SetRotation(0, _angle, 0);
 	_hit_box->Draw3D();
 }
 
 void ArmBase::Move(Controller* pad)
 {
-	_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-	_angle = AngleClamp(_angle);
+#pragma region Šp“x‚ÌŒvŽZ
+	float dist = Vector3_Distance(_angle_point[_angle_point.size() - 1], _position);
 
-	if ((int)_angle != (int)_old_angle)
+	if (dist > 0.5f)
+	{
+		_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+
+		_angle = AngleClamp(_angle);
+	}
+
+	if (_angle != _old_angle)
 	{
 		_angle_point.push_back(_position);
+		_count++;
 	}
 
 	_model->SetRotation(0, _angle, 0);
 
-	_old_angle = (int)_angle;
+	_old_angle = _angle;
+#pragma endregion
 
 #pragma region ˆÚ“®‚Æ“–‚½‚è”»’è
-	auto hit_list = _hit_box->IsHitBoxList(_player_tag);
-
 	Vector3 move_dir = Vector3_Zero;
 
 	auto map_pos = _imap_data->GetPosition();
 
-	if (!hit_list.empty())
+	move_dir = MoveDirection(pad->GetPadStateX(), pad->GetPadStateY());
+	move_dir *= 0.15f;
+	_position = _model->GetPosition() + move_dir;
+
+	/*if (!hit_list.empty())
 	{
 		auto model = _hit_box->IshitNearestObject(hit_list, _position, _model->GetFrontVector());
 
@@ -132,9 +145,9 @@ void ArmBase::Move(Controller* pad)
 	else
 	{
 		move_dir = MoveDirection(pad->GetPadStateX(), pad->GetPadStateY());
-		move_dir *= 0.1f;
+		move_dir *= 0.15f;
 		_position = _model->GetPosition() + move_dir;
-	}
+	}*/
 #pragma endregion
 
 	_position.x = Clamp(_position.x, 1, map_pos[12].x);
@@ -159,7 +172,7 @@ void ArmBase::ReturnArm()
 		return;
 	}
 
-	move_dir *= 0.1f;
+	move_dir *= 0.2f;
 
 	_angle = -AngleCalculating(move_dir.x, move_dir.z);
 
@@ -179,32 +192,3 @@ void ArmBase::ReturnArm()
 
 	_model->SetPosition(_position);
 }
-
-float ArmBase::AngleClamp(float angle)
-{
-	if (angle >= 0 - 45 && angle < 0 + 45)
-	{
-		angle = 0;
-	}
-	else if (angle >= 90 - 45 && angle < 90 + 45)
-	{
-		angle = 90;
-
-	}
-	else if (angle >= 180 - 45 && angle < 180 + 45)
-	{
-		angle = 180;
-	}
-	else if (angle >= 270 - 45 && angle < 270 + 45)
-	{
-		angle = 270;
-	}
-
-	return angle;
-}
-
-
-
-
-
-

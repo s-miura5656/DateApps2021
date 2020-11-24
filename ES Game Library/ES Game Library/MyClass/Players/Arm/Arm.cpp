@@ -32,7 +32,7 @@ bool Arm::Fileinitialize()
 bool Arm::Initialize()
 {
 	_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
-	_model = GraphicsDevice.CreateModelFromFile(_T("Player/sword_01.X"));
+	_model = GraphicsDevice.CreateModelFromFile(_T("Player/robo_arm.X"));
 
 	_model->SetRotation(0, _iplayer_data->GetAngle(_player_tag), 0);
 	_position = _iplayer_data->GetPosition(_player_tag);
@@ -46,7 +46,7 @@ bool Arm::Initialize()
 
 	arm_speed = 0.07f;
 
-	_model->SetScale(0.005f);
+	_model->SetScale(1.f);
 
 	hit_flag = false;
 

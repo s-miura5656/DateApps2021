@@ -93,3 +93,28 @@ static Vector3 MoveDirection(float pad_x, float pad_y)
 
 	return Vector3_Normalize(pos);
 }
+
+static int AngleClamp(float angle)
+{
+	int arm_angle = angle;
+
+	if (arm_angle >= 0 - 45 && arm_angle < 0 + 45)
+	{
+		arm_angle = 0;
+	}
+	else if (arm_angle >= 90 - 45 && arm_angle < 90 + 45)
+	{
+		arm_angle = 90;
+
+	}
+	else if (arm_angle >= 180 - 45 && arm_angle < 180 + 45)
+	{
+		arm_angle = 180;
+	}
+	else if (arm_angle >= 270 - 45 && arm_angle < 270 + 45)
+	{
+		arm_angle = 270;
+	}
+
+	return arm_angle;
+}
