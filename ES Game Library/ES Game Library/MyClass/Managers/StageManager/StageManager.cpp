@@ -16,6 +16,9 @@ StageManager::~StageManager()
 
 bool StageManager::Initialize()
 {
+	//配列の添え字でタグを呼べる
+	string random_item[3] = { POWOR_ITEM_TAG ,SPEED_ITEM_TAG ,HITPOINT_ITEM_TAG };
+	srand((unsigned int)time(NULL));
 	FILE* fp = fopen("MapSprite/mapenglish.csv","r");
 
 	//マップデータを読み込む
@@ -43,6 +46,7 @@ bool StageManager::Initialize()
 	stages.emplace(FLOOR_TAG, new Floor);
 	stages[FLOOR_TAG]->Initialize();
 	stages[FLOOR_TAG]->SetPosition(Vector3(7, 0, -6));
+	stages[FLOOR_TAG]->SetRotation(Vector3_Zero);
 
 	ItemCounter* itemcounter = new ItemCounter;
 	IPrayerData* iplayer_data = new IPrayerData;
@@ -61,8 +65,8 @@ bool StageManager::Initialize()
 				tag = DESTRUCTION_BLOCK_TAG + tag;
 				stages.emplace(tag, new Block);
 				stages[tag]->SetPosition(Vector3(x, 0, -z));
+				stages[tag]->SetRotation(Vector3_Zero);
 				stages[tag]->Initialize();
-				//itemcounter->SetItem(POWOR_ITEM_TAG, stages[tag]->GetPosition());
 				tags.push_back(tag);
 				imap_data->SetPosition(Vector3(x, 0, -z));
 				break;
@@ -70,6 +74,7 @@ bool StageManager::Initialize()
 				tag = INDESTRUCTIBIEPILLAR_TAG + tag;
 				stages.emplace(tag, new Pillar(tag));
 				stages[tag]->SetPosition(Vector3(x, 0, -z));
+				stages[tag]->SetRotation(Vector3_Zero);
 				stages[tag]->Initialize();
 				tags.push_back(tag);
 				imap_data->SetPosition(Vector3(x, 0, -z));
@@ -79,8 +84,40 @@ bool StageManager::Initialize()
 				tag = WALL_METAL_TAG + tag;
 				stages.emplace(tag, new Metal(tag));
 				stages[tag]->SetPosition(Vector3(x, 0, -z));
+				if (z == 0) {
+					stages[tag]->SetRotation(Vector3(0, 270, 0));
+				}
+				else if (x == 0) {
+					stages[tag]->SetRotation(Vector3(0, 180, 0));
+				}
+				else if (z == mapdate.size() - 1) {
+					stages[tag]->SetRotation(Vector3(0, 90, 0));
+				}
+				else {
+					stages[tag]->SetRotation(Vector3(0, 0, 0));
+				}
 				stages[tag]->Initialize();
 				pos.push_back(Vector3(x, 0, -z));
+				tags.push_back(tag);
+				break;
+			case 'c':
+				tag = WALL_CORNER_TAG + tag;
+				stages.emplace(tag, new WallCorner);
+				stages[tag]->SetPosition(Vector3(x, -0.5, -z));
+				stages[tag]->SetRotation(Vector3_Zero);
+				if (z == 0) {
+					stages[tag]->SetRotation(Vector3(0, 270, 0));
+					if (x == mapdate.size() + 1) {
+						stages[tag]->SetRotation(Vector3(0, 0, 0));
+					}
+				}
+				if (z == mapdate.size() - 1) {
+					stages[tag]->SetRotation(Vector3(0, 180, 0));
+					if (x == mapdate.size() + 1) {
+						stages[tag]->SetRotation(Vector3(0, 90, 0));
+					}
+				}
+				stages[tag]->Initialize();
 				tags.push_back(tag);
 				break;
 			case 'p':
@@ -122,10 +159,10 @@ void StageManager::Draw2D()
 
 void StageManager::Draw3D()
 {
+//読み込んだブロックの数だけ描画する
 	for (const auto& tag : tags)
 	{
 		stages[tag]->Draw3D();
 	}
-
 	stages[FLOOR_TAG]->Draw3D();
 }
