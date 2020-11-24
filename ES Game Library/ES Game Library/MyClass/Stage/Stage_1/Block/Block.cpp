@@ -13,7 +13,7 @@ Block::~Block()
 bool Block::Initialize()
 {
 	//Xファイルの読み込み
-	_model = GraphicsDevice.CreateModelFromFile(_T("MapSprite/block.X"));
+	_model = GraphicsDevice.CreateModelFromFile(_T("MapSprite/capsule.X"));
 	//スケールの設定
 	_model->SetScale(_scale);
 	//マテリアルの設定

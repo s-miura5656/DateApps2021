@@ -20,12 +20,15 @@ public:
 
 	//引数でステージを構成するブロックのポジションをセットする
 	void SetPosition(Vector3& position) { _position = position; }
+	//引数でステージを構成するブロックのローテーションをセットする
+	void SetRotation(Vector3& rotation) { _rotation = rotation; }
 	//ステージを構成するブロックのポジションを取得する
 	Vector3 GetPosition() { return _position; }
 protected:
-	const float _scale = 0.0254f;//!基準のスケールを設定する
+	const float _scale = 1.0f;//!基準のスケールを設定する
 	MODEL _model;//!継承されるモデルのベース
 	Vector3 _position;//!継承されるモデルのポジション
+	Vector3 _rotation;//!継承されるモデルのローテーション
 	std::unique_ptr<HitBox> _hit_box;
 	std::string _tag;
 private:

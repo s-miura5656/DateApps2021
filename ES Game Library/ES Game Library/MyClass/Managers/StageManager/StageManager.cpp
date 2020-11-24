@@ -19,7 +19,7 @@ bool StageManager::Initialize()
 	//配列の添え字でタグを呼べる
 	string random_item[3] = { POWOR_ITEM_TAG ,SPEED_ITEM_TAG ,HITPOINT_ITEM_TAG };
 	srand((unsigned int)time(NULL));
-	FILE* fp = fopen("MapSprite/mapenglish.csv","r");
+	FILE* fp = fopen("MapSprite/map.csv","r");
 
 	//マップデータを読み込む
 	char lordchar[CHAR_MAX + 1];
@@ -101,7 +101,7 @@ bool StageManager::Initialize()
 				tags.push_back(tag);
 				break;
 			case 'c':
-				tag = WALL_CORNER_TAG + tag;
+				tag = WALL_METAL_TAG + tag;
 				stages.emplace(tag, new WallCorner);
 				stages[tag]->SetPosition(Vector3(x, -0.5, -z));
 				stages[tag]->SetRotation(Vector3_Zero);

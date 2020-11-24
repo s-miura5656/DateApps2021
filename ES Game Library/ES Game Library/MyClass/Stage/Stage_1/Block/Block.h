@@ -17,8 +17,6 @@ public:
 	~Block();
 	bool Initialize() override;
 	void Draw3D() override;
-	void SetDestructiveFlag(bool destructiveflag) { _destructiveflag = destructiveflag; }
-	bool GetDestructiveFlag() { return _destructiveflag; }
 private:
 	ItemCounter* itemcounter;
 	bool _destructiveflag;

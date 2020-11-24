@@ -190,6 +190,7 @@
     <ClCompile Include="MyClass\Stage\Stage_1\Floor\Floor.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Metal\Metal.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Pillar\Pillar.cpp" />
+    <ClCompile Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.cpp" />
     <ClCompile Include="MyClass\Ui\MainUi.cpp" />
     <ClCompile Include="MyClass\Ui\ResultUi.cpp" />
     <ClCompile Include="MyClass\Ui\TitleUi.cpp" />
@@ -280,6 +281,7 @@
     <ClInclude Include="MyClass\Stage\Stage_1\Floor\Floor.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Metal\Metal.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Pillar\Pillar.h" />
+    <ClInclude Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.h" />
     <ClInclude Include="MyClass\Ui\BaseUi.h" />
     <ClInclude Include="MyClass\Ui\MainUi.h" />
     <ClInclude Include="MyClass\Ui\ResultUi.h" />
