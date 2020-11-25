@@ -28,9 +28,5 @@ public:
 
 private:
 	std::map<std::string, StageBase*>	stages;
-	std::vector<std::string>			tags;
 	std::vector<cstring>				mapdate; //! マップデータの読み込み
-	std::vector<bool> flag;
-	std::vector<std::string>			itemtag;
-	string random_item[3];
 };

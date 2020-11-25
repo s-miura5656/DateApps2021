@@ -17,12 +17,7 @@ StageManager::~StageManager()
 
 bool StageManager::Initialize()
 {
-	random_item[0] = POWOR_ITEM_TAG;
-	random_item[1] = SPEED_ITEM_TAG;
-	random_item[2] = HITPOINT_ITEM_TAG;
-
 	//配列の添え字でタグを呼べる
-	srand((unsigned int)time(NULL));
 	FILE* fp = fopen("MapSprite/map.csv","r");
 
 	//マップデータを読み込む
@@ -71,8 +66,6 @@ bool StageManager::Initialize()
 				stages[tag]->SetPosition(Vector3(x, 0, -z));
 				stages[tag]->SetRotation(Vector3_Zero);
 				stages[tag]->Initialize();
-				tags.push_back(tag);
-				flag.push_back(false);
 				imap_data->SetPosition(Vector3(x, 0, -z));
 				break;
 			case 'i':
@@ -81,7 +74,6 @@ bool StageManager::Initialize()
 				stages[tag]->SetPosition(Vector3(x, 0, -z));
 				stages[tag]->SetRotation(Vector3_Zero);
 				stages[tag]->Initialize();
-				tags.push_back(tag);
 				imap_data->SetPosition(Vector3(x, 0, -z));
 				break;
 			case 'o':
@@ -102,7 +94,6 @@ bool StageManager::Initialize()
 				}
 				stages[tag]->Initialize();
 				pos.push_back(Vector3(x, 0, -z));
-				tags.push_back(tag);
 				break;
 			case 'c':
 				tag = WALL_METAL_TAG + tag;
@@ -122,7 +113,6 @@ bool StageManager::Initialize()
 					}
 				}
 				stages[tag]->Initialize();
-				tags.push_back(tag);
 				break;
 			case 'p':
 				tag = PLAYER_TAG + std::to_string(player_num);
@@ -142,7 +132,6 @@ bool StageManager::Initialize()
 			}
 		}
 	}
-
 	delete imap_data;
 	delete iplayer_data;
 	delete itemcounter;
@@ -157,6 +146,7 @@ int StageManager::Update()
 	while (it != stages.end())
 	{
 		if ((*it).second->Update() == 1) {
+			const string random_item[3] = { POWOR_ITEM_TAG ,SPEED_ITEM_TAG ,HITPOINT_ITEM_TAG };
 			ItemCounter* itemcounter = new ItemCounter;
 			itemcounter->SetItem(random_item[rand() % 3], it->second->GetPosition());
 			stages.erase(it++);
@@ -165,7 +155,6 @@ int StageManager::Update()
 			++it;
 		}
 	}
-
 	return 0;
 }
 
@@ -181,12 +170,7 @@ void StageManager::Draw3D()
 	while (it != stages.end())
 	{
 		it->second->Draw3D();
-
 		++it;
 	}
-	/*for (const auto& tag : tags)
-	{
-		stages[tag]->Draw3D();
-	}*/
 	stages[FLOOR_TAG]->Draw3D();
 }
