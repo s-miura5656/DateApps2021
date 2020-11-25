@@ -27,6 +27,7 @@ public:
 	void Draw3D() override;
 
 private:
-	std::map<std::string, StageBase*>	stages;
+	std::vector<StageBase*>				stages;
 	std::vector<cstring>				mapdate; //! マップデータの読み込み
+	int _count = 0;
 };
