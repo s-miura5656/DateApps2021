@@ -46,6 +46,4 @@ protected:
 	std::unique_ptr<HitBox> _hit_box;
 	std::string _tag;
 	std::string _arm_tag;
-
-	int a = 0;
 };

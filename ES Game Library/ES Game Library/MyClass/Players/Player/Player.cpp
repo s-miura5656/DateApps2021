@@ -68,7 +68,6 @@ int Player::Update()
 	//! ロケットパンチ発射切り替え
 	if (pad->GetButtonBuffer(GamePad_Button1))
 	{
-		a++;
 		_iplayer_data->SetState(_tag, PlayerEnum::ATTACK);
 		CreateArm();
 		return 0;
@@ -93,14 +92,15 @@ int Player::Update()
 void Player::Move(Controller* pad)
 {
 	_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+
+	_angle = AngleClamp(_angle);
+
 	_model->SetRotation(0, _angle, 0);
 
 #pragma region 移動と当たり判定
 	auto hit_list = _hit_box->IsHitBoxList(_arm_tag);
 
 	Vector3 move_dir = Vector3_Zero;
-
-	auto map_pos = _imap_data->GetPosition();
 
 	if (!hit_list.empty())
 	{
@@ -129,9 +129,6 @@ void Player::Move(Controller* pad)
 		_position = _model->GetPosition() + move_dir;
 	}
 #pragma endregion
-
-	_position.x = Clamp(_position.x, 1, map_pos[12].x);
-	_position.z = Clamp(_position.z, map_pos[142].z, -1);
 
 	_model->SetPosition(_position);
 

@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cstdio>
 #include "../../Data/IData.h"
+#include "../../Data/StructList.h"
 
 StageManager::StageManager()
 {
@@ -54,12 +55,14 @@ bool StageManager::Initialize()
 	std::vector<Vector3> pos;
 
 	IMapData* imap_data = new IMapData;
+	
 
 	for (int z = 0; z < mapdate.size(); z++)
 	{
 		for (int x = 0; x < mapdate[z].size(); x++)
 		{
 			std::string tag = std::to_string(z) + std::to_string(x);
+			MapData data;
 			switch (mapdate[z][x]) {
 			case 'b':
 				tag = DESTRUCTION_BLOCK_TAG + tag;
@@ -68,7 +71,8 @@ bool StageManager::Initialize()
 				stages[tag]->SetRotation(Vector3_Zero);
 				stages[tag]->Initialize();
 				tags.push_back(tag);
-				imap_data->SetPosition(Vector3(x, 0, -z));
+				data.position = Vector3(x, 0, -z);
+				imap_data->SetData(data);
 				break;
 			case 'i':
 				tag = INDESTRUCTIBIEPILLAR_TAG + tag;
@@ -77,8 +81,9 @@ bool StageManager::Initialize()
 				stages[tag]->SetRotation(Vector3_Zero);
 				stages[tag]->Initialize();
 				tags.push_back(tag);
-				imap_data->SetPosition(Vector3(x, 0, -z));
-
+				data.position = Vector3(x, 0, -z);
+				data.move_flag = true;
+				imap_data->SetData(data);
 				break;
 			case 'o':
 				tag = WALL_METAL_TAG + tag;
@@ -124,12 +129,12 @@ bool StageManager::Initialize()
 				tag = PLAYER_TAG + std::to_string(player_num);
 				iplayer_data->SetPosition(tag, Vector3(x, 0, -z));
 				player_num++;
-				imap_data->SetPosition(Vector3(x, 0, -z));
-
+				data.position = Vector3(x, 0, -z);
+				imap_data->SetData(data);
 				break;
 			case ' ':
-				imap_data->SetPosition(Vector3(x, 0, -z));
-
+				data.position = Vector3(x, 0, -z);
+				imap_data->SetData(data);
 				break;
 			default:
 				//‚Ç‚ê‚àŠY“–‚µ‚È‚¢‚Æ‚«
@@ -138,6 +143,8 @@ bool StageManager::Initialize()
 			}
 		}
 	}
+
+	auto a = imap_data->GetData();
 
 	delete imap_data;
 	delete iplayer_data;

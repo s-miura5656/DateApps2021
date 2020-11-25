@@ -43,9 +43,9 @@ public:
 	bool    Tag_Sarch(string _tag);
 
 	bool IsHitObjects(std::string tags);
-	Vector3 WallShavingObjects(std::list<HitBox*> is_hit_list, Vector3 pos, Vector3 move_dir);
+	Vector3 WallShavingObjects(std::list<HitBox*> is_hit_list, Vector3 pos, Vector3 front_vec);
 
-	MODEL IshitNearestObject(std::list<HitBox*> is_hit_list, Vector3 pos, Vector3 move_dir);
+	MODEL IshitNearestObject(std::list<HitBox*> is_hit_list, Vector3 pos, Vector3 front_vec);
 
 	std::list<HitBox*> IsHitBoxList();
 	std::list<HitBox*> IsHitBoxList(std::string tag);

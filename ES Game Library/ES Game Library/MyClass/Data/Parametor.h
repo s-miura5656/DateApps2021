@@ -54,19 +54,19 @@ private:
 
 };
 
-class MapPosition {
+class MapParam {
 public:
 	friend class IMapData;
-	MapPosition() {}
-	~MapPosition() {}
+	MapParam() {}
+	~MapParam() {}
 
-	static MapPosition& Instance() {
-		static MapPosition instance;
+	static MapParam& Instance() {
+		static MapParam instance;
 		return instance;
 	};
 private:
-	MapPosition(const MapPosition&) = delete;
-	void operator=(const MapPosition&) = delete;
+	MapParam(const MapParam&) = delete;
+	void operator=(const MapParam&) = delete;
 
-	std::vector<Vector3> _position;
+	std::vector<MapData> _map_data;
 };

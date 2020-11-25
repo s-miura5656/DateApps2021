@@ -64,6 +64,6 @@ class IMapData {
 public:
 	IMapData() {};
 	~IMapData() {};
-	void SetPosition(Vector3 pos) { MapPosition::Instance()._position.push_back(pos); }
-	std::vector<Vector3> GetPosition() const { return MapPosition::Instance()._position; }
+	void SetData(MapData data) { MapParam::Instance()._map_data.push_back(data); }
+	std::vector<MapData> GetData() const { return MapParam::Instance()._map_data; }
 };

@@ -20,3 +20,8 @@ struct ArmParam {
 	int     weight = 50;
 	int     tunns = 5;
 };
+
+struct MapData {
+	Vector3 position = Vector3_Zero;
+	bool  move_flag = false;
+};

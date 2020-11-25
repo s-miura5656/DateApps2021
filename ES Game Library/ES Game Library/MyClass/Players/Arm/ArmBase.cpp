@@ -116,7 +116,7 @@ void ArmBase::Move(Controller* pad)
 #pragma region ˆÚ“®‚Æ“–‚½‚è”»’è
 	Vector3 move_dir = Vector3_Zero;
 
-	auto map_pos = _imap_data->GetPosition();
+	auto map_data = _imap_data->GetData();
 
 	move_dir = MoveDirection(pad->GetPadStateX(), pad->GetPadStateY());
 	move_dir *= 0.15f;
@@ -150,8 +150,8 @@ void ArmBase::Move(Controller* pad)
 	}*/
 #pragma endregion
 
-	_position.x = Clamp(_position.x, 1, map_pos[12].x);
-	_position.z = Clamp(_position.z, map_pos[142].z, -1);
+//	_position.x = Clamp(_position.x, 1, map_pos[12].x);
+//	_position.z = Clamp(_position.z, map_pos[142].z, -1);
 
 	_model->SetPosition(_position);
 
@@ -185,10 +185,10 @@ void ArmBase::ReturnArm()
 		_angle_point.erase(_angle_point.begin() + (a - 1));
 	}
 
-	auto map_pos = _imap_data->GetPosition();
+	auto map_data = _imap_data->GetData();
 
-	_position.x = Clamp(_position.x, 1, map_pos[12].x);
-	_position.z = Clamp(_position.z, map_pos[142].z, -1);
+//	_position.x = Clamp(_position.x, 1, map_pos[12].x);
+//	_position.z = Clamp(_position.z, map_pos[142].z, -1);
 
 	_model->SetPosition(_position);
 }

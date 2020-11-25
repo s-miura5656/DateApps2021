@@ -5,7 +5,7 @@
 #include "../../Scenes/Main/MainScene.h"
 #include "../../Scenes/Title/TitleScene.h"
 #include"../../Scenes/Result/ResultScene.h"
-
+#include "../ControllerManager/ContorollerManager.h"
 
 //! @brief コンストラクタ
 //! @detail SceneManager が作られたときに呼び出されるよ
@@ -61,10 +61,11 @@ bool SceneManager::Initialize()
 	/**
 	* @brief カメラの初期設定
 	*/
+	_camera_angle = 60;
 	Viewport view = GraphicsDevice.GetViewport();
-	_camera->SetView(Vector3(7, 17, -9), Vector3(81, 0, 0));
+	_camera->SetView(Vector3(7, 15, -15), Vector3(_camera_angle, 0, 0));
 	_camera->SetPerspectiveFieldOfView(45.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
-
+	GraphicsDevice.SetCamera(_camera);
 	
 
 	//! 一番最初に読み込まれるシーン
@@ -76,6 +77,27 @@ bool SceneManager::Initialize()
 int SceneManager::Update()
 {
 	_scene->Update();
+
+#if  _DEBUG
+
+	if (ControllerManager::Instance().GetController("Player_1") != nullptr)
+	{
+		auto&& pad = ControllerManager::Instance().GetController("Player_1");
+
+		if (buf.IsPressed(GamePad_Button2))
+		{
+			_camera_angle++;
+		}
+
+		if (buf.IsPressed(GamePad_Button3))
+		{
+			_camera_angle--;
+		}
+	}
+	
+	_camera->SetView(Vector3(7, 15, -15), Vector3(_camera_angle, 0, 0));
+
+#endif //  _DEBUG
 
 	return 0;
 }
