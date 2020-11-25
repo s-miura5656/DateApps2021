@@ -11,13 +11,17 @@ StageManager::StageManager()
 
 StageManager::~StageManager()
 {
-	
+	//std::string tag = DESTRUCTION_BLOCK_TAG + std::to_string(blockpos[a].z) + std::to_string(blockpos[a].x);
+	//stages.erase(tag,Block);
 }
 
 bool StageManager::Initialize()
 {
+	random_item[0] = POWOR_ITEM_TAG;
+	random_item[1] = SPEED_ITEM_TAG;
+	random_item[2] = HITPOINT_ITEM_TAG;
+
 	//配列の添え字でタグを呼べる
-	string random_item[3] = { POWOR_ITEM_TAG ,SPEED_ITEM_TAG ,HITPOINT_ITEM_TAG };
 	srand((unsigned int)time(NULL));
 	FILE* fp = fopen("MapSprite/map.csv","r");
 
@@ -63,11 +67,12 @@ bool StageManager::Initialize()
 			switch (mapdate[z][x]) {
 			case 'b':
 				tag = DESTRUCTION_BLOCK_TAG + tag;
-				stages.emplace(tag, new Block);
+				stages.emplace(tag, new Block(tag));
 				stages[tag]->SetPosition(Vector3(x, 0, -z));
 				stages[tag]->SetRotation(Vector3_Zero);
 				stages[tag]->Initialize();
 				tags.push_back(tag);
+				flag.push_back(false);
 				imap_data->SetPosition(Vector3(x, 0, -z));
 				break;
 			case 'i':
@@ -78,7 +83,6 @@ bool StageManager::Initialize()
 				stages[tag]->Initialize();
 				tags.push_back(tag);
 				imap_data->SetPosition(Vector3(x, 0, -z));
-
 				break;
 			case 'o':
 				tag = WALL_METAL_TAG + tag;
@@ -149,6 +153,19 @@ bool StageManager::Initialize()
 
 int StageManager::Update()
 {
+	auto   it  = stages.begin();
+	while (it != stages.end())
+	{
+		if ((*it).second->Update() == 1) {
+			ItemCounter* itemcounter = new ItemCounter;
+			itemcounter->SetItem(random_item[rand() % 3], it->second->GetPosition());
+			stages.erase(it++);
+		}
+		else {
+			++it;
+		}
+	}
+
 	return 0;
 }
 
@@ -160,9 +177,16 @@ void StageManager::Draw2D()
 void StageManager::Draw3D()
 {
 //読み込んだブロックの数だけ描画する
-	for (const auto& tag : tags)
+	auto   it = stages.begin();
+	while (it != stages.end())
+	{
+		it->second->Draw3D();
+
+		++it;
+	}
+	/*for (const auto& tag : tags)
 	{
 		stages[tag]->Draw3D();
-	}
+	}*/
 	stages[FLOOR_TAG]->Draw3D();
 }

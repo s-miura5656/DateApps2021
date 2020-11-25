@@ -130,8 +130,6 @@ void Player::Move(Controller* pad)
 	}
 #pragma endregion
 
-	_position.x = Clamp(_position.x, 1, map_pos[12].x);
-	_position.z = Clamp(_position.z, map_pos[142].z, -1);
 
 	_model->SetPosition(_position);
 

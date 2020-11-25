@@ -13,7 +13,7 @@ Floor::~Floor()
 bool Floor::Initialize()
 {
 	//Xファイルの読み込み
-	_model = GraphicsDevice.CreateModelFromFile(_T("MapSprite/ground.X"));
+	_model = GraphicsDevice.CreateModelFromFile(_T("MapSprite/stage.X"));
 	//スケールの設定
 	_model->SetScale(_scale);
 	//マテリアルの設定
