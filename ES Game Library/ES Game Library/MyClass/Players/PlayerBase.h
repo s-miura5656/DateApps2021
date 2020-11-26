@@ -39,6 +39,8 @@ protected:
 	float _distance			 = FLT_MAX;
 	Vector3 _position		 = Vector3_Zero;
 	Vector3 _old_pos		 = Vector3_Zero;
+	Vector3 _new_pos		 = Vector3_Zero;
+
 	ArmBase* _arm = nullptr;
 	IPrayerData* _iplayer_data;
 	IArmData* _iarm_data;
@@ -46,4 +48,10 @@ protected:
 	std::unique_ptr<HitBox> _hit_box;
 	std::string _tag;
 	std::string _arm_tag;
+
+	int _index_x = 1;
+	int _index_z = 1;
+
+	bool _move_flag = false;
+	float _lerp_count = 0.f;
 };

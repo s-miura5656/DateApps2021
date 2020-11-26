@@ -37,6 +37,8 @@ bool Arm::Initialize()
 	_model->SetRotation(0, _iplayer_data->GetAngle(_player_tag), 0);
 	_position = _iplayer_data->GetPosition(_player_tag);
 	_old_pos = _position;
+	_new_pos = _position;
+
 	_model->SetPosition(_position);
 	_angle_point.push_back(_position);
 
@@ -46,7 +48,7 @@ bool Arm::Initialize()
 
 	arm_speed = 0.07f;
 
-	_model->SetScale(1.f);
+	_model->SetScale(2.f);
 
 	hit_flag = false;
 
