@@ -211,6 +211,9 @@
     <Filter Include="Myclass\Stage\Stage_1\WallCorner">
       <UniqueIdentifier>{6c8b088e-7888-4b3f-b85c-bb666abb77cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Managers\ResouceManager">
+      <UniqueIdentifier>{24c622f3-ad5a-46ad-8fdf-5aa4b017c4a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -444,6 +447,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.cpp">
       <Filter>Myclass\Stage\Stage_1\WallCorner</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\ResouceManager\ResouceManager.cpp">
+      <Filter>Myclass\Managers\ResouceManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -717,6 +723,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.h">
       <Filter>Myclass\Stage\Stage_1\WallCorner</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\ResouceManager\ResouceManager.h">
+      <Filter>Myclass\Managers\ResouceManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

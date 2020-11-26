@@ -11,12 +11,12 @@ PlayerBase::~PlayerBase()
 
 void PlayerBase::Draw2D()
 {
-//	if (_tag == "Player_1")
-//	{
-//		SpriteBatch.DrawString(_font, Vector2(0, 250), Color(1.f, 1.f, 1.f), _T("State:%d"), _iplayer_data->GetState(_tag));
-//		//SpriteBatch.DrawString(_font, Vector2(0, 350), Color(1.f, 1.f, 1.f), _T("POS_X:%f"), _iplayer_data->GetPosition(_tag).x);
-//		//SpriteBatch.DrawString(_font, Vector2(0, 400), Color(1.f, 1.f, 1.f), _T("POS_Z:%f"), _iplayer_data->GetPosition(_tag).z);
-//	}
+	if (_tag == "Player_1")
+	{
+		SpriteBatch.DrawString(_font, Vector2(0, 250), Color(1.f, 1.f, 1.f), _T("ANGLE:%f"), _angle);
+		//SpriteBatch.DrawString(_font, Vector2(0, 350), Color(1.f, 1.f, 1.f), _T("POS_X:%f"), _iplayer_data->GetPosition(_tag).x);
+		//SpriteBatch.DrawString(_font, Vector2(0, 400), Color(1.f, 1.f, 1.f), _T("POS_Z:%f"), _iplayer_data->GetPosition(_tag).z);
+	}
 	if (_arm != nullptr)
 	{
 		_arm->Draw2D();

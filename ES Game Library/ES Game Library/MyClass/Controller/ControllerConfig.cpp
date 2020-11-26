@@ -1,28 +1,14 @@
 #include"ControllerConfig.h"
 
-::KeyboardBuffer Controller::keyboardBuffer;
-
-
 bool Controller::Initialize()
 {
 	return true;
 }
 
-void  Controller::Update()
+void Controller::GamePadRefresh()
 {
-
+	_pad_buffer = GamePad(_pad_number)->GetBuffer();
+	_pad_state  = GamePad(_pad_number)->GetState();
 }
 
-GamePadBuffer Controller::PadBuffer()
-{
-	auto&& buffer = GamePad(pad_number)->GetBuffer();
 
-	return buffer;
-}
-
-GamePadState Controller::PadState()
-{
-	auto&& state = GamePad(pad_number)->GetState();
-	
-	return state;
-}

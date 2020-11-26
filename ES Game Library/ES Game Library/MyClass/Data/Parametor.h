@@ -68,5 +68,5 @@ private:
 	MapParam(const MapParam&) = delete;
 	void operator=(const MapParam&) = delete;
 
-	std::vector<MapData> _map_data;
+	std::vector<std::vector<MapData>> _map_data;
 };

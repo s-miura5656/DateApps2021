@@ -51,6 +51,9 @@ bool Player::Initialize()
 
 int Player::Update()
 {
+	auto pad = ControllerManager::Instance().GetController(_tag);
+	pad->GamePadRefresh();
+
 	//! パンチ発射状態ならすぐさまリターン
 	if (_iplayer_data->GetState(_tag) == PlayerEnum::ATTACK)
 	{
@@ -62,8 +65,6 @@ int Player::Update()
 	{
 		DestroyArm();
 	}
-
-	auto pad = ControllerManager::Instance().GetController(_tag);
 
 	//! ロケットパンチ発射切り替え
 	if (pad->GetButtonBuffer(GamePad_Button1))

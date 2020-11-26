@@ -72,7 +72,7 @@ bool StageManager::Initialize()
 				stages[tag]->Initialize();
 				tags.push_back(tag);
 				data.position = Vector3(x, 0, -z);
-				imap_data->SetData(data);
+				//imap_data->SetData(data);
 				break;
 			case 'i':
 				tag = INDESTRUCTIBIEPILLAR_TAG + tag;
@@ -83,7 +83,7 @@ bool StageManager::Initialize()
 				tags.push_back(tag);
 				data.position = Vector3(x, 0, -z);
 				data.move_flag = true;
-				imap_data->SetData(data);
+				//imap_data->SetData(data);
 				break;
 			case 'o':
 				tag = WALL_METAL_TAG + tag;
@@ -130,11 +130,11 @@ bool StageManager::Initialize()
 				iplayer_data->SetPosition(tag, Vector3(x, 0, -z));
 				player_num++;
 				data.position = Vector3(x, 0, -z);
-				imap_data->SetData(data);
+				//imap_data->SetData(data);
 				break;
 			case ' ':
 				data.position = Vector3(x, 0, -z);
-				imap_data->SetData(data);
+				//imap_data->SetData(data);
 				break;
 			default:
 				//‚Ç‚ê‚àŠY“–‚µ‚È‚¢‚Æ‚«
