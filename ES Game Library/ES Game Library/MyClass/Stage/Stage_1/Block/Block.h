@@ -19,5 +19,4 @@ public:
 	int Update() override;
 private:
 	ItemCounter* itemcounter;
-	bool _destructiveflag;
 };

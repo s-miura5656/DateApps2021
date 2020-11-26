@@ -1,16 +1,16 @@
 
-#include"Floor.h"
-Floor::Floor()
+#include"Indestructible.h"
+Indestructible::Indestructible()
 {
 	_model = nullptr;
 }
 
-Floor::~Floor()
+Indestructible::~Indestructible()
 {
 
 }
 
-bool Floor::Initialize()
+bool Indestructible::Initialize()
 {
 	//XÉtÉ@ÉCÉãÇÃì«Ç›çûÇ›
 	_model = GraphicsDevice.CreateModelFromFile(_T("MapSprite/stage.X"));

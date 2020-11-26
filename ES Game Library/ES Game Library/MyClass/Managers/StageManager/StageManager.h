@@ -6,10 +6,7 @@
 
 #include"../../Managers/ManagerBase.h"
 #include"../../Stage/Stage_1/Block/Block.h"
-#include"../../Stage/Stage_1/Pillar/Pillar.h"
-#include"../../Stage/Stage_1/Metal/Metal.h"
-#include"../../Stage/Stage_1/Floor/Floor.h"
-#include"../../Stage/Stage_1/WallCorner/WallCorner.h"
+#include"../../Stage/Stage_1/Indestructible/Indestructible.h"
 #include "../../Data/WordsTable.h"
 
 class StageBase;
@@ -27,7 +24,8 @@ public:
 	void Draw3D() override;
 
 private:
-	std::vector<StageBase*>				stages;
-	std::vector<cstring>				mapdate; //! マップデータの読み込み
+	std::vector<StageBase*>		stages;
+	std::vector<cstring>		mapdate; //! マップデータの読み込み
+	std::vector<Vector3>        Indestructiblepos;
 	int _count = 0;
 };

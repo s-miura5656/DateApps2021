@@ -23,10 +23,15 @@ bool Block::Initialize()
 	_model->SetScale(_scale);
 	//マテリアルの設定
 	_model->SetMaterial(GetMaterial());
+	//当たり判定を破壊可能ブロックと同じポジションにする
 	_hit_box->SetHitBoxPosition(_position);
 	return _model != nullptr;
 }
-
+/**
+ * @brief プレイヤーが触れた時の処理
+ * @return プレイヤーが触れてない時 (int)0
+ * @return プレイヤーが触れた時 (int)1
+ */
 int Block::Update()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)

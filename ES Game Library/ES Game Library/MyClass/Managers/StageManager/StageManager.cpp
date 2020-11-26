@@ -56,10 +56,12 @@ bool StageManager::Initialize()
 				tag = DESTRUCTION_BLOCK_TAG + tag;
 				stages.push_back(new Block(tag));
 				stages[_count]->SetPosition(Vector3(x, 0, -z));
-				stages[_count]->SetRotation(Vector3_Zero);
 				stages[_count]->Initialize();
 				_count++;
 				imap_data->SetPosition(Vector3(x, 0, -z));
+				break;
+			case 'i':
+				
 				break;
 			case 'p':
 				tag = PLAYER_TAG + std::to_string(player_num);
@@ -74,10 +76,9 @@ bool StageManager::Initialize()
 		}
 	}
 
-	stages.push_back(new Floor);
+	stages.push_back(new Indestructible);
 	stages[_count]->Initialize();
 	stages[_count]->SetPosition(Vector3(7,0,-6));
-	stages[_count]->SetRotation(Vector3_Zero);
 
 	delete imap_data;
 	delete iplayer_data;
@@ -94,7 +95,7 @@ int StageManager::Update()
 		{
 			const string random_item[3] = { POWOR_ITEM_TAG ,SPEED_ITEM_TAG ,HITPOINT_ITEM_TAG };
 			ItemCounter* itemcounter = new ItemCounter;
-			itemcounter->SetItem(random_item[rand() % 3],stages[i]->GetPosition());
+			itemcounter->SetItem(random_item[MathHelper_Random(0,3)],stages[i]->GetPosition());
 			stages.erase(stages.begin() + i);
 		}
 	}
