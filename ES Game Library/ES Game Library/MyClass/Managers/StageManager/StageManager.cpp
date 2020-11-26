@@ -61,7 +61,9 @@ bool StageManager::Initialize()
 				imap_data->SetPosition(Vector3(x, 0, -z));
 				break;
 			case 'i':
-				
+				sp.x = x;
+				sp.z = -z;
+				pillarpos.push_back(sp);
 				break;
 			case 'p':
 				tag = PLAYER_TAG + std::to_string(player_num);
