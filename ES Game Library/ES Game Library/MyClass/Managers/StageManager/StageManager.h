@@ -7,8 +7,7 @@
 #include"../../Managers/ManagerBase.h"
 #include"../../Stage/Stage_1/Block/Block.h"
 #include"../../Stage/Stage_1/Indestructible/Indestructible.h"
-#include "../../Data/WordsTable.h"
-#include "../../Data/StructList.h"
+
 
 class StageBase;
 class HitBox;
@@ -25,10 +24,8 @@ public:
 	void Draw2D() override;
 	void Draw3D() override;
 private:
-	StagePraMmeter sp;
 
 	std::vector<StageBase*>		stages;
 	std::vector<cstring>		mapdate; //! マップデータの読み込み
-	vector<StagePraMmeter> pillarpos;
 	int _count = 0;
 };

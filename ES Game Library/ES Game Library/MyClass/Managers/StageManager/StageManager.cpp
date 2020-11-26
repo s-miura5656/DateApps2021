@@ -1,8 +1,9 @@
 #include "StageManager.h"
-#include "../../Stage/Stage_1/Stage.h"
 #include <fstream>
 #include <cstdio>
 #include "../../Data/IData.h"
+#include "../../Data/WordsTable.h"
+#include "../../Data/StructList.h"
 
 StageManager::StageManager()
 {
@@ -58,29 +59,21 @@ bool StageManager::Initialize()
 				stages[_count]->SetPosition(Vector3(x, 0, -z));
 				stages[_count]->Initialize();
 				_count++;
-				imap_data->SetPosition(Vector3(x, 0, -z));
-				break;
-			case 'i':
-				sp.x = x;
-				sp.z = -z;
-				pillarpos.push_back(sp);
 				break;
 			case 'p':
 				tag = PLAYER_TAG + std::to_string(player_num);
 				iplayer_data->SetPosition(tag, Vector3(x, 0, -z));
 				player_num++;
-				imap_data->SetPosition(Vector3(x, 0, -z));
-				break;
-			case ' ':
-				imap_data->SetPosition(Vector3(x, 0, -z));
 				break;
 			}
 		}
 	}
 
+	imap_data->SetData(mapdate);
+
 	stages.push_back(new Indestructible);
-	stages[_count]->Initialize();
-	stages[_count]->SetPosition(Vector3(7,0,-6));
+	stages[stages.size() - 1]->Initialize();
+	stages[stages.size() - 1]->SetPosition(Vector3(7,0,-6));
 
 	delete imap_data;
 	delete iplayer_data;

@@ -64,6 +64,6 @@ class IMapData {
 public:
 	IMapData() {};
 	~IMapData() {};
-	void SetData(int index, MapData data) { MapParam::Instance()._map_data[index].push_back(data); }
-	std::vector<std::vector<MapData>> GetData() const { return MapParam::Instance()._map_data; }
+	void SetData(std::vector<cstring> map_data) { MapParam::Instance()._map_data = map_data; }
+	std::vector<cstring> GetData() const { return MapParam::Instance()._map_data; }
 };
