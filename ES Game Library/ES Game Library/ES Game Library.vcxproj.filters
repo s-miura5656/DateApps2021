@@ -175,9 +175,6 @@
     <Filter Include="Myclass\Stage\Stage_1\Block">
       <UniqueIdentifier>{86846442-c0b1-442e-8238-643612c5990c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Stage\Stage_1\Floor">
-      <UniqueIdentifier>{a40b6061-4caf-4d71-bf9c-e3c3c50278c0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Stage\Stage_1\Piller">
       <UniqueIdentifier>{d7edd38a-d77c-47ec-a91f-7a0a64734f54}</UniqueIdentifier>
     </Filter>
@@ -211,8 +208,8 @@
     <Filter Include="Myclass\Stage\Stage_1\WallCorner">
       <UniqueIdentifier>{6c8b088e-7888-4b3f-b85c-bb666abb77cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Managers\ResouceManager">
-      <UniqueIdentifier>{24c622f3-ad5a-46ad-8fdf-5aa4b017c4a9}</UniqueIdentifier>
+    <Filter Include="Myclass\Stage\Stage_1\Indestructible">
+      <UniqueIdentifier>{f0008524-b885-4dd5-85eb-73d39396dea7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -409,9 +406,6 @@
     <ClCompile Include="MyClass\Stage\Stage_1\Block\Block.cpp">
       <Filter>Myclass\Stage\Stage_1\Block</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Stage\Stage_1\Floor\Floor.cpp">
-      <Filter>Myclass\Stage\Stage_1\Floor</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Stage\Stage_1\Metal\Metal.cpp">
       <Filter>Myclass\Stage\Stage_1\Metal</Filter>
     </ClCompile>
@@ -448,8 +442,8 @@
     <ClCompile Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.cpp">
       <Filter>Myclass\Stage\Stage_1\WallCorner</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Managers\ResouceManager\ResouceManager.cpp">
-      <Filter>Myclass\Managers\ResouceManager</Filter>
+    <ClCompile Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.cpp">
+      <Filter>Myclass\Stage\Stage_1\Indestructible</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -670,9 +664,6 @@
     <ClInclude Include="MyClass\Stage\Stage_1\Block\Block.h">
       <Filter>Myclass\Stage\Stage_1\Block</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Stage\Stage_1\Floor\Floor.h">
-      <Filter>Myclass\Stage\Stage_1\Floor</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Stage\Stage_1\Metal\Metal.h">
       <Filter>Myclass\Stage\Stage_1\Metal</Filter>
     </ClInclude>
@@ -724,8 +715,8 @@
     <ClInclude Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.h">
       <Filter>Myclass\Stage\Stage_1\WallCorner</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Managers\ResouceManager\ResouceManager.h">
-      <Filter>Myclass\Managers\ResouceManager</Filter>
+    <ClInclude Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.h">
+      <Filter>Myclass\Stage\Stage_1\Indestructible</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

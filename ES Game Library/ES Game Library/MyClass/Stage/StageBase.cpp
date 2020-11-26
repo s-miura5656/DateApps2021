@@ -18,8 +18,13 @@ int StageBase::Update()
 void StageBase::Draw3D()
 {
 	_model->SetPosition(_position);
-	_model->SetRotation(_rotation);
+	_model->SetRotation(0,0,0);
 	_model->Draw();
+
+	if (_hit_box != nullptr)
+	{
+		_hit_box->Draw3D();
+	}
 }
 
 Material StageBase::GetMaterial()

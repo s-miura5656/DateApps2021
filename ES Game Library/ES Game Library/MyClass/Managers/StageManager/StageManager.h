@@ -6,14 +6,13 @@
 
 #include"../../Managers/ManagerBase.h"
 #include"../../Stage/Stage_1/Block/Block.h"
-#include"../../Stage/Stage_1/Pillar/Pillar.h"
-#include"../../Stage/Stage_1/Metal/Metal.h"
-#include"../../Stage/Stage_1/Floor/Floor.h"
-#include"../../Stage/Stage_1/WallCorner/WallCorner.h"
+#include"../../Stage/Stage_1/Indestructible/Indestructible.h"
 #include "../../Data/WordsTable.h"
+#include "../../Data/StructList.h"
 
 class StageBase;
 class HitBox;
+
 
 class StageManager : public ManagerBase
 {
@@ -25,9 +24,11 @@ public:
 	int Update() override;
 	void Draw2D() override;
 	void Draw3D() override;
-
 private:
-	std::map<std::string, StageBase*>	stages;
-	std::vector<std::string>			tags;
-	std::vector<cstring>				mapdate; //! マップデータの読み込み
+	StagePraMmeter sp;
+
+	std::vector<StageBase*>		stages;
+	std::vector<cstring>		mapdate; //! マップデータの読み込み
+	vector<StagePraMmeter> pillarpos;
+	int _count = 0;
 };

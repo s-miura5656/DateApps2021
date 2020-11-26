@@ -42,18 +42,8 @@ int AttackPowerItem::Update()
 
 		if (_hit_box->IsHitObjects(name))
 		{
-			/*auto&& hit_box = _hit_box->GetHitBoxTag(name);
-			MODEL hit_model = hit_box->GetModelTag();
-
-			hit_model->IntersectRay(_hit_box->GetModelTag()->GetPosition(), hit_model->GetPosition(), &hit_box->_dist);*/
-
 			ItemEffect(name);
-			//Removeflag = true;
-		}
-		else
-		{
-			/*auto&& hit_box = _hit_box->GetHitBoxTag(name);
-			hit_box->_dist = FLT_MAX;*/
+			Removeflag = true;
 		}
 	}
 

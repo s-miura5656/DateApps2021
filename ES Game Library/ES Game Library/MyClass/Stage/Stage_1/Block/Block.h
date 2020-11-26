@@ -13,11 +13,10 @@
 class Block :public StageBase
 {
 public:
-	Block();
+	Block(std::string tag);
 	~Block();
 	bool Initialize() override;
-	void Draw3D() override;
+	int Update() override;
 private:
 	ItemCounter* itemcounter;
-	bool _destructiveflag;
 };
