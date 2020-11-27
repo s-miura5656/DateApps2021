@@ -32,21 +32,26 @@ bool Arm::Fileinitialize()
 bool Arm::Initialize()
 {
 	_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
-	_model = GraphicsDevice.CreateModelFromFile(_T("Player/sword_01.X"));
+	_model = GraphicsDevice.CreateModelFromFile(_T("Player/robo_arm.X"));
 
 	_model->SetRotation(0, _iplayer_data->GetAngle(_player_tag), 0);
 	_position = _iplayer_data->GetPosition(_player_tag);
 	_old_pos = _position;
+	_new_pos = _position;
+
+	_index_num = _iplayer_data->GetIndexNum();
+
 	_model->SetPosition(_position);
 	_angle_point.push_back(_position);
 
 	_angle = _iplayer_data->GetAngle(_player_tag);
+	_model->SetRotation(0, _angle, 0);
 	_old_angle = _angle;
 	arm_state = ArmEnum::PunchState::PUNCH;
 
 	arm_speed = 0.07f;
 
-	_model->SetScale(0.005f);
+	_model->SetScale(2.f);
 
 	hit_flag = false;
 

@@ -28,12 +28,10 @@ int ArmBase::Update()
 
 	if (arm_state == ArmEnum::PunchState::PUNCH)
 	{
-		if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
-			Move(pad);
+		Move(pad);
 
 		if (_angle_point.size() > 10)
 			arm_state = ArmEnum::PunchState::RETURN_PUNCH;
-
 	}
 	
 	if (arm_state == ArmEnum::PunchState::RETURN_PUNCH)
@@ -74,75 +72,83 @@ int ArmBase::Update()
 
 void ArmBase::Draw2D()
 {
-	/*if (_tag == "Arm_1")
+	if (_tag == "Arm_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 1.f, 1.f), _T("ANGLE:%f"), _angle);
+		//SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 1.f, 1.f), _T("ANGLE:%d"), );
 		SpriteBatch.DrawString(_font, Vector2(0, 350), Color(1.f, 1.f, 1.f), _T("POS_X:%f"), _model->GetPosition().x);
 		SpriteBatch.DrawString(_font, Vector2(0, 400), Color(1.f, 1.f, 1.f), _T("POS_Z:%f"), _model->GetPosition().z);
-	}*/
+	}
 }
 
 void ArmBase::Draw3D()
 {
+	_model->SetRotation(90, _angle, 180);
 	_model->Draw();
+	_model->SetRotation(0, _angle, 0);
 	_hit_box->Draw3D();
 }
 
 void ArmBase::Move(Controller* pad)
 {
-	_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-	_angle = AngleClamp(_angle);
+	auto&& map_data = _imap_data->GetData();
 
-	if ((int)_angle != (int)_old_angle)
+	if (_move_flag)
 	{
-		_angle_point.push_back(_position);
-	}
+		_position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
+		_lerp_count += 0.05f;
 
-	_model->SetRotation(0, _angle, 0);
-
-	_old_angle = (int)_angle;
-
-#pragma region ˆÚ“®‚Æ“–‚½‚è”»’è
-	auto hit_list = _hit_box->IsHitBoxList(_player_tag);
-
-	Vector3 move_dir = Vector3_Zero;
-
-	auto map_pos = _imap_data->GetPosition();
-
-	if (!hit_list.empty())
-	{
-		auto model = _hit_box->IshitNearestObject(hit_list, _position, _model->GetFrontVector());
-
-		auto hit_box = _hit_box->GetModelTag();
-
-		if (hit_box->GetPosition().x + hit_box->GetScale().x / 2 > model->GetPosition().x - model->GetScale().x / 2 ||
-			hit_box->GetPosition().x - hit_box->GetScale().x / 2 < model->GetPosition().x + model->GetScale().x / 2 ||
-			hit_box->GetPosition().z + hit_box->GetScale().z / 2 < model->GetPosition().z - model->GetScale().z / 2 ||
-			hit_box->GetPosition().z - hit_box->GetScale().z / 2 < model->GetPosition().z + model->GetScale().z / 2)
+		if (_lerp_count >= 1.f)
 		{
-			_position = _old_pos;
+			_move_flag = false;
+			_lerp_count = 0;
+			_iplayer_data->SetState(_tag, PlayerEnum::WAIT);
 		}
-
-		_model->SetPosition(_position);
-
-		move_dir = SlidingOnWallVectorCreate(model, _model->GetPosition(), _model->GetFrontVector());
-
-		_position += move_dir * 0.1f;
 	}
 	else
 	{
-		move_dir = MoveDirection(pad->GetPadStateX(), pad->GetPadStateY());
-		move_dir *= 0.1f;
-		_position = _model->GetPosition() + move_dir;
+		
+		float abs_x = fabsf(pad->GetPadStateX());
+		float abs_z = fabsf(pad->GetPadStateY());
+
+		if (abs_x > 30 && abs_x > abs_z)
+		{
+			int old_index = _index_num.x;
+			std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
+			_index_num.x = Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
+
+			if (map_data[_index_num.z][_index_num.x] != 'i' && map_data[_index_num.z][_index_num.x] != 'w')
+			{
+				_new_pos = Vector3(1 * _index_num.x, 1, 1 * -_index_num.z);
+				_angle_point.push_back(_new_pos);
+				_move_flag = true;
+			}
+			else
+			{
+				_index_num.x = old_index;
+			}
+		}
+
+		if (abs_z > 30 && abs_x < abs_z)
+		{
+			int old_index = _index_num.z;
+			std::signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
+			_index_num.z = Clamp(_index_num.z, 1, map_data.size() - 2);
+
+			if (map_data[_index_num.z][_index_num.x] != 'i' && map_data[_index_num.z][_index_num.x] != 'w')
+			{
+				_new_pos = Vector3(1 * _index_num.x, 1, 1 * -_index_num.z);
+				_angle_point.push_back(_new_pos);
+				_move_flag = true;
+			}
+			else
+			{
+				_index_num.z = old_index;
+			}
+		}
+
+		_old_pos = _position;
 	}
-#pragma endregion
-
-	_position.x = Clamp(_position.x, 1, map_pos[12].x);
-	_position.z = Clamp(_position.z, map_pos[142].z, -1);
-
 	_model->SetPosition(_position);
-
-	_old_pos = _position;
 }
 
 void ArmBase::ReturnArm()
@@ -159,7 +165,7 @@ void ArmBase::ReturnArm()
 		return;
 	}
 
-	move_dir *= 0.1f;
+	move_dir *= 0.2f;
 
 	_angle = -AngleCalculating(move_dir.x, move_dir.z);
 
@@ -172,39 +178,7 @@ void ArmBase::ReturnArm()
 		_angle_point.erase(_angle_point.begin() + (a - 1));
 	}
 
-	auto map_pos = _imap_data->GetPosition();
-
-	_position.x = Clamp(_position.x, 1, map_pos[12].x);
-	_position.z = Clamp(_position.z, map_pos[142].z, -1);
+	auto map_data = _imap_data->GetData();
 
 	_model->SetPosition(_position);
 }
-
-float ArmBase::AngleClamp(float angle)
-{
-	if (angle >= 0 - 45 && angle < 0 + 45)
-	{
-		angle = 0;
-	}
-	else if (angle >= 90 - 45 && angle < 90 + 45)
-	{
-		angle = 90;
-
-	}
-	else if (angle >= 180 - 45 && angle < 180 + 45)
-	{
-		angle = 180;
-	}
-	else if (angle >= 270 - 45 && angle < 270 + 45)
-	{
-		angle = 270;
-	}
-
-	return angle;
-}
-
-
-
-
-
-

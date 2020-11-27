@@ -20,7 +20,6 @@ public:
 
 	void    Move(Controller* pad);
 	void ReturnArm();
-	float AngleClamp(float angle);
 
 	int     GetArmState() { return arm_state; }
 	Vector3 ArmGetPos()   { return _model->GetPosition(); }
@@ -37,7 +36,7 @@ protected:
 
 	float scale;
 	float _angle = 0.f;
-	float _old_angle = FLT_MAX;
+	int _old_angle = INT_MAX;
 	float arm_speed;
 
 	bool  hit_flag;
@@ -47,10 +46,17 @@ protected:
 	std::vector<Vector3> _angle_point;
 	Vector3 _position = Vector3_Zero;
 	Vector3 _old_pos  = Vector3_Zero;
+	Vector3 _new_pos = Vector3_Zero;
+
 	IPrayerData* _iplayer_data;
 	IArmData* _iarm_Data;
 	IMapData*	 _imap_data;
 
 	
 	std::unique_ptr<HitBox> _hit_box;
+
+	IndexNum _index_num;
+
+	bool _move_flag = false;
+	float _lerp_count = 0.f;;
 };

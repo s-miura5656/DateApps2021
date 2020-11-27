@@ -5,7 +5,7 @@
 #include "../../Scenes/Main/MainScene.h"
 #include "../../Scenes/Title/TitleScene.h"
 #include"../../Scenes/Result/ResultScene.h"
-
+#include "../ControllerManager/ContorollerManager.h"
 
 //! @brief コンストラクタ
 //! @detail SceneManager が作られたときに呼び出されるよ
@@ -62,9 +62,12 @@ bool SceneManager::Initialize()
 	* @brief カメラの初期設定
 	*/
 	Viewport view = GraphicsDevice.GetViewport();
-	_camera->SetView(Vector3(7, 17, -9), Vector3(81, 0, 0));
-	_camera->SetPerspectiveFieldOfView(45.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
+	_camera_pos = Vector3(7, 600, -400);
+	_look_pos   = Vector3(7, 0, -5.5f);
 
+	_camera->SetLookAt(_camera_pos, _look_pos, 0);
+	_camera->SetPerspectiveFieldOfView(1.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
+	GraphicsDevice.SetCamera(_camera);
 	
 
 	//! 一番最初に読み込まれるシーン
@@ -76,6 +79,37 @@ bool SceneManager::Initialize()
 int SceneManager::Update()
 {
 	_scene->Update();
+
+#if  _DEBUG
+
+	/*if (ControllerManager::Instance().GetController("Player_1") != nullptr)
+	{
+		auto&& pad = ControllerManager::Instance().GetController("Player_1");
+
+		if (pad->GetButtonState(GamePad_Button6))
+		{
+			_camera_pos.y++;
+		}
+
+		if (pad->GetButtonState(GamePad_Button8))
+		{
+			_camera_pos.y--;
+		}
+
+		if (pad->GetButtonState(GamePad_Button5))
+		{
+			_camera_pos.z++;
+		}
+
+		if (pad->GetButtonState(GamePad_Button7))
+		{
+			_camera_pos.z--;
+		}
+	}*/
+	
+	//_camera->SetLookAt(_camera_pos, Vector3(7, 0, -5.5f), 0);
+
+#endif //  _DEBUG
 
 	return 0;
 }

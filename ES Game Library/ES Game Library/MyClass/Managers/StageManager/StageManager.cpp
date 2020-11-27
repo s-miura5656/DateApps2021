@@ -1,8 +1,9 @@
 #include "StageManager.h"
-#include "../../Stage/Stage_1/Stage.h"
 #include <fstream>
 #include <cstdio>
 #include "../../Data/IData.h"
+#include "../../Data/WordsTable.h"
+#include "../../Data/StructList.h"
 
 StageManager::StageManager()
 {
@@ -11,12 +12,13 @@ StageManager::StageManager()
 
 StageManager::~StageManager()
 {
-	
+
 }
 
 bool StageManager::Initialize()
 {
-	FILE* fp = fopen("MapSprite/mapenglish.csv","r");
+	//配列の添え字でタグを呼べる
+	FILE* fp = fopen("MapSprite/map.csv","r");
 
 	//マップデータを読み込む
 	char lordchar[CHAR_MAX + 1];
@@ -39,15 +41,9 @@ bool StageManager::Initialize()
 	}
 	//ファイルを閉じる
 	fclose(fp);
-	
-	stages.emplace(FLOOR_TAG, new Floor);
-	stages[FLOOR_TAG]->Initialize();
-	stages[FLOOR_TAG]->SetPosition(Vector3(7, 0, -6));
 
-	ItemCounter* itemcounter = new ItemCounter;
 	IPrayerData* iplayer_data = new IPrayerData;
 	int player_num = 1;
-	std::vector<Vector3> pos;
 
 	IMapData* imap_data = new IMapData;
 
@@ -55,56 +51,32 @@ bool StageManager::Initialize()
 	{
 		for (int x = 0; x < mapdate[z].size(); x++)
 		{
-			std::string tag = std::to_string(z) + std::to_string(x);
+			std::string tag = std::to_string(_count);
 			switch (mapdate[z][x]) {
 			case 'b':
 				tag = DESTRUCTION_BLOCK_TAG + tag;
-				stages.emplace(tag, new Block);
-				stages[tag]->SetPosition(Vector3(x, 0, -z));
-				stages[tag]->Initialize();
-				//itemcounter->SetItem(POWOR_ITEM_TAG, stages[tag]->GetPosition());
-				tags.push_back(tag);
-				imap_data->SetPosition(Vector3(x, 0, -z));
-				break;
-			case 'i':
-				tag = INDESTRUCTIBIEPILLAR_TAG + tag;
-				stages.emplace(tag, new Pillar(tag));
-				stages[tag]->SetPosition(Vector3(x, 0, -z));
-				stages[tag]->Initialize();
-				tags.push_back(tag);
-				imap_data->SetPosition(Vector3(x, 0, -z));
-
-				break;
-			case 'o':
-				tag = WALL_METAL_TAG + tag;
-				stages.emplace(tag, new Metal(tag));
-				stages[tag]->SetPosition(Vector3(x, 0, -z));
-				stages[tag]->Initialize();
-				pos.push_back(Vector3(x, 0, -z));
-				tags.push_back(tag);
+				stages.push_back(new Block(tag));
+				stages[_count]->SetPosition(Vector3(x, 0, -z));
+				stages[_count]->Initialize();
+				_count++;
 				break;
 			case 'p':
 				tag = PLAYER_TAG + std::to_string(player_num);
 				iplayer_data->SetPosition(tag, Vector3(x, 0, -z));
 				player_num++;
-				imap_data->SetPosition(Vector3(x, 0, -z));
-
-				break;
-			case ' ':
-				imap_data->SetPosition(Vector3(x, 0, -z));
-
-				break;
-			default:
-				//どれも該当しないとき
-				//今回は何もしない
 				break;
 			}
 		}
 	}
 
+	imap_data->SetData(mapdate);
+
+	stages.push_back(new Indestructible);
+	stages[stages.size() - 1]->Initialize();
+	stages[stages.size() - 1]->SetPosition(Vector3(7,0,-6));
+
 	delete imap_data;
 	delete iplayer_data;
-	delete itemcounter;
 
 	int size = stages.size();
 	return true;
@@ -112,6 +84,16 @@ bool StageManager::Initialize()
 
 int StageManager::Update()
 {
+	for (int i = 0; i < stages.size(); i++)
+	{
+		if (stages[i]->Update() == 1)
+		{
+			const string random_item[3] = { POWOR_ITEM_TAG ,SPEED_ITEM_TAG ,HITPOINT_ITEM_TAG };
+			ItemCounter* itemcounter = new ItemCounter;
+			itemcounter->SetItem(random_item[MathHelper_Random(0,3)],stages[i]->GetPosition());
+			stages.erase(stages.begin() + i);
+		}
+	}
 	return 0;
 }
 
@@ -122,10 +104,9 @@ void StageManager::Draw2D()
 
 void StageManager::Draw3D()
 {
-	for (const auto& tag : tags)
+//読み込んだブロックの数だけ描画する
+	for (int i = 0; i < stages.size(); i++)
 	{
-		stages[tag]->Draw3D();
+		stages[i]->Draw3D();
 	}
-
-	stages[FLOOR_TAG]->Draw3D();
 }

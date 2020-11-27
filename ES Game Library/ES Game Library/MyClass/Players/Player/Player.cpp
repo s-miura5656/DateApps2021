@@ -43,7 +43,11 @@ bool Player::Initialize()
 	_model->SetPosition(_iplayer_data->GetPosition(_tag));
 
 	_position = _model->GetPosition();
-
+	_old_pos = _position;
+	_new_pos = _position;
+	
+	_index_num.Initialize(1, 1, 1);
+	
 	ControllerManager::Instance().CreateGamePad(_tag);
 
 	return true;
@@ -51,6 +55,9 @@ bool Player::Initialize()
 
 int Player::Update()
 {
+	auto pad = ControllerManager::Instance().GetController(_tag);
+	pad->GamePadRefresh();
+
 	//! パンチ発射状態ならすぐさまリターン
 	if (_iplayer_data->GetState(_tag) == PlayerEnum::ATTACK)
 	{
@@ -58,33 +65,41 @@ int Player::Update()
 		return 0;
 	}
 
+	if (_iplayer_data->GetState(_tag) == PlayerEnum::MOVE)
+	{
+		//! 移動
+		Move(pad);
+	}
+
 	if (_iplayer_data->GetState(_tag) == PlayerEnum::WAIT)
 	{
 		DestroyArm();
+
+		if (pad->GetButtonState(GamePad_Button1))
+		{
+			_iplayer_data->SetState(_tag, PlayerEnum::ATTACK);
+			DestroyArm();
+			CreateArm();
+			return 0;
+		}
 	}
 
-	auto pad = ControllerManager::Instance().GetController(_tag);
-
 	//! ロケットパンチ発射切り替え
-	if (pad->GetButtonBuffer(GamePad_Button1))
+	if (pad->GetButtonState(GamePad_Button1))
 	{
-		a++;
 		_iplayer_data->SetState(_tag, PlayerEnum::ATTACK);
+		DestroyArm();
 		CreateArm();
 		return 0;
 	}
+	
 
 	//! プレイヤー移動
 	if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
 	{
+		_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+		_angle = AngleClamp(_angle);
 		_iplayer_data->SetState(_tag, PlayerEnum::MOVE);
-
-		//! 移動
-		Move(pad);
-	}
-	else
-	{
-		_iplayer_data->SetState(_tag, PlayerEnum::WAIT);
 	}
 
 	return 0;
@@ -92,48 +107,69 @@ int Player::Update()
 
 void Player::Move(Controller* pad)
 {
-	_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-	_model->SetRotation(0, _angle, 0);
+	auto&& map_data = _imap_data->GetData();
 
-#pragma region 移動と当たり判定
-	auto hit_list = _hit_box->IsHitBoxList(_arm_tag);
-
-	Vector3 move_dir = Vector3_Zero;
-
-	auto map_pos = _imap_data->GetPosition();
-
-	if (!hit_list.empty())
+	if (_move_flag)
 	{
-		auto model = _hit_box->IshitNearestObject(hit_list, _position, _model->GetFrontVector());
+		_position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
+		_lerp_count += 0.04f;
 
-		auto hit_box = _hit_box->GetModelTag();
-
-		if (hit_box->GetPosition().x + hit_box->GetScale().x / 2 > model->GetPosition().x - model->GetScale().x / 2 ||
-			hit_box->GetPosition().x - hit_box->GetScale().x / 2 < model->GetPosition().x + model->GetScale().x / 2 ||
-			hit_box->GetPosition().z + hit_box->GetScale().z / 2 < model->GetPosition().z - model->GetScale().z / 2 ||
-			hit_box->GetPosition().z - hit_box->GetScale().z / 2 < model->GetPosition().z + model->GetScale().z / 2)
+		if (_lerp_count >= 1.f)
 		{
-			_position = _old_pos;
+			_move_flag = false;
+			_lerp_count = 0;
+			_iplayer_data->SetState(_tag, PlayerEnum::WAIT);
 		}
-
-		_model->SetPosition(_position);
-
-		move_dir = SlidingOnWallVectorCreate(model, _model->GetPosition(), _model->GetFrontVector());
-
-		_position += move_dir * 0.04f;
 	}
 	else
 	{
-		move_dir = MoveDirection(pad->GetPadStateX(), pad->GetPadStateY());
-		move_dir *= 0.04f;
-		_position = _model->GetPosition() + move_dir;
-	}
-#pragma endregion
+		float abs_x = fabsf(pad->GetPadStateX());
+		
+		float abs_z = fabsf(pad->GetPadStateY());
 
-	_position.x = Clamp(_position.x, 1, map_pos[12].x);
-	_position.z = Clamp(_position.z, map_pos[142].z, -1);
+		if (abs_x > 16 && abs_x > abs_z)
+		{
+			int old_index = _index_num.x;
+
+			std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
+
+			_index_num.x = Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
+
+			if (map_data[_index_num.z][_index_num.x] != 'i' && 
+				map_data[_index_num.z][_index_num.x] != 'w')
+			{
+				_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
+				_move_flag = true;
+			}
+			else
+			{
+				_index_num.x = old_index;
+			}
+		}
+
+		if (abs_z > 16 && abs_x < abs_z)
+		{
+			int old_index = _index_num.z;
+
+			std::signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
+
+			_index_num.z = Clamp(_index_num.z, 1, map_data.size() - 2);
+
+			if (map_data[_index_num.z][_index_num.x] != 'i' && 
+				map_data[_index_num.z][_index_num.x] != 'w')
+			{
+				_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
+				_iplayer_data->SetIndexNum(_index_num);
+				_move_flag = true;
+			}
+			else
+			{
+				_index_num.z = old_index;
+			}
+		}
+
+		_old_pos = _position;
+	}
 
 	_model->SetPosition(_position);
-
-	_old_pos = _position;
 }

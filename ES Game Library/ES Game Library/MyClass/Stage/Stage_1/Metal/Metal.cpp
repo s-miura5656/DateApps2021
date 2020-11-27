@@ -18,7 +18,7 @@ Metal::~Metal()
 bool Metal::Initialize()
 {
 	//Xファイルの読み込み
-	_model = GraphicsDevice.CreateModelFromFile(_T("MapSprite/metal.X"));
+	_model = GraphicsDevice.CreateModelFromFile(_T("MapSprite/wall.X"));
 	//スケールの設定
 	_model->SetScale(_scale);
 	//マテリアルの設定
