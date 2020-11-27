@@ -61,10 +61,12 @@ bool SceneManager::Initialize()
 	/**
 	* @brief ƒJƒƒ‰‚Ì‰ŠúÝ’è
 	*/
-	_camera_angle = 60;
 	Viewport view = GraphicsDevice.GetViewport();
-	_camera->SetView(Vector3(7, 15, -15), Vector3(_camera_angle, 0, 0));
-	_camera->SetPerspectiveFieldOfView(40.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
+	_camera_pos = Vector3(7, 600, -400);
+	_look_pos   = Vector3(7, 0, -5.5f);
+
+	_camera->SetLookAt(_camera_pos, _look_pos, 0);
+	_camera->SetPerspectiveFieldOfView(1.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 	GraphicsDevice.SetCamera(_camera);
 	
 
@@ -84,18 +86,28 @@ int SceneManager::Update()
 	{
 		auto&& pad = ControllerManager::Instance().GetController("Player_1");
 
-		if (pad->GetButtonBuffer(GamePad_Button2))
+		if (pad->GetButtonState(GamePad_Button6))
 		{
-			_camera_angle++;
+			_camera_pos.y++;
 		}
 
-		if (pad->GetButtonBuffer(GamePad_Button3))
+		if (pad->GetButtonState(GamePad_Button8))
 		{
-			_camera_angle--;
+			_camera_pos.y--;
 		}
-	}
+
+		if (pad->GetButtonState(GamePad_Button5))
+		{
+			_camera_pos.z++;
+		}
+
+		if (pad->GetButtonState(GamePad_Button7))
+		{
+			_camera_pos.z--;
+		}
+	}*/
 	
-	_camera->SetView(Vector3(7, 15, -15), Vector3(_camera_angle, 0, 0));*/
+	//_camera->SetLookAt(_camera_pos, Vector3(7, 0, -5.5f), 0);
 
 #endif //  _DEBUG
 

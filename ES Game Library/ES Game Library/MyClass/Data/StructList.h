@@ -25,3 +25,10 @@ struct MapData {
 	Vector3 position = Vector3_Zero;
 	bool  move_flag = false;
 };
+
+struct IndexNum {
+	int x = 0;
+	int y = 0;
+	int z = 0;
+	void Initialize(int X, int Y, int Z) { x = X; y = Y; z = Z; }
+};

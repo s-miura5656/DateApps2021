@@ -28,6 +28,7 @@ private:
 	void operator=(const PlayerParametor&) = delete;
 
 	std::map<std::string, PlayerParam> _player_params;
+	IndexNum _index_num;
 	PlayerParam _player_param;
 };
 

@@ -55,8 +55,7 @@ protected:
 	
 	std::unique_ptr<HitBox> _hit_box;
 
-	int _index_x = 1;
-	int _index_z = 1;
+	IndexNum _index_num;
 
 	bool _move_flag = false;
 	float _lerp_count = 0.f;;

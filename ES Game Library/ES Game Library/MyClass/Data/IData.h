@@ -23,6 +23,7 @@ public:
 	void SetAngle(std::string& player_tag, float angle)						{ PlayerParametor::Instance()._player_params[player_tag].angle = angle; }
 	void SetPosition(std::string& player_tag, Vector3 pos)					{ PlayerParametor::Instance()._player_params[player_tag].position = pos; }
 	void SetState(std::string& player_tag, int state)						{ PlayerParametor::Instance()._player_params[player_tag].state = state; }
+	void SetIndexNum(IndexNum index_num)									{ PlayerParametor::Instance()._index_num = index_num; }
 
 	//! ÉQÉbÉ^Å[
 	PlayerParam GetPlayerPram(std::string& player_tag)  const { return PlayerParametor::Instance()._player_params[player_tag]; }
@@ -33,7 +34,7 @@ public:
 	float GetAngle(std::string& player_tag)				const { return PlayerParametor::Instance()._player_params[player_tag].angle; }
 	Vector3 GetPosition(std::string& player_tag)		const { return PlayerParametor::Instance()._player_params[player_tag].position; }
 	int GetState(std::string& player_tag)				const { return PlayerParametor::Instance()._player_params[player_tag].state; }
-	
+	IndexNum GetIndexNum()                              const { return PlayerParametor::Instance()._index_num; }
 private:
 };
 

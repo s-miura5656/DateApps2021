@@ -211,6 +211,9 @@
     <Filter Include="Myclass\Stage\Stage_1\Indestructible">
       <UniqueIdentifier>{f0008524-b885-4dd5-85eb-73d39396dea7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Managers\ResouceManager">
+      <UniqueIdentifier>{e6c03f7b-6c09-4b3a-b045-acfa7c994af0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -444,6 +447,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.cpp">
       <Filter>Myclass\Stage\Stage_1\Indestructible</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\ResouceManager\ResouceManager.cpp">
+      <Filter>Myclass\Managers\ResouceManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -717,6 +723,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.h">
       <Filter>Myclass\Stage\Stage_1\Indestructible</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\ResouceManager\ResouceManager.h">
+      <Filter>Myclass\Managers\ResouceManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

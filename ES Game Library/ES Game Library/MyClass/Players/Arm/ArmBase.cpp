@@ -28,12 +28,10 @@ int ArmBase::Update()
 
 	if (arm_state == ArmEnum::PunchState::PUNCH)
 	{
-		if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
-			Move(pad);
+		Move(pad);
 
 		if (_angle_point.size() > 10)
 			arm_state = ArmEnum::PunchState::RETURN_PUNCH;
-
 	}
 	
 	if (arm_state == ArmEnum::PunchState::RETURN_PUNCH)
@@ -108,44 +106,43 @@ void ArmBase::Move(Controller* pad)
 	}
 	else
 	{
+		
 		float abs_x = fabsf(pad->GetPadStateX());
-
 		float abs_z = fabsf(pad->GetPadStateY());
 
 		if (abs_x > 30 && abs_x > abs_z)
 		{
-			int old_index = _index_x;
+			int old_index = _index_num.x;
+			std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
+			_index_num.x = Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
 
-			std::signbit(pad->GetPadStateX()) ? _index_x-- : _index_x++;
-
-			_index_x = Clamp(_index_x, 1, map_data[_index_z].size() - 3);
-
-			if (map_data[_index_z][_index_x] != 'i' && map_data[_index_z][_index_x] != 'w')
+			if (map_data[_index_num.z][_index_num.x] != 'i' && map_data[_index_num.z][_index_num.x] != 'w')
 			{
-				_new_pos = Vector3(1 * _index_x, 0, 1 * -_index_z);
+				_new_pos = Vector3(1 * _index_num.x, 1, 1 * -_index_num.z);
+				_angle_point.push_back(_new_pos);
 				_move_flag = true;
 			}
 			else
 			{
-				_index_x = old_index;
+				_index_num.x = old_index;
 			}
 		}
+
 		if (abs_z > 30 && abs_x < abs_z)
 		{
-			int old_index = _index_z;
+			int old_index = _index_num.z;
+			std::signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
+			_index_num.z = Clamp(_index_num.z, 1, map_data.size() - 2);
 
-			std::signbit(pad->GetPadStateY()) ? _index_z-- : _index_z++;
-
-			_index_z = Clamp(_index_z, 1, map_data.size() - 2);
-
-			if (map_data[_index_z][_index_x] != 'i' && map_data[_index_z][_index_x] != 'w')
+			if (map_data[_index_num.z][_index_num.x] != 'i' && map_data[_index_num.z][_index_num.x] != 'w')
 			{
-				_new_pos = Vector3(1 * _index_x, 0, 1 * -_index_z);
+				_new_pos = Vector3(1 * _index_num.x, 1, 1 * -_index_num.z);
+				_angle_point.push_back(_new_pos);
 				_move_flag = true;
 			}
 			else
 			{
-				_index_z = old_index;
+				_index_num.z = old_index;
 			}
 		}
 

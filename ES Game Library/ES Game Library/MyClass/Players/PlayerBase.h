@@ -45,12 +45,12 @@ protected:
 	IPrayerData* _iplayer_data;
 	IArmData* _iarm_data;
 	IMapData* _imap_data;
+
 	std::unique_ptr<HitBox> _hit_box;
 	std::string _tag;
 	std::string _arm_tag;
 
-	int _index_x = 1;
-	int _index_z = 1;
+	IndexNum _index_num;
 
 	bool _move_flag = false;
 	float _lerp_count = 0.f;

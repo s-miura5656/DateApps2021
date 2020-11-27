@@ -39,10 +39,13 @@ bool Arm::Initialize()
 	_old_pos = _position;
 	_new_pos = _position;
 
+	_index_num = _iplayer_data->GetIndexNum();
+
 	_model->SetPosition(_position);
 	_angle_point.push_back(_position);
 
 	_angle = _iplayer_data->GetAngle(_player_tag);
+	_model->SetRotation(0, _angle, 0);
 	_old_angle = _angle;
 	arm_state = ArmEnum::PunchState::PUNCH;
 

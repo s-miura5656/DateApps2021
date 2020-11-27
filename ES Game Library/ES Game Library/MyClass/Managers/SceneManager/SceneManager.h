@@ -44,7 +44,8 @@ private:
 	//! シングルトンオブジェクトを他で作らせないための記述
 	SceneManager(const SceneManager&) = delete;
 	void operator=(const SceneManager&) = delete;
-	int _camera_angle;
 	CAMERA _camera;
+	Vector3 _camera_pos;
+	Vector3 _look_pos;
 	BaseScene* _scene;
 };
