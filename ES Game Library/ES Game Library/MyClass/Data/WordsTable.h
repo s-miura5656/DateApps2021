@@ -22,7 +22,7 @@ static const std::string WALL_METAL_TAG           = "WallMetal_";
 
 namespace PlayerEnum {
 	//プレイヤーのアニメーション
-	enum { WAIT, MOVE, DESTRUCTION, ATTACK, ANIMATION_ALL_TYPE };
+	enum { WAIT, MOVE, DESTRUCTION, ATTACK, DAMAGE, ANIMATION_ALL_TYPE };
 
 	enum PunchType { UNCLASP_PUNCH, SET_PUNCH, PUNCH_MAX };
 

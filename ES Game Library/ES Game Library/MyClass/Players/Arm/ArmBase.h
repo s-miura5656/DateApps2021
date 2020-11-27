@@ -58,5 +58,6 @@ protected:
 	IndexNum _index_num;
 
 	bool _move_flag = false;
-	float _lerp_count = 0.f;;
+	float _lerp_count = 0.f;
+	int _count = 0;
 };

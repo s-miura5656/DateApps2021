@@ -39,7 +39,7 @@ bool Arm::Initialize()
 	_old_pos = _position + Vector3(0, 0.5f, 0);
 	_new_pos = _position + Vector3(0, 0.5f, 0);
 
-	_index_num = _iplayer_data->GetIndexNum();
+	_index_num = _iplayer_data->GetIndexNum(_player_tag);
 
 	_model->SetPosition(_new_pos);
 	_angle_point.push_back(_position);

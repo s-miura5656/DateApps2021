@@ -13,10 +13,11 @@ void PlayerBase::Draw2D()
 {
 	if (_tag == "Player_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 250), Color(1.f, 1.f, 1.f), _T("ANGLE:%f"), _angle);
+		//SpriteBatch.DrawString(_font, Vector2(0, 250), Color(1.f, 1.f, 1.f), _T("ANGLE:%f"), _angle);
 		//SpriteBatch.DrawString(_font, Vector2(0, 350), Color(1.f, 1.f, 1.f), _T("POS_X:%f"), _iplayer_data->GetPosition(_tag).x);
 		//SpriteBatch.DrawString(_font, Vector2(0, 400), Color(1.f, 1.f, 1.f), _T("POS_Z:%f"), _iplayer_data->GetPosition(_tag).z);
 	}
+
 	if (_arm != nullptr)
 	{
 		_arm->Draw2D();
@@ -26,7 +27,7 @@ void PlayerBase::Draw2D()
 void PlayerBase::Draw3D()
 {
 	_model->SetPosition(_iplayer_data->GetPosition(_tag));
-	_model->SetRotation(Vector3(15, _angle - 180, 0));
+	_model->SetRotation(Vector3(0, _angle - 180, 0));
 	_model->Draw();
 	_model->SetRotation(Vector3(0, _angle, 0));
 
@@ -49,7 +50,7 @@ float PlayerBase::PlayerSpeed()
 
 	if (_weight != p_data->GetWeight(_tag))
 	{
-		_weight = p_data->GetWeight(_tag) + a_data->GetWeight(_arm_tag);
+		_weight = p_data->GetWeight(_tag);
 		_iplayer_data->SetWeight(_tag, _weight);
 		_move_speed = (float)p_data->GetSpeed(_tag) / (float)p_data->GetWeight(_tag);
 	}

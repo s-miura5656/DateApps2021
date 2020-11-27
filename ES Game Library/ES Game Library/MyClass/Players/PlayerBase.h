@@ -54,4 +54,5 @@ protected:
 
 	bool _move_flag = false;
 	float _lerp_count = 0.f;
+	int count = 0;
 };

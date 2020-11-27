@@ -46,8 +46,12 @@ bool Player::Initialize()
 	_old_pos = _position;
 	_new_pos = _position;
 	
-	_index_num.Initialize(1, 1, 1);
+	Vector3 position = _position;
+
+	_index_num.Initialize(fabsf(_position.x), fabsf(_position.y), fabsf(_position.z));
 	
+	_iplayer_data->SetIndexNum(_tag, _index_num);
+	_iarm_data->SetSpeed(_arm_tag, 0.1f);
 	ControllerManager::Instance().CreateGamePad(_tag);
 
 	return true;
@@ -58,7 +62,30 @@ int Player::Update()
 	auto pad = ControllerManager::Instance().GetController(_tag);
 	pad->GamePadRefresh();
 
-	
+	KeyboardBuffer keybuffer = Keyboard->GetBuffer();
+
+	if (keybuffer.IsPressed(Keys_Up))
+	{
+		float speed = _iarm_data->GetSpeed(_arm_tag);
+		speed += 0.01f;
+		_iarm_data->SetSpeed(_arm_tag, speed);
+	}
+
+	if (keybuffer.IsPressed(Keys_Down))
+	{
+		float speed = _iarm_data->GetSpeed(_arm_tag);
+		speed -= 0.01f;
+		_iarm_data->SetSpeed(_arm_tag, speed);
+	}
+
+	if (_iplayer_data->GetState(_tag) == PlayerEnum::DAMAGE)
+	{
+		_index_num = _iplayer_data->GetIndexNum(_tag);
+		_position = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
+		_model->SetPosition(_position);
+		_iplayer_data->SetState(_tag, PlayerEnum::WAIT);
+		return 0;
+	}
 
 	if (_iplayer_data->GetState(_tag) == PlayerEnum::MOVE)
 	{
@@ -69,6 +96,7 @@ int Player::Update()
 	//! パンチ発射状態ならすぐさまリターン
 	if (_iplayer_data->GetState(_tag) == PlayerEnum::ATTACK)
 	{
+		_iplayer_data->SetIndexNum(_tag, _index_num);
 		_arm->Update();
 		return 0;
 	}
@@ -77,25 +105,15 @@ int Player::Update()
 	{
 		DestroyArm();
 
+		//! ロケットパンチ発射切り替え
 		if (pad->GetButtonState(GamePad_Button1))
 		{
 			_iplayer_data->SetState(_tag, PlayerEnum::ATTACK);
-			DestroyArm();
 			CreateArm();
 			return 0;
 		}
 	}
-
-	//! ロケットパンチ発射切り替え
-	if (pad->GetButtonState(GamePad_Button1))
-	{
-		_iplayer_data->SetState(_tag, PlayerEnum::ATTACK);
-		DestroyArm();
-		CreateArm();
-		return 0;
-	}
 	
-
 	//! プレイヤー移動
 	if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
 	{
@@ -161,7 +179,7 @@ void Player::Move(Controller* pad)
 				map_data[_index_num.z][_index_num.x] != 'w')
 			{
 				_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
-				_iplayer_data->SetIndexNum(_index_num);
+				_iplayer_data->SetIndexNum(_tag , _index_num);
 				_move_flag = true;
 			}
 			else

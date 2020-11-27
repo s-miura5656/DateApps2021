@@ -23,7 +23,7 @@ public:
 	void SetAngle(std::string& player_tag, float angle)						{ PlayerParametor::Instance()._player_params[player_tag].angle = angle; }
 	void SetPosition(std::string& player_tag, Vector3 pos)					{ PlayerParametor::Instance()._player_params[player_tag].position = pos; }
 	void SetState(std::string& player_tag, int state)						{ PlayerParametor::Instance()._player_params[player_tag].state = state; }
-	void SetIndexNum(IndexNum index_num)									{ PlayerParametor::Instance()._index_num = index_num; }
+	void SetIndexNum(std::string& player_tag, IndexNum index_num)			{ PlayerParametor::Instance()._index_nums[player_tag] = index_num; }
 
 	//! ゲッター
 	PlayerParam GetPlayerPram(std::string& player_tag)  const { return PlayerParametor::Instance()._player_params[player_tag]; }
@@ -34,7 +34,7 @@ public:
 	float GetAngle(std::string& player_tag)				const { return PlayerParametor::Instance()._player_params[player_tag].angle; }
 	Vector3 GetPosition(std::string& player_tag)		const { return PlayerParametor::Instance()._player_params[player_tag].position; }
 	int GetState(std::string& player_tag)				const { return PlayerParametor::Instance()._player_params[player_tag].state; }
-	IndexNum GetIndexNum()                              const { return PlayerParametor::Instance()._index_num; }
+	IndexNum GetIndexNum(std::string& player_tag)       const { return PlayerParametor::Instance()._index_nums[player_tag]; }
 private:
 };
 
@@ -47,7 +47,7 @@ public:
 	//! セッター
 	void SetArmParam(std::string& arm_tag, ArmParam& arm_param)  { ArmParametor::Instance()._arm_params[arm_tag] = arm_param; }
 	void SetAttackPowor(std::string& arm_tag, int attack_powor)  { ArmParametor::Instance()._arm_params[arm_tag].attack_powor = attack_powor; }
-	void SetWeight(std::string& arm_tag, int weight)			 { ArmParametor::Instance()._arm_params[arm_tag].weight = weight; }
+	void SetSpeed(std::string& arm_tag, float speed)			 { ArmParametor::Instance()._arm_params[arm_tag].speed = speed; }
 	void SetPosition(std::string& arm_tag, Vector3 pos)			 { ArmParametor::Instance()._arm_params[arm_tag].position = pos; }
 	void SetAngle(std::string& arm_tag, float angle)			 { ArmParametor::Instance()._arm_params[arm_tag].angle = angle; }
 	void SetTurns(std::string& arm_tag, int turns)				 { ArmParametor::Instance()._arm_params[arm_tag].tunns = turns; }
@@ -55,7 +55,7 @@ public:
 	//! ゲッター
 	ArmParam GetPlayerPram(std::string& arm_tag)  const { return ArmParametor::Instance()._arm_params[arm_tag]; }
 	int GetAttackPowor(std::string& arm_tag)	  const { return ArmParametor::Instance()._arm_params[arm_tag].attack_powor; }
-	int GetWeight(std::string& arm_tag)			  const { return ArmParametor::Instance()._arm_params[arm_tag].weight; }
+	float GetSpeed(std::string& arm_tag)	      const { return ArmParametor::Instance()._arm_params[arm_tag].speed; }
 	int GetTurns(std::string& arm_tag)			  const { return ArmParametor::Instance()._arm_params[arm_tag].tunns; }
 	float GetAngle(std::string& arm_tag)		  const { return ArmParametor::Instance()._arm_params[arm_tag].angle; }
 	Vector3 GetPosition(std::string& arm_tag)	  const { return ArmParametor::Instance()._arm_params[arm_tag].position; }
