@@ -63,7 +63,7 @@ int ArmBase::Update()
 		}
 	}
 
-	auto box_pos = _model->GetPosition() + Vector3_Up * 0.5f;
+	auto box_pos = _model->GetPosition();
 
 	_hit_box->SetHitBoxPosition(box_pos);
 
@@ -95,7 +95,7 @@ void ArmBase::Move(Controller* pad)
 	if (_move_flag)
 	{
 		_position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
-		_lerp_count += 0.05f;
+		_lerp_count += 0.1f;
 
 		if (_lerp_count >= 1.f)
 		{
@@ -106,7 +106,6 @@ void ArmBase::Move(Controller* pad)
 	}
 	else
 	{
-		
 		float abs_x = fabsf(pad->GetPadStateX());
 		float abs_z = fabsf(pad->GetPadStateY());
 
@@ -118,7 +117,7 @@ void ArmBase::Move(Controller* pad)
 
 			if (map_data[_index_num.z][_index_num.x] != 'i' && map_data[_index_num.z][_index_num.x] != 'w')
 			{
-				_new_pos = Vector3(1 * _index_num.x, 1, 1 * -_index_num.z);
+				_new_pos = Vector3(1 * _index_num.x, 0.5f, 1 * -_index_num.z);
 				_angle_point.push_back(_new_pos);
 				_move_flag = true;
 			}
@@ -136,7 +135,7 @@ void ArmBase::Move(Controller* pad)
 
 			if (map_data[_index_num.z][_index_num.x] != 'i' && map_data[_index_num.z][_index_num.x] != 'w')
 			{
-				_new_pos = Vector3(1 * _index_num.x, 1, 1 * -_index_num.z);
+				_new_pos = Vector3(1 * _index_num.x, 0.5f, 1 * -_index_num.z);
 				_angle_point.push_back(_new_pos);
 				_move_flag = true;
 			}

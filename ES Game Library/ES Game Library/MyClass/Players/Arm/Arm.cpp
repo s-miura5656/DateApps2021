@@ -36,12 +36,12 @@ bool Arm::Initialize()
 
 	_model->SetRotation(0, _iplayer_data->GetAngle(_player_tag), 0);
 	_position = _iplayer_data->GetPosition(_player_tag);
-	_old_pos = _position;
-	_new_pos = _position;
+	_old_pos = _position + Vector3(0, 0.5f, 0);
+	_new_pos = _position + Vector3(0, 0.5f, 0);
 
 	_index_num = _iplayer_data->GetIndexNum();
 
-	_model->SetPosition(_position);
+	_model->SetPosition(_new_pos);
 	_angle_point.push_back(_position);
 
 	_angle = _iplayer_data->GetAngle(_player_tag);

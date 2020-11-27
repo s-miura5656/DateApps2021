@@ -58,17 +58,19 @@ int Player::Update()
 	auto pad = ControllerManager::Instance().GetController(_tag);
 	pad->GamePadRefresh();
 
-	//! パンチ発射状態ならすぐさまリターン
-	if (_iplayer_data->GetState(_tag) == PlayerEnum::ATTACK)
-	{
-		_arm->Update();
-		return 0;
-	}
+	
 
 	if (_iplayer_data->GetState(_tag) == PlayerEnum::MOVE)
 	{
 		//! 移動
 		Move(pad);
+	}
+
+	//! パンチ発射状態ならすぐさまリターン
+	if (_iplayer_data->GetState(_tag) == PlayerEnum::ATTACK)
+	{
+		_arm->Update();
+		return 0;
 	}
 
 	if (_iplayer_data->GetState(_tag) == PlayerEnum::WAIT)
