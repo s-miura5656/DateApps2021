@@ -19,7 +19,7 @@ public:
 	};
 
 	MODEL LoadModelFile(LPCTSTR file_name);
-
+	ANIMATIONMODEL AnimationLoadModelFile(std::string animfile_name);
 private:
 	ResouceManager(const ResouceManager&) = delete;
 	void operator=(const ResouceManager&) = delete;

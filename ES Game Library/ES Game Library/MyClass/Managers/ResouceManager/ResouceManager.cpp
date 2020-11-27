@@ -17,3 +17,18 @@ MODEL ResouceManager::LoadModelFile(LPCTSTR file_name)
 		return _resouces_model[file_name];
 	}
 }
+ANIMATIONMODEL AnimationLoadModelFile(std::string animfile_name) {
+	auto&& it = _resouces_animation_model.find(animfile_name);
+
+	if (it != _resouces_animation_model.end())
+	{
+		return it->second;
+	}
+	else
+	{
+		ANIMATIONMODEL animationmodel = GraphicsDevice.CreateAnimationModelFromFile(animfile_name);
+
+		_resouces_animation_model.emplace(animfile_name, animationmodel);
+
+		return _resouces_animation_model[animfile_name];
+	}
