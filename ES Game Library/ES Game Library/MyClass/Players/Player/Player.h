@@ -13,17 +13,10 @@ public:
 	Player (std::string name);
 	~Player ();
 
-	bool FileInitialize(LPCTSTR& file);
 	bool Initialize() override;
 	int Update() override;
-	void Move(Controller* pad);
-
-	void PlayerColor(Material& mat) {
-		_model->SetMaterial(mat);
-		//rocket_punch->SetMaterial(mat);
-	}
 
 	void PlayerStartPosition(Vector3& pos) { _model->SetPosition(pos); }
-
+	void DebugControll();
 private:
 };

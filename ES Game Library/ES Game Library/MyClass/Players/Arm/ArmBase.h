@@ -18,12 +18,14 @@ public:
 	virtual void Draw2D();
 	virtual void Draw3D();
 
-	void    Move(Controller* pad);
-	void ReturnArm();
+	void Move(Controller* pad);
+	void ArmReturn();
+	void ArmFire();
 
-	int     GetArmState() { return arm_state; }
+	int     GetArmState() { return _arm_state; }
 	Vector3 ArmGetPos()   { return _model->GetPosition(); }
 	MODEL   GetArm()      { return _model; }
+
 
 protected:
 	FONT _font;
@@ -32,7 +34,7 @@ protected:
 	
 	MODEL _model;
 
-	int arm_state;
+	int _arm_state;
 
 	float scale;
 	float _angle = 0.f;
@@ -58,5 +60,6 @@ protected:
 	IndexNum _index_num;
 
 	bool _move_flag = false;
-	float _lerp_count = 0.f;;
+	float _lerp_count = 0.f;
+	int _count = 0;
 };

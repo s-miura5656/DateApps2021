@@ -17,17 +17,18 @@ public:
 
 	Vector3 GetPos()  { return _model->GetPosition(); }
 	float GetAngle()  { return _angle; }
-	MODEL GetPlayer() { return _model; }
+	ANIMATIONMODEL GetPlayer() { return _model; }
 	
-	float PlayerSpeed();
-
+	void ChangeAnimation();
 	void CreateArm();
 	void DestroyArm();
+	void Move(Controller* pad);
+
 	std::string GetTag() const { return _tag; }
 	int GetPlayerNumber() const { return (*_tag.rbegin()) - '0'; }
 
 protected:
-	MODEL _model;
+	ANIMATIONMODEL _model;
 	FONT _font;
 
 	const float scale		 = 0.004f;
@@ -37,6 +38,7 @@ protected:
 	float _weight			 = 0.f;
 	float _move_speed		 = 0.f;
 	float _distance			 = FLT_MAX;
+
 	Vector3 _position		 = Vector3_Zero;
 	Vector3 _old_pos		 = Vector3_Zero;
 	Vector3 _new_pos		 = Vector3_Zero;
@@ -54,4 +56,5 @@ protected:
 
 	bool _move_flag = false;
 	float _lerp_count = 0.f;
+	int count = 0;
 };

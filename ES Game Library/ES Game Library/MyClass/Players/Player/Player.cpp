@@ -1,6 +1,7 @@
 #include "Player.h"
-#include "../../Data/Parametor.h"
 #include "../../Data/MyAlgorithm.h"
+#include "../../Data/Parametor.h"
+#include "../../Managers/ResouceManager/ResouceManager.h"
 
 Player::Player(std::string tag)
 {
@@ -11,7 +12,7 @@ Player::Player(std::string tag)
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_hit_box->Settags(tag);
-	_hit_box->SetHitBoxScale(0.7f);
+	_hit_box->SetHitBoxScale(0.8f);
 	_iplayer_data = new IPrayerData;
 	_iarm_data = new IArmData;
 	_imap_data = new IMapData;
@@ -28,27 +29,37 @@ Player::~Player()
 	_hit_box->OnReMove();
 }
 
-bool Player::FileInitialize(LPCTSTR& file)
-{
-	_model = GraphicsDevice.CreateModelFromFile(file);
-	return true;
-}
-
 bool Player::Initialize()
 {
+	//! file
 	_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
+	_model = GraphicsDevice.CreateAnimationModelFromFile(_T("player/robot.X"));
 
-	_model->SetScale(player_scale);
 
+	//! Position
 	_model->SetPosition(_iplayer_data->GetPosition(_tag));
-
 	_position = _model->GetPosition();
 	_old_pos = _position;
 	_new_pos = _position;
-	
-	_index_num.Initialize(1, 1, 1);
-	
+	_index_num.Initialize(fabsf(_position.x), fabsf(_position.y), fabsf(_position.z));
+	_iplayer_data->SetIndexNum(_tag, _index_num);
+
+	//! Speed
+	_iarm_data->SetSpeed(_arm_tag, 0.1f);
+
+	//! Scale
+	_model->SetScale(player_scale);
+
+	//! Pad
 	ControllerManager::Instance().CreateGamePad(_tag);
+
+	//! Material
+	Material mat;
+	mat.Diffuse = Color(1.0f, 1.0f, 1.0f);
+	mat.Ambient = Color(1.0f, 1.0f, 1.0f);
+	mat.Specular = Color(1.0f, 1.0f, 1.0f);
+
+	_model->SetMaterial(mat);
 
 	return true;
 }
@@ -58,118 +69,99 @@ int Player::Update()
 	auto pad = ControllerManager::Instance().GetController(_tag);
 	pad->GamePadRefresh();
 
-	//! パンチ発射状態ならすぐさまリターン
-	if (_iplayer_data->GetState(_tag) == PlayerEnum::ATTACK)
+	ChangeAnimation();
+
+	DebugControll();
+
+	if (_iplayer_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
 	{
+		_index_num = _iplayer_data->GetIndexNum(_tag);
+		_position = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
+		_model->SetPosition(_position);
+		_iplayer_data->SetState(_tag, PlayerEnum::Animation::WAIT);
+		return 0;
+	}
+	
+	if (_iplayer_data->GetState(_tag) == PlayerEnum::Animation::WAIT)
+	{
+		DestroyArm();
+
+		//! ロケットパンチ発射切り替え
+		if (pad->GetButtonState(GamePad_Button2))
+		{
+			_iplayer_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
+			_iplayer_data->SetPosition(_tag, _position);
+			CreateArm();
+			return 0;
+		}
+
+		//! プレイヤー移動
+		if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
+		{
+			_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+			_angle = AngleClamp(_angle);
+			_iplayer_data->SetState(_tag, PlayerEnum::Animation::MOVE);
+		}
+	}
+
+	//! パンチ発射状態ならすぐさまリターン
+	if (_iplayer_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
+	{
+		_iplayer_data->SetIndexNum(_tag, _index_num);
 		_arm->Update();
 		return 0;
 	}
 
-	if (_iplayer_data->GetState(_tag) == PlayerEnum::MOVE)
+	if (_iplayer_data->GetState(_tag) == PlayerEnum::Animation::MOVE)
 	{
 		//! 移動
 		Move(pad);
 	}
-
-	if (_iplayer_data->GetState(_tag) == PlayerEnum::WAIT)
-	{
-		DestroyArm();
-
-		if (pad->GetButtonState(GamePad_Button1))
-		{
-			_iplayer_data->SetState(_tag, PlayerEnum::ATTACK);
-			DestroyArm();
-			CreateArm();
-			return 0;
-		}
-	}
-
-	//! ロケットパンチ発射切り替え
-	if (pad->GetButtonState(GamePad_Button1))
-	{
-		_iplayer_data->SetState(_tag, PlayerEnum::ATTACK);
-		DestroyArm();
-		CreateArm();
-		return 0;
-	}
 	
-
-	//! プレイヤー移動
-	if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
-	{
-		_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-		_angle = AngleClamp(_angle);
-		_iplayer_data->SetState(_tag, PlayerEnum::MOVE);
-	}
-
 	return 0;
 }
 
-void Player::Move(Controller* pad)
+void Player::DebugControll()
 {
-	auto&& map_data = _imap_data->GetData();
+	KeyboardBuffer keybuffer = Keyboard->GetBuffer();
+	KeyboardState keystate   = Keyboard->GetState();
 
-	if (_move_flag)
-	{
-		_position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
-		_lerp_count += 0.04f;
+	//! アームの移動速度調整
+	float speed = _iarm_data->GetSpeed(_arm_tag);
 
-		if (_lerp_count >= 1.f)
-		{
-			_move_flag = false;
-			_lerp_count = 0;
-			_iplayer_data->SetState(_tag, PlayerEnum::WAIT);
-		}
-	}
-	else
-	{
-		float abs_x = fabsf(pad->GetPadStateX());
-		
-		float abs_z = fabsf(pad->GetPadStateY());
+	if (keybuffer.IsPressed(Keys_Up))
+		speed += 0.01f;
 
-		if (abs_x > 16 && abs_x > abs_z)
-		{
-			int old_index = _index_num.x;
+	if (keybuffer.IsPressed(Keys_Down))
+		speed -= 0.01f;
 
-			std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
+	speed = Clamp(speed, 0.01f, 10.0f);
+	_iarm_data->SetSpeed(_arm_tag, speed);
 
-			_index_num.x = Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
+	//! プレイヤーの移動速度調整
+	speed = _iplayer_data->GetSpeed(_tag);
 
-			if (map_data[_index_num.z][_index_num.x] != 'i' && 
-				map_data[_index_num.z][_index_num.x] != 'w')
-			{
-				_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
-				_move_flag = true;
-			}
-			else
-			{
-				_index_num.x = old_index;
-			}
-		}
+	if (keybuffer.IsPressed(Keys_Up) && keystate.IsKeyDown(Keys_LeftControl))
+		speed += 0.01f;
 
-		if (abs_z > 16 && abs_x < abs_z)
-		{
-			int old_index = _index_num.z;
+	if (keybuffer.IsPressed(Keys_Down) && keystate.IsKeyDown(Keys_LeftControl))
+		speed -= 0.01f;
 
-			std::signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
+	speed = Clamp(speed, 0.01f, 10.0f);
+	_iplayer_data->SetSpeed(_tag, speed);
 
-			_index_num.z = Clamp(_index_num.z, 1, map_data.size() - 2);
+	//! アームの限界距離
+	int range = _iarm_data->GetLimitRange(_arm_tag);
 
-			if (map_data[_index_num.z][_index_num.x] != 'i' && 
-				map_data[_index_num.z][_index_num.x] != 'w')
-			{
-				_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
-				_iplayer_data->SetIndexNum(_index_num);
-				_move_flag = true;
-			}
-			else
-			{
-				_index_num.z = old_index;
-			}
-		}
+	if (keybuffer.IsPressed(Keys_Up) && keystate.IsKeyDown(Keys_LeftAlt))
+		range++;
 
-		_old_pos = _position;
-	}
+	if (keybuffer.IsPressed(Keys_Down) && keystate.IsKeyDown(Keys_LeftAlt))
+		range--;
 
-	_model->SetPosition(_position);
+	range = (int)Clamp(range, 1, 20);
+
+	_iarm_data->SetLimitRange(_arm_tag, range);
 }
+
+

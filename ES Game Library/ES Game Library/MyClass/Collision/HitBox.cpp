@@ -196,6 +196,23 @@ bool HitBox::IsHitObjects(std::string tags) {
 	return result;
 }
 
+HitBox* HitBox::IsHitObjectsPointer(std::string tags) {
+	
+	HitBox* result = nullptr;
+
+	if (!Tag_Sarch(tags))
+		return result = nullptr;
+
+	std::list<HitBox*> HitList = HitHitBoxlist();
+	for (auto&& other : HitList)
+	{
+		if (other->_tag == tags)
+			return result = other;
+	}
+
+	return result = nullptr;
+}
+
 /**
  * @fn 壁ずりベクトルの取得
  * @param (is_hit_list) 当たっているヒットボックスのリストを取得

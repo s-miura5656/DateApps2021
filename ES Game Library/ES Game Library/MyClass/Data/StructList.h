@@ -9,21 +9,22 @@ struct PlayerParam {
 	float angle		  = 0.f;
 	int hit_point	  = 1000;
 	int attack_powor  = 100;
-	int speed		  = 100;
+	float speed		  = 0.05f;
 	int weight        = 50;
 };
 
 struct ArmParam {
-	Vector3 position = Vector3_Zero;
-	float   angle = 0.f;
-	int     attack_powor = 100;
-	int     weight = 50;
-	int     tunns = 5;
+	int		state		 = ArmEnum::PUNCH;
+	Vector3 position	 = Vector3_Zero;
+	float   angle		 = 0.f;
+	int     attack_powor = 200;
+	float   speed		 = 0.2f;
+	int     limit_range  = 5;
 };
 
 struct MapData {
 	Vector3 position = Vector3_Zero;
-	bool  move_flag = false;
+	bool  move_flag  = false;
 };
 
 struct IndexNum {
