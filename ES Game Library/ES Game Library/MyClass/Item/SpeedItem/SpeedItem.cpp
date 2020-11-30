@@ -18,7 +18,7 @@ SpeedItem::~SpeedItem()
 
 bool SpeedItem::Initialize()
 {
-	_speed = 10;
+	_speed = 0.01f;
 
 	Material material;
 	material.Diffuse = Color(0.0f, 0.0f, 1.0f);

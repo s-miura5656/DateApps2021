@@ -3,6 +3,8 @@
 #include "../../ESGLib.h"
 #include "../Data/IData.h"
 
+class PlayerBase;
+
 class BaseUi {
 public:
 	BaseUi() {}

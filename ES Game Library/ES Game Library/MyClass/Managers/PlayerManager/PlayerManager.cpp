@@ -26,24 +26,6 @@ PlayerManager::~PlayerManager()
 
 bool PlayerManager::Initialize()
 {
-	Material player_mtrl[PLAYER_COUNT_MAX];
-
-	player_mtrl[0].Diffuse = Color(1.0f, 0.0f, 0.0f, 1.0f);
-	player_mtrl[0].Ambient = Color(1.0f, 0.0f, 0.0f, 1.0f);
-	player_mtrl[1].Diffuse = Color(0.0f, 1.0f, 0.0f, 0.3f);
-	player_mtrl[1].Ambient = Color(0.0f, 1.0f, 0.0f, 0.3f);
-	player_mtrl[2].Diffuse = Color(0.0f, 0.0f, 1.0f, 0.3f);
-	player_mtrl[2].Ambient = Color(0.0f, 0.0f, 1.0f, 0.3f);
-	player_mtrl[3].Diffuse = Color(1.0f, 1.0f, 0.0f, 0.3f);
-	player_mtrl[3].Ambient = Color(1.0f, 1.0f, 0.0f, 0.3f);
-
-	Vector3 _start_pos[4];
-
-	_start_pos[0] = Vector3(-6.f, 0,  5.f);
-	_start_pos[1] = Vector3( 6.f, 0,  5.f);
-	_start_pos[2] = Vector3(-6.f, 0, -5.f);
-	_start_pos[3] = Vector3( 6.f, 0, -5.f);
-
 	LPCTSTR model_file_name = _T("player/robot.X");
 
 //ƒvƒŒƒCƒ„[
@@ -51,14 +33,10 @@ bool PlayerManager::Initialize()
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
 		std::string arm_name = ARM_TAG + std::to_string(i + 1);
-		players[i]->FileInitialize(model_file_name);
-		players[i]->PlayerColor(player_mtrl[i]);
-		players[i]->PlayerStartPosition(_start_pos[i]);
 		players[i]->Initialize();
 
-		ArmParametor::Instance().CreateParametor(ARM_TAG + std::to_string(i + 1));
-		i_player_data->SetPosition(name, players[i]->GetPos());
-		i_arm_data->SetPosition(arm_name, players[i]->GetPos());
+		PlayerParametor::Instance().CreateParametor(name);
+		ArmParametor::Instance().CreateParametor(arm_name);
 	}
 
     return true;
@@ -73,7 +51,6 @@ int PlayerManager::Update()
 		players[i]->Update();
 		i_player_data->SetPosition(name, players[i]->GetPos());
 		i_player_data->SetAngle(name, players[i]->GetAngle());
-		i_arm_data->SetPosition(arm_name, players[i]->GetPos());
 	}
 
     return 0;
@@ -81,12 +58,14 @@ int PlayerManager::Update()
 
 void PlayerManager::Draw2D()
 {
+#if _DEBUG
 	auto player = players;
 
 	for (int i = 0; i < players.size(); ++i)
 	{
 		player[i]->Draw2D();
 	}
+#endif
 }
 
 void PlayerManager::Draw3D()

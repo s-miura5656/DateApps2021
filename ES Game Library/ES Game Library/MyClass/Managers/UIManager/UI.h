@@ -6,10 +6,7 @@ class BaseUi;
 
 class MainUiManager : public ManagerBase
 {
-
-
 public:
-
     //! @enum ƒV[ƒ“–¼
     enum UiState
     {

@@ -15,37 +15,51 @@ public:
 
 	virtual bool Initialize() { return true; }
 	virtual int  Update();
-	virtual void Draw();
+	virtual void Draw2D();
+	virtual void Draw3D();
 
-	void    SetPra(Vector3 pos, float angle);
-	void    ArmShoot(int flag);
-	void    Move();
-	void    MoveProtoType();
-	int     GetArmState() { return arm_state; }
-	Vector3 ArmGetPos()   { return arm_model->GetPosition(); }
-	MODEL   GetArm()      { return arm_model; }
+	void Move(Controller* pad);
+	void ArmReturn();
+	void ArmFire();
+
+	int     GetArmState() { return _arm_state; }
+	Vector3 ArmGetPos()   { return _model->GetPosition(); }
+	MODEL   GetArm()      { return _model; }
+
 
 protected:
+	FONT _font;
+	std::string _tag;
 	std::string _player_tag;
-	MODEL arm_model;
+	
+	MODEL _model;
 
-	int arm_state;
+	int _arm_state;
 
 	float scale;
-	float angle;
+	float _angle = 0.f;
+	int _old_angle = INT_MAX;
 	float arm_speed;
 
 	bool  hit_flag;
 
-	float dist;
+	float _dist;
 
-	Vector3 arm_get_pos;
-	Vector3 arm_get_rot;
+	std::vector<Vector3> _angle_point;
+	Vector3 _position = Vector3_Zero;
+	Vector3 _old_pos  = Vector3_Zero;
+	Vector3 _new_pos = Vector3_Zero;
 
 	IPrayerData* _iplayer_data;
+	IArmData* _iarm_Data;
+	IMapData*	 _imap_data;
 
-	float player_angle;
 	
 	std::unique_ptr<HitBox> _hit_box;
-	std::string _tag;
+
+	IndexNum _index_num;
+
+	bool _move_flag = false;
+	float _lerp_count = 0.f;
+	int _count = 0;
 };

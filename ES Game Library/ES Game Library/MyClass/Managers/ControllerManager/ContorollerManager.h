@@ -25,5 +25,4 @@ private:
 	void operator=(const ControllerManager&) = delete;
 
 	std::map<std::string, Controller*> controller;
-
 };

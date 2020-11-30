@@ -8,12 +8,15 @@
 
 #include"../../../../ESGLib.h"
 #include"../../StageBase.h"
-
+#include"../../../Item/ItemCounter/ItemCounter.h"
+#include"../../../Data/WordsTable.h"
 class Block :public StageBase
 {
 public:
-	Block();
+	Block(std::string tag);
 	~Block();
 	bool Initialize() override;
+	int Update() override;
 private:
+	ItemCounter* itemcounter;
 };

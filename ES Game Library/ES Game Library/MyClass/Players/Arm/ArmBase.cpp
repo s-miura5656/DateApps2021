@@ -1,5 +1,6 @@
 #include "ArmBase.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
+#include "../../Data/MyAlgorithm.h"
 
 ArmBase::ArmBase()
 {
@@ -12,97 +13,206 @@ ArmBase::~ArmBase()
 
 int ArmBase::Update()
 {
-	MoveProtoType();
+	auto pad = ControllerManager::Instance().GetController(_player_tag);
+	
+	_dist = Vector3_Distance(_iplayer_data->GetPosition(_player_tag), _model->GetPosition());
+
+
+	//! アームの発射状態の判定
+	if (pad->GetButtonState(GamePad_Button2) && _arm_state == ArmEnum::PunchState::PUNCH)
+	{
+		if (_arm_state != ArmEnum::PunchState::PUNCH)
+			_arm_state = ArmEnum::PunchState::PUNCH;
+	}
+	else
+	{
+		_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+		_iarm_Data->SetState(_tag, _arm_state);
+	}
+
+	if (_arm_state == ArmEnum::PunchState::PUNCH)
+	{
+		Move(pad);
+
+		ArmFire();
+
+		if (_angle_point.size() >= _iarm_Data->GetLimitRange(_tag))
+			_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+	}
+
+	//! アームの戻り状態の処理の判定
+	if (_arm_state == ArmEnum::PunchState::RETURN_PUNCH)
+	{
+		ArmReturn();
+
+		if (_dist < 0.6f)
+		{
+			_arm_state = ArmEnum::PunchState::NO_PUNCH;
+			_iarm_Data->SetState(_tag, _arm_state);
+		}
+	}
+	
+	//! アームが戻ってきた時の処理の判定
+	if (_arm_state == ArmEnum::PunchState::NO_PUNCH)
+	{
+		_iplayer_data->SetState(_player_tag, PlayerEnum::Animation::WAIT);
+	}
 
 	return 0;
 }
 
-void ArmBase::Draw()
+void ArmBase::Draw2D()
 {
-	auto collision_pos = arm_model->GetPosition();
-	collision_pos.y = arm_model->GetScale().y / 2;
-	_hit_box->SetHitBoxPosition(collision_pos);
-	arm_model->Draw();
-}
-
-void ArmBase::SetPra(Vector3 pos, float angle) 
-{
-	arm_model->SetRotation(0, angle, 0);
-	arm_model->SetPosition(pos);
-}
-
-void ArmBase::ArmShoot(int flag)
-{
-	arm_state = flag;
-}
-
-void ArmBase::Move()
-{
-	/*auto pad = ControllerManager::Instance().GetController(_player_tag);
-
-	player_angle = MathHelper_Atan2(double(pad->GetPadStateX() - Axis_Center) / double(Axis_Max - Axis_Center),
-		-double(pad->GetPadStateY() - Axis_Center) / double(Axis_Max - Axis_Center));
-
-	arm_model->SetRotation(0, player_angle, 0);
-	arm_model->Move(0, 0, arm_speed);*/
-}
-
-void ArmBase::MoveProtoType()
-{
-	arm_get_pos = arm_model->GetPosition();
-	arm_get_rot = arm_model->GetRotation();
-
-	auto player_get_pos = _iplayer_data->GetPosition(_player_tag);
-	auto player_get_angle = _iplayer_data->GetAngle(_player_tag);
-
-	auto pad = ControllerManager::Instance().GetController(_player_tag);
-
-	dist = Vector3_Distance(player_get_pos, arm_get_pos);
-
-	if (arm_state == RETURN_PUNCH)
+	if (_tag == "Arm_1")
 	{
-		Matrix  miss_rot;
-		miss_rot = Matrix_CreateLookAt(arm_get_pos, player_get_pos, Vector3_Up);
-		miss_rot = Matrix_Invert(miss_rot);
-		arm_model->SetDirection(Quaternion_CreateFromRotationMatrix(miss_rot));
+		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 0.f, 0.f), _T("Speed:%f"), _iarm_Data->GetSpeed(_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 350), Color(1.f, 0.f, 0.f), _T("AnglePointSize:%d"), _angle_point.size());
+		SpriteBatch.DrawString(_font, Vector2(0, 400), Color(1.f, 0.f, 0.f), _T("LimitRange:%d"), _iarm_Data->GetLimitRange(_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 450), Color(1.f, 0.f, 0.f), _T("Dist:%f"), _dist);
+	}
+}
 
-		arm_model->Move(0,0, arm_speed);
-		if (dist <= 0.5) {
-			arm_state = NO_PUNCH;
-			dist = 0;
+void ArmBase::Draw3D()
+{
+	_model->SetRotation(0, _angle - 180, 0);
+	_model->Draw();
+	_model->SetRotation(0, _angle, 0);
+
+	auto box_pos = _model->GetPosition();
+	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
+	_hit_box->SetHitBoxPosition(box_pos);
+	_hit_box->Draw3D();
+}
+
+//! @fn アームの移動
+//! @brief アームの移動を処理する
+//! @param コントローラー
+void ArmBase::Move(Controller* pad)
+{
+	auto&& map_data = _imap_data->GetData();
+
+	if (_move_flag)
+	{
+		_position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
+		_lerp_count += _iarm_Data->GetSpeed(_tag);
+
+		if (_lerp_count >= 1.f)
+		{
+			_angle_point.push_back(_new_pos);
+			_move_flag = false;
+			_lerp_count = 0;
+			_iplayer_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 		}
 	}
-	else if (arm_state == PUNCH)
+	else
 	{
+		float abs_x = fabsf(pad->GetPadStateX());
+		float abs_z = fabsf(pad->GetPadStateY());
 
-		if (pad->GetPadStateX() != Axis_Center||
-			pad->GetPadStateY() != Axis_Center)
+		if (abs_x > abs_z)
 		{
-			player_angle = MathHelper_Atan2(double(pad->GetPadStateX() - Axis_Center) / double(Axis_Max - Axis_Center),
-				-double(pad->GetPadStateY() - Axis_Center) / double(Axis_Max - Axis_Center));
+			int old_index = _index_num.x;
+			std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
+			_index_num.x = Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
 
-			arm_model->SetRotation(0, player_angle, 0);
-			arm_model->Move(0, 0, arm_speed);
-		}
-
-		for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
-		{
-			std::string name = PLAYER_TAG + std::to_string(i + 1);
-
-			if (_player_tag == name)
-				continue;
-
-			if (_hit_box->IsHitObjects(name))
+			if (map_data[_index_num.z][_index_num.x] != 'i' && map_data[_index_num.z][_index_num.x] != 'w')
 			{
-				int damege = _iplayer_data->GetHitPoint(name) - _iplayer_data->GetAttackPowor(_player_tag);
-				_iplayer_data->SetHitPoint(name, damege);
-				arm_state = RETURN_PUNCH;
+				_new_pos = Vector3(1 * _index_num.x, 0.5f, 1 * -_index_num.z);
+				_move_flag = true;
+			}
+			else
+			{
+				_index_num.x = old_index;
+				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+				_iarm_Data->SetState(_tag, _arm_state);
 			}
 		}
+
+		if (abs_x < abs_z)
+		{
+			int old_index = _index_num.z;
+			std::signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
+			_index_num.z = Clamp(_index_num.z, 1, map_data.size() - 2);
+
+			if (map_data[_index_num.z][_index_num.x] != 'i' && map_data[_index_num.z][_index_num.x] != 'w')
+			{
+				_new_pos = Vector3(1 * _index_num.x, 0.5f, 1 * -_index_num.z);
+				_move_flag = true;
+			}
+			else
+			{
+				_index_num.z = old_index;
+				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+				_iarm_Data->SetState(_tag, _arm_state);
+			}
+		}
+
+		_old_pos = _position;
 	}
-	else if (arm_state == NO_PUNCH)
-	{
-		SetPra(player_get_pos, player_get_angle);
-	}
+	_model->SetPosition(_position);
 }
 
+//! @fn アームの戻り
+//! @brief アームの戻り移動を処理する
+void ArmBase::ArmReturn()
+{
+	auto a = _angle_point.size();
+
+	Vector3 move_dir = Vector3_Normalize(_angle_point[a - 1] - _model->GetPosition());
+
+	auto dist = Vector3_Distance(_model->GetPosition(), _angle_point[a - 1]);
+
+	if (dist < 0.1f && a > 1)
+	{
+		_angle_point.erase(_angle_point.begin() + (a - 1));
+		return;
+	}
+
+	move_dir *= _iarm_Data->GetSpeed(_tag);
+
+	_angle = -AngleCalculating(move_dir.x, move_dir.z);
+
+	_model->SetRotation(0, _angle, 0);
+
+	_position = _model->GetPosition() + move_dir;
+
+	if (move_dir == Vector3_Zero && a > 1)
+	{
+		_angle_point.erase(_angle_point.begin() + (a - 1));
+	}
+
+	auto map_data = _imap_data->GetData();
+
+	_model->SetPosition(_position);
+}
+
+void ArmBase::ArmFire()
+{
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string name = PLAYER_TAG + std::to_string(i + 1);
+
+		if (name == _player_tag)
+			continue;
+
+		if (_hit_box->IsHitObjects(name))
+		{
+			auto&& i_player_data = _iplayer_data;
+			auto&& iarm_data = _iarm_Data;
+			
+			int damege = i_player_data->GetAttackPowor(_player_tag);
+			int hitpoint = i_player_data->GetHitPoint(name);
+			
+			hitpoint -= damege;
+
+			_iplayer_data->SetHitPoint(name, hitpoint);
+
+			_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+			iarm_data->SetState(_tag, _arm_state);
+
+			i_player_data->SetState(name, PlayerEnum::Animation::DAMAGE);
+
+			break;
+		}
+	}
+}

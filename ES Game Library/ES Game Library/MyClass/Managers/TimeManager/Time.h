@@ -22,10 +22,17 @@ public:
 	void Initialize();
 	void Update();
 
+	inline float GetLimitTime() const { return limitTime; }
+	inline float GetTime()		const { return time; }
+	inline float GetTimeLeft()  const { return limitTime - time; }
 
-	DWORD startTime;
-	DWORD nowTime;
-	DWORD time;
-	DWORD limitTime;
+private:
+	float limitTime;
+	float time;
+
+	//DWORD startTime;
+	//DWORD nowTime;
+	//DWORD time;
+	//DWORD limitTime;
 	};
 

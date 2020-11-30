@@ -1,6 +1,7 @@
 #include "AttackPowerItem.h"
 #include "../../Data/WordsTable.h"
 
+
 AttackPowerItem::AttackPowerItem(Vector3 position, std::string name)
 {
 	this->_position = position;

@@ -21,4 +21,6 @@ public:
 private:
 
 	std::vector<ManagerBase*> _managers;
+
+	class MainUiManager* ui;
 };

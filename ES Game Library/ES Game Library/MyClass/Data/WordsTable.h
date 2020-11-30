@@ -19,18 +19,17 @@ static const std::string HITPOINT_ITEM_TAG = "HitPointItem_";
 static const std::string DESTRUCTION_BLOCK_TAG    = "DestructionBlock_";
 static const std::string INDESTRUCTIBIEPILLAR_TAG = "InDestructiblePillar_";
 static const std::string WALL_METAL_TAG           = "WallMetal_";
-static const std::string FLOOR_TAG                = "Floor_";
 
 namespace PlayerEnum {
 	//プレイヤーのアニメーション
-	enum { WAIT, WALK, DESTRUCTION, ATTACK, ANIMATION_ALL_TYPE };
+	enum Animation { WAIT, MOVE, ATTACK, DAMAGE, ANIMATION_ALL_TYPE };
 
 	enum PunchType { UNCLASP_PUNCH, SET_PUNCH, PUNCH_MAX };
 
-	//プレイヤーの状態
-	enum { NO_PUNCH, PUNCH, RETURN_PUNCH };
-	enum { DEATH, ALIVE };
+	//enum { DEATH, ALIVE };
+}
 
-	//gamepad
-	enum { PLAYER1, PLAYER2, PLAYER3, PLAYER4, PLAYER_MAX };
+namespace ArmEnum {
+	enum PunchState { NO_PUNCH, PUNCH, RETURN_PUNCH };
+	enum PunchType { PULL, PUSH, ALL };
 }
