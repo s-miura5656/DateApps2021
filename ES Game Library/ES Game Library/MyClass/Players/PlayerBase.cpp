@@ -88,7 +88,8 @@ void PlayerBase::Move(Controller* pad)
 			_index_num.x = Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
 
 			if (map_data[_index_num.z][_index_num.x] != 'i' &&
-				map_data[_index_num.z][_index_num.x] != 'w')
+				map_data[_index_num.z][_index_num.x] != 'w' &&
+				map_data[_index_num.z][_index_num.x] != 'b')
 			{
 				_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
 				_move_flag = true;
@@ -108,7 +109,8 @@ void PlayerBase::Move(Controller* pad)
 			_index_num.z = Clamp(_index_num.z, 1, map_data.size() - 2);
 
 			if (map_data[_index_num.z][_index_num.x] != 'i' &&
-				map_data[_index_num.z][_index_num.x] != 'w')
+				map_data[_index_num.z][_index_num.x] != 'w' &&
+				map_data[_index_num.z][_index_num.x] != 'b')
 			{
 				_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
 				_iplayer_data->SetIndexNum(_tag, _index_num);

@@ -8,12 +8,12 @@ Block::Block(std::string tag)
 	_hit_box->Init();
 	_tag = tag;
 	_hit_box->Settags(_tag);
-	_hit_box->SetHitBoxScale(1.f);
+	_hit_box->SetHitBoxScale(0.9f);
 }
 
 Block::~Block()
 {
-	_hit_box.reset();
+	_hit_box->OnReMove();
 }
 
 bool Block::Initialize()
