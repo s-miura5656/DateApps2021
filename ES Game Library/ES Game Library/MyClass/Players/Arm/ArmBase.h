@@ -37,7 +37,7 @@ protected:
 	MODEL _model;
 
 	int arm_state;
-	int _punch_type;
+	int _punch_type = ArmEnum::PunchType::ALL;
 
 	float scale;
 	float _angle = 0.f;

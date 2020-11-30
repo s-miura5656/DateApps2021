@@ -19,10 +19,11 @@ public:
 	float GetAngle()  { return _angle; }
 	ANIMATIONMODEL GetPlayer() { return _model; }
 	
-	float PlayerSpeed();
 	void ChangeAnimation();
 	void CreateArm();
 	void DestroyArm();
+	void Move(Controller* pad);
+
 	std::string GetTag() const { return _tag; }
 	int GetPlayerNumber() const { return (*_tag.rbegin()) - '0'; }
 
@@ -37,6 +38,7 @@ protected:
 	float _weight			 = 0.f;
 	float _move_speed		 = 0.f;
 	float _distance			 = FLT_MAX;
+
 	Vector3 _position		 = Vector3_Zero;
 	Vector3 _old_pos		 = Vector3_Zero;
 	Vector3 _new_pos		 = Vector3_Zero;

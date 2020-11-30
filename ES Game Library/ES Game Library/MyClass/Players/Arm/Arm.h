@@ -8,12 +8,7 @@ public:
 	Arm(std::string name);
 	~Arm();
 
-	bool Fileinitialize();
-	bool Initialize();
-
-	void ArmColor(Material& mat) {
-		_model->SetMaterial(mat);
-	}
+	bool Initialize() override;
 
 private:
 };

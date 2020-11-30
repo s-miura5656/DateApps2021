@@ -34,9 +34,11 @@ int ArmBase::Update()
 
 	if (arm_state == ArmEnum::PunchState::PUNCH)
 	{
-		Move(pad);
-
 		ArmFire(pad);
+
+		if (_angle_point.size() >= _iarm_Data->GetLimitRange(_tag))
+			arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+
 	}
 
 	//! ƒA[ƒ€‚Ì–ß‚èó‘Ô‚Ìˆ—‚Ì”»’è
@@ -44,7 +46,7 @@ int ArmBase::Update()
 	{
 		ArmReturn();
 
-		if (_dist < 0.3f)
+		if (_dist < 0.6f)
 		{
 			arm_state = ArmEnum::PunchState::NO_PUNCH;
 			_iarm_Data->SetState(_tag, arm_state);
@@ -57,9 +59,7 @@ int ArmBase::Update()
 		_iplayer_data->SetState(_player_tag, PlayerEnum::Animation:: WAIT);
 	}
 
-	auto box_pos = _model->GetPosition();
-
-	_hit_box->SetHitBoxPosition(box_pos);
+	
 
 	return 0;
 }
@@ -68,17 +68,21 @@ void ArmBase::Draw2D()
 {
 	if (_tag == "Arm_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 1.f, 1.f), _T("Speed:%f"), _iarm_Data->GetSpeed(_tag));
-		SpriteBatch.DrawString(_font, Vector2(0, 350), Color(1.f, 1.f, 1.f), _T("POS_X:%f"), _model->GetPosition().x);
-		SpriteBatch.DrawString(_font, Vector2(0, 400), Color(1.f, 1.f, 1.f), _T("POS_Z:%f"), _model->GetPosition().z);
+		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 0.f, 0.f), _T("Speed:%f"), _iarm_Data->GetSpeed(_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 350), Color(1.f, 0.f, 0.f), _T("AnglePointSize:%d"), _angle_point.size());
+		SpriteBatch.DrawString(_font, Vector2(0, 400), Color(1.f, 0.f, 0.f), _T("LimitRange:%d"), _iarm_Data->GetLimitRange(_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 450), Color(1.f, 0.f, 0.f), _T("Dist:%f"), _dist);
 	}
 }
 
 void ArmBase::Draw3D()
 {
-	_model->SetRotation(0, -_angle, 0);
+	_model->SetRotation(0, _angle - 180, 0);
 	_model->Draw();
 	_model->SetRotation(0, _angle, 0);
+
+	auto box_pos = _model->GetPosition();
+	_hit_box->SetHitBoxPosition(box_pos);
 	_hit_box->Draw3D();
 }
 
@@ -98,7 +102,7 @@ void ArmBase::Move(Controller* pad)
 		{
 			_move_flag = false;
 			_lerp_count = 0;
-			_iplayer_data->SetState(_tag, PlayerEnum::WAIT);
+			_iplayer_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 		}
 	}
 	else
@@ -189,10 +193,14 @@ void ArmBase::ArmFire(Controller* pad)
 {
 	if (_punch_type == ArmEnum::PunchType::PUSH)
 	{
+		Move(pad);
+
 		Push();
 	}
 	else if (_punch_type == ArmEnum::PunchType::PULL)
 	{
+		Move(pad);
+
 		Pull();
 	}
 }

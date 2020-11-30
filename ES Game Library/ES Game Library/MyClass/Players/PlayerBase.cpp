@@ -1,4 +1,5 @@
 #include "PlayerBase.h"
+#include "../Data/MyAlgorithm.h"
 
 PlayerBase::PlayerBase()
 {
@@ -32,37 +33,12 @@ void PlayerBase::Draw3D()
 	_model->SetRotation(Vector3(0, _angle, 0));
 
 	auto collision_pos = _model->GetPosition();
-	collision_pos.y = _model->GetScale().y / 2;
+	//collision_pos.y += _model->GetScale().y / 2;
 	_hit_box->SetHitBoxPosition(collision_pos);
 	_hit_box->Draw3D();
 
 	if (_arm != nullptr)
 		_arm->Draw3D();
-}
-
-float PlayerBase::PlayerSpeed()
-{
-	auto p_data = _iplayer_data;
-
-	auto a_data = _iarm_data;
-
-	if (_weight != p_data->GetWeight(_tag))
-	{
-		_weight = p_data->GetWeight(_tag);
-		_iplayer_data->SetWeight(_tag, _weight);
-		_move_speed = (float)p_data->GetSpeed(_tag) / (float)p_data->GetWeight(_tag);
-	}
-
-	if (_speed != p_data->GetSpeed(_tag))
-	{
-		_move_speed = (float)p_data->GetSpeed(_tag) / (float)p_data->GetWeight(_tag);
-	}
-
-	_move_speed /= 100.f;
-
-	_move_speed *= 5.f;
-
-	return _move_speed;
 }
 
 void PlayerBase::ChangeAnimation()
@@ -79,6 +55,75 @@ void PlayerBase::ChangeAnimation()
 
 		_model->SetTrackEnable(i, FALSE);
 	}
+}
+
+void PlayerBase::Move(Controller* pad)
+{
+	auto&& map_data = _imap_data->GetData();
+
+	if (_move_flag)
+	{
+		_position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
+		_lerp_count += _iplayer_data->GetSpeed(_tag);
+
+		if (_lerp_count >= 1.f)
+		{
+			_move_flag = false;
+			_lerp_count = 0;
+			_iplayer_data->SetState(_tag, PlayerEnum::Animation::WAIT);
+		}
+	}
+	else
+	{
+		float abs_x = fabsf(pad->GetPadStateX());
+
+		float abs_z = fabsf(pad->GetPadStateY());
+
+		if (abs_x > 16 && abs_x > abs_z)
+		{
+			int old_index = _index_num.x;
+
+			std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
+
+			_index_num.x = Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
+
+			if (map_data[_index_num.z][_index_num.x] != 'i' &&
+				map_data[_index_num.z][_index_num.x] != 'w')
+			{
+				_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
+				_move_flag = true;
+			}
+			else
+			{
+				_index_num.x = old_index;
+			}
+		}
+
+		if (abs_z > 16 && abs_x < abs_z)
+		{
+			int old_index = _index_num.z;
+
+			std::signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
+
+			_index_num.z = Clamp(_index_num.z, 1, map_data.size() - 2);
+
+			if (map_data[_index_num.z][_index_num.x] != 'i' &&
+				map_data[_index_num.z][_index_num.x] != 'w')
+			{
+				_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
+				_iplayer_data->SetIndexNum(_tag, _index_num);
+				_move_flag = true;
+			}
+			else
+			{
+				_index_num.z = old_index;
+			}
+		}
+
+		_old_pos = _position;
+	}
+
+	_model->SetPosition(_position);
 }
 
 void PlayerBase::CreateArm()

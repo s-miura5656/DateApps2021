@@ -31,5 +31,5 @@ namespace PlayerEnum {
 
 namespace ArmEnum {
 	enum PunchState { NO_PUNCH, PUNCH, RETURN_PUNCH };
-	enum PunchType {PULL, PUSH};
+	enum PunchType { PULL, PUSH, ALL };
 }
