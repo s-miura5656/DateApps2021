@@ -19,11 +19,11 @@ public:
 	};
 
 	MODEL LoadModelFile(LPCTSTR file_name);
-	ANIMATIONMODEL AnimationLoadModelFile(std::string animfile_name);
+	ANIMATIONMODEL AnimationLoadModelFile(LPCTSTR animfile_name);
 private:
 	ResouceManager(const ResouceManager&) = delete;
 	void operator=(const ResouceManager&) = delete;
 
-	std::map<LPCTSTR, MODEL> _resouces_model;
-	std::map<std::string, ANIMATIONMODEL> _resouces_animation_model;
+	std::map<tstring, MODEL> _resouces_model;
+	std::map<tstring, ANIMATIONMODEL> _resouces_animation_model;
 };

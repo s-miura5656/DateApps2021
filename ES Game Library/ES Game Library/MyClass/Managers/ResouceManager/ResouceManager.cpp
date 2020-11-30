@@ -17,7 +17,8 @@ MODEL ResouceManager::LoadModelFile(LPCTSTR file_name)
 		return _resouces_model[file_name];
 	}
 }
-ANIMATIONMODEL AnimationLoadModelFile(std::string animfile_name) {
+ANIMATIONMODEL ResouceManager::AnimationLoadModelFile(LPCTSTR animfile_name)
+{
 	auto&& it = _resouces_animation_model.find(animfile_name);
 
 	if (it != _resouces_animation_model.end())
@@ -32,3 +33,4 @@ ANIMATIONMODEL AnimationLoadModelFile(std::string animfile_name) {
 
 		return _resouces_animation_model[animfile_name];
 	}
+}

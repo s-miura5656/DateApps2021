@@ -19,7 +19,6 @@ Block::~Block()
 bool Block::Initialize()
 {
 	//Xファイルの読み込み
-	//_model = GraphicsDevice.CreateModelFromFile(_T("MapSprite/capsule.X"));
 	_model = ResouceManager::Instance().LoadModelFile(_T("MapSprite/capsule.X"));
 	//スケールの設定
 	_model->SetScale(_scale);
