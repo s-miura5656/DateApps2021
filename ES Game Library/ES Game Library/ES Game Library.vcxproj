@@ -274,6 +274,7 @@
     <ClInclude Include="MyClass\Scenes\BaseScene.h" />
     <ClInclude Include="MyClass\Scenes\Main\MainScene.h" />
     <ClInclude Include="MyClass\Scenes\Result\ResultScene.h" />
+    <ClInclude Include="MyClass\Scenes\Title\ModelAnimation\ModelAnimation.h" />
     <ClInclude Include="MyClass\Scenes\Title\TitleScene.h" />
     <ClInclude Include="MyClass\Stage\StageBase.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Block\Block.h" />

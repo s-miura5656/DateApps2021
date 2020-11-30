@@ -208,6 +208,9 @@
     <Filter Include="Myclass\Item\ItemCounter">
       <UniqueIdentifier>{ad802b2a-6a26-4517-84d9-c15e91d9b1d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Scenes\Title\ModelAnimation">
+      <UniqueIdentifier>{4f880dab-8eac-42fe-9ba2-932d72743f83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -708,6 +711,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Item\ItemCounter\ItemCounter.h">
       <Filter>Myclass\Item\ItemCounter</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Scenes\Title\ModelAnimation\ModelAnimation.h">
+      <Filter>Myclass\Scenes\Title\ModelAnimation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

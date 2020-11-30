@@ -1,4 +1,5 @@
 #include"ResultScene.h"
+#include"../../Data/WordsTable.h"
 
 /*
 * @fn ƒ^ƒCƒgƒ‹‚Ì‰Šú‰»
@@ -17,6 +18,13 @@ bool ResultScene::Initialize()
 */
 int ResultScene::Update()
 {
+	auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(1));
+
+	if (pad->GetButtonBuffer(GamePad_Button1))
+	{
+		//exit(0)
+	}
+
 	return 0;
 }
 

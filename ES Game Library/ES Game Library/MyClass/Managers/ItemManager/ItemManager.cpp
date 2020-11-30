@@ -49,7 +49,7 @@ void ItemManager::AddItemBase(std::string name, Vector3 position)
 {
 	//ItemFactory* itemfactory = new ItemStationeryFactory;
 
-	////item_base.push_back(itemfactory->Create(name, position));
+	//item_base.push_back(itemfactory->Create(name, position));
 
 	//delete itemfactory;
 }
