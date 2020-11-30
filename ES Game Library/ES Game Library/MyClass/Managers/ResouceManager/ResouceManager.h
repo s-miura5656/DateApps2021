@@ -22,6 +22,7 @@ public:
 	MODEL LoadModelFile(LPCTSTR model_file_name);
 	ANIMATIONMODEL LoadAnimationModelFile(LPCTSTR animation_model_name);
 	FONT LordFontFile(LPCTSTR font_file_name, float size);
+	SOUND LordSoundFile(LPTSTR sound_file_name);
 private:
 	ResouceManager(const ResouceManager&) = delete;
 	void operator=(const ResouceManager&) = delete;
@@ -30,4 +31,5 @@ private:
 	std::map<tstring, MODEL> _resouces_model;
 	std::map<tstring, ANIMATIONMODEL> _resouces_animation_model;
 	std::map<tstring, FONT> _resouces_font;
+	std::map<tstring, SOUND> _resouces_sound;
 };

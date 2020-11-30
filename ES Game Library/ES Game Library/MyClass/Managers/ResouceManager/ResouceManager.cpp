@@ -68,3 +68,20 @@ FONT ResouceManager::LordFontFile(LPCTSTR font_file_name,float size)
 		return _resouces_font[font_file_name];
 	}
 }
+SOUND ResouceManager::LordSoundFile(LPTSTR sound_file_name)
+{
+	auto&& it = _resouces_sound.find(sound_file_name);
+
+	if (it != _resouces_sound.end())
+	{
+		return it->second;
+	}
+	else
+	{
+		SOUND sound = SoundDevice.CreateSoundFromFile(sound_file_name);
+
+		_resouces_sound.emplace(sound_file_name, sound);
+
+		return _resouces_sound[sound_file_name];
+	}
+}

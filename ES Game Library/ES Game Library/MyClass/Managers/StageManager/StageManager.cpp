@@ -17,6 +17,7 @@ StageManager::~StageManager()
 
 bool StageManager::Initialize()
 {
+	se = ResouceManager::Instance().LordSoundFile(_T("MapSprite/se.wav"));
 	FILE* fp = fopen("MapSprite/map.csv","r");
 
 	//マップデータを読み込む
@@ -83,6 +84,10 @@ bool StageManager::Initialize()
 
 int StageManager::Update()
 {
+	KeyboardState key = Keyboard->GetState();
+	if (key.IsKeyDown(Keys_Space)) {
+		se->Play();
+	}
 	for (int i = 0; i < stages.size(); i++)
 	{
 		if (stages[i]->Update() == 1)
