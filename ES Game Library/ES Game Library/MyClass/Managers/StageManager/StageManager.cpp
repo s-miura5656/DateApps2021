@@ -4,7 +4,7 @@
 #include "../../Data/IData.h"
 #include "../../Data/WordsTable.h"
 #include "../../Data/StructList.h"
-
+#include"../ResouceManager/ResouceManager.h"
 StageManager::StageManager()
 {
 	
@@ -17,7 +17,6 @@ StageManager::~StageManager()
 
 bool StageManager::Initialize()
 {
-	//配列の添え字でタグを呼べる
 	FILE* fp = fopen("MapSprite/map.csv","r");
 
 	//マップデータを読み込む
@@ -99,7 +98,6 @@ int StageManager::Update()
 
 void StageManager::Draw2D()
 {
-	
 }
 
 void StageManager::Draw3D()

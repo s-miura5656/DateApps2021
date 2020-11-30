@@ -20,7 +20,8 @@ public:
 
 	SPRITE LordSpriteFile(LPCTSTR sprite_file_name);
 	MODEL LoadModelFile(LPCTSTR model_file_name);
-	ANIMATIONMODEL AnimationLoadModelFile(LPCTSTR animation_model_name);
+	ANIMATIONMODEL LoadAnimationModelFile(LPCTSTR animation_model_name);
+	FONT LordFontFile(LPCTSTR font_file_name, float size);
 private:
 	ResouceManager(const ResouceManager&) = delete;
 	void operator=(const ResouceManager&) = delete;
@@ -28,4 +29,5 @@ private:
 	std::map<tstring, SPRITE> _resouces_sprite;
 	std::map<tstring, MODEL> _resouces_model;
 	std::map<tstring, ANIMATIONMODEL> _resouces_animation_model;
+	std::map<tstring, FONT> _resouces_font;
 };

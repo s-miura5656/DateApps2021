@@ -34,7 +34,7 @@ MODEL ResouceManager::LoadModelFile(LPCTSTR model_file_name)
 		return _resouces_model[model_file_name];
 	}
 }
-ANIMATIONMODEL ResouceManager::AnimationLoadModelFile(LPCTSTR animation_model_name)
+ANIMATIONMODEL ResouceManager::LoadAnimationModelFile(LPCTSTR animation_model_name)
 {
 	auto&& it = _resouces_animation_model.find(animation_model_name);
 
@@ -49,5 +49,22 @@ ANIMATIONMODEL ResouceManager::AnimationLoadModelFile(LPCTSTR animation_model_na
 		_resouces_animation_model.emplace(animation_model_name, animationmodel);
 
 		return _resouces_animation_model[animation_model_name];
+	}
+}
+FONT ResouceManager::LordFontFile(LPCTSTR font_file_name,float size)
+{
+	auto&& it = _resouces_font.find(font_file_name);
+
+	if (it != _resouces_font.end())
+	{
+		return it->second;
+	}
+	else
+	{
+		FONT font = GraphicsDevice.CreateSpriteFont(font_file_name, size);
+
+		_resouces_font.emplace(font_file_name, font);
+
+		return _resouces_font[font_file_name];
 	}
 }
