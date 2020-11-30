@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../../ESGLib.h"
+#include "../../ESGLib.h"
 #include <sstream>
 
 static void ModelRotation(Vector3 rotation, MODEL model)

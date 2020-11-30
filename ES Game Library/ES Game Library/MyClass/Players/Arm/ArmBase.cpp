@@ -200,7 +200,7 @@ void ArmBase::ArmFire()
 			auto&& i_player_data = _iplayer_data;
 			auto&& iarm_data = _iarm_Data;
 			
-			int damege = iarm_data->GetAttackPowor(_tag);
+			int damege = i_player_data->GetAttackPowor(_player_tag);
 			int hitpoint = i_player_data->GetHitPoint(name);
 			
 			hitpoint -= damege;
