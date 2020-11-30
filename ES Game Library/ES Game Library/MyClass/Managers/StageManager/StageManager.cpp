@@ -89,7 +89,7 @@ int StageManager::Update()
 		{
 			const string random_item[3] = { POWOR_ITEM_TAG ,SPEED_ITEM_TAG ,HITPOINT_ITEM_TAG };
 			ItemCounter* itemcounter = new ItemCounter;
-			itemcounter->SetItem(random_item[MathHelper_Random(0,3)],stages[i]->GetPosition());
+			itemcounter->SetItem(random_item[MathHelper_Random(0,2)],stages[i]->GetPosition());
 			stages.erase(stages.begin() + i);
 		}
 	}
