@@ -1,6 +1,6 @@
 #include"TitleScene.h"
 #include"../../Data/WordsTable.h"
-#include"../Title/ModelAnimation/ModelAnimation.h"
+#include"../../Data/ModelAnimation.h"
 
 /*
 * @fn ƒ^ƒCƒgƒ‹‚Ì‰Šú‰»
