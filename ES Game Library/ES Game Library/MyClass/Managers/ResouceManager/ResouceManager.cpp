@@ -70,7 +70,7 @@ SHADER ResouceManager::LordShaderFile(LPCTSTR shader_file_name)
 		return _resouces_shader[shader_file_name];
 	}
 }
-SHADER ResouceManager::LordEffectFile(LPCTSTR effect_file_name)
+EFFECT ResouceManager::LordEffectFile(LPCTSTR effect_file_name)
 {
 	auto&& it = _resouces_effect.find(effect_file_name);
 	if (it != _resouces_effect.end())
