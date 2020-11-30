@@ -18,12 +18,14 @@ public:
 		return instance;
 	};
 
-	MODEL LoadModelFile(LPCTSTR file_name);
-	ANIMATIONMODEL AnimationLoadModelFile(LPCTSTR animfile_name);
+	SPRITE LordSpriteFile(LPCTSTR sprite_file_name);
+	MODEL LoadModelFile(LPCTSTR model_file_name);
+	ANIMATIONMODEL AnimationLoadModelFile(LPCTSTR animation_model_name);
 private:
 	ResouceManager(const ResouceManager&) = delete;
 	void operator=(const ResouceManager&) = delete;
 
+	std::map<tstring, SPRITE> _resouces_sprite;
 	std::map<tstring, MODEL> _resouces_model;
 	std::map<tstring, ANIMATIONMODEL> _resouces_animation_model;
 };
