@@ -56,6 +56,34 @@ FONT ResouceManager::LordFontFile(LPCTSTR font_file_name,float size)
 		return _resouces_font[font_file_name];
 	}
 }
+SHADER ResouceManager::LordShaderFile(LPCTSTR shader_file_name)
+{
+	auto&& it = _resouces_shader.find(shader_file_name);
+	if (it != _resouces_shader.end())
+	{
+		return it->second;
+	}
+	else
+	{
+		SHADER shader = GraphicsDevice.CreateEffectFromFile(shader_file_name);
+		_resouces_shader.emplace(shader_file_name, shader);
+		return _resouces_shader[shader_file_name];
+	}
+}
+SHADER ResouceManager::LordEffectFile(LPCTSTR effect_file_name)
+{
+	auto&& it = _resouces_effect.find(effect_file_name);
+	if (it != _resouces_effect.end())
+	{
+		return it->second;
+	}
+	else
+	{
+		EFFECT effect = GraphicsDevice.CreateEffectFromFile(effect_file_name);
+		_resouces_effect.emplace(effect_file_name, effect);
+		return _resouces_effect[effect_file_name];
+	}
+}
 SOUND ResouceManager::LordSoundFile(LPTSTR sound_file_name)
 {
 	auto&& it = _resouces_sound.find(sound_file_name);
