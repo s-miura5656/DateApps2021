@@ -1,5 +1,6 @@
 #include "Arm.h"
 #include "../../Data/MyAlgorithm.h"
+#include "../../Managers/ResouceManager/ResouceManager.h"
 
 Arm::Arm(std::string name)
 {
@@ -31,29 +32,33 @@ bool Arm::Fileinitialize()
 
 bool Arm::Initialize()
 {
+	//! ファイル
 	_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
-	_model = GraphicsDevice.CreateModelFromFile(_T("Player/robo_arm.X"));
+	_model = ResouceManager::Instance().LoadModelFile(_T("Player/robot_hand01.X"));
 
-	_model->SetRotation(0, _iplayer_data->GetAngle(_player_tag), 0);
+	//! 座標
 	_position = _iplayer_data->GetPosition(_player_tag);
 	_old_pos = _position + Vector3(0, 0.5f, 0);
 	_new_pos = _position + Vector3(0, 0.5f, 0);
-
-	_index_num = _iplayer_data->GetIndexNum(_player_tag);
-
 	_model->SetPosition(_new_pos);
+	_index_num = _iplayer_data->GetIndexNum(_player_tag);
 	_angle_point.push_back(_position);
 
+	//! 角度
 	_angle = _iplayer_data->GetAngle(_player_tag);
-	_model->SetRotation(0, _angle, 0);
+	_model->SetRotation(0, _iplayer_data->GetAngle(_player_tag), 0);
 	_old_angle = _angle;
+
+	//! ステート
 	arm_state = ArmEnum::PunchState::PUNCH;
 	_iarm_Data->SetState(_tag, arm_state);
+	hit_flag = false;
+
+	//! スピード
 	arm_speed = 0.07f;
 
+	//! サイズ
 	_model->SetScale(2.f);
-
-	hit_flag = false;
 
 	return true;
 }

@@ -31,8 +31,7 @@ Player::~Player()
 
 bool Player::FileInitialize(LPCTSTR& file)
 {
-	//_model = GraphicsDevice.CreateModelFromFile(file);
-	_model = ResouceManager::Instance().LoadModelFile(file);
+	_model = GraphicsDevice.CreateAnimationModelFromFile(file);
 
 	return true;
 }
@@ -67,6 +66,8 @@ int Player::Update()
 
 	KeyboardBuffer keybuffer = Keyboard->GetBuffer();
 
+	ChangeAnimation();
+
 	if (keybuffer.IsPressed(Keys_Up))
 	{
 		float speed = _iarm_data->GetSpeed(_arm_tag);
@@ -81,43 +82,43 @@ int Player::Update()
 		_iarm_data->SetSpeed(_arm_tag, speed);
 	}
 
-	if (_iplayer_data->GetState(_tag) == PlayerEnum::DAMAGE)
+	if (_iplayer_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
 	{
 		_index_num = _iplayer_data->GetIndexNum(_tag);
 		_position = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
 		_model->SetPosition(_position);
-		_iplayer_data->SetState(_tag, PlayerEnum::WAIT);
+		_iplayer_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 		return 0;
 	}
 
-	if (_iplayer_data->GetState(_tag) == PlayerEnum::MOVE)
+	if (_iplayer_data->GetState(_tag) == PlayerEnum::Animation::MOVE)
 	{
 		//! 移動
 		Move(pad);
 	}
 
 	//! パンチ発射状態ならすぐさまリターン
-	if (_iplayer_data->GetState(_tag) == PlayerEnum::ATTACK)
+	if (_iplayer_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
 	{
 		_iplayer_data->SetIndexNum(_tag, _index_num);
 		_arm->Update();
 		return 0;
 	}
 
-	if (_iplayer_data->GetState(_tag) == PlayerEnum::WAIT)
+	if (_iplayer_data->GetState(_tag) == PlayerEnum::Animation::WAIT)
 	{
 		DestroyArm();
 
 		//! ロケットパンチ発射切り替え
 		if (pad->GetButtonState(GamePad_Button2))
 		{
-			_iplayer_data->SetState(_tag, PlayerEnum::ATTACK);
+			_iplayer_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
 			CreateArm();
 			return 0;
 		}
 		else if (pad->GetButtonState(GamePad_Button3))
 		{
-			_iplayer_data->SetState(_tag, PlayerEnum::ATTACK);
+			_iplayer_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
 			CreateArm();
 			return 0;
 		}
@@ -129,8 +130,10 @@ int Player::Update()
 	{
 		_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
 		_angle = AngleClamp(_angle);
-		_iplayer_data->SetState(_tag, PlayerEnum::MOVE);
+		_iplayer_data->SetState(_tag, PlayerEnum::Animation::MOVE);
 	}
+
+
 
 	return 0;
 }
@@ -148,7 +151,7 @@ void Player::Move(Controller* pad)
 		{
 			_move_flag = false;
 			_lerp_count = 0;
-			_iplayer_data->SetState(_tag, PlayerEnum::WAIT);
+			_iplayer_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 		}
 	}
 	else

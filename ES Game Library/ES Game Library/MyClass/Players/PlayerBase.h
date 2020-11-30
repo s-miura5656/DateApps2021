@@ -17,17 +17,17 @@ public:
 
 	Vector3 GetPos()  { return _model->GetPosition(); }
 	float GetAngle()  { return _angle; }
-	MODEL GetPlayer() { return _model; }
+	ANIMATIONMODEL GetPlayer() { return _model; }
 	
 	float PlayerSpeed();
-
+	void ChangeAnimation();
 	void CreateArm();
 	void DestroyArm();
 	std::string GetTag() const { return _tag; }
 	int GetPlayerNumber() const { return (*_tag.rbegin()) - '0'; }
 
 protected:
-	MODEL _model;
+	ANIMATIONMODEL _model;
 	FONT _font;
 
 	const float scale		 = 0.004f;

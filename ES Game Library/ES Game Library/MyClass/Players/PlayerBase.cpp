@@ -2,6 +2,7 @@
 
 PlayerBase::PlayerBase()
 {
+
 }
 
 PlayerBase::~PlayerBase()
@@ -19,15 +20,14 @@ void PlayerBase::Draw2D()
 	}
 
 	if (_arm != nullptr)
-	{
 		_arm->Draw2D();
-	}
 }
 
 void PlayerBase::Draw3D()
 {
 	_model->SetPosition(_iplayer_data->GetPosition(_tag));
 	_model->SetRotation(Vector3(0, _angle - 180, 0));
+	_model->AdvanceTime(GameTimer.GetElapsedSecond() * 2);
 	_model->Draw();
 	_model->SetRotation(Vector3(0, _angle, 0));
 
@@ -37,9 +37,7 @@ void PlayerBase::Draw3D()
 	_hit_box->Draw3D();
 
 	if (_arm != nullptr)
-	{
 		_arm->Draw3D();
-	}
 }
 
 float PlayerBase::PlayerSpeed()
@@ -65,6 +63,22 @@ float PlayerBase::PlayerSpeed()
 	_move_speed *= 5.f;
 
 	return _move_speed;
+}
+
+void PlayerBase::ChangeAnimation()
+{
+	auto&& state = _iplayer_data->GetState(_tag);
+
+	for (int i = 0; i < PlayerEnum::Animation::ANIMATION_ALL_TYPE; ++i)
+	{
+		if (i == state)
+		{
+			_model->SetTrackEnable(i, TRUE);
+			continue;
+		}
+
+		_model->SetTrackEnable(i, FALSE);
+	}
 }
 
 void PlayerBase::CreateArm()

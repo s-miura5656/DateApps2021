@@ -54,7 +54,7 @@ int ArmBase::Update()
 	//! ƒA[ƒ€‚ª–ß‚Á‚Ä‚«‚½Žž‚Ìˆ—‚Ì”»’è
 	if (arm_state == ArmEnum::PunchState::NO_PUNCH)
 	{
-		_iplayer_data->SetState(_player_tag, PlayerEnum::WAIT);
+		_iplayer_data->SetState(_player_tag, PlayerEnum::Animation:: WAIT);
 	}
 
 	auto box_pos = _model->GetPosition();
@@ -76,7 +76,7 @@ void ArmBase::Draw2D()
 
 void ArmBase::Draw3D()
 {
-	_model->SetRotation(90, _angle, 180);
+	_model->SetRotation(0, -_angle, 0);
 	_model->Draw();
 	_model->SetRotation(0, _angle, 0);
 	_hit_box->Draw3D();
@@ -212,7 +212,7 @@ void ArmBase::Push()
 		{
 			arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 			_iarm_Data->SetState(_tag, arm_state);
-			_iplayer_data->SetState(name, PlayerEnum::DAMAGE);
+			_iplayer_data->SetState(name, PlayerEnum::Animation::DAMAGE);
 
 			IndexNum index = _iplayer_data->GetIndexNum(name);
 
@@ -255,7 +255,7 @@ void ArmBase::Pull()
 		if (_hit_box->IsHitObjects(name))
 		{
 			arm_state = ArmEnum::PunchState::RETURN_PUNCH;
-			_iplayer_data->SetState(name, PlayerEnum::DAMAGE);
+			_iplayer_data->SetState(name, PlayerEnum::Animation::DAMAGE);
 
 			IndexNum index = _iplayer_data->GetIndexNum(name);
 
