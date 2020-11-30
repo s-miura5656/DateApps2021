@@ -4,7 +4,7 @@
 #include "../../Data/IData.h"
 #include "../../Data/WordsTable.h"
 #include "../../Data/StructList.h"
-
+#include"../ResouceManager/ResouceManager.h"
 StageManager::StageManager()
 {
 	
@@ -17,7 +17,6 @@ StageManager::~StageManager()
 
 bool StageManager::Initialize()
 {
-	//配列の添え字でタグを呼べる
 	FILE* fp = fopen("MapSprite/map.csv","r");
 
 	//マップデータを読み込む
@@ -90,7 +89,7 @@ int StageManager::Update()
 		{
 			const string random_item[3] = { POWOR_ITEM_TAG ,SPEED_ITEM_TAG ,HITPOINT_ITEM_TAG };
 			ItemCounter* itemcounter = new ItemCounter;
-			itemcounter->SetItem(random_item[MathHelper_Random(0,3)],stages[i]->GetPosition());
+			itemcounter->SetItem(random_item[MathHelper_Random(0,2)],stages[i]->GetPosition());
 			stages.erase(stages.begin() + i);
 		}
 	}
@@ -99,7 +98,7 @@ int StageManager::Update()
 
 void StageManager::Draw2D()
 {
-	
+
 }
 
 void StageManager::Draw3D()
