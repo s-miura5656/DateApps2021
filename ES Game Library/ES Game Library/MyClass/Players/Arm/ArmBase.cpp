@@ -17,49 +17,46 @@ int ArmBase::Update()
 	
 	_dist = Vector3_Distance(_iplayer_data->GetPosition(_player_tag), _model->GetPosition());
 
+
 	//! アームの発射状態の判定
-	if (pad->GetButtonState(GamePad_Button2) && arm_state == ArmEnum::PunchState::PUNCH)
+	if (pad->GetButtonState(GamePad_Button2) && _arm_state == ArmEnum::PunchState::PUNCH)
 	{
-		_punch_type = ArmEnum::PunchType::PUSH;
-	}
-	else if (pad->GetButtonState(GamePad_Button3) && arm_state == ArmEnum::PunchState::PUNCH)
-	{
-		_punch_type = ArmEnum::PunchType::PULL;
+		if (_arm_state != ArmEnum::PunchState::PUNCH)
+			_arm_state = ArmEnum::PunchState::PUNCH;
 	}
 	else
 	{
-		arm_state = ArmEnum::PunchState::RETURN_PUNCH;
-		_iarm_Data->SetState(_tag, arm_state);
+		_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+		_iarm_Data->SetState(_tag, _arm_state);
 	}
 
-	if (arm_state == ArmEnum::PunchState::PUNCH)
+	if (_arm_state == ArmEnum::PunchState::PUNCH)
 	{
-		ArmFire(pad);
+		Move(pad);
+
+		ArmFire();
 
 		if (_angle_point.size() >= _iarm_Data->GetLimitRange(_tag))
-			arm_state = ArmEnum::PunchState::RETURN_PUNCH;
-
+			_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 	}
 
 	//! アームの戻り状態の処理の判定
-	if (arm_state == ArmEnum::PunchState::RETURN_PUNCH)
+	if (_arm_state == ArmEnum::PunchState::RETURN_PUNCH)
 	{
 		ArmReturn();
 
 		if (_dist < 0.6f)
 		{
-			arm_state = ArmEnum::PunchState::NO_PUNCH;
-			_iarm_Data->SetState(_tag, arm_state);
+			_arm_state = ArmEnum::PunchState::NO_PUNCH;
+			_iarm_Data->SetState(_tag, _arm_state);
 		}
 	}
 	
 	//! アームが戻ってきた時の処理の判定
-	if (arm_state == ArmEnum::PunchState::NO_PUNCH)
+	if (_arm_state == ArmEnum::PunchState::NO_PUNCH)
 	{
-		_iplayer_data->SetState(_player_tag, PlayerEnum::Animation:: WAIT);
+		_iplayer_data->SetState(_player_tag, PlayerEnum::Animation::WAIT);
 	}
-
-	
 
 	return 0;
 }
@@ -82,6 +79,7 @@ void ArmBase::Draw3D()
 	_model->SetRotation(0, _angle, 0);
 
 	auto box_pos = _model->GetPosition();
+	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
 	_hit_box->SetHitBoxPosition(box_pos);
 	_hit_box->Draw3D();
 }
@@ -100,6 +98,7 @@ void ArmBase::Move(Controller* pad)
 
 		if (_lerp_count >= 1.f)
 		{
+			_angle_point.push_back(_new_pos);
 			_move_flag = false;
 			_lerp_count = 0;
 			_iplayer_data->SetState(_tag, PlayerEnum::Animation::WAIT);
@@ -110,7 +109,7 @@ void ArmBase::Move(Controller* pad)
 		float abs_x = fabsf(pad->GetPadStateX());
 		float abs_z = fabsf(pad->GetPadStateY());
 
-		if (abs_x > 30 && abs_x > abs_z)
+		if (abs_x > abs_z)
 		{
 			int old_index = _index_num.x;
 			std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
@@ -119,18 +118,17 @@ void ArmBase::Move(Controller* pad)
 			if (map_data[_index_num.z][_index_num.x] != 'i' && map_data[_index_num.z][_index_num.x] != 'w')
 			{
 				_new_pos = Vector3(1 * _index_num.x, 0.5f, 1 * -_index_num.z);
-				_angle_point.push_back(_new_pos);
 				_move_flag = true;
 			}
 			else
 			{
 				_index_num.x = old_index;
-				arm_state = ArmEnum::PunchState::RETURN_PUNCH;
-				_iarm_Data->SetState(_tag, arm_state);
+				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+				_iarm_Data->SetState(_tag, _arm_state);
 			}
 		}
 
-		if (abs_z > 30 && abs_x < abs_z)
+		if (abs_x < abs_z)
 		{
 			int old_index = _index_num.z;
 			std::signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
@@ -139,14 +137,13 @@ void ArmBase::Move(Controller* pad)
 			if (map_data[_index_num.z][_index_num.x] != 'i' && map_data[_index_num.z][_index_num.x] != 'w')
 			{
 				_new_pos = Vector3(1 * _index_num.x, 0.5f, 1 * -_index_num.z);
-				_angle_point.push_back(_new_pos);
 				_move_flag = true;
 			}
 			else
 			{
 				_index_num.z = old_index;
-				arm_state = ArmEnum::PunchState::RETURN_PUNCH;
-				_iarm_Data->SetState(_tag, arm_state);
+				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+				_iarm_Data->SetState(_tag, _arm_state);
 			}
 		}
 
@@ -189,25 +186,7 @@ void ArmBase::ArmReturn()
 	_model->SetPosition(_position);
 }
 
-void ArmBase::ArmFire(Controller* pad)
-{
-	if (_punch_type == ArmEnum::PunchType::PUSH)
-	{
-		Move(pad);
-
-		Push();
-	}
-	else if (_punch_type == ArmEnum::PunchType::PULL)
-	{
-		Move(pad);
-
-		Pull();
-	}
-}
-
-//! @fn 他のプレイヤーを押す
-//! @brief 他のプレイヤーを押す
-void ArmBase::Push()
+void ArmBase::ArmFire()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
@@ -218,77 +197,22 @@ void ArmBase::Push()
 
 		if (_hit_box->IsHitObjects(name))
 		{
-			arm_state = ArmEnum::PunchState::RETURN_PUNCH;
-			_iarm_Data->SetState(_tag, arm_state);
-			_iplayer_data->SetState(name, PlayerEnum::Animation::DAMAGE);
+			auto&& i_player_data = _iplayer_data;
+			auto&& iarm_data = _iarm_Data;
+			
+			int damege = iarm_data->GetAttackPowor(_tag);
+			int hitpoint = i_player_data->GetHitPoint(name);
+			
+			hitpoint -= damege;
 
-			IndexNum index = _iplayer_data->GetIndexNum(name);
+			_iplayer_data->SetHitPoint(name, hitpoint);
 
-			if (_angle == 0)
-			{
-				index.z -= 1;
-			}
-			else if (_angle == 90)
-			{
-				index.x += 1;
-			}
-			else if (_angle == 180)
-			{
-				index.z += 1;
-			}
-			else if (_angle == 270)
-			{
-				index.x -= 1;
-			}
+			_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+			iarm_data->SetState(_tag, _arm_state);
 
-			_iplayer_data->SetIndexNum(name, index);
-			break;
-		}
-	}
-
-	
-}
-
-//! @fn 他のプレイヤーを引っ張る
-//! @brief 他のプレイヤーを引っ張る
-void ArmBase::Pull()
-{
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		std::string name = PLAYER_TAG + std::to_string(i + 1);
-
-		if (name == _player_tag)
-			continue;
-
-		if (_hit_box->IsHitObjects(name))
-		{
-			arm_state = ArmEnum::PunchState::RETURN_PUNCH;
-			_iplayer_data->SetState(name, PlayerEnum::Animation::DAMAGE);
-
-			IndexNum index = _iplayer_data->GetIndexNum(name);
-
-			if (_angle == 0)
-			{
-				index.z += 1;
-			}
-			else if (_angle == 90)
-			{
-				index.x -= 1;
-			}
-			else if (_angle == 180)
-			{
-				index.z -= 1;
-			}
-			else if (_angle == 270)
-			{
-				index.x += 1;
-			}
-
-			_iplayer_data->SetIndexNum(name, index);
+			i_player_data->SetState(name, PlayerEnum::Animation::DAMAGE);
 
 			break;
 		}
 	}
 }
-
-

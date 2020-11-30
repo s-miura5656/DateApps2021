@@ -18,13 +18,11 @@ public:
 	virtual void Draw2D();
 	virtual void Draw3D();
 
-	void    Move(Controller* pad);
+	void Move(Controller* pad);
 	void ArmReturn();
-	void ArmFire(Controller* pad);
-	void Push();
-	void Pull();
+	void ArmFire();
 
-	int     GetArmState() { return arm_state; }
+	int     GetArmState() { return _arm_state; }
 	Vector3 ArmGetPos()   { return _model->GetPosition(); }
 	MODEL   GetArm()      { return _model; }
 
@@ -36,8 +34,7 @@ protected:
 	
 	MODEL _model;
 
-	int arm_state;
-	int _punch_type = ArmEnum::PunchType::ALL;
+	int _arm_state;
 
 	float scale;
 	float _angle = 0.f;

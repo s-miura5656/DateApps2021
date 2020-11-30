@@ -35,7 +35,6 @@ public:
 	Vector3 GetPosition(std::string& player_tag)		const { return PlayerParametor::Instance()._player_params[player_tag].position; }
 	int GetState(std::string& player_tag)				const { return PlayerParametor::Instance()._player_params[player_tag].state; }
 	IndexNum GetIndexNum(std::string& player_tag)       const { return PlayerParametor::Instance()._index_nums[player_tag]; }
-private:
 };
 
 class IArmData 

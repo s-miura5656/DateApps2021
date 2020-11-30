@@ -13,7 +13,7 @@ Arm::Arm(std::string name)
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_hit_box->Settags(_tag);
-	_hit_box->SetHitBoxScale(0.5f);
+	_hit_box->SetHitBoxScale(0.8f);
 
 	_iplayer_data = new IPrayerData;
 	_iarm_Data = new IArmData;
@@ -33,8 +33,8 @@ bool Arm::Initialize()
 
 	//! Position
 	_position = _iplayer_data->GetPosition(_player_tag) + Vector3(0, 0.5f, 0);
-	_old_pos = _position + Vector3(0, 0.5f, 0);
-	_new_pos = _position + Vector3(0, 0.5f, 0);
+	_old_pos = _position;
+	_new_pos = _position;
 	_model->SetPosition(_new_pos);
 	_index_num = _iplayer_data->GetIndexNum(_player_tag);
 	_angle_point.push_back(_position);
@@ -45,8 +45,8 @@ bool Arm::Initialize()
 	_old_angle = _angle;
 
 	//! State
-	arm_state = ArmEnum::PunchState::PUNCH;
-	_iarm_Data->SetState(_tag, arm_state);
+	_arm_state = ArmEnum::PunchState::PUNCH;
+	_iarm_Data->SetState(_tag, _arm_state);
 	hit_flag = false;
 
 	//! Speed

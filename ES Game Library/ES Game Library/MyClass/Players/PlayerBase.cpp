@@ -33,7 +33,7 @@ void PlayerBase::Draw3D()
 	_model->SetRotation(Vector3(0, _angle, 0));
 
 	auto collision_pos = _model->GetPosition();
-	//collision_pos.y += _model->GetScale().y / 2;
+	collision_pos.y += _model->GetScale().y / 2;
 	_hit_box->SetHitBoxPosition(collision_pos);
 	_hit_box->Draw3D();
 
@@ -79,7 +79,7 @@ void PlayerBase::Move(Controller* pad)
 
 		float abs_z = fabsf(pad->GetPadStateY());
 
-		if (abs_x > 16 && abs_x > abs_z)
+		if (abs_x > abs_z)
 		{
 			int old_index = _index_num.x;
 
@@ -99,7 +99,7 @@ void PlayerBase::Move(Controller* pad)
 			}
 		}
 
-		if (abs_z > 16 && abs_x < abs_z)
+		if (abs_x < abs_z)
 		{
 			int old_index = _index_num.z;
 

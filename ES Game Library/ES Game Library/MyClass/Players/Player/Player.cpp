@@ -12,7 +12,7 @@ Player::Player(std::string tag)
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_hit_box->Settags(tag);
-	_hit_box->SetHitBoxScale(0.7f);
+	_hit_box->SetHitBoxScale(0.8f);
 	_iplayer_data = new IPrayerData;
 	_iarm_data = new IArmData;
 	_imap_data = new IMapData;
@@ -88,13 +88,6 @@ int Player::Update()
 
 		//! ロケットパンチ発射切り替え
 		if (pad->GetButtonState(GamePad_Button2))
-		{
-			_iplayer_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
-			_iplayer_data->SetPosition(_tag, _position);
-			CreateArm();
-			return 0;
-		}
-		else if (pad->GetButtonState(GamePad_Button3))
 		{
 			_iplayer_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
 			_iplayer_data->SetPosition(_tag, _position);

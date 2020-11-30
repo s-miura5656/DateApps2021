@@ -17,7 +17,7 @@ struct ArmParam {
 	int		state		 = ArmEnum::PUNCH;
 	Vector3 position	 = Vector3_Zero;
 	float   angle		 = 0.f;
-	int     attack_powor = 100;
+	int     attack_powor = 200;
 	float   speed		 = 0.2f;
 	int     limit_range  = 5;
 };
