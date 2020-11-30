@@ -19,11 +19,15 @@ public:
 	virtual void Draw3D();
 
 	void    Move(Controller* pad);
-	void ReturnArm();
+	void ArmReturn();
+	void ArmFire(Controller* pad);
+	void Push();
+	void Pull();
 
 	int     GetArmState() { return arm_state; }
 	Vector3 ArmGetPos()   { return _model->GetPosition(); }
 	MODEL   GetArm()      { return _model; }
+
 
 protected:
 	FONT _font;
@@ -33,6 +37,7 @@ protected:
 	MODEL _model;
 
 	int arm_state;
+	int _punch_type;
 
 	float scale;
 	float _angle = 0.f;

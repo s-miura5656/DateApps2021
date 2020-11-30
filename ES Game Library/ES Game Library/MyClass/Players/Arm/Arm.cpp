@@ -48,7 +48,7 @@ bool Arm::Initialize()
 	_model->SetRotation(0, _angle, 0);
 	_old_angle = _angle;
 	arm_state = ArmEnum::PunchState::PUNCH;
-
+	_iarm_Data->SetState(_tag, arm_state);
 	arm_speed = 0.07f;
 
 	_model->SetScale(2.f);

@@ -50,15 +50,17 @@ public:
 	void SetSpeed(std::string& arm_tag, float speed)			 { ArmParametor::Instance()._arm_params[arm_tag].speed = speed; }
 	void SetPosition(std::string& arm_tag, Vector3 pos)			 { ArmParametor::Instance()._arm_params[arm_tag].position = pos; }
 	void SetAngle(std::string& arm_tag, float angle)			 { ArmParametor::Instance()._arm_params[arm_tag].angle = angle; }
+	void SetState(std::string& arm_tag, int state)				 { ArmParametor::Instance()._arm_params[arm_tag].state = state; }
 	void SetTurns(std::string& arm_tag, int turns)				 { ArmParametor::Instance()._arm_params[arm_tag].tunns = turns; }
 
 	//! ÉQÉbÉ^Å[
-	ArmParam GetPlayerPram(std::string& arm_tag)  const { return ArmParametor::Instance()._arm_params[arm_tag]; }
-	int GetAttackPowor(std::string& arm_tag)	  const { return ArmParametor::Instance()._arm_params[arm_tag].attack_powor; }
-	float GetSpeed(std::string& arm_tag)	      const { return ArmParametor::Instance()._arm_params[arm_tag].speed; }
-	int GetTurns(std::string& arm_tag)			  const { return ArmParametor::Instance()._arm_params[arm_tag].tunns; }
-	float GetAngle(std::string& arm_tag)		  const { return ArmParametor::Instance()._arm_params[arm_tag].angle; }
-	Vector3 GetPosition(std::string& arm_tag)	  const { return ArmParametor::Instance()._arm_params[arm_tag].position; }
+	ArmParam GetPlayerPram(std::string& arm_tag)		   const { return ArmParametor::Instance()._arm_params[arm_tag]; }
+	int GetAttackPowor(std::string& arm_tag)			   const { return ArmParametor::Instance()._arm_params[arm_tag].attack_powor; }
+	float GetSpeed(std::string& arm_tag)				   const { return ArmParametor::Instance()._arm_params[arm_tag].speed; }
+	Vector3 GetPosition(std::string& arm_tag)			   const { return ArmParametor::Instance()._arm_params[arm_tag].position; }
+	float GetAngle(std::string& arm_tag)				   const { return ArmParametor::Instance()._arm_params[arm_tag].angle; }
+	int GetTurns(std::string& arm_tag)					   const { return ArmParametor::Instance()._arm_params[arm_tag].tunns; }
+	int GetState(std::string& arm_tag)					   const { return ArmParametor::Instance()._arm_params[arm_tag].state; }
 };
 
 class IMapData {

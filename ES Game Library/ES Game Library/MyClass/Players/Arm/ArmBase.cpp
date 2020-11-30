@@ -14,66 +14,44 @@ ArmBase::~ArmBase()
 int ArmBase::Update()
 {
 	auto pad = ControllerManager::Instance().GetController(_player_tag);
-
+	
 	_dist = Vector3_Distance(_iplayer_data->GetPosition(_player_tag), _model->GetPosition());
 
-	if (pad->GetButtonState(GamePad_Button1) && arm_state == ArmEnum::PunchState::PUNCH)
+	//! アームの発射状態の判定
+	if (pad->GetButtonState(GamePad_Button2) && arm_state == ArmEnum::PunchState::PUNCH)
 	{
-		arm_state = ArmEnum::PunchState::PUNCH;
+		_punch_type = ArmEnum::PunchType::PUSH;
+	}
+	else if (pad->GetButtonState(GamePad_Button3) && arm_state == ArmEnum::PunchState::PUNCH)
+	{
+		_punch_type = ArmEnum::PunchType::PULL;
 	}
 	else
 	{
 		arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+		_iarm_Data->SetState(_tag, arm_state);
 	}
 
 	if (arm_state == ArmEnum::PunchState::PUNCH)
 	{
 		Move(pad);
 
-		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+		ArmFire(pad);
+	}
+
+	//! アームの戻り状態の処理の判定
+	if (arm_state == ArmEnum::PunchState::RETURN_PUNCH)
+	{
+		ArmReturn();
+
+		if (_dist < 0.3f)
 		{
-			std::string name = PLAYER_TAG + std::to_string(i + 1);
-
-			if (name == _player_tag)
-				continue;
-
-			if (_hit_box->IsHitObjects(name))
-			{
-				arm_state = ArmEnum::PunchState::RETURN_PUNCH;
-				_iplayer_data->SetState(name, PlayerEnum::DAMAGE);
-				IndexNum index = _iplayer_data->GetIndexNum(name);
-
-				if (_angle == 0)
-				{
-					index.z += 2;
-				}
-				else if (_angle == 90)
-				{
-					index.x += 2;
-				}
-				else if (_angle == 180)
-				{
-					index.z -= 2;
-				}
-				else if (_angle == 270)
-				{
-					index.x -= 2;
-				}
-
-				_iplayer_data->SetIndexNum(name, index);
-				break;
-			}
+			arm_state = ArmEnum::PunchState::NO_PUNCH;
+			_iarm_Data->SetState(_tag, arm_state);
 		}
 	}
 	
-	if (arm_state == ArmEnum::PunchState::RETURN_PUNCH)
-	{
-		ReturnArm();
-
-		if (_dist < 0.3f)
-			arm_state = ArmEnum::PunchState::NO_PUNCH;
-	}
-	
+	//! アームが戻ってきた時の処理の判定
 	if (arm_state == ArmEnum::PunchState::NO_PUNCH)
 	{
 		_iplayer_data->SetState(_player_tag, PlayerEnum::WAIT);
@@ -104,6 +82,9 @@ void ArmBase::Draw3D()
 	_hit_box->Draw3D();
 }
 
+//! @fn アームの移動
+//! @brief アームの移動を処理する
+//! @param コントローラー
 void ArmBase::Move(Controller* pad)
 {
 	auto&& map_data = _imap_data->GetData();
@@ -141,6 +122,7 @@ void ArmBase::Move(Controller* pad)
 			{
 				_index_num.x = old_index;
 				arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+				_iarm_Data->SetState(_tag, arm_state);
 			}
 		}
 
@@ -160,6 +142,7 @@ void ArmBase::Move(Controller* pad)
 			{
 				_index_num.z = old_index;
 				arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+				_iarm_Data->SetState(_tag, arm_state);
 			}
 		}
 
@@ -168,7 +151,9 @@ void ArmBase::Move(Controller* pad)
 	_model->SetPosition(_position);
 }
 
-void ArmBase::ReturnArm()
+//! @fn アームの戻り
+//! @brief アームの戻り移動を処理する
+void ArmBase::ArmReturn()
 {
 	auto a = _angle_point.size();
 
@@ -199,3 +184,103 @@ void ArmBase::ReturnArm()
 
 	_model->SetPosition(_position);
 }
+
+void ArmBase::ArmFire(Controller* pad)
+{
+	if (_punch_type == ArmEnum::PunchType::PUSH)
+	{
+		Push();
+	}
+	else if (_punch_type == ArmEnum::PunchType::PULL)
+	{
+		Pull();
+	}
+}
+
+//! @fn 他のプレイヤーを押す
+//! @brief 他のプレイヤーを押す
+void ArmBase::Push()
+{
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string name = PLAYER_TAG + std::to_string(i + 1);
+
+		if (name == _player_tag)
+			continue;
+
+		if (_hit_box->IsHitObjects(name))
+		{
+			arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+			_iarm_Data->SetState(_tag, arm_state);
+			_iplayer_data->SetState(name, PlayerEnum::DAMAGE);
+
+			IndexNum index = _iplayer_data->GetIndexNum(name);
+
+			if (_angle == 0)
+			{
+				index.z -= 1;
+			}
+			else if (_angle == 90)
+			{
+				index.x += 1;
+			}
+			else if (_angle == 180)
+			{
+				index.z += 1;
+			}
+			else if (_angle == 270)
+			{
+				index.x -= 1;
+			}
+
+			_iplayer_data->SetIndexNum(name, index);
+			break;
+		}
+	}
+
+	
+}
+
+//! @fn 他のプレイヤーを引っ張る
+//! @brief 他のプレイヤーを引っ張る
+void ArmBase::Pull()
+{
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string name = PLAYER_TAG + std::to_string(i + 1);
+
+		if (name == _player_tag)
+			continue;
+
+		if (_hit_box->IsHitObjects(name))
+		{
+			arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+			_iplayer_data->SetState(name, PlayerEnum::DAMAGE);
+
+			IndexNum index = _iplayer_data->GetIndexNum(name);
+
+			if (_angle == 0)
+			{
+				index.z += 1;
+			}
+			else if (_angle == 90)
+			{
+				index.x -= 1;
+			}
+			else if (_angle == 180)
+			{
+				index.z -= 1;
+			}
+			else if (_angle == 270)
+			{
+				index.x += 1;
+			}
+
+			_iplayer_data->SetIndexNum(name, index);
+
+			break;
+		}
+	}
+}
+
+

@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "../../Data/Parametor.h"
 #include "../../Data/MyAlgorithm.h"
+#include "../../Managers/ResouceManager/ResouceManager.h"
 
 Player::Player(std::string tag)
 {
@@ -30,7 +31,9 @@ Player::~Player()
 
 bool Player::FileInitialize(LPCTSTR& file)
 {
-	_model = GraphicsDevice.CreateModelFromFile(file);
+	//_model = GraphicsDevice.CreateModelFromFile(file);
+	_model = ResouceManager::Instance().LoadModelFile(file);
+
 	return true;
 }
 
@@ -106,12 +109,19 @@ int Player::Update()
 		DestroyArm();
 
 		//! ロケットパンチ発射切り替え
-		if (pad->GetButtonState(GamePad_Button1))
+		if (pad->GetButtonState(GamePad_Button2))
 		{
 			_iplayer_data->SetState(_tag, PlayerEnum::ATTACK);
 			CreateArm();
 			return 0;
 		}
+		else if (pad->GetButtonState(GamePad_Button3))
+		{
+			_iplayer_data->SetState(_tag, PlayerEnum::ATTACK);
+			CreateArm();
+			return 0;
+		}
+
 	}
 	
 	//! プレイヤー移動
