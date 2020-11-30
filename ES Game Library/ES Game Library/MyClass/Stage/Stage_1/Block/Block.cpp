@@ -25,7 +25,7 @@ bool Block::Initialize()
 	//マテリアルの設定
 	_model->SetMaterial(GetMaterial());
 	//当たり判定を破壊可能ブロックと同じポジションにする
-	_hit_box->SetHitBoxPosition(_position);
+	_hit_box->SetHitBoxPosition(_position + Vector3(0,1,0));
 	return _model != nullptr;
 }
 /**
@@ -37,13 +37,12 @@ int Block::Update()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		std::string name = PLAYER_TAG + std::to_string(i + 1);
-
-		if (_hit_box->IsHitObjects(name))
-		{
-			return 1;
+		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
+		if (_hit_box ->Tag_Sarch(arm_tag)) {
+			if (_hit_box->IsHitObjects(arm_tag)) {
+				return 1;
+			}
 		}
 	}
-
 	return 0;
 }
