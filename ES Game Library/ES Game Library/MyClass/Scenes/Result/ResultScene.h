@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../BaseScene.h"
+#include"../../Managers/ControllerManager/ContorollerManager.h"
 
 class ResultScene : public BaseScene
 {
