@@ -1,5 +1,6 @@
-#include"Block.h"
+#include "Block.h"
 #include "../../../Managers/ResouceManager/ResouceManager.h"
+#include "../../../Data/IData.h"
 
 Block::Block(std::string tag)
 {
@@ -38,10 +39,22 @@ int Block::Update()
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
-		if (_hit_box ->Tag_Sarch(arm_tag)) {
-			if (_hit_box->IsHitObjects(arm_tag)) {
-				return 1;
-			}
+		
+		if (!_hit_box->Tag_Sarch(arm_tag))
+			continue;
+
+		if (_hit_box->IsHitObjects(arm_tag)) 
+		{
+			IMapData* mapdata = new IMapData;
+			auto data = mapdata->GetData();
+
+			int x = fabsf(_position.x);
+			int z = fabsf(_position.z);
+
+			data[z][x] = ' ';
+			mapdata->SetData(data);
+			delete mapdata;
+			return 1;
 		}
 	}
 	return 0;
