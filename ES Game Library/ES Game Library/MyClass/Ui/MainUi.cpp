@@ -19,9 +19,9 @@ bool MainUi::Initialize()
 {
 	time_limit_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
 	player_date = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 30);
-	HP_green = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/緑.png"));
-	HP_red = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/ゲージベース2.png"));
-	HP_black = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/ゲージベース.png"));
+	HP_green = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/hp_green2.png"));
+	HP_red = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/hp_red2.png"));
+	HP_black = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/hp_white2.png"));
 
 	for (int i = 0; i < 4; ++i) {
 		green_x[i] = 320.0f;
