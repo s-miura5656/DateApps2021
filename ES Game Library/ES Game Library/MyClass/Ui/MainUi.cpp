@@ -18,10 +18,10 @@ MainUi::~MainUi()
 bool MainUi::Initialize()
 {
 	time_limit_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
-	player_date = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 30);
-	HP_green = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/緑.png"));
-	HP_red = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/ゲージベース2.png"));
-	HP_black = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/ゲージベース.png"));
+	player_date = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 20);
+	HP_green = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/hp_green2.png"));
+	HP_red = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/hp_red2.png"));
+	HP_black = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/hp_white2.png"));
 
 	for (int i = 0; i < 4; ++i) {
 		green_x[i] = 320.0f;
@@ -30,10 +30,10 @@ bool MainUi::Initialize()
 	/*hp_bar  = RectWH(0.0f, 0.0f, green_x * hit_points / 300.0f, 22);
 	red_bar = RectWH(0.0f, 0.0f, red_x, 22);*/
 
-	powor_ui_pos[0] = Vector2(  10,   0);
-	powor_ui_pos[1] = Vector2(950,   0);
-	powor_ui_pos[2] = Vector2(  10, 620);
-	powor_ui_pos[3] = Vector2(950, 620);
+	powor_ui_pos[0] = Vector2(  10,   50);
+	powor_ui_pos[1] = Vector2(950 ,   50);
+	powor_ui_pos[2] = Vector2(  10,  570);
+	powor_ui_pos[3] = Vector2(950 ,  570);
 	
 	hp_ui_pos[0] = Vector3(  10,  30,0);
 	hp_ui_pos[1] = Vector3(950,  30,0);
@@ -73,8 +73,8 @@ void MainUi::DebugDraw()
 		const auto text_color = color[i];
 
 		SpriteBatch.DrawString(player_date, power_pos, text_color, _T("PLAYER_ATK : %d"), iplayer_data->GetAttackPowor(tag));
-		SpriteBatch.DrawString(player_date, power_pos + Vector2(0, 30), text_color, _T("PLAYER_HP  : %d"), iplayer_data->GetHitPoint(tag));
-		SpriteBatch.DrawString(player_date, power_pos + Vector2(0, 60), text_color, _T("PLAYER_SPD : %d"), iplayer_data->GetSpeed(tag));
+		//SpriteBatch.DrawString(player_date, power_pos + Vector2(0, 30), text_color, _T("PLAYER_HP  : %d"), iplayer_data->GetHitPoint(tag));
+		SpriteBatch.DrawString(player_date, power_pos + Vector2(0, 20), text_color, _T("PLAYER_SPD : %f"), iplayer_data->GetSpeed(tag));
 	}
 }
 #endif
