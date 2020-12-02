@@ -9,7 +9,7 @@ public:
 	~AttackPowerItem();
 	
 	bool Initialize() override;
-	void ItemEffect(std::string name) override { _iplayer_data->SetAttackPowor(name, _iplayer_data->GetAttackPowor(name) + _attack_powor); }
+	void ItemEffect(std::string name) override { _i_player_data->SetAttackPowor(name, _i_player_data->GetAttackPowor(name) + _attack_powor); }
 	int Update() override;
 
 private:

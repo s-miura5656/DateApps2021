@@ -8,12 +8,13 @@ SpeedItem::SpeedItem(Vector3 position, std::string name)
 	_hit_box->Init();
 	_hit_box->Settags(name);
 	_hit_box->SetHitBox(1, 1, 1);
-	_iplayer_data = new IPrayerData;
+	_i_player_data = new IPrayerData;
 }
 
 SpeedItem::~SpeedItem()
 {
-	delete _iplayer_data;
+	delete _i_player_data;
+	_hit_box.reset();
 }
 
 bool SpeedItem::Initialize()
