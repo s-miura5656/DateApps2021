@@ -16,13 +16,15 @@ int ArmBase::Update()
 {
 	auto pad = ControllerManager::Instance().GetController(_player_tag);
 	
-	_dist = Vector3_Distance(_i_player_data->GetPosition(_player_tag), _model->GetPosition());
+	_player_distance = Vector3_Distance(_i_player_data->GetPosition(_player_tag), _model->GetPosition());
+
+	_arm_state = _i_arm_Data->GetState(_tag);
 
 	//! アームの発射状態の判定
 	if (pad->GetButtonState(GamePad_Button2) && _arm_state == ArmEnum::PunchState::PUNCH)
 	{
-		if (_arm_state != ArmEnum::PunchState::PUNCH)
-			_arm_state = ArmEnum::PunchState::PUNCH;
+		_arm_state = ArmEnum::PunchState::PUNCH;
+		_i_arm_Data->SetState(_tag, _arm_state);
 	}
 	else
 	{
@@ -32,12 +34,31 @@ int ArmBase::Update()
 
 	if (_arm_state == ArmEnum::PunchState::PUNCH)
 	{
-		MoveTurn(pad);
-
-		ArmFire();
+		if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
+		{
+			_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+			_angle = AngleClamp(_angle);
+		}
 
 		if (_angle_point.size() >= _i_arm_Data->GetLimitRange(_tag))
-			_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+		{
+			_wait_count++;
+
+			if (_wait_count >= 30)
+			{
+				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+				_i_arm_Data->SetState(_tag, _arm_state);
+				_wait_count = 0;
+			}
+		}
+		else
+		{
+			MoveTurn(pad);
+		}
+
+		HitOtherObject();
+
+		return 0;
 	}
 
 	//! アームの戻り状態の処理の判定
@@ -45,7 +66,7 @@ int ArmBase::Update()
 	{
 		ArmReturn();
 
-		if (_dist < 0.6f)
+		if (_player_distance < 0.6f)
 		{
 			_arm_state = ArmEnum::PunchState::NO_PUNCH;
 			_i_arm_Data->SetState(_tag, _arm_state);
@@ -66,6 +87,7 @@ void ArmBase::Draw2D()
 	if (_tag == "Arm_1")
 	{
 		SpriteBatch.DrawString(_font, Vector2(0, 450), Color(1.f, 0.f, 0.f), _T("AnglePointSize:%d"), _angle_point.size());
+		SpriteBatch.DrawString(_font, Vector2(0, 500), Color(1.f, 0.f, 0.f), _T("Angle:%f"), _angle);
 	}
 }
 
@@ -96,38 +118,28 @@ void ArmBase::MoveTurn(Controller* pad)
 
 		if (_lerp_count >= 1.f)
 		{
-			_angle_point.push_back(_new_pos);
 			_move_flag  = false;
+			_angle_point.push_back(_position);
 			_lerp_count = 0;
 		}
 	}
 	else
 	{
-		float abs_x = fabsf(pad->GetPadStateX());
-		float abs_z = fabsf(pad->GetPadStateY());
-
-		_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-		_angle = AngleClamp(_angle);
-
 		int old_index_x = _index_num.x;
 		int old_index_z = _index_num.z;
+		
+		auto dir = _model->GetFrontVector();
 
-		if (abs_x > abs_z)
-		{
-			signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
-			_index_num.x = (int)Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
+		_index_num.x += dir.x;
+		_index_num.x = (int)Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
 
-		}
-		else if (abs_x < abs_z)
-		{
-			signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
-			_index_num.z = (int)Clamp(_index_num.z, 1, map_data.size() - 2);
-		}
+		_index_num.z += -dir.z;
+		_index_num.z = (int)Clamp(_index_num.z, 1, map_data.size() - 2);
 		
 		if (map_data[_index_num.z][_index_num.x] != 'i' &&
 			map_data[_index_num.z][_index_num.x] != 'w')
 		{
-			_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
+			_new_pos = Vector3(1 * _index_num.x, 0, -1 * _index_num.z);
 			_move_flag = true;
 		}
 		else
@@ -178,9 +190,9 @@ void ArmBase::ArmReturn()
 	auto map_data = _i_map_data->GetData();
 }
 
-void ArmBase::ArmFire()
+void ArmBase::HitOtherObject()
 {
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
 

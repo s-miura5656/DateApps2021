@@ -49,8 +49,6 @@ int PlayerManager::Update()
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
 		std::string arm_name = ARM_TAG + std::to_string(i + 1);
 		players[i]->Update();
-		/*i_player_data->setposition(name, players[i]->getpos());
-		i_player_data->setangle(name, players[i]->getangle());*/
 	}
 
     return 0;

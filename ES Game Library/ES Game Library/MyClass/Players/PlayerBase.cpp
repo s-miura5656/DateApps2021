@@ -37,6 +37,9 @@ void PlayerBase::Draw3D()
 	_model->AdvanceTime(GameTimer.GetElapsedSecond() * 2);
 	_model->Draw();
 	_model->SetRotation(Vector3(0, _angle, 0));
+	
+	_i_player_data->SetAngle(_tag, _angle);
+	_i_player_data->SetPosition(_tag, _position);
 
 	auto collision_pos = _model->GetPosition();
 	collision_pos.y += _model->GetScale().y / 2;
@@ -78,7 +81,6 @@ void PlayerBase::Move(Controller* pad)
 		{
 			_move_flag  = false;
 			_lerp_count = 0;
-			_i_player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 			_i_player_data->SetPosition(_tag, _position);
 		}
 	}

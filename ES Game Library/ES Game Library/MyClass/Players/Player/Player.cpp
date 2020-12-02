@@ -85,34 +85,40 @@ int Player::Update()
 		return 0;
 	}
 	
-	if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::WAIT)
+	if (!_move_flag)
 	{
-		DestroyArm();
-
-		//! プレイヤー移動
-		if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
+		//! パンチ発射状態ならすぐさまリターン
+		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
 		{
-			_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-			_angle = AngleClamp(_angle);
-			_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
-		}
-
-		//! ロケットパンチ発射切り替え
-		if (pad->GetButtonState(GamePad_Button2))
-		{
-			_i_player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
-			_i_player_data->SetPosition(_tag, _position);
-			CreateArm();
+			_i_player_data->SetIndexNum(_tag, _index_num);
+			_arm->Update();
 			return 0;
 		}
-	}
+		else
+		{
+			//! プレイヤー移動
+			if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
+			{
+				_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+				_angle = AngleClamp(_angle);
+				_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
+			}
+			else
+			{
+				_i_player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
+			}
 
-	//! パンチ発射状態ならすぐさまリターン
-	if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
-	{
-		_i_player_data->SetIndexNum(_tag, _index_num);
-		_arm->Update();
-		return 0;
+			DestroyArm();
+
+			//! ロケットパンチ発射切り替え
+			if (pad->GetButtonState(GamePad_Button2) && !_move_flag)
+			{
+				_i_player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
+				_i_player_data->SetPosition(_tag, _position);
+				CreateArm();
+				return 0;
+			}
+		}
 	}
 
 	if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::MOVE)

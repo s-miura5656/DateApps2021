@@ -30,6 +30,6 @@ namespace PlayerEnum {
 }
 
 namespace ArmEnum {
-	enum PunchState { NO_PUNCH, PUNCH, RETURN_PUNCH };
+	enum PunchState { NO_PUNCH, PUNCH, WAIT_PUNCH, RETURN_PUNCH };
 	enum PunchType { PULL, PUSH, ALL };
 }

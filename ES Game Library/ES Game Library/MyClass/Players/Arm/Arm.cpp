@@ -13,7 +13,7 @@ Arm::Arm(std::string name)
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_hit_box->Settags(_tag);
-	_hit_box->SetHitBoxScale(1.f);
+	_hit_box->SetHitBoxScale(0.8f);
 
 	_i_player_data = new IPrayerData;
 	_i_arm_Data	   = new IArmData;
@@ -34,10 +34,11 @@ bool Arm::Initialize()
 	_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
 	//_model = ResouceManager::Instance().LoadModelFile(_T("Player/robot_hand01.X"));
 	_model = GraphicsDevice.CreateModelFromFile(_T("Player/robot_hand01.X"));
+	
 	//! Angle
 	_angle = _i_player_data->GetAngle(_player_tag);
-	_model->SetRotation(0, _i_player_data->GetAngle(_player_tag), 0);
 	_old_angle = _angle;
+	_model->SetRotation(0, _angle, 0);
 
 	//! Position
 	_position = _i_player_data->GetPosition(_player_tag);
@@ -50,13 +51,12 @@ bool Arm::Initialize()
 	//! State
 	_arm_state = ArmEnum::PunchState::PUNCH;
 	_i_arm_Data->SetState(_tag, _arm_state);
-	hit_flag = false;
-
-	//! Speed
-	arm_speed = 0.07f;
 
 	//! Scale
 	_model->SetScale(2.f);
+
+	//! distance
+	_player_distance = FLT_MAX;
 
 	//! Material
 	Material mat;
@@ -65,6 +65,10 @@ bool Arm::Initialize()
 	mat.Specular = Color(1.0f, 1.0f, 1.0f);
 
 	_model->SetMaterial(mat);
+
+	//! Flag
+	_shot_flag = true;
+	_move_flag = false;
 
 	return true;
 }

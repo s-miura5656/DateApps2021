@@ -1,6 +1,7 @@
 #include "Block.h"
 #include "../../../Managers/ResouceManager/ResouceManager.h"
 #include "../../../Data/IData.h"
+#include "../../../Data/WordsTable.h"
 
 Block::Block(std::string tag)
 {
@@ -9,7 +10,7 @@ Block::Block(std::string tag)
 	_hit_box->Init();
 	_tag = tag;
 	_hit_box->Settags(_tag);
-	_hit_box->SetHitBoxScale(0.9f);
+	_hit_box->SetHitBoxScale(1.0f);
 }
 
 Block::~Block()
@@ -45,15 +46,19 @@ int Block::Update()
 
 		if (_hit_box->IsHitObjects(arm_tag)) 
 		{
-			IMapData* mapdata = new IMapData;
-			auto data = mapdata->GetData();
+			IMapData* map_data = new IMapData;
+			auto data = map_data->GetData();
 
 			int x = fabsf(_position.x);
 			int z = fabsf(_position.z);
 
 			data[z][x] = ' ';
-			mapdata->SetData(data);
-			delete mapdata;
+			map_data->SetData(data);
+			delete map_data;
+
+			IArmData* arm_data = new IArmData;
+			arm_data->SetState(arm_tag, ArmEnum::PunchState::RETURN_PUNCH);
+			delete arm_data;
 			return 1;
 		}
 	}
