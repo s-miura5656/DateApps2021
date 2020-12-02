@@ -109,7 +109,7 @@ void PlayerBase::Move(Controller* pad)
 			map_data[_index_num.z][_index_num.x] != 'w' &&
 			map_data[_index_num.z][_index_num.x] != 'b')
 		{
-			_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
+			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
 			_i_player_data->SetIndexNum(_tag, _index_num);
 			_move_flag = true;
 		}

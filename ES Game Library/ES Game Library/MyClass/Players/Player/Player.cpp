@@ -115,6 +115,8 @@ int Player::Update()
 			//! ロケットパンチ発射切り替え
 			if (pad->GetButtonState(GamePad_Button2) && !_move_flag)
 			{
+				_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+				_angle = AngleClamp(_angle);
 				_i_player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
 				_i_player_data->SetPosition(_tag, _position);
 				CreateArm();
