@@ -16,7 +16,7 @@ int ArmBase::Update()
 {
 	auto pad = ControllerManager::Instance().GetController(_player_tag);
 	
-	_player_distance = Vector3_Distance(_i_player_data->GetPosition(_player_tag), _model->GetPosition());
+	_player_distance = Vector3_Distance(_i_player_data->GetPosition(_player_tag), _position);
 
 	_arm_state = _i_arm_Data->GetState(_tag);
 
@@ -86,8 +86,8 @@ void ArmBase::Draw2D()
 {
 	if (_tag == "Arm_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 450), Color(1.f, 0.f, 0.f), _T("AnglePointSize:%d"), _angle_point.size());
-		SpriteBatch.DrawString(_font, Vector2(0, 500), Color(1.f, 0.f, 0.f), _T("Angle:%f"), _angle);
+		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(0.f, 0.f, 0.f), _T("AnglePointSize:%d"), _angle_point.size());
+		SpriteBatch.DrawString(_font, Vector2(0, 320), Color(0.f, 0.f, 0.f), _T("CreateCount:%d"), ArmBase::_create_count);
 	}
 }
 
@@ -98,7 +98,7 @@ void ArmBase::Draw3D()
 	_model->Draw();
 	_model->SetRotation(0, _angle, 0);
 
-	auto box_pos = _model->GetPosition();
+	auto box_pos = _position;
 	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
 	_hit_box->SetHitBoxPosition(box_pos);
 	_hit_box->Draw3D();
@@ -128,7 +128,7 @@ void ArmBase::MoveTurn(Controller* pad)
 		int old_index_x = _index_num.x;
 		int old_index_z = _index_num.z;
 		
-		auto dir = _model->GetFrontVector();
+		auto dir = DirectionFromAngle(Vector3(0, _angle, 0));
 
 		_index_num.x += dir.x;
 		_index_num.x = (int)Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
@@ -153,20 +153,15 @@ void ArmBase::MoveTurn(Controller* pad)
 	}
 }
 
-void ArmBase::Move(Controller* pad)
-{
-
-}
-
 //! @fn アームの戻り
 //! @brief アームの戻り移動を処理する
 void ArmBase::ArmReturn()
 {
 	auto angle_point_size = _angle_point.size();
 
-	Vector3 move_dir = Vector3_Normalize(_angle_point[angle_point_size - 1] - _model->GetPosition());
+	Vector3 move_dir = Vector3_Normalize(_angle_point[angle_point_size - 1] - _position);
 
-	auto dist = Vector3_Distance(_model->GetPosition(), _angle_point[angle_point_size - 1]);
+	auto dist = Vector3_Distance(_position, _angle_point[angle_point_size - 1]);
 
 	if (dist < 0.3f && angle_point_size > 1)
 	{
@@ -180,14 +175,12 @@ void ArmBase::ArmReturn()
 
 	_model->SetRotation(0, _angle, 0);
 
-	_position = _model->GetPosition() + move_dir;
+	_position += move_dir;
 
 	if (move_dir == Vector3_Zero && angle_point_size > 1)
 	{
 		_angle_point.erase(_angle_point.begin() + (angle_point_size - 1));
 	}
-
-	auto map_data = _i_map_data->GetData();
 }
 
 void ArmBase::HitOtherObject()
@@ -201,8 +194,8 @@ void ArmBase::HitOtherObject()
 
 		if (_hit_box->IsHitObjects(name))
 		{
-			auto&& i_player_data = _i_player_data;
-			auto&& i_arm_data    = _i_arm_Data;
+			auto i_player_data = _i_player_data;
+			auto i_arm_data    = _i_arm_Data;
 			
 			int damege = i_player_data->GetAttackPowor(_player_tag);
 			int hitpoint = i_player_data->GetHitPoint(name);
@@ -213,8 +206,8 @@ void ArmBase::HitOtherObject()
 
 			_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 
-			i_arm_data->SetState(_tag, _arm_state);
-			i_player_data->SetState(name, PlayerEnum::Animation::DAMAGE);
+			_i_arm_Data->SetState(_tag, _arm_state);
+			_i_player_data->SetState(name, PlayerEnum::Animation::DAMAGE);
 			break;
 		}
 	}

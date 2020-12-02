@@ -28,8 +28,10 @@ public:
 	int GetPlayerNumber() const { return (*_tag.rbegin()) - '0'; }
 
 protected:
+	//! file
 	ANIMATIONMODEL _model;
 	FONT _font;
+	EFFECT _shader;
 
 	const float scale		 = 0.004f;
 	const float player_scale = 1.f;

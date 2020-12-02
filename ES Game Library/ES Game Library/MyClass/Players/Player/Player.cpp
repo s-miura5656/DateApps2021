@@ -20,9 +20,7 @@ Player::Player(std::string tag)
 
 Player::~Player()
 {
-	if (_arm != nullptr)
-		delete _arm;
-	
+	delete _arm;
 	delete _i_map_data;
 	delete _i_arm_Data;
 	delete _i_player_data;
@@ -32,9 +30,12 @@ Player::~Player()
 bool Player::Initialize()
 {
 	//! file
-	_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
+	_font = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
 	_model = GraphicsDevice.CreateAnimationModelFromFile(_T("player/robot.X"));
 
+//	_model = ResouceManager::Instance().LoadAnimationModelFile(_T("player/robot.X"));
+
+//	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
 
 	//! Position
 	_model->SetPosition(_i_player_data->GetPosition(_tag));
@@ -72,15 +73,15 @@ int Player::Update()
 
 	if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
 	{
-		DestroyArm();
-
 		_damage_count++;
 
 		if (_damage_count > 120)
 		{
-			_i_player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
+			_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
 			_damage_count = 0;
 		}
+
+		DestroyArm();
 
 		return 0;
 	}
@@ -96,6 +97,8 @@ int Player::Update()
 		}
 		else
 		{
+			DestroyArm();
+
 			//! プレイヤー移動
 			if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
 			{
@@ -108,15 +111,12 @@ int Player::Update()
 				_i_player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 			}
 
-			DestroyArm();
-
 			//! ロケットパンチ発射切り替え
 			if (pad->GetButtonState(GamePad_Button2) && !_move_flag)
 			{
 				_i_player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
 				_i_player_data->SetPosition(_tag, _position);
 				CreateArm();
-				return 0;
 			}
 		}
 	}
