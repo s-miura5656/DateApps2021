@@ -69,7 +69,6 @@ bool SceneManager::Initialize()
 	_camera->SetPerspectiveFieldOfView(1.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 	GraphicsDevice.SetCamera(_camera);
 	
-
 	//! ˆê”ÔÅ‰‚É“Ç‚İ‚Ü‚ê‚éƒV[ƒ“
 	ChangeScene(SceneState::MAIN);
 

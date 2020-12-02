@@ -25,7 +25,7 @@ protected:
 
 	MODEL _box;
 	Vector3 _position;
-	IPrayerData* _iplayer_data;
+	IPrayerData* _i_player_data;
 	std::unique_ptr<HitBox> _hit_box;
 
 	bool Removeflag = false;

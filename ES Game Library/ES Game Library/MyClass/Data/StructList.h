@@ -18,7 +18,8 @@ struct ArmParam {
 	Vector3 position	 = Vector3_Zero;
 	float   angle		 = 0.f;
 	int     attack_powor = 200;
-	float   speed		 = 0.2f;
+	float   go_speed	 = 0.2f;
+	float   return_speed = 0.2f;
 	int     limit_range  = 5;
 };
 

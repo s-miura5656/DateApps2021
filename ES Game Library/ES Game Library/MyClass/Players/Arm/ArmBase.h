@@ -18,9 +18,10 @@ public:
 	virtual void Draw2D();
 	virtual void Draw3D();
 
+	void MoveTurn(Controller* pad);
 	void Move(Controller* pad);
 	void ArmReturn();
-	void ArmFire();
+	void HitOtherObject();
 
 	int     GetArmState() { return _arm_state; }
 	Vector3 ArmGetPos()   { return _model->GetPosition(); }
@@ -28,38 +29,44 @@ public:
 
 
 protected:
-	FONT _font;
+
+	//! file
+	FONT  _font;
+	MODEL _model;
+
+	//! tag
 	std::string _tag;
 	std::string _player_tag;
 	
-	MODEL _model;
-
+	//! state
 	int _arm_state;
 
-	float scale;
+	//! transform
 	float _angle = 0.f;
-	int _old_angle = INT_MAX;
-	float arm_speed;
+	int   _old_angle = INT_MAX;
 
-	bool  hit_flag;
-
-	float _dist;
+	//! distnace
+	float _player_distance;
 
 	std::vector<Vector3> _angle_point;
 	Vector3 _position = Vector3_Zero;
 	Vector3 _old_pos  = Vector3_Zero;
 	Vector3 _new_pos = Vector3_Zero;
 
-	IPrayerData* _iplayer_data;
-	IArmData* _iarm_Data;
-	IMapData*	 _imap_data;
+	IPrayerData* _i_player_data;
+	IArmData*	 _i_arm_Data;
+	IMapData*	 _i_map_data;
 
 	
 	std::unique_ptr<HitBox> _hit_box;
 
 	IndexNum _index_num;
 
-	bool _move_flag = false;
+	//! count
 	float _lerp_count = 0.f;
-	int _count = 0;
+	int   _wait_count = 0;
+
+	//! flag
+	bool _shot_flag;
+	bool _move_flag;
 };

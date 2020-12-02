@@ -15,9 +15,15 @@ void PlayerBase::Draw2D()
 {
 	if (_tag == "Player_1")
 	{
-		//SpriteBatch.DrawString(_font, Vector2(0, 250), Color(1.f, 1.f, 1.f), _T("ANGLE:%f"), _angle);
-		//SpriteBatch.DrawString(_font, Vector2(0, 350), Color(1.f, 1.f, 1.f), _T("POS_X:%f"), _iplayer_data->GetPosition(_tag).x);
-		//SpriteBatch.DrawString(_font, Vector2(0, 400), Color(1.f, 1.f, 1.f), _T("POS_Z:%f"), _iplayer_data->GetPosition(_tag).z);
+		SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 0.f, 0.f), _T("プレイヤーのHP:%f"), _i_player_data->GetHitPoint(_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 250), Color(1.f, 0.f, 0.f), _T("プレイヤーの移動速度:%f"), _i_player_data->GetSpeed(_tag));
+	}
+
+	if (_arm_tag == "Arm_1")
+	{
+		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 0.f, 0.f), _T("アームの飛ぶ速度:%f"), _i_arm_Data->GetGoSpeed(_arm_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 350), Color(1.f, 0.f, 0.f), _T("アームの戻る速度:%f"), _i_arm_Data->GetReturnSpeed(_arm_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 400), Color(1.f, 0.f, 0.f), _T("アームの最大距離:%d"), _i_arm_Data->GetLimitRange(_arm_tag));
 	}
 
 	if (_arm != nullptr)
@@ -26,11 +32,14 @@ void PlayerBase::Draw2D()
 
 void PlayerBase::Draw3D()
 {
-	_model->SetPosition(_iplayer_data->GetPosition(_tag));
+	_model->SetPosition(_position);
 	_model->SetRotation(Vector3(0, _angle - 180, 0));
 	_model->AdvanceTime(GameTimer.GetElapsedSecond() * 2);
 	_model->Draw();
 	_model->SetRotation(Vector3(0, _angle, 0));
+	
+	_i_player_data->SetAngle(_tag, _angle);
+	_i_player_data->SetPosition(_tag, _position);
 
 	auto collision_pos = _model->GetPosition();
 	collision_pos.y += _model->GetScale().y / 2;
@@ -43,7 +52,7 @@ void PlayerBase::Draw3D()
 
 void PlayerBase::ChangeAnimation()
 {
-	auto&& state = _iplayer_data->GetState(_tag);
+	int state = _i_player_data->GetState(_tag);
 
 	for (int i = 0; i < PlayerEnum::Animation::ANIMATION_ALL_TYPE; ++i)
 	{
@@ -59,73 +68,59 @@ void PlayerBase::ChangeAnimation()
 
 void PlayerBase::Move(Controller* pad)
 {
-	auto&& map_data = _imap_data->GetData();
+	auto&& map_data = _i_map_data->GetData();
 
 	if (_move_flag)
 	{
 		_position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
-		_lerp_count += _iplayer_data->GetSpeed(_tag);
+		_lerp_count += _i_player_data->GetSpeed(_tag);
 
-		if (_lerp_count >= 1.f)
+		_lerp_count = Clamp(_lerp_count, 0, 1.f);
+
+		if (_lerp_count >= 1.f) 
 		{
-			_move_flag = false;
+			_move_flag  = false;
 			_lerp_count = 0;
-			_iplayer_data->SetState(_tag, PlayerEnum::Animation::WAIT);
+			_i_player_data->SetPosition(_tag, _position);
 		}
 	}
 	else
 	{
 		float abs_x = fabsf(pad->GetPadStateX());
-
 		float abs_z = fabsf(pad->GetPadStateY());
+		
+		int old_index_x = _index_num.x;
+		int old_index_z = _index_num.z;
 
 		if (abs_x > abs_z)
 		{
-			int old_index = _index_num.x;
-
 			std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
 
-			_index_num.x = Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
-
-			if (map_data[_index_num.z][_index_num.x] != 'i' &&
-				map_data[_index_num.z][_index_num.x] != 'w' &&
-				map_data[_index_num.z][_index_num.x] != 'b')
-			{
-				_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
-				_move_flag = true;
-			}
-			else
-			{
-				_index_num.x = old_index;
-			}
+			_index_num.x = (int)Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
 		}
-
-		if (abs_x < abs_z)
+		else if (abs_x < abs_z)
 		{
-			int old_index = _index_num.z;
-
 			std::signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
 
-			_index_num.z = Clamp(_index_num.z, 1, map_data.size() - 2);
+			_index_num.z = (int)Clamp(_index_num.z, 1, map_data.size() - 2);
+		}
 
-			if (map_data[_index_num.z][_index_num.x] != 'i' &&
-				map_data[_index_num.z][_index_num.x] != 'w' &&
-				map_data[_index_num.z][_index_num.x] != 'b')
-			{
-				_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
-				_iplayer_data->SetIndexNum(_tag, _index_num);
-				_move_flag = true;
-			}
-			else
-			{
-				_index_num.z = old_index;
-			}
+		if (map_data[_index_num.z][_index_num.x] != 'i' &&
+			map_data[_index_num.z][_index_num.x] != 'w' &&
+			map_data[_index_num.z][_index_num.x] != 'b')
+		{
+			_new_pos = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
+			_i_player_data->SetIndexNum(_tag, _index_num);
+			_move_flag = true;
+		}
+		else
+		{
+			_index_num.x = old_index_x;
+			_index_num.z = old_index_z;
 		}
 
 		_old_pos = _position;
 	}
-
-	_model->SetPosition(_position);
 }
 
 void PlayerBase::CreateArm()
@@ -142,6 +137,7 @@ void PlayerBase::DestroyArm()
 	if (_arm == nullptr)
 		return;
 
+	delete _arm;
 	_arm = nullptr;
 }
 

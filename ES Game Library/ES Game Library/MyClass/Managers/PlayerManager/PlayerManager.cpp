@@ -28,7 +28,7 @@ bool PlayerManager::Initialize()
 {
 	LPCTSTR model_file_name = _T("player/robot.X");
 
-//プレイヤー
+	//プレイヤー
 	for (int i = 0; i < players.size(); ++i)
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
@@ -49,8 +49,6 @@ int PlayerManager::Update()
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
 		std::string arm_name = ARM_TAG + std::to_string(i + 1);
 		players[i]->Update();
-		i_player_data->SetPosition(name, players[i]->GetPos());
-		i_player_data->SetAngle(name, players[i]->GetAngle());
 	}
 
     return 0;
@@ -58,14 +56,12 @@ int PlayerManager::Update()
 
 void PlayerManager::Draw2D()
 {
-#if _DEBUG
 	auto player = players;
 
 	for (int i = 0; i < players.size(); ++i)
 	{
 		player[i]->Draw2D();
 	}
-#endif
 }
 
 void PlayerManager::Draw3D()

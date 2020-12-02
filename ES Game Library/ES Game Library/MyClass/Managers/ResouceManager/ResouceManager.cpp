@@ -14,6 +14,7 @@ SPRITE ResouceManager::LordSpriteFile(LPCTSTR sprite_file_name)
 		return _resouces_sprite[sprite_file_name];
 	}
 }
+
 MODEL ResouceManager::LoadModelFile(LPCTSTR model_file_name)
 {
 	auto&& it = _resouces_model.find(model_file_name);
@@ -28,6 +29,7 @@ MODEL ResouceManager::LoadModelFile(LPCTSTR model_file_name)
 		return _resouces_model[model_file_name];
 	}
 }
+
 ANIMATIONMODEL ResouceManager::LoadAnimationModelFile(LPCTSTR animation_model_name)
 {
 	auto&& it = _resouces_animation_model.find(animation_model_name);
@@ -42,6 +44,7 @@ ANIMATIONMODEL ResouceManager::LoadAnimationModelFile(LPCTSTR animation_model_na
 		return _resouces_animation_model[animation_model_name];
 	}
 }
+
 FONT ResouceManager::LordFontFile(LPCTSTR font_file_name,float size)
 {
 	auto&& it = _resouces_font.find(font_file_name);
@@ -56,6 +59,7 @@ FONT ResouceManager::LordFontFile(LPCTSTR font_file_name,float size)
 		return _resouces_font[font_file_name];
 	}
 }
+
 SHADER ResouceManager::LordShaderFile(LPCTSTR shader_file_name)
 {
 	auto&& it = _resouces_shader.find(shader_file_name);
@@ -70,6 +74,7 @@ SHADER ResouceManager::LordShaderFile(LPCTSTR shader_file_name)
 		return _resouces_shader[shader_file_name];
 	}
 }
+
 EFFECT ResouceManager::LordEffectFile(LPCTSTR effect_file_name)
 {
 	auto&& it = _resouces_effect.find(effect_file_name);
@@ -84,6 +89,7 @@ EFFECT ResouceManager::LordEffectFile(LPCTSTR effect_file_name)
 		return _resouces_effect[effect_file_name];
 	}
 }
+
 SOUND ResouceManager::LordSoundFile(LPTSTR sound_file_name)
 {
 	auto&& it = _resouces_sound.find(sound_file_name);
@@ -98,6 +104,7 @@ SOUND ResouceManager::LordSoundFile(LPTSTR sound_file_name)
 		return _resouces_sound[sound_file_name];
 	}
 }
+
 MUSIC ResouceManager::LordMusicFile(LPTSTR music_file_name)
 {
 	auto&& it = _resouces_music.find(music_file_name);
@@ -112,6 +119,7 @@ MUSIC ResouceManager::LordMusicFile(LPTSTR music_file_name)
 		return _resouces_music[music_file_name];
 	}
 }
+
 MEDIA ResouceManager::LordMediaFile(LPTSTR media_file_name)
 {
 	auto&& it = _resouces_media.find(media_file_name);
