@@ -9,7 +9,7 @@ public:
 	~SpeedItem();
 
 	bool Initialize() override;
-	void ItemEffect(std::string name) override { _iplayer_data->SetSpeed(name, _iplayer_data->GetSpeed(name) + _speed); }
+	void ItemEffect(std::string name) override { _i_player_data->SetSpeed(name, _i_player_data->GetSpeed(name) + _speed); }
 	int Update() override;
 
 private:

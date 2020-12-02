@@ -44,9 +44,9 @@ protected:
 	Vector3 _new_pos		 = Vector3_Zero;
 
 	ArmBase* _arm = nullptr;
-	IPrayerData* _iplayer_data;
-	IArmData* _iarm_data;
-	IMapData* _imap_data;
+	IPrayerData* _i_player_data;
+	IArmData* _i_arm_Data;
+	IMapData* _i_map_data;
 
 	std::unique_ptr<HitBox> _hit_box;
 	std::string _tag;
@@ -56,5 +56,5 @@ protected:
 
 	bool _move_flag = false;
 	float _lerp_count = 0.f;
-	int count = 0;
+	int _damage_count = 0;
 };

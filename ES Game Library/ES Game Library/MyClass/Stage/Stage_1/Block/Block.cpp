@@ -14,7 +14,7 @@ Block::Block(std::string tag)
 
 Block::~Block()
 {
-	_hit_box->OnReMove();
+	_hit_box.reset();
 }
 
 bool Block::Initialize()
@@ -57,5 +57,6 @@ int Block::Update()
 			return 1;
 		}
 	}
+
 	return 0;
 }

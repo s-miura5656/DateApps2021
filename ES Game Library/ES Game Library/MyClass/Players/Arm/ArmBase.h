@@ -18,6 +18,7 @@ public:
 	virtual void Draw2D();
 	virtual void Draw3D();
 
+	void MoveTurn(Controller* pad);
 	void Move(Controller* pad);
 	void ArmReturn();
 	void ArmFire();
@@ -50,9 +51,9 @@ protected:
 	Vector3 _old_pos  = Vector3_Zero;
 	Vector3 _new_pos = Vector3_Zero;
 
-	IPrayerData* _iplayer_data;
-	IArmData* _iarm_Data;
-	IMapData*	 _imap_data;
+	IPrayerData* _i_player_data;
+	IArmData*	 _i_arm_Data;
+	IMapData*	 _i_map_data;
 
 	
 	std::unique_ptr<HitBox> _hit_box;

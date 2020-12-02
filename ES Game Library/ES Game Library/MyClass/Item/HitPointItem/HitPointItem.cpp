@@ -7,12 +7,13 @@ HitPointItem::HitPointItem(Vector3 position, std::string name)
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_hit_box->Settags(name);
-	_iplayer_data = new IPrayerData;
+	_i_player_data = new IPrayerData;
 }
 
 HitPointItem::~HitPointItem()
 {
-	delete _iplayer_data;
+	delete _i_player_data;
+	_hit_box.reset();
 }
 
 

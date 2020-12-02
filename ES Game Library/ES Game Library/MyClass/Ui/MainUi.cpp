@@ -62,7 +62,6 @@ void MainUi::Draw2D()
 	HpAnimation();
 }
 
-#ifdef _DEBUG
 void MainUi::DebugDraw()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
@@ -77,7 +76,7 @@ void MainUi::DebugDraw()
 		SpriteBatch.DrawString(player_date, power_pos + Vector2(0, 20), text_color, _T("PLAYER_SPD : %f"), iplayer_data->GetSpeed(tag));
 	}
 }
-#endif
+
 void MainUi::HpAnimation()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)

@@ -13,9 +13,9 @@ Player::Player(std::string tag)
 	_hit_box->Init();
 	_hit_box->Settags(tag);
 	_hit_box->SetHitBoxScale(0.8f);
-	_iplayer_data = new IPrayerData;
-	_iarm_data = new IArmData;
-	_imap_data = new IMapData;
+	_i_player_data = new IPrayerData;
+	_i_arm_Data    = new IArmData;
+	_i_map_data    = new IMapData;
 }
 
 Player::~Player()
@@ -23,10 +23,10 @@ Player::~Player()
 	if (_arm != nullptr)
 		delete _arm;
 	
-	delete _imap_data;
-	delete _iarm_data;
-	delete _iplayer_data;
-	_hit_box->OnReMove();
+	delete _i_map_data;
+	delete _i_arm_Data;
+	delete _i_player_data;
+	_hit_box.reset();
 }
 
 bool Player::Initialize()
@@ -37,15 +37,12 @@ bool Player::Initialize()
 
 
 	//! Position
-	_model->SetPosition(_iplayer_data->GetPosition(_tag));
+	_model->SetPosition(_i_player_data->GetPosition(_tag));
 	_position = _model->GetPosition();
 	_old_pos = _position;
 	_new_pos = _position;
 	_index_num.Initialize(fabsf(_position.x), fabsf(_position.y), fabsf(_position.z));
-	_iplayer_data->SetIndexNum(_tag, _index_num);
-
-	//! Speed
-	_iarm_data->SetSpeed(_arm_tag, 0.1f);
+	_i_player_data->SetIndexNum(_tag, _index_num);
 
 	//! Scale
 	_model->SetScale(player_scale);
@@ -73,51 +70,57 @@ int Player::Update()
 
 	DebugControll();
 
-	if (_iplayer_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
-	{
-		_index_num = _iplayer_data->GetIndexNum(_tag);
-		_position = Vector3(1 * _index_num.x, 0, 1 * -_index_num.z);
-		_model->SetPosition(_position);
-		_iplayer_data->SetState(_tag, PlayerEnum::Animation::WAIT);
-		return 0;
-	}
-	
-	if (_iplayer_data->GetState(_tag) == PlayerEnum::Animation::WAIT)
+	if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
 	{
 		DestroyArm();
 
-		//! ロケットパンチ発射切り替え
-		if (pad->GetButtonState(GamePad_Button2))
+		_damage_count++;
+
+		if (_damage_count > 120)
 		{
-			_iplayer_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
-			_iplayer_data->SetPosition(_tag, _position);
-			CreateArm();
-			return 0;
+			_i_player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
+			_damage_count = 0;
 		}
+
+		return 0;
+	}
+	
+	if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::WAIT)
+	{
+		DestroyArm();
 
 		//! プレイヤー移動
 		if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
 		{
 			_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
 			_angle = AngleClamp(_angle);
-			_iplayer_data->SetState(_tag, PlayerEnum::Animation::MOVE);
+			_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
+		}
+
+		//! ロケットパンチ発射切り替え
+		if (pad->GetButtonState(GamePad_Button2))
+		{
+			_i_player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
+			_i_player_data->SetPosition(_tag, _position);
+			CreateArm();
+			return 0;
 		}
 	}
 
 	//! パンチ発射状態ならすぐさまリターン
-	if (_iplayer_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
+	if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
 	{
-		_iplayer_data->SetIndexNum(_tag, _index_num);
+		_i_player_data->SetIndexNum(_tag, _index_num);
 		_arm->Update();
 		return 0;
 	}
 
-	if (_iplayer_data->GetState(_tag) == PlayerEnum::Animation::MOVE)
+	if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::MOVE)
 	{
 		//! 移動
 		Move(pad);
 	}
-	
+
 	return 0;
 }
 
@@ -126,20 +129,9 @@ void Player::DebugControll()
 	KeyboardBuffer keybuffer = Keyboard->GetBuffer();
 	KeyboardState keystate   = Keyboard->GetState();
 
-	//! アームの移動速度調整
-	float speed = _iarm_data->GetSpeed(_arm_tag);
 
-	if (keybuffer.IsPressed(Keys_Up))
-		speed += 0.01f;
-
-	if (keybuffer.IsPressed(Keys_Down))
-		speed -= 0.01f;
-
-	speed = Clamp(speed, 0.01f, 10.0f);
-	_iarm_data->SetSpeed(_arm_tag, speed);
-
-	//! プレイヤーの移動速度調整
-	speed = _iplayer_data->GetSpeed(_tag);
+	//! アームの飛ぶ速度調整
+	float speed = _i_arm_Data->GetGoSpeed(_arm_tag);
 
 	if (keybuffer.IsPressed(Keys_Up) && keystate.IsKeyDown(Keys_LeftControl))
 		speed += 0.01f;
@@ -148,20 +140,47 @@ void Player::DebugControll()
 		speed -= 0.01f;
 
 	speed = Clamp(speed, 0.01f, 10.0f);
-	_iplayer_data->SetSpeed(_tag, speed);
+	_i_arm_Data->SetGoSpeed(_arm_tag, speed);
 
-	//! アームの限界距離
-	int range = _iarm_data->GetLimitRange(_arm_tag);
+
+	//! アームの戻る速度調整
+	speed = _i_arm_Data->GetReturnSpeed(_arm_tag);
 
 	if (keybuffer.IsPressed(Keys_Up) && keystate.IsKeyDown(Keys_LeftAlt))
-		range++;
+		speed += 0.01f;
 
 	if (keybuffer.IsPressed(Keys_Down) && keystate.IsKeyDown(Keys_LeftAlt))
+		speed -= 0.01f;
+
+	speed = Clamp(speed, 0.01f, 10.0f);
+	_i_arm_Data->SetReturnSpeed(_arm_tag, speed);
+
+
+	//! プレイヤーの移動速度調整
+	speed = _i_player_data->GetSpeed(_tag);
+
+	if (keybuffer.IsPressed(Keys_Up) && keystate.IsKeyDown(Keys_LeftShift))
+		speed += 0.01f;
+
+	if (keybuffer.IsPressed(Keys_Down) && keystate.IsKeyDown(Keys_LeftShift))
+		speed -= 0.01f;
+
+	speed = Clamp(speed, 0.01f, 10.0f);
+	_i_player_data->SetSpeed(_tag, speed);
+
+
+	//! アームの限界距離
+	int range = _i_arm_Data->GetLimitRange(_arm_tag);
+
+	if (keybuffer.IsPressed(Keys_Right))
+		range++;
+
+	if (keybuffer.IsPressed(Keys_Left))
 		range--;
 
 	range = (int)Clamp(range, 1, 20);
 
-	_iarm_data->SetLimitRange(_arm_tag, range);
+	_i_arm_Data->SetLimitRange(_arm_tag, range);
 }
 
 

@@ -10,7 +10,7 @@ public:
 	~HitPointItem();
 
 	bool Initialize() override;
-	void ItemEffect(std::string name) override { _iplayer_data->SetHitPoint(name, _iplayer_data->GetHitPoint(name) + _hit_point); }
+	void ItemEffect(std::string name) override { _i_player_data->SetHitPoint(name, _i_player_data->GetHitPoint(name) + _hit_point); }
 	int  Update() override;
 
 private:
