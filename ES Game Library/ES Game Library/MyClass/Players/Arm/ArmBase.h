@@ -19,14 +19,8 @@ public:
 	virtual void Draw3D();
 
 	void MoveTurn(Controller* pad);
-	void Move(Controller* pad);
 	void ArmReturn();
 	void HitOtherObject();
-
-	int     GetArmState() { return _arm_state; }
-	Vector3 ArmGetPos()   { return _model->GetPosition(); }
-	MODEL   GetArm()      { return _model; }
-
 
 protected:
 
@@ -51,7 +45,7 @@ protected:
 	std::vector<Vector3> _angle_point;
 	Vector3 _position = Vector3_Zero;
 	Vector3 _old_pos  = Vector3_Zero;
-	Vector3 _new_pos = Vector3_Zero;
+	Vector3 _new_pos  = Vector3_Zero;
 
 	IPrayerData* _i_player_data;
 	IArmData*	 _i_arm_Data;
@@ -65,6 +59,7 @@ protected:
 	//! count
 	float _lerp_count = 0.f;
 	int   _wait_count = 0;
+	static int _create_count;
 
 	//! flag
 	bool _shot_flag;

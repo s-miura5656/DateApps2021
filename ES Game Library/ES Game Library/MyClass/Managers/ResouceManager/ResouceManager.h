@@ -31,13 +31,13 @@ private:
 	ResouceManager(const ResouceManager&) = delete;
 	void operator=(const ResouceManager&) = delete;
 
-	std::map<tstring, SPRITE> _resouces_sprite;
-	std::map<tstring, MODEL> _resouces_model;
-	std::map<tstring, ANIMATIONMODEL> _resouces_animation_model;
-	std::map<tstring, FONT> _resouces_font;
-	std::map<tstring, SHADER> _resouces_shader;
-	std::map<tstring, EFFECT> _resouces_effect;
-	std::map<tstring, SOUND> _resouces_sound;
-	std::map<tstring, MUSIC> _resouces_music;
-	std::map<tstring, MEDIA> _resouces_media;
+	std::map<tstring, SPRITE>			_resouces_sprite;
+	std::map<tstring, MODEL>			_resouces_model;
+	std::map<tstring, ANIMATIONMODEL>   _resouces_animation_model;
+	std::map<tstring, FONT>				_resouces_font;
+	std::map<tstring, SHADER>			_resouces_shader;
+	std::map<tstring, EFFECT>			_resouces_effect;
+	std::map<tstring, SOUND>			_resouces_sound;
+	std::map<tstring, MUSIC>			_resouces_music;
+	std::map<tstring, MEDIA>			_resouces_media;
 };

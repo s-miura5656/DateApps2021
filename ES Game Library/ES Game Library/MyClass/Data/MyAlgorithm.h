@@ -123,3 +123,20 @@ static int AngleClamp(float angle)
 
 	return _angle;
 }
+
+//! @fn  前方向の取得
+//! @brief 回転軸から前方向の取得
+//! @param (angle) オイラーの回転軸
+//! @return 前方向
+static Vector3 DirectionFromAngle(Vector3 angle) 
+{
+	auto matrix_x = Matrix_CreateRotationX(angle.x);
+
+	auto matrix_y = Matrix_CreateRotationY(angle.y);
+
+	auto matrix_z = Matrix_CreateRotationZ(angle.z);
+
+	Matrix front_matrix = matrix_x * matrix_y * matrix_z;
+
+	return Vector3(front_matrix._31, front_matrix._32, front_matrix._33);
+}

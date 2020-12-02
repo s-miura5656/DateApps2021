@@ -125,8 +125,8 @@ void PlayerBase::Move(Controller* pad)
 
 void PlayerBase::CreateArm()
 {
-	if (_arm != nullptr)
-		_arm = nullptr;
+	delete _arm;
+	_arm = nullptr;
 
 	_arm = new Arm(_tag);
 	_arm->Initialize();
@@ -134,9 +134,6 @@ void PlayerBase::CreateArm()
 
 void PlayerBase::DestroyArm()
 {
-	if (_arm == nullptr)
-		return;
-
 	delete _arm;
 	_arm = nullptr;
 }
