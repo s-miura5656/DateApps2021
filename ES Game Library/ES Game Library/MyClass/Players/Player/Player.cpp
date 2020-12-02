@@ -32,9 +32,9 @@ Player::~Player()
 bool Player::Initialize()
 {
 	//! file
-	_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
+	_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 20);
 	_model = GraphicsDevice.CreateAnimationModelFromFile(_T("player/robot.X"));
-
+//	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
 
 	//! Position
 	_model->SetPosition(_i_player_data->GetPosition(_tag));
@@ -78,7 +78,7 @@ int Player::Update()
 
 		if (_damage_count > 120)
 		{
-			_i_player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
+			_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
 			_damage_count = 0;
 		}
 

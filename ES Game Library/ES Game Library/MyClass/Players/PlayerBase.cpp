@@ -15,15 +15,15 @@ void PlayerBase::Draw2D()
 {
 	if (_tag == "Player_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 0.f, 0.f), _T("プレイヤーのHP:%f"), _i_player_data->GetHitPoint(_tag));
-		SpriteBatch.DrawString(_font, Vector2(0, 250), Color(1.f, 0.f, 0.f), _T("プレイヤーの移動速度:%f"), _i_player_data->GetSpeed(_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("プレイヤーのHP:%d"), _i_player_data->GetHitPoint(_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("プレイヤーの移動速度:%f"), _i_player_data->GetSpeed(_tag));
 	}
 
 	if (_arm_tag == "Arm_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 0.f, 0.f), _T("アームの飛ぶ速度:%f"), _i_arm_Data->GetGoSpeed(_arm_tag));
-		SpriteBatch.DrawString(_font, Vector2(0, 350), Color(1.f, 0.f, 0.f), _T("アームの戻る速度:%f"), _i_arm_Data->GetReturnSpeed(_arm_tag));
-		SpriteBatch.DrawString(_font, Vector2(0, 400), Color(1.f, 0.f, 0.f), _T("アームの最大距離:%d"), _i_arm_Data->GetLimitRange(_arm_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 240), Color(1.f, 1.f, 1.f), _T("アームの飛ぶ速度:%f"), _i_arm_Data->GetGoSpeed(_arm_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 260), Color(1.f, 1.f, 1.f), _T("アームの戻る速度:%f"), _i_arm_Data->GetReturnSpeed(_arm_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 280), Color(1.f, 1.f, 1.f), _T("アームの最大距離:%d"), _i_arm_Data->GetLimitRange(_arm_tag));
 	}
 
 	if (_arm != nullptr)

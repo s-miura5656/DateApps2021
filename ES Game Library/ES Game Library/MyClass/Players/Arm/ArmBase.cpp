@@ -86,8 +86,8 @@ void ArmBase::Draw2D()
 {
 	if (_tag == "Arm_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 450), Color(1.f, 0.f, 0.f), _T("AnglePointSize:%d"), _angle_point.size());
-		SpriteBatch.DrawString(_font, Vector2(0, 500), Color(1.f, 0.f, 0.f), _T("Angle:%f"), _angle);
+		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(0.f, 0.f, 0.f), _T("AnglePointSize:%d"), _angle_point.size());
+		SpriteBatch.DrawString(_font, Vector2(0, 320), Color(0.f, 0.f, 0.f), _T("Angle:%f"), _angle);
 	}
 }
 

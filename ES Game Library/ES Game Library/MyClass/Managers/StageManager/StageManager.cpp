@@ -88,8 +88,8 @@ int StageManager::Update()
 		if (stages[i]->Update() == 1)
 		{
 			const string random_item[3] = { POWOR_ITEM_TAG ,SPEED_ITEM_TAG ,HITPOINT_ITEM_TAG };
-			ItemCounter* itemcounter = new ItemCounter;
-			itemcounter->SetItem(random_item[MathHelper_Random(0,2)],stages[i]->GetPosition());
+			/*ItemCounter* itemcounter = new ItemCounter;
+			itemcounter->SetItem(random_item[MathHelper_Random(0,2)],stages[i]->GetPosition());*/
 			stages.erase(stages.begin() + i);
 		}
 	}
