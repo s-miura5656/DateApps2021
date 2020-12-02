@@ -31,7 +31,7 @@ Arm::~Arm()
 bool Arm::Initialize()
 {
 	//! File
-	_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
+	_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 20);
 	//_model = ResouceManager::Instance().LoadModelFile(_T("Player/robot_hand01.X"));
 	_model = GraphicsDevice.CreateModelFromFile(_T("Player/robot_hand01.X"));
 	
