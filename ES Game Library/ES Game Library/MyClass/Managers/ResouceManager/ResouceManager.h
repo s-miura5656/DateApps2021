@@ -18,15 +18,15 @@ public:
 		return instance;
 	};
 
-	SPRITE LordSpriteFile(LPCTSTR sprite_file_name);
-	MODEL LoadModelFile(LPCTSTR model_file_name);
-	ANIMATIONMODEL LoadAnimationModelFile(LPCTSTR animation_model_name);
-	FONT LordFontFile(LPCTSTR font_file_name, float size);
-	SHADER LordShaderFile(LPCTSTR shader_file_name);
-	EFFECT LordEffectFile(LPCTSTR effect_file_name);
-	SOUND LordSoundFile(LPTSTR sound_file_name);
-	MUSIC LordMusicFile(LPTSTR music_file_name);
-	MEDIA LordMediaFile(LPTSTR media_file_name);
+	SPRITE LordSpriteFile(tstring sprite_file_name);
+	MODEL LoadModelFile(tstring model_file_name);
+	ANIMATIONMODEL LoadAnimationModelFile(tstring animation_model_name);
+	FONT LordFontFile(tstring font_file_name, float size);
+	SHADER LordShaderFile(tstring shader_file_name);
+	EFFECT LordEffectFile(tstring effect_file_name);
+	SOUND LordSoundFile(tstring sound_file_name);
+	MUSIC LordMusicFile(tstring music_file_name);
+	MEDIA LordMediaFile(tstring media_file_name);
 private:
 	ResouceManager(const ResouceManager&) = delete;
 	void operator=(const ResouceManager&) = delete;

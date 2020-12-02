@@ -45,7 +45,8 @@ protected:
 	Vector3 _old_pos		 = Vector3_Zero;
 	Vector3 _new_pos		 = Vector3_Zero;
 
-	ArmBase* _arm = nullptr;
+	std::unique_ptr<ArmBase> _arm;
+	//ArmBase* _arm = nullptr;
 	IPrayerData* _i_player_data;
 	IArmData* _i_arm_Data;
 	IMapData* _i_map_data;

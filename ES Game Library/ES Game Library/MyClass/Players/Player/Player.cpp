@@ -3,6 +3,7 @@
 #include "../../Data/Parametor.h"
 #include "../../Managers/ResouceManager/ResouceManager.h"
 
+
 Player::Player(std::string tag)
 {
 	PlayerParametor::Instance().CreateParametor(tag);
@@ -20,7 +21,7 @@ Player::Player(std::string tag)
 
 Player::~Player()
 {
-	delete _arm;
+	_arm.reset();
 	delete _i_map_data;
 	delete _i_arm_Data;
 	delete _i_player_data;

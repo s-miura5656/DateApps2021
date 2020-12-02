@@ -88,6 +88,8 @@ void ArmBase::Draw2D()
 	{
 		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(0.f, 0.f, 0.f), _T("AnglePointSize:%d"), _angle_point.size());
 		SpriteBatch.DrawString(_font, Vector2(0, 320), Color(0.f, 0.f, 0.f), _T("CreateCount:%d"), ArmBase::_create_count);
+		SpriteBatch.DrawString(_font, Vector2(0, 340), Color(0.f, 0.f, 0.f), _T("Pos_X:%f"), _position.x);
+		SpriteBatch.DrawString(_font, Vector2(0, 360), Color(0.f, 0.f, 0.f), _T("Pos_Z:%f"), _position.z);
 	}
 }
 
@@ -128,27 +130,35 @@ void ArmBase::MoveTurn(Controller* pad)
 		int old_index_x = _index_num.x;
 		int old_index_z = _index_num.z;
 		
-		auto dir = DirectionFromAngle(Vector3(0, _angle, 0));
+		Vector3 dir = DirectionFromAngle(Vector3(0, _angle, 0));
 
-		_index_num.x += dir.x;
-		_index_num.x = (int)Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
-
-		_index_num.z += -dir.z;
-		_index_num.z = (int)Clamp(_index_num.z, 1, map_data.size() - 2);
+		auto abs_x = fabs(dir.x);
+		auto abs_z = fabs(dir.z);
 		
+		if (abs_x > abs_z)
+		{
+			signbit(dir.x) ? _index_num.x-- : _index_num.x++;
+			_index_num.x = Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
+		}
+		else if (abs_x < abs_z)
+		{
+			signbit(dir.z) ? _index_num.z++ : _index_num.z--;
+			_index_num.z = Clamp(_index_num.z, 0, map_data.size() - 1);
+		}
+		
+
 		if (map_data[_index_num.z][_index_num.x] != 'i' &&
 			map_data[_index_num.z][_index_num.x] != 'w')
 		{
-			_new_pos = Vector3(1 * _index_num.x, 0, -1 * _index_num.z);
+			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
 			_move_flag = true;
 		}
 		else
 		{
 			_index_num.x = old_index_x;
 			_index_num.z = old_index_z;
-			_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
-			_i_arm_Data->SetState(_tag, _arm_state);
 		}
+
 		_old_pos = _position;
 	}
 }
@@ -173,8 +183,6 @@ void ArmBase::ArmReturn()
 
 	_angle = -AngleCalculating(move_dir.x, move_dir.z);
 
-	_model->SetRotation(0, _angle, 0);
-
 	_position += move_dir;
 
 	if (move_dir == Vector3_Zero && angle_point_size > 1)
@@ -194,8 +202,8 @@ void ArmBase::HitOtherObject()
 
 		if (_hit_box->IsHitObjects(name))
 		{
-			auto i_player_data = _i_player_data;
-			auto i_arm_data    = _i_arm_Data;
+			auto i_player_data = _i_player_data.get();
+			auto i_arm_data    = _i_arm_Data.get();
 			
 			int damege = i_player_data->GetAttackPowor(_player_tag);
 			int hitpoint = i_player_data->GetHitPoint(name);

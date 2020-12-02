@@ -96,13 +96,13 @@ void PlayerBase::Move(Controller* pad)
 		{
 			std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
 
-			_index_num.x = (int)Clamp(_index_num.x, 1, map_data[_index_num.z].size() - 3);
+			_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
 		}
 		else if (abs_x < abs_z)
 		{
 			std::signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
 
-			_index_num.z = (int)Clamp(_index_num.z, 1, map_data.size() - 2);
+			_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
 		}
 
 		if (map_data[_index_num.z][_index_num.x] != 'i' &&
@@ -125,16 +125,16 @@ void PlayerBase::Move(Controller* pad)
 
 void PlayerBase::CreateArm()
 {
-	delete _arm;
+	_arm.reset();
 	_arm = nullptr;
 
-	_arm = new Arm(_tag);
+	_arm.reset(new Arm(_tag));
 	_arm->Initialize();
 }
 
 void PlayerBase::DestroyArm()
 {
-	delete _arm;
+	_arm.reset();
 	_arm = nullptr;
 }
 

@@ -29,10 +29,10 @@ static float Clamp(float value, float min, float max)
 
 	value *= ratio;*/
 
-	if (value <= min)
+	if (value < min)
 		value = min;
 
-	if (value >= max)
+	if (value > max)
 		value = max;
 
 	return value;
@@ -138,5 +138,5 @@ static Vector3 DirectionFromAngle(Vector3 angle)
 
 	Matrix front_matrix = matrix_x * matrix_y * matrix_z;
 
-	return Vector3(front_matrix._31, front_matrix._32, front_matrix._33);
+	return Vector3_Normalize(Vector3(front_matrix._31, front_matrix._32, front_matrix._33));
 }

@@ -15,20 +15,20 @@ Arm::Arm(std::string name)
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_hit_box->Settags(_tag);
-	_hit_box->SetHitBoxScale(0.8f);
+	_hit_box->SetHitBoxScale(0.6f);
 
-	_i_player_data = new IPrayerData;
-	_i_arm_Data	   = new IArmData;
-	_i_map_data    = new IMapData;
+	_i_player_data.reset(new IPrayerData);
+	_i_arm_Data.reset(new IArmData);
+	_i_map_data.reset(new IMapData);
 
 	_create_count++;
 }
 
 Arm::~Arm()
 {
-	delete _i_map_data;
-	delete _i_arm_Data;
-	delete _i_player_data;
+	_i_map_data.reset();
+	_i_arm_Data.reset();
+	_i_player_data.reset();
 	_hit_box.reset();
 
 	_create_count--;

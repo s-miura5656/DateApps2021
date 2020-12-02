@@ -79,37 +79,6 @@ int SceneManager::Update()
 {
 	_scene->Update();
 
-#if  _DEBUG
-
-	/*if (ControllerManager::Instance().GetController("Player_1") != nullptr)
-	{
-		auto&& pad = ControllerManager::Instance().GetController("Player_1");
-
-		if (pad->GetButtonState(GamePad_Button6))
-		{
-			_camera_pos.y++;
-		}
-
-		if (pad->GetButtonState(GamePad_Button8))
-		{
-			_camera_pos.y--;
-		}
-
-		if (pad->GetButtonState(GamePad_Button5))
-		{
-			_camera_pos.z++;
-		}
-
-		if (pad->GetButtonState(GamePad_Button7))
-		{
-			_camera_pos.z--;
-		}
-	}*/
-	
-	//_camera->SetLookAt(_camera_pos, Vector3(7, 0, -5.5f), 0);
-
-#endif //  _DEBUG
-
 	return 0;
 }
 
