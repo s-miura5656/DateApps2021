@@ -62,6 +62,5 @@ protected:
 	static int _create_count;
 
 	//! flag
-	bool _shot_flag;
 	bool _move_flag;
 };

@@ -51,6 +51,10 @@ bool Arm::Initialize()
 	_new_pos = _position;
 	_index_num = _i_player_data->GetIndexNum(_player_tag);
 
+	auto box_pos = _position;
+	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
+	_hit_box->SetHitBoxPosition(box_pos);
+
 	//! State
 	_arm_state = ArmEnum::PunchState::PUNCH;
 	_i_arm_Data->SetState(_tag, _arm_state);
@@ -70,7 +74,6 @@ bool Arm::Initialize()
 	_model->SetMaterial(mat);
 
 	//! Flag
-	_shot_flag = true;
 	_move_flag = false;
 
 	return true;

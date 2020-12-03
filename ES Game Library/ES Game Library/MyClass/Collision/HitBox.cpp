@@ -1,7 +1,10 @@
 #include "HitBox.h"
+#include "../Data/MyAlgorithm.h"
 
 //static
 std::list<HitBox*> HitBox::_HitBox_list;
+
+MODEL HitBox::_model = nullptr;
 
 //デストラクタ
 HitBox::~HitBox() 
@@ -42,13 +45,18 @@ void HitBox::SetHitBox(float width, float height, float depth)
 	_width  = width;
 	_height = height;
 	_depth  = depth ;
+
 	//Model設定
-	SimpleShape   shape;
-	shape.Type = Shape_Box;
-	shape.Width = _width;
-	shape.Height = _height;
-	shape.Depth = _depth;
-	_model = GraphicsDevice.CreateModelFromSimpleShape(shape);
+	if (_model == nullptr )
+	{
+		SimpleShape   shape;
+		shape.Type   = Shape_Box;
+		shape.Width  = _width;
+		shape.Height = _height;
+		shape.Depth  = _depth;
+		_model = GraphicsDevice.CreateModelFromSimpleShape(shape);
+	}
+
 	//Material設定
 	Material _mtrl;
 	_mtrl.Diffuse = Color(1.f, 1.f, 1.f);
@@ -78,6 +86,7 @@ void HitBox::OnReMove() {
 			it++;
 		}
 		else {
+			
 			it = _HitBox_list.erase(it);
 			return;
 		}
@@ -193,6 +202,47 @@ bool HitBox::IsHitObjects(std::string tags) {
 		if (other->_tag == tags)
 			result = true;
 	}
+	return result;
+}
+
+/**
+ * @fn 当たり判定
+ * @brief OBBを使用せず当たり判定のBOXを用いた判定
+ * @param (std::string tags) 衝突判定をしたいタグを代入する
+ * @return 戻り値の説明　当たっていればTRUE　当たってなかったらFALSE
+ */
+bool HitBox::IsHitObjectsSquare(std::string tags)
+{
+	bool result = false;
+
+	HitBox* hit_object;
+
+	float dist = FLT_MAX;
+
+	std::vector<float> dists;
+
+	for (auto it = _HitBox_list.begin(); it != _HitBox_list.end(); ++it)
+	{
+		if ((*it)->_tag == this->_tag)
+			continue;
+
+		if ((*it)->_tag == tags)
+		{
+			hit_object = (*it);
+			break;
+		}
+	}
+
+	if (this->_position.x - this->_model->GetScale().x / 2 < hit_object->_position.x + hit_object->_model->GetScale().x / 2 &&
+		this->_position.x + this->_model->GetScale().x / 2 > hit_object->_position.x - hit_object->_model->GetScale().x / 2 &&
+		this->_position.y - this->_model->GetScale().y / 2 < hit_object->_position.y + hit_object->_model->GetScale().y / 2 &&
+		this->_position.y + this->_model->GetScale().y / 2 > hit_object->_position.y - hit_object->_model->GetScale().y / 2 &&
+		this->_position.z - this->_model->GetScale().z / 2 < hit_object->_position.z + hit_object->_model->GetScale().z / 2 &&
+		this->_position.z + this->_model->GetScale().z / 2 > hit_object->_position.z - hit_object->_model->GetScale().z / 2)
+	{
+		result = true;
+	}
+
 	return result;
 }
 

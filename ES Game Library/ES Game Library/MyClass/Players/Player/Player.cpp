@@ -2,7 +2,7 @@
 #include "../../Data/MyAlgorithm.h"
 #include "../../Data/Parametor.h"
 #include "../../Managers/ResouceManager/ResouceManager.h"
-
+#include <codecvt>
 
 Player::Player(std::string tag)
 {
@@ -31,12 +31,9 @@ Player::~Player()
 bool Player::Initialize()
 {
 	//! file
-	_font = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
-	_model = GraphicsDevice.CreateAnimationModelFromFile(_T("player/robot.X"));
-
-//	_model = ResouceManager::Instance().LoadAnimationModelFile(_T("player/robot.X"));
-
-//	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
+	_font   = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
+	_model  = ResouceManager::Instance().LoadAnimationModelFile(_T("player/robot.X"));
+	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
 
 	//! Position
 	_model->SetPosition(_i_player_data->GetPosition(_tag));
@@ -57,9 +54,19 @@ bool Player::Initialize()
 	mat.Diffuse = Color(1.0f, 1.0f, 1.0f);
 	mat.Ambient = Color(1.0f, 1.0f, 1.0f);
 	mat.Specular = Color(1.0f, 1.0f, 1.0f);
-
 	_model->SetMaterial(mat);
 
+	//! index
+	_animation_index = _i_player_data->GetState(_tag);
+
+	//! count
+	_animation_count = 0;
+
+	//! shader
+	_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
+	auto path = ConvertFilePath("Player/", _tag, ".png");
+	_texture = GraphicsDevice.CreateSpriteFromFile(path.c_str());
+	
 	return true;
 }
 
@@ -67,8 +74,6 @@ int Player::Update()
 {
 	auto pad = ControllerManager::Instance().GetController(_tag);
 	pad->GamePadRefresh();
-
-	ChangeAnimation();
 
 	DebugControll();
 
@@ -113,10 +118,8 @@ int Player::Update()
 			}
 
 			//! ロケットパンチ発射切り替え
-			if (pad->GetButtonState(GamePad_Button2) && !_move_flag)
+			if (pad->GetButtonState(GamePad_Button2))
 			{
-				_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-				_angle = AngleClamp(_angle);
 				_i_player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
 				_i_player_data->SetPosition(_tag, _position);
 				CreateArm();

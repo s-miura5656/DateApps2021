@@ -17,6 +17,7 @@ public:
 	~Block();
 	bool Initialize() override;
 	int Update() override;
+	void Draw3D() override;
 private:
 	ItemCounter* itemcounter;
 };

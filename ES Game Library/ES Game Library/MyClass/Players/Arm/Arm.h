@@ -9,6 +9,5 @@ public:
 	~Arm();
 
 	bool Initialize() override;
-
 private:
 };

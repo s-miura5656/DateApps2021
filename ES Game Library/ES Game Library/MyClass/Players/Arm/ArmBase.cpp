@@ -15,7 +15,7 @@ ArmBase::~ArmBase()
 int ArmBase::Update()
 {
 	auto pad = ControllerManager::Instance().GetController(_player_tag);
-	
+
 	_player_distance = Vector3_Distance(_i_player_data->GetPosition(_player_tag), _position);
 
 	_arm_state = _i_arm_Data->GetState(_tag);
@@ -200,7 +200,8 @@ void ArmBase::HitOtherObject()
 		if (name == _player_tag)
 			continue;
 
-		if (_hit_box->IsHitObjects(name))
+		//! プレイヤーに当たったら
+		if (_hit_box->IsHitObjectsSquare(name))
 		{
 			auto i_player_data = _i_player_data.get();
 			auto i_arm_data    = _i_arm_Data.get();
@@ -210,7 +211,9 @@ void ArmBase::HitOtherObject()
 			
 			hitpoint -= damege;
 
-			_i_player_data->SetHitPoint(name, hitpoint);
+			//! ダメージ硬直ではないときにHPを減らす
+			if (_i_player_data->GetState(name) != PlayerEnum::Animation::DAMAGE)
+				_i_player_data->SetHitPoint(name, hitpoint);
 
 			_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 

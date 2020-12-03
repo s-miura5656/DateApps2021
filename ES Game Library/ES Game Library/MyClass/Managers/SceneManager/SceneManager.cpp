@@ -56,19 +56,20 @@ bool SceneManager::Initialize()
 	light.Diffuse = Color(1.0f, 1.0f, 1.0f);
 	light.Ambient = Color(1.0f, 1.0f, 1.0f);
 	light.Specular = Color(1.0f, 1.0f, 1.0f);
-	GraphicsDevice.SetLight(light);
+	
+	SceneLight::Instance().SetLightParametor(light);
+	SceneLight::Instance().SetSceneLight();
 
 	/**
 	* @brief ƒJƒƒ‰‚Ì‰ŠúÝ’è
 	*/
 	Viewport view = GraphicsDevice.GetViewport();
-	_camera_pos = Vector3(7, 600, -400);
-	_look_pos   = Vector3(7, 0, -5.5f);
+	Vector3 _camera_pos = Vector3(7, 600, -400);
+	Vector3 _look_pos   = Vector3(7, 0, -5.5f);
 
-	_camera->SetLookAt(_camera_pos, _look_pos, 0);
-	_camera->SetPerspectiveFieldOfView(1.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
-	GraphicsDevice.SetCamera(_camera);
-	
+	SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
+	SceneCamera::Instance().SetPerspectiveFieldOfView(1.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
+
 	//! ˆê”ÔÅ‰‚É“Ç‚Ýž‚Ü‚ê‚éƒV[ƒ“
 	ChangeScene(SceneState::MAIN);
 
@@ -89,7 +90,7 @@ void SceneManager::Draw2D()
 
 void SceneManager::Draw3D()
 {
-	GraphicsDevice.SetCamera(_camera);
+	SceneCamera::Instance().SetSceneCamera();
 
 	_scene->Draw3D();
 }

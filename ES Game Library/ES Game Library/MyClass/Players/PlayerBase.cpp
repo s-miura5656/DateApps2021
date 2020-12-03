@@ -1,5 +1,6 @@
 #include "PlayerBase.h"
 #include "../Data/MyAlgorithm.h"
+#include "../Managers/SceneManager/SceneManager.h"
 
 PlayerBase::PlayerBase()
 {
@@ -15,6 +16,7 @@ void PlayerBase::Draw2D()
 {
 	if (_tag == "Player_1")
 	{
+		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤーの状態:%d"), _i_player_data->GetState(_tag));
 		SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("プレイヤーのHP:%d"), _i_player_data->GetHitPoint(_tag));
 		SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("プレイヤーの移動速度:%f"), _i_player_data->GetSpeed(_tag));
 	}
@@ -32,11 +34,17 @@ void PlayerBase::Draw2D()
 
 void PlayerBase::Draw3D()
 {
+	ChangeAnimation();
+
 	_model->SetPosition(_position);
 	_model->SetRotation(Vector3(0, _angle - 180, 0));
-	_model->AdvanceTime(GameTimer.GetElapsedSecond() * 2);
-	_model->Draw();
-	_model->SetRotation(Vector3(0, _angle, 0));
+	
+	_shader->SetTexture("m_Texture", *_texture);
+	_shader->SetParameter("vp", SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix());
+
+	_model->Draw(_shader);
+
+//	_model->SetRotation(Vector3(0, _angle, 0));
 	
 	_i_player_data->SetAngle(_tag, _angle);
 	_i_player_data->SetPosition(_tag, _position);
@@ -44,7 +52,7 @@ void PlayerBase::Draw3D()
 	auto collision_pos = _model->GetPosition();
 	collision_pos.y += _model->GetScale().y / 2;
 	_hit_box->SetHitBoxPosition(collision_pos);
-	_hit_box->Draw3D();
+	//_hit_box->Draw3D();
 
 	if (_arm != nullptr)
 		_arm->Draw3D();
@@ -52,18 +60,23 @@ void PlayerBase::Draw3D()
 
 void PlayerBase::ChangeAnimation()
 {
-	int state = _i_player_data->GetState(_tag);
+	auto index = _i_player_data->GetState(_tag);
+
+	_animation_count += GameTimer.GetElapsedSecond();
 
 	for (int i = 0; i < PlayerEnum::Animation::ANIMATION_ALL_TYPE; ++i)
 	{
-		if (i == state)
-		{
-			_model->SetTrackEnable(i, TRUE);
-			continue;
-		}
-
 		_model->SetTrackEnable(i, FALSE);
 	}
+
+	if (_animation_index != index)
+	{
+		_animation_index = index;
+		_animation_count = 0;
+	}
+
+	_model->SetTrackEnable(_animation_index, TRUE);	
+	_model->SetTrackPosition(_animation_index, _animation_count);
 }
 
 void PlayerBase::Move(Controller* pad)

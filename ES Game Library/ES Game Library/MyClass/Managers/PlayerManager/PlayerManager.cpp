@@ -56,20 +56,16 @@ int PlayerManager::Update()
 
 void PlayerManager::Draw2D()
 {
-	auto player = players;
-
 	for (int i = 0; i < players.size(); ++i)
 	{
-		player[i]->Draw2D();
+		players[i]->Draw2D();
 	}
 }
 
 void PlayerManager::Draw3D()
 {
-	auto player = players;
-
 	for (int i = 0; i < players.size(); ++i)
 	{
-		player[i]->Draw3D();
+		players[i]->Draw3D();
 	}
 }
