@@ -1,6 +1,7 @@
 #include"TitleScene.h"
 #include"../../Data/WordsTable.h"
 #include"../../Data/ModelAnimation.h"
+#include"../../Managers/SceneManager/SceneManager.h"
 
 /*
 * @fn タイトルの初期化
@@ -15,14 +16,14 @@ bool TitleScene::Initialize()
 
 	ControllerManager::Instance().CreateGamePad(PLAYER_TAG + std::to_string(1));
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < MODEL_MAX; i++)
 	{
 		model[i] = GraphicsDevice.CreateModelFromFile(_T("Player/robot.x"));
 	}
 	
 
 	item = GraphicsDevice.CreateModelFromFile(_T("TitleSprite/item_04.X"));
-
+	
 
 	Material material;
 	material.Diffuse = Color(1.0f, 1.0f, 1.0f); // 陰影のグラデーション 明るい部分
@@ -30,10 +31,10 @@ bool TitleScene::Initialize()
 	material.Specular = Color(1.0f, 1.0f, 1.0f); // テカリ
 	material.Power = 10.0f; // テカリの効果の強さ
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < MODEL_MAX; i++)
 	{
 		model[i]->SetMaterial(material);
-		model[i]->SetPosition(Vector3(-4 + 3* i, 0, 0));
+		model[i]->SetPosition(Vector3(1 *i, 0, -5));
 		model[i]->SetRotation(90, 0, 0);
 		model[i]->SetScale(1.0f, 1.0f, 1.0f);
 	}
@@ -41,6 +42,7 @@ bool TitleScene::Initialize()
 	item->SetMaterial(material);
 	item->SetScale(5.0f, 5.0f, 5.0f);
 	item->SetRotation(270, 0, 0);
+	item->SetPosition(Vector3(5, 0, -3));
 	
 
 	camera->SetView(Vector3(0, 0, 0), Vector3(5, 0, 0)); // 視点
@@ -48,6 +50,14 @@ bool TitleScene::Initialize()
 
 	
 	GraphicsDevice.SetCamera(camera);
+
+	
+
+	//impact = Vector3_Zero;
+	//attenuate = Vector3(0.01f, 0.0, 0.0f);
+
+	impactspeed.Initialize(Vector3(0.01f,0.0f,0.0f));
+	
 
 	return true;
 }
@@ -65,6 +75,7 @@ int TitleScene::Update()
 		//exit(0);
 	}
 
+	KeyboardBuffer key = Keyboard->GetBuffer();
 
 	// モデルの回転
 	ModelRotation(Vector3(0.0f, 0.0f, 5.0f), model[0]);
@@ -78,8 +89,22 @@ int TitleScene::Update()
 	_alpha = ModelFlashing(1.0f, 0.0f, _alpha, 0.1f, model[2]);
 	_alpha = ModelFlashing(1.0f, 0.0f, _alpha, 0.1f, item);
 
-	// モデルのZ軸往復
-	_bound = ModelBound(_bound, 0.0f, 5.0f, 2.0f, model[3]);
+	// モデルの往復
+	_bound = ModelBound(0.0f, 2.0f, 0.0f, 1.0f, model[3]);
+
+
+	
+	
+	if (key.IsPressed(Keys_Enter))
+	{
+		impactspeed.Update(Vector3(0.5f, 0.0f,0.0f),Vector3(0.01f, 0.0f,0.0f));
+	}
+
+	impactspeed.impactSpeed(Vector3(0.005f, 0.0f, 0.0f), model[4]);
+
+
+
+	
 
 	return 0;
 }
@@ -95,11 +120,11 @@ void TitleScene::Draw2D()
 }
 void TitleScene::Draw3D()
 {
-	//item->Draw();
 
 	model[0]-> Draw();
 	model[1]->Draw();
 	model[3]->Draw();
+	model[4]->Draw();
 
 	GraphicsDevice.BeginAlphaBlend();
 	model[2]->DrawAlpha(_alpha);

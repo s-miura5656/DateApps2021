@@ -79,11 +79,3 @@ static float ModelBound(float bound_x_max, float bound_y_max, float bound_z_max,
 
 	return bound_x_max, bound_y_max, bound_z_max;
 }
-
-static float ModelImpact()
-{
-	// ÕŒ‚‚ª‰Á‚í‚Á‚½‚È‚Ç‚ÌAŠÉ‹}‚ª•t‚¢‚½•¨—‰‰Z“I‚È“®‚«
-
-
-
-}
