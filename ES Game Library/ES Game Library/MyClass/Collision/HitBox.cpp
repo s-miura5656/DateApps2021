@@ -86,7 +86,6 @@ void HitBox::OnReMove() {
 			it++;
 		}
 		else {
-			
 			it = _HitBox_list.erase(it);
 			return;
 		}
@@ -223,9 +222,11 @@ bool HitBox::IsHitObjectsSquare(std::string tags)
 
 	for (auto it = _HitBox_list.begin(); it != _HitBox_list.end(); ++it)
 	{
+		//! 自分は飛ばして次へ
 		if ((*it)->_tag == this->_tag)
 			continue;
 
+		//! 探している HitBox* がが見つかったらループを抜ける
 		if ((*it)->_tag == tags)
 		{
 			hit_object = (*it);
@@ -233,12 +234,21 @@ bool HitBox::IsHitObjectsSquare(std::string tags)
 		}
 	}
 
-	if (this->_position.x - this->_model->GetScale().x / 2 < hit_object->_position.x + hit_object->_model->GetScale().x / 2 &&
-		this->_position.x + this->_model->GetScale().x / 2 > hit_object->_position.x - hit_object->_model->GetScale().x / 2 &&
-		this->_position.y - this->_model->GetScale().y / 2 < hit_object->_position.y + hit_object->_model->GetScale().y / 2 &&
-		this->_position.y + this->_model->GetScale().y / 2 > hit_object->_position.y - hit_object->_model->GetScale().y / 2 &&
-		this->_position.z - this->_model->GetScale().z / 2 < hit_object->_position.z + hit_object->_model->GetScale().z / 2 &&
-		this->_position.z + this->_model->GetScale().z / 2 > hit_object->_position.z - hit_object->_model->GetScale().z / 2)
+	//! 当たり判定を行っている方のモデルの座標とサイズ
+	auto a_pos   = this->_position;
+	auto a_scale = this->_model->GetScale() / 2;
+
+	//! 当たっている方の座標とサイズ
+	auto b_pos   = hit_object->_position;
+	auto b_scale = hit_object->_model->GetScale() / 2;
+
+	//! aとbのボックスの当たり判定
+	if (a_pos.x - a_scale.x < b_pos.x + b_scale.x  &&
+		a_pos.x + a_scale.x > b_pos.x - b_scale.x  &&
+		a_pos.y - a_scale.y < b_pos.y + b_scale.y  &&
+		a_pos.y + a_scale.y > b_pos.y - b_scale.y  &&
+		a_pos.z - a_scale.z < b_pos.z + b_scale.z  &&
+		a_pos.z + a_scale.z > b_pos.z - b_scale.z )
 	{
 		result = true;
 	}

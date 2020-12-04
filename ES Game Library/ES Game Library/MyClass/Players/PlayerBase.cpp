@@ -44,8 +44,6 @@ void PlayerBase::Draw3D()
 
 	_model->Draw(_shader);
 
-//	_model->SetRotation(Vector3(0, _angle, 0));
-	
 	_i_player_data->SetAngle(_tag, _angle);
 	_i_player_data->SetPosition(_tag, _position);
 
@@ -64,17 +62,20 @@ void PlayerBase::ChangeAnimation()
 
 	_animation_count += GameTimer.GetElapsedSecond();
 
+	//! 全てのアニメーショントラックを停止
 	for (int i = 0; i < PlayerEnum::Animation::ANIMATION_ALL_TYPE; ++i)
 	{
 		_model->SetTrackEnable(i, FALSE);
 	}
 
+	//! アニメーショントラックと状態が違う場合アニメーショントラックを更新
 	if (_animation_index != index)
 	{
 		_animation_index = index;
 		_animation_count = 0;
 	}
 
+	//! アニメーショントラックのアニメーションを指定した位置から再生
 	_model->SetTrackEnable(_animation_index, TRUE);	
 	_model->SetTrackPosition(_animation_index, _animation_count);
 }
@@ -83,6 +84,7 @@ void PlayerBase::Move(Controller* pad)
 {
 	auto&& map_data = _i_map_data->GetData();
 
+	//! 移動中か入力受付状態か判定
 	if (_move_flag)
 	{
 		_position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);

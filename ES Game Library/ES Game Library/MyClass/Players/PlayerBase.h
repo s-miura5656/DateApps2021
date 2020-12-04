@@ -42,6 +42,7 @@ protected:
 	float _move_speed		 = 0.f;
 	float _distance			 = FLT_MAX;
 
+	//! position
 	Vector3 _position		 = Vector3_Zero;
 	Vector3 _old_pos		 = Vector3_Zero;
 	Vector3 _new_pos		 = Vector3_Zero;

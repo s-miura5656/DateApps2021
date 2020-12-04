@@ -32,14 +32,17 @@ int ArmBase::Update()
 		_i_arm_Data->SetState(_tag, _arm_state);
 	}
 
+	//! アームを発射している状態の処理
 	if (_arm_state == ArmEnum::PunchState::PUNCH)
 	{
+		//! パッドを倒していたらY軸の角度を求める
 		if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
 		{
 			_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
 			_angle = AngleClamp(_angle);
 		}
 
+		//! アームの最大距離の判定
 		if (_angle_point.size() >= _i_arm_Data->GetLimitRange(_tag))
 		{
 			_wait_count++;
@@ -56,6 +59,7 @@ int ArmBase::Update()
 			MoveTurn(pad);
 		}
 
+		//! 当たり判定
 		HitOtherObject();
 
 		return 0;
@@ -102,7 +106,8 @@ void ArmBase::Draw3D()
 
 	auto box_pos = _position;
 	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
-	_hit_box->SetHitBoxPosition(box_pos);
+	auto a = DirectionFromAngle(Vector3(0, _angle, 0));
+	_hit_box->SetHitBoxPosition(box_pos + a * 0.3f);
 	_hit_box->Draw3D();
 }
 
@@ -113,6 +118,7 @@ void ArmBase::MoveTurn(Controller* pad)
 {
 	auto&& map_data = _i_map_data->GetData();
 
+	//! 移動中かそうでないか判定
 	if (_move_flag)
 	{
 		_position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
@@ -135,6 +141,7 @@ void ArmBase::MoveTurn(Controller* pad)
 		auto abs_x = fabs(dir.x);
 		auto abs_z = fabs(dir.z);
 		
+		//! 方向の絶対値を判定してから、大きいほうの軸の符号から進む方向を決定
 		if (abs_x > abs_z)
 		{
 			signbit(dir.x) ? _index_num.x-- : _index_num.x++;
@@ -146,7 +153,7 @@ void ArmBase::MoveTurn(Controller* pad)
 			_index_num.z = Clamp(_index_num.z, 0, map_data.size() - 1);
 		}
 		
-
+		//! 壁の判定
 		if (map_data[_index_num.z][_index_num.x] != 'i' &&
 			map_data[_index_num.z][_index_num.x] != 'w')
 		{
@@ -173,6 +180,7 @@ void ArmBase::ArmReturn()
 
 	auto dist = Vector3_Distance(_position, _angle_point[angle_point_size - 1]);
 
+	//! 一定距離まで中継地点に近づいたら配列を削除
 	if (dist < 0.3f && angle_point_size > 1)
 	{
 		_angle_point.erase(_angle_point.begin() + (angle_point_size - 1));
@@ -185,6 +193,7 @@ void ArmBase::ArmReturn()
 
 	_position += move_dir;
 
+	//! 移動が完了したら配列を削除
 	if (move_dir == Vector3_Zero && angle_point_size > 1)
 	{
 		_angle_point.erase(_angle_point.begin() + (angle_point_size - 1));
@@ -197,6 +206,7 @@ void ArmBase::HitOtherObject()
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
 
+		//! 自分のタグだったら次へ
 		if (name == _player_tag)
 			continue;
 

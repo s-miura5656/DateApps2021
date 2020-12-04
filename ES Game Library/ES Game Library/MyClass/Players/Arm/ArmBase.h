@@ -47,13 +47,13 @@ protected:
 	Vector3 _old_pos  = Vector3_Zero;
 	Vector3 _new_pos  = Vector3_Zero;
 
+	//! pointer
 	std::unique_ptr<IPrayerData> _i_player_data;
 	std::unique_ptr<IArmData> 	 _i_arm_Data;
 	std::unique_ptr<IMapData> 	 _i_map_data;
-
-	
 	std::unique_ptr<HitBox> _hit_box;
 
+	//! index
 	IndexNum _index_num;
 
 	//! count

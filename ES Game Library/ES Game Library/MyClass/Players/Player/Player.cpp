@@ -77,6 +77,7 @@ int Player::Update()
 
 	DebugControll();
 
+	//! ダメージ状態の判定
 	if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
 	{
 		_damage_count++;
@@ -92,6 +93,7 @@ int Player::Update()
 		return 0;
 	}
 	
+	//! 移動中か待機中か判定
 	if (!_move_flag)
 	{
 		//! パンチ発射状態ならすぐさまリターン
