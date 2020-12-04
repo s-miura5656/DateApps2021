@@ -2,6 +2,7 @@
 
 #include "../BaseScene.h"
 #include"../../Managers/ControllerManager/ContorollerManager.h"
+#include"../../Data/ImpactSpeed.h"
 
 
 class TitleScene : public BaseScene
@@ -14,11 +15,15 @@ public:
 
 private:
 	SPRITE _title;
-	MODEL model[4];
+
+	enum {MODEL_MAX = 5};
+	MODEL model[MODEL_MAX];
 	CAMERA camera;
 
 	MODEL item;
 
+	//Vector3 impact;
+	//Vector3 attenuate;
 
 	float _scale = 1.f;
 
@@ -27,4 +32,7 @@ private:
 	float _wave = 1.f;
 
 	float _bound = 5.f;
+
+
+	ImpactSpeed impactspeed;
 };

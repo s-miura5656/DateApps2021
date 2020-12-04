@@ -70,7 +70,7 @@ bool SceneManager::Initialize()
 	GraphicsDevice.SetCamera(_camera);
 	
 	//! ˆê”ÔÅ‰‚É“Ç‚İ‚Ü‚ê‚éƒV[ƒ“
-	ChangeScene(SceneState::MAIN);
+	ChangeScene(SceneState::TITLE);
 
 	return true;
 }
