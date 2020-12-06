@@ -66,7 +66,8 @@ protected:
 	bool _move_flag = false;
 
 	//! count
-	float _lerp_count = 0.f;
-	int _damage_count = 0;
+	float _lerp_count       = 0.f;
+	int _damage_count       = 0;
 	double _animation_count = 0;
+	int _shot_pending_count = 0;
 };

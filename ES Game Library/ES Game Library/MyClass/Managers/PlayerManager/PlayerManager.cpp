@@ -26,9 +26,6 @@ PlayerManager::~PlayerManager()
 
 bool PlayerManager::Initialize()
 {
-	LPCTSTR model_file_name = _T("player/robot.X");
-
-	//プレイヤー
 	for (int i = 0; i < players.size(); ++i)
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
@@ -46,10 +43,10 @@ int PlayerManager::Update()
 {
 	for (int i = 0; i < players.size(); ++i)
 	{
-		std::string name = PLAYER_TAG + std::to_string(i + 1);
-		std::string arm_name = ARM_TAG + std::to_string(i + 1);
 		players[i]->Update();
 	}
+
+	//! ここのプレイヤーが倒されたときの処理
 
     return 0;
 }

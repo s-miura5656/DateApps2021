@@ -77,6 +77,15 @@ float4 PS(VSOUTPUT psin) : COLOR
     return tex2D(s0, psin.Uv);
 }
 
+float4 DAMAGE_PS(VSOUTPUT psin) : COLOR
+{
+    float4 color = tex2D(s0, psin.Uv) + float4(1.0f, 0.0f, 0.0f, 1.0f);
+    
+    color.a = 0.5f;
+    
+    return color;
+}
+
 technique FixModel
 {
 	pass Pass0
@@ -84,4 +93,13 @@ technique FixModel
 		VertexShader = compile vs_3_0 VS();
 		PixelShader  = compile ps_3_0 PS();
 	}
+}
+
+technique DamageModel
+{
+    pass Pass0
+    {
+        VertexShader = compile vs_3_0 VS();
+        PixelShader  = compile ps_3_0 DAMAGE_PS();
+    }
 }

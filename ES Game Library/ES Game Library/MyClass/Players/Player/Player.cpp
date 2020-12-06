@@ -32,7 +32,7 @@ bool Player::Initialize()
 {
 	//! file
 	_font   = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
-	_model  = ResouceManager::Instance().LoadAnimationModelFile(_T("player/robot.X"));
+	_model  = ResouceManager::Instance().LoadAnimationModelFile(_T("player/Robo_animation.X"));
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
 
 	//! Position
@@ -103,6 +103,20 @@ int Player::Update()
 			_arm->Update();
 			return 0;
 		}
+		else if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::SHOT)
+		{
+			_shot_pending_count++;
+
+			if (_shot_pending_count > 60)
+			{
+				_i_player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
+				_i_player_data->SetPosition(_tag, _position);
+				_shot_pending_count = 0;
+				CreateArm();
+			}
+
+			return 0;
+		}
 		else
 		{
 			DestroyArm();
@@ -122,9 +136,8 @@ int Player::Update()
 			//! ロケットパンチ発射切り替え
 			if (pad->GetButtonState(GamePad_Button2))
 			{
-				_i_player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
+				_i_player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
 				_i_player_data->SetPosition(_tag, _position);
-				CreateArm();
 			}
 		}
 	}

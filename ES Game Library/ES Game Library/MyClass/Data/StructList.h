@@ -11,6 +11,7 @@ struct PlayerParam {
 	int attack_powor  = 100;
 	float speed		  = 0.04f;
 	int weight        = 50;
+	int kill_count    = 0;
 };
 
 struct ArmParam {

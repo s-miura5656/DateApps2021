@@ -35,13 +35,6 @@ int ArmBase::Update()
 	//! アームを発射している状態の処理
 	if (_arm_state == ArmEnum::PunchState::PUNCH)
 	{
-		//! パッドを倒していたらY軸の角度を求める
-		if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
-		{
-			_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-			_angle = AngleClamp(_angle);
-		}
-
 		//! アームの最大距離の判定
 		if (_angle_point.size() >= _i_arm_Data->GetLimitRange(_tag))
 		{
@@ -56,7 +49,7 @@ int ArmBase::Update()
 		}
 		else
 		{
-			MoveTurn(pad);
+			MoveArm(pad);
 		}
 
 		//! 当たり判定
@@ -114,9 +107,12 @@ void ArmBase::Draw3D()
 //! @fn アームの移動(曲がる)
 //! @brief アームの移動を処理する
 //! @param コントローラー
-void ArmBase::MoveTurn(Controller* pad)
+void ArmBase::MoveArm(Controller* pad)
 {
 	auto&& map_data = _i_map_data->GetData();
+
+	if (TurnArm(pad))
+		return;
 
 	//! 移動中かそうでないか判定
 	if (_move_flag)
@@ -129,6 +125,19 @@ void ArmBase::MoveTurn(Controller* pad)
 			_move_flag  = false;
 			_angle_point.push_back(_position);
 			_lerp_count = 0;
+
+			//! パッドを倒していたらアームの向き入力状態
+			if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
+			{
+				_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+				_angle = AngleClamp(_angle);
+
+				if (_angle != _old_angle)
+				{
+					_old_angle = _angle;
+					_turn_flag = true;
+				}
+			}
 		}
 	}
 	else
@@ -168,6 +177,23 @@ void ArmBase::MoveTurn(Controller* pad)
 
 		_old_pos = _position;
 	}
+}
+
+bool ArmBase::TurnArm(Controller* pad)
+{
+	//! フラグがたっていたらアームの向き入力
+	if (_turn_flag)
+	{
+		_wait_count++;
+
+		if (_wait_count > 30)
+		{
+			_wait_count = 0;
+			_turn_flag = false;
+		}
+	}
+
+	return _turn_flag;
 }
 
 //! @fn アームの戻り
@@ -213,8 +239,8 @@ void ArmBase::HitOtherObject()
 		//! プレイヤーに当たったら
 		if (_hit_box->IsHitObjectsSquare(name))
 		{
-			auto i_player_data = _i_player_data.get();
-			auto i_arm_data    = _i_arm_Data.get();
+			auto&& i_player_data = _i_player_data.get();
+			auto&& i_arm_data    = _i_arm_Data.get();
 			
 			int damege = i_player_data->GetAttackPowor(_player_tag);
 			int hitpoint = i_player_data->GetHitPoint(name);
@@ -222,13 +248,25 @@ void ArmBase::HitOtherObject()
 			hitpoint -= damege;
 
 			//! ダメージ硬直ではないときにHPを減らす
-			if (_i_player_data->GetState(name) != PlayerEnum::Animation::DAMAGE)
-				_i_player_data->SetHitPoint(name, hitpoint);
+			if (i_player_data->GetState(name) != PlayerEnum::Animation::DAMAGE)
+			{
+				i_player_data->SetHitPoint(name, hitpoint);
+			}
 
-			_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
-
-			_i_arm_Data->SetState(_tag, _arm_state);
-			_i_player_data->SetState(name, PlayerEnum::Animation::DAMAGE);
+			if (i_player_data->GetHitPoint(name) <= 0)
+			{
+				i_player_data->SetKillCount(_player_tag, i_player_data->GetKillCount(_player_tag) + 1);
+				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+				i_arm_data->SetState(_tag, _arm_state);
+//				i_player_data->SetState(name, PlayerEnum::Animation::DEATH);
+			}
+			else
+			{
+				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+				i_arm_data->SetState(_tag, _arm_state);
+				i_player_data->SetState(name, PlayerEnum::Animation::DAMAGE);
+			}
+			
 			break;
 		}
 	}

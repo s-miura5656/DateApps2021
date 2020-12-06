@@ -24,6 +24,7 @@ public:
 	void SetPosition(std::string& player_tag, Vector3 pos)					{ PlayerParametor::Instance()._player_params[player_tag].position = pos; }
 	void SetState(std::string& player_tag, int state)						{ PlayerParametor::Instance()._player_params[player_tag].state = state; }
 	void SetIndexNum(std::string& player_tag, IndexNum index_num)			{ PlayerParametor::Instance()._index_nums[player_tag] = index_num; }
+	void SetKillCount(std::string& player_tag, int kill_count)				{ PlayerParametor::Instance()._player_params[player_tag].kill_count = kill_count; }
 
 	//! ÉQÉbÉ^Å[
 	PlayerParam GetPlayerPram(std::string& player_tag)  const { return PlayerParametor::Instance()._player_params[player_tag]; }
@@ -35,6 +36,7 @@ public:
 	Vector3 GetPosition(std::string& player_tag)		const { return PlayerParametor::Instance()._player_params[player_tag].position; }
 	int GetState(std::string& player_tag)				const { return PlayerParametor::Instance()._player_params[player_tag].state; }
 	IndexNum GetIndexNum(std::string& player_tag)       const { return PlayerParametor::Instance()._index_nums[player_tag]; }
+	int GetKillCount(std::string& player_tag)			const { return PlayerParametor::Instance()._player_params[player_tag].kill_count; }
 };
 
 class IArmData 

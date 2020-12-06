@@ -75,6 +75,7 @@ bool Arm::Initialize()
 
 	//! Flag
 	_move_flag = false;
+	_turn_flag = false;
 
 	return true;
 }
