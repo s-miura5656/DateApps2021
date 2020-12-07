@@ -451,6 +451,12 @@
     <ClCompile Include="MyClass\Managers\ResouceManager\ResouceManager.cpp">
       <Filter>Myclass\Managers\ResouceManager</Filter>
     </ClCompile>
+    <ClCompile Include="MyClass\EffectBase.cpp">
+      <Filter>Myclass</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\EffectManager.cpp">
+      <Filter>Myclass\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h">
@@ -726,6 +732,15 @@
     </ClInclude>
     <ClInclude Include="MyClass\Managers\ResouceManager\ResouceManager.h">
       <Filter>Myclass\Managers\ResouceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Scenes\Title\ModelAnimation\ModelAnimation.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\EffectBase.h">
+      <Filter>Myclass</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\EffectManager.h">
+      <Filter>Myclass\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

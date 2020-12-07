@@ -112,7 +112,7 @@ void CEffekseer::Release()
 	}
 
 	if(m_renderer != NULL) {
-		m_renderer->Destory();
+		m_renderer->Destroy();
 		m_renderer = NULL;
 	}
 }

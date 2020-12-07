@@ -123,12 +123,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Extension\Effekseer\Effekseer.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Extension\Effekseer\EffekseerEffect.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Extension\Kinect\Kinect.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -166,12 +166,14 @@
     </ClCompile>
     <ClCompile Include="MyClass\Collision\HitBox.cpp" />
     <ClCompile Include="MyClass\Controller\ControllerConfig.cpp" />
+    <ClCompile Include="MyClass\EffectBase.cpp" />
     <ClCompile Include="MyClass\Item\AttackPowerItem\AttackPowerItem.cpp" />
     <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp" />
     <ClCompile Include="MyClass\Item\ItemBase.cpp" />
     <ClCompile Include="MyClass\Item\ItemFactory\ItemFactory.cpp" />
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp" />
     <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp" />
+    <ClCompile Include="MyClass\Managers\EffectManager.cpp" />
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp" />
     <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp" />
     <ClCompile Include="MyClass\Managers\ResouceManager\ResouceManager.cpp" />
@@ -255,6 +257,7 @@
     <ClInclude Include="MyClass\Data\Parametor.h" />
     <ClInclude Include="MyClass\Data\StructList.h" />
     <ClInclude Include="MyClass\Data\WordsTable.h" />
+    <ClInclude Include="MyClass\EffectBase.h" />
     <ClInclude Include="MyClass\Item\AttackPowerItem\AttackPowerItem.h" />
     <ClInclude Include="MyClass\Item\HitPointItem\HitPointItem.h" />
     <ClInclude Include="MyClass\Item\Itembase.hpp" />
@@ -262,6 +265,7 @@
     <ClInclude Include="MyClass\Item\ItemFactory\ItemFactory.h" />
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h" />
     <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h" />
+    <ClInclude Include="MyClass\Managers\EffectManager.h" />
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h" />
     <ClInclude Include="MyClass\Managers\ManagerBase.h" />
     <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h" />

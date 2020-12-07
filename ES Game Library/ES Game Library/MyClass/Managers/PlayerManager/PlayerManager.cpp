@@ -2,6 +2,7 @@
 #include "../../Players/Player/Player.h"
 #include "../../Data/WordsTable.h"
 
+
 PlayerManager::PlayerManager()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
@@ -39,7 +40,7 @@ bool PlayerManager::Initialize()
 		ArmParametor::Instance().CreateParametor(arm_name);
 	}
 
-    return true;
+   return true;
 }
 
 int PlayerManager::Update()
@@ -50,7 +51,7 @@ int PlayerManager::Update()
 		std::string arm_name = ARM_TAG + std::to_string(i + 1);
 		players[i]->Update();
 	}
-
+	
     return 0;
 }
 

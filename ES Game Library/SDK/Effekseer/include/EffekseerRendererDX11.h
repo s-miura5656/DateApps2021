@@ -1,4 +1,4 @@
-
+ï»¿
 #ifndef	__EFFEKSEERRENDERER_DX11_BASE_PRE_H__
 #define	__EFFEKSEERRENDERER_DX11_BASE_PRE_H__
 
@@ -52,7 +52,7 @@ namespace EffekseerRenderer
 //-----------------------------------------------------------------------------------
 
 /**
-	@brief	”wŒi‚ð˜c‚Ü‚¹‚éƒGƒtƒFƒNƒg‚ð•`‰æ‚·‚é‘O‚ÉŽÀs‚³‚ê‚éƒR[ƒ‹ƒoƒbƒN
+	@brief	èƒŒæ™¯ã‚’æ­ªã¾ã›ã‚‹ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’æç”»ã™ã‚‹å‰ã«å®Ÿè¡Œã•ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 */
 class DistortingCallback
 {
@@ -60,157 +60,257 @@ public:
 	DistortingCallback() {}
 	virtual ~DistortingCallback() {}
 
-	virtual void OnDistorting() {}
+	virtual bool OnDistorting() { return false; }
 };
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
+
+/**
+	@brief	
+	\~english A status of UV when particles are rendered.
+	\~japanese ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’æç”»ã™ã‚‹æ™‚ã®UVã®çŠ¶æ…‹
+*/
+enum class UVStyle
+{
+	Normal,
+	VerticalFlipped,
+};
+
 class Renderer
+	: ::Effekseer::IReference
 {
 protected:
-	Renderer() {}
-	virtual ~Renderer() {}
+	Renderer();
+	virtual ~Renderer();
+
+	class Impl;
+	Impl* impl = nullptr;
 
 public:
 	/**
-		@brief	ƒfƒoƒCƒXƒƒXƒg‚ª”­¶‚µ‚½Žž‚ÉŽÀs‚·‚éB
+		@brief	ãƒ‡ãƒã‚¤ã‚¹ãƒ­ã‚¹ãƒˆãŒç™ºç”Ÿã—ãŸæ™‚ã«å®Ÿè¡Œã™ã‚‹ã€‚
 	*/
 	virtual void OnLostDevice() = 0;
 
 	/**
-		@brief	ƒfƒoƒCƒX‚ªƒŠƒZƒbƒg‚³‚ê‚½Žž‚ÉŽÀs‚·‚éB
+		@brief	ãƒ‡ãƒã‚¤ã‚¹ãŒãƒªã‚»ãƒƒãƒˆã•ã‚ŒãŸæ™‚ã«å®Ÿè¡Œã™ã‚‹ã€‚
 	*/
 	virtual void OnResetDevice() = 0;
 
 	/**
-		@brief	‚±‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ð”jŠü‚·‚éB
+		@brief	ã“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç ´æ£„ã™ã‚‹ã€‚
 	*/
-	virtual void Destory() = 0;
+	virtual void Destroy() = 0;
 
 	/**
-		@brief	ƒXƒe[ƒg‚ð•œ‹A‚·‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO‚ðÝ’è‚·‚éB
+		@brief	ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å¾©å¸°ã™ã‚‹ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°ã‚’è¨­å®šã™ã‚‹ã€‚
 	*/
 	virtual void SetRestorationOfStatesFlag(bool flag) = 0;
 
 	/**
-		@brief	•`‰æ‚ðŠJŽn‚·‚éŽž‚ÉŽÀs‚·‚éB
+		@brief	æç”»ã‚’é–‹å§‹ã™ã‚‹æ™‚ã«å®Ÿè¡Œã™ã‚‹ã€‚
 	*/
 	virtual bool BeginRendering() = 0;
 
 	/**
-		@brief	•`‰æ‚ðI—¹‚·‚éŽž‚ÉŽÀs‚·‚éB
+		@brief	æç”»ã‚’çµ‚äº†ã™ã‚‹æ™‚ã«å®Ÿè¡Œã™ã‚‹ã€‚
 	*/
 	virtual bool EndRendering() = 0;
 
 	/**
-		@brief	ƒ‰ƒCƒg‚Ì•ûŒü‚ðŽæ“¾‚·‚éB
+		@brief	ãƒ©ã‚¤ãƒˆã®æ–¹å‘ã‚’å–å¾—ã™ã‚‹ã€‚
 	*/
 	virtual const ::Effekseer::Vector3D& GetLightDirection() const = 0;
 
 	/**
-		@brief	ƒ‰ƒCƒg‚Ì•ûŒü‚ðÝ’è‚·‚éB
+		@brief	ãƒ©ã‚¤ãƒˆã®æ–¹å‘ã‚’è¨­å®šã™ã‚‹ã€‚
 	*/
-	virtual void SetLightDirection( ::Effekseer::Vector3D& direction ) = 0;
+	virtual void SetLightDirection( const ::Effekseer::Vector3D& direction ) = 0;
 
 	/**
-		@brief	ƒ‰ƒCƒg‚ÌF‚ðŽæ“¾‚·‚éB
+		@brief	ãƒ©ã‚¤ãƒˆã®è‰²ã‚’å–å¾—ã™ã‚‹ã€‚
 	*/
 	virtual const ::Effekseer::Color& GetLightColor() const = 0;
 
 	/**
-		@brief	ƒ‰ƒCƒg‚ÌF‚ðÝ’è‚·‚éB
+		@brief	ãƒ©ã‚¤ãƒˆã®è‰²ã‚’è¨­å®šã™ã‚‹ã€‚
 	*/
-	virtual void SetLightColor( ::Effekseer::Color& color ) = 0;
+	virtual void SetLightColor( const ::Effekseer::Color& color ) = 0;
 
 	/**
-		@brief	ƒ‰ƒCƒg‚ÌŠÂ‹«Œõ‚ÌF‚ðŽæ“¾‚·‚éB
+		@brief	ãƒ©ã‚¤ãƒˆã®ç’°å¢ƒå…‰ã®è‰²ã‚’å–å¾—ã™ã‚‹ã€‚
 	*/
 	virtual const ::Effekseer::Color& GetLightAmbientColor() const = 0;
 
 	/**
-		@brief	ƒ‰ƒCƒg‚ÌŠÂ‹«Œõ‚ÌF‚ðÝ’è‚·‚éB
+		@brief	ãƒ©ã‚¤ãƒˆã®ç’°å¢ƒå…‰ã®è‰²ã‚’è¨­å®šã™ã‚‹ã€‚
 	*/
-	virtual void SetLightAmbientColor( ::Effekseer::Color& color ) = 0;
+	virtual void SetLightAmbientColor( const ::Effekseer::Color& color ) = 0;
 
 		/**
-		@brief	Å‘å•`‰æƒXƒvƒ‰ƒCƒg”‚ðŽæ“¾‚·‚éB
+		@brief	æœ€å¤§æç”»ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ•°ã‚’å–å¾—ã™ã‚‹ã€‚
 	*/
 	virtual int32_t GetSquareMaxCount() const = 0;
 
 	/**
-		@brief	“Š‰es—ñ‚ðŽæ“¾‚·‚éB
+		@brief	æŠ•å½±è¡Œåˆ—ã‚’å–å¾—ã™ã‚‹ã€‚
 	*/
 	virtual const ::Effekseer::Matrix44& GetProjectionMatrix() const = 0;
 
 	/**
-		@brief	“Š‰es—ñ‚ðÝ’è‚·‚éB
+		@brief	æŠ•å½±è¡Œåˆ—ã‚’è¨­å®šã™ã‚‹ã€‚
 	*/
 	virtual void SetProjectionMatrix( const ::Effekseer::Matrix44& mat ) = 0;
 
 	/**
-		@brief	ƒJƒƒ‰s—ñ‚ðŽæ“¾‚·‚éB
+		@brief	ã‚«ãƒ¡ãƒ©è¡Œåˆ—ã‚’å–å¾—ã™ã‚‹ã€‚
 	*/
 	virtual const ::Effekseer::Matrix44& GetCameraMatrix() const = 0;
 
 	/**
-		@brief	ƒJƒƒ‰s—ñ‚ðÝ’è‚·‚éB
+		@brief	ã‚«ãƒ¡ãƒ©è¡Œåˆ—ã‚’è¨­å®šã™ã‚‹ã€‚
 	*/
 	virtual void SetCameraMatrix( const ::Effekseer::Matrix44& mat ) = 0;
 
 	/**
-		@brief	ƒJƒƒ‰ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ‚ðŽæ“¾‚·‚éB
+		@brief	ã‚«ãƒ¡ãƒ©ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—ã‚’å–å¾—ã™ã‚‹ã€‚
 	*/
 	virtual ::Effekseer::Matrix44& GetCameraProjectionMatrix() = 0;
 
 	/**
-		@brief	ƒXƒvƒ‰ƒCƒgƒŒƒ“ƒ_ƒ‰[‚ð¶¬‚·‚éB
+		@brief	Get a front direction of camera
+	*/
+	virtual ::Effekseer::Vector3D GetCameraFrontDirection() const = 0;
+
+	/**
+		@brief	Get a position of camera
+	*/
+	virtual ::Effekseer::Vector3D GetCameraPosition() const = 0;
+
+	/**
+		@brief	Set a front direction and position of camera manually
+		@note
+		These are set based on camera matrix automatically.
+		It is failed on some platform.
+	*/
+	virtual void SetCameraParameter(const ::Effekseer::Vector3D& front, const ::Effekseer::Vector3D& position) = 0;
+
+	/**
+		@brief	ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼ã‚’ç”Ÿæˆã™ã‚‹ã€‚
 	*/
 	virtual ::Effekseer::SpriteRenderer* CreateSpriteRenderer() = 0;
 
 	/**
-		@brief	ƒŠƒ{ƒ“ƒŒƒ“ƒ_ƒ‰[‚ð¶¬‚·‚éB
+		@brief	ãƒªãƒœãƒ³ãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼ã‚’ç”Ÿæˆã™ã‚‹ã€‚
 	*/
 	virtual ::Effekseer::RibbonRenderer* CreateRibbonRenderer() = 0;
 
 	/**
-		@brief	ƒŠƒ“ƒOƒŒƒ“ƒ_ƒ‰[‚ð¶¬‚·‚éB
+		@brief	ãƒªãƒ³ã‚°ãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼ã‚’ç”Ÿæˆã™ã‚‹ã€‚
 	*/
 	virtual ::Effekseer::RingRenderer* CreateRingRenderer() = 0;
 
 	/**
-		@brief	ƒ‚ƒfƒ‹ƒŒƒ“ƒ_ƒ‰[‚ð¶¬‚·‚éB
+		@brief	ãƒ¢ãƒ‡ãƒ«ãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼ã‚’ç”Ÿæˆã™ã‚‹ã€‚
 	*/
 	virtual ::Effekseer::ModelRenderer* CreateModelRenderer() = 0;
 
 	/**
-		@brief	‹OÕƒŒƒ“ƒ_ƒ‰[‚ð¶¬‚·‚éB
+		@brief	è»Œè·¡ãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼ã‚’ç”Ÿæˆã™ã‚‹ã€‚
 	*/
 	virtual ::Effekseer::TrackRenderer* CreateTrackRenderer() = 0;
 
 	/**
-		@brief	•W€‚ÌƒeƒNƒXƒ`ƒƒ“ÇžƒNƒ‰ƒX‚ð¶¬‚·‚éB
+		@brief	æ¨™æº–ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­è¾¼ã‚¯ãƒ©ã‚¹ã‚’ç”Ÿæˆã™ã‚‹ã€‚
 	*/
 	virtual ::Effekseer::TextureLoader* CreateTextureLoader( ::Effekseer::FileInterface* fileInterface = NULL ) = 0;
 
 	/**
-		@brief	•W€‚Ìƒ‚ƒfƒ‹“ÇžƒNƒ‰ƒX‚ð¶¬‚·‚éB
+		@brief	æ¨™æº–ã®ãƒ¢ãƒ‡ãƒ«èª­è¾¼ã‚¯ãƒ©ã‚¹ã‚’ç”Ÿæˆã™ã‚‹ã€‚
 	*/
 	virtual ::Effekseer::ModelLoader* CreateModelLoader( ::Effekseer::FileInterface* fileInterface = NULL ) = 0;
 
 	/**
-		@brief	ƒŒƒ“ƒ_[ƒXƒe[ƒg‚ð‹­§“I‚ÉƒŠƒZƒbƒg‚·‚éB
+		@brief	ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å¼·åˆ¶çš„ã«ãƒªã‚»ãƒƒãƒˆã™ã‚‹ã€‚
 	*/
 	virtual void ResetRenderState() = 0;
 
 	/**
-	@brief	”wŒi‚ð˜c‚Ü‚¹‚éƒGƒtƒFƒNƒg‚ª•`‰æ‚³‚ê‚é‘O‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN‚ðŽæ“¾‚·‚éB
+	@brief	èƒŒæ™¯ã‚’æ­ªã¾ã›ã‚‹ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãŒæç”»ã•ã‚Œã‚‹å‰ã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’å–å¾—ã™ã‚‹ã€‚
 	*/
 	virtual DistortingCallback* GetDistortingCallback() = 0;
 
 	/**
-	@brief	”wŒi‚ð˜c‚Ü‚¹‚éƒGƒtƒFƒNƒg‚ª•`‰æ‚³‚ê‚é‘O‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN‚ðÝ’è‚·‚éB
+	@brief	èƒŒæ™¯ã‚’æ­ªã¾ã›ã‚‹ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãŒæç”»ã•ã‚Œã‚‹å‰ã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’è¨­å®šã™ã‚‹ã€‚
 	*/
 	virtual void SetDistortingCallback(DistortingCallback* callback) = 0;
+
+	/**
+	@brief	
+	\~english Get draw call count
+	\~japanese ãƒ‰ãƒ­ãƒ¼ã‚³ãƒ¼ãƒ«ã®å›žæ•°ã‚’å–å¾—ã™ã‚‹
+	*/
+	virtual int32_t GetDrawCallCount() const = 0;
+
+	/**
+	@brief
+	\~english Get the number of vertex drawn
+	\~japanese æç”»ã•ã‚ŒãŸé ‚ç‚¹æ•°ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
+	*/
+	virtual int32_t GetDrawVertexCount() const = 0;
+
+	/**
+	@brief
+	\~english Reset draw call count
+	\~japanese ãƒ‰ãƒ­ãƒ¼ã‚³ãƒ¼ãƒ«ã®å›žæ•°ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
+	*/
+	virtual void ResetDrawCallCount() = 0;
+
+	/**
+	@brief
+	\~english Reset the number of vertex drawn
+	\~japanese æç”»ã•ã‚ŒãŸé ‚ç‚¹æ•°ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
+	*/
+	virtual void ResetDrawVertexCount() = 0;
+
+	/**
+	@brief	æç”»ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®šã™ã‚‹ã€‚
+	*/
+	virtual void SetRenderMode( Effekseer::RenderMode renderMode ) = 0;
+
+	/**
+	@brief	æç”»ãƒ¢ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹ã€‚
+	*/
+	virtual Effekseer::RenderMode GetRenderMode() = 0;
+
+	/**
+	@brief
+	\~english Get an UV Style of texture when particles are rendered.
+	\~japanese ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’æç”»ã™ã‚‹ã¨ãã®UVã®çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹ã€‚
+	*/
+	UVStyle GetTextureUVStyle() const;
+
+	/**
+	@brief
+	\~english Set an UV Style of texture when particles are rendered.
+	\~japanese ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’æç”»ã™ã‚‹ã¨ãã®UVã®çŠ¶æ…‹ã‚’è¨­å®šã™ã‚‹ã€‚
+	*/
+	void SetTextureUVStyle(UVStyle style);
+
+	/**
+	@brief
+	\~english Get an UV Style of background when particles are rendered.
+	\~japanese ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’æç”»ã™ã‚‹ã¨ãã®èƒŒæ™¯ã®UVã®çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹ã€‚
+	*/
+	UVStyle GetBackgroundTextureUVStyle() const;
+
+	/**
+	@brief
+	\~english Set an UV Style of background when particles are rendered.
+	\~japanese ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’æç”»ã™ã‚‹ã¨ãã®èƒŒæ™¯ã®UVã®çŠ¶æ…‹ã‚’è¨­å®šã™ã‚‹ã€‚
+	*/
+	void SetBackgroundTextureUVStyle(UVStyle style);
 };
 
 //----------------------------------------------------------------------------------
@@ -221,6 +321,7 @@ public:
 //
 //----------------------------------------------------------------------------------
 #endif	// __EFFEKSEERRENDERER_RENDERER_H__
+
 #ifndef	__EFFEKSEERRENDERER_DX11_RENDERER_H__
 #define	__EFFEKSEERRENDERER_DX11_RENDERER_H__
 
@@ -236,8 +337,20 @@ namespace EffekseerRendererDX11
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
+
 /**
-	@brief	•`‰æƒNƒ‰ƒX
+@brief	ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­è¾¼ã‚¯ãƒ©ã‚¹ã‚’ç”Ÿæˆã™ã‚‹ã€‚
+*/
+::Effekseer::TextureLoader* CreateTextureLoader(ID3D11Device* device, ID3D11DeviceContext* context, ::Effekseer::FileInterface* fileInterface = NULL);
+
+/**
+@brief	ãƒ¢ãƒ‡ãƒ«èª­è¾¼ã‚¯ãƒ©ã‚¹ã‚’ç”Ÿæˆã™ã‚‹ã€‚
+*/
+::Effekseer::ModelLoader* CreateModelLoader(ID3D11Device* device, ::Effekseer::FileInterface* fileInterface = NULL);
+
+
+/**
+	@brief	æç”»ã‚¯ãƒ©ã‚¹
 */
 class Renderer
 	: public ::EffekseerRenderer::Renderer
@@ -248,25 +361,32 @@ protected:
 
 public:
 	/**
-		@brief	ƒCƒ“ƒXƒ^ƒ“ƒX‚ð¶¬‚·‚éB
-		@param	device	[in]	DirectX‚ÌƒfƒoƒCƒX
-		@param	squareMaxCount	[in]	Å‘å•`‰æƒXƒvƒ‰ƒCƒg”
-		@return	ƒCƒ“ƒXƒ^ƒ“ƒX
+		@brief	ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆã™ã‚‹ã€‚
+		@param	device		DirectXã®ãƒ‡ãƒã‚¤ã‚¹
+		@param	context		DirectXã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
+		@param	squareMaxCount	æœ€å¤§æç”»ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ•°
+		@param	depthFunc	å¥¥è¡Œãã®è¨ˆç®—æ–¹æ³•
+		@return	ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 	*/
-	static Renderer* Create( ID3D11Device* device, ID3D11DeviceContext* context, int32_t squareMaxCount );
+	static Renderer* Create(
+		ID3D11Device* device, 
+		ID3D11DeviceContext* context, 
+		int32_t squareMaxCount, 
+		D3D11_COMPARISON_FUNC depthFunc = D3D11_COMPARISON_LESS);
 
-	/**
-		@brief	ƒfƒoƒCƒX‚ðŽæ“¾‚·‚éB
-	*/
 	virtual ID3D11Device* GetDevice() = 0;
 
-	/**
-	@brief	”wŒi‚ðŽæ“¾‚·‚éB
-	*/
-	virtual ID3D11ShaderResourceView* GetBackground() = 0;
+	virtual ID3D11DeviceContext* GetContext() = 0;
 
 	/**
-	@brief	”wŒi‚ðÝ’è‚·‚éB
+		@brief	\~English	Get background
+				\~Japanese	èƒŒæ™¯ã‚’å–å¾—ã™ã‚‹
+	*/
+	virtual Effekseer::TextureData* GetBackground() = 0;
+
+	/**
+		@brief	\~English	Set background
+				\~Japanese	èƒŒæ™¯ã‚’è¨­å®šã™ã‚‹
 	*/
 	virtual void SetBackground(ID3D11ShaderResourceView* background) = 0;
 };
@@ -275,35 +395,54 @@ public:
 //
 //----------------------------------------------------------------------------------
 /**
-	@brief	ƒ‚ƒfƒ‹
+@brief	\~English	Model
+		\~Japanese	ãƒ¢ãƒ‡ãƒ«
 */
-class Model : public Effekseer::Model
+class Model 
+	: public Effekseer::Model
 {
 private:
 
 public:
-	ID3D11Buffer*		VertexBuffer;
-	ID3D11Buffer*		IndexBuffer;
-	int32_t				VertexCount;
-	int32_t				IndexCount;
-	int32_t				FaceCount;
-	int32_t				ModelCount;
+
+	struct InternalModel
+	{
+		ID3D11Buffer*		VertexBuffer;
+		ID3D11Buffer*		IndexBuffer;
+		int32_t				VertexCount;
+		int32_t				IndexCount;
+		int32_t				FaceCount;
+
+		InternalModel()
+		{
+			VertexBuffer = nullptr;
+			IndexBuffer = nullptr;
+			VertexCount = 0;
+			IndexCount = 0;
+			FaceCount = 0;
+		}
+
+		virtual ~InternalModel()
+		{
+			ES_SAFE_RELEASE(VertexBuffer);
+			ES_SAFE_RELEASE(IndexBuffer);
+		}
+	};
+
+	InternalModel*				InternalModels = nullptr;
+	int32_t						ModelCount;
 
 	Model( uint8_t* data, int32_t size )
 		: Effekseer::Model	( data, size )
-		, VertexBuffer	( NULL )
-		, IndexBuffer	( NULL )
-		, VertexCount		( 0 )
-		, IndexCount		( 0 )
-		, FaceCount			( 0 )
-		, ModelCount		( 0 )
+		, InternalModels(nullptr)
+		, ModelCount(0)
 	{
+		this->m_vertexSize = sizeof(VertexWithIndex);
 	}
 
 	virtual ~Model()
 	{
-		ES_SAFE_RELEASE( VertexBuffer );
-		ES_SAFE_RELEASE( IndexBuffer );
+		ES_SAFE_DELETE_ARRAY(InternalModels);
 	}
 };
 
