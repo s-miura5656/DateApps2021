@@ -22,13 +22,12 @@ void EffectManager::Update()
 {
 	Effekseer.Update();
 
-	auto player_pos = player_data.GetPosition(player_tag);
 	if (flag)
 	{
-		effect_num = eb[EffectEnum::PUNCH].EffectPlay(player_pos);
+		auto player_pos = player_data.GetPosition(player_tag);
+		auto effect_num = eb[EffectEnum::PUNCH].EffectPlay(player_pos);
 		eb[EffectEnum::PUNCH].SetSpeed(effect_num, 1.f);
 		eb[EffectEnum::PUNCH].SetScale(effect_num, 0.3f);
-		count++;
 		flag = false;
 	}
 

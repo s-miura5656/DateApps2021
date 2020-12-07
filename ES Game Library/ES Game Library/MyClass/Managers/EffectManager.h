@@ -20,7 +20,4 @@ private:
 	string player_tag;
 	IPrayerData player_data;
 	bool flag = true;
-
-	int effect_num;
-	int count=0;
 };
