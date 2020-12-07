@@ -70,6 +70,7 @@ bool SceneManager::Initialize()
 	SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
 	SceneCamera::Instance().SetPerspectiveFieldOfView(1.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 
+
 	return true;
 }
 
