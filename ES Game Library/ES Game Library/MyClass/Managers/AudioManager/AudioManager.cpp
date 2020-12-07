@@ -23,3 +23,7 @@ void AudioManager::PunchPlay()
 		}
 	}
 }
+void AudioManager::MainBgmPlay()
+{
+	_mainbgm->Play();
+}

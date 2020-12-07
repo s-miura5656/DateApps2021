@@ -7,8 +7,9 @@ public:
 	~AudioManager();
 	bool Initialize();
 	enum{ MAX_PLAY = 4};
-	MUSIC _mainbgm;
 	void PunchPlay();
+	void MainBgmPlay();
 private:
 	SOUND _punch[MAX_PLAY];
+	MUSIC _mainbgm;
 };
