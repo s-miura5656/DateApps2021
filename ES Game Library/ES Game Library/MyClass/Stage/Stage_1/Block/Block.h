@@ -18,7 +18,6 @@ public:
 	bool Initialize() override;
 	int Update() override;
 	void Draw3D() override;
-	//aaa
 private:
 	ItemCounter* itemcounter;
 };
