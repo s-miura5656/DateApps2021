@@ -24,6 +24,7 @@ public:
 
 	void CreateEffect(std::string path, std::string file_name);
 	EffectBase* GetEffect(std::string file_name) { return eb[file_name]; }
+
 private:
 	EffectManager(const EffectManager&) = delete;
 	void operator=(const EffectManager&) = delete;

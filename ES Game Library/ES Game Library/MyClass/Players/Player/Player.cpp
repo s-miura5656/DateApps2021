@@ -2,7 +2,6 @@
 #include "../../Data/MyAlgorithm.h"
 #include "../../Data/Parametor.h"
 #include "../../Managers/ResouceManager/ResouceManager.h"
-#include "../../Managers/EffectManager/EffectManager.h"
 #include <codecvt>
 
 Player::Player(std::string tag)
@@ -36,9 +35,7 @@ bool Player::Initialize()
 	_font   = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
 	_model  = ResouceManager::Instance().LoadAnimationModelFile(_T("player/Robo_animation ver3.X"));
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
-	//EffectManager::Instance().CreateEffect("Effect/effect_flash/", "flash");
-
-	effect = Effekseer.CreateEffectFromFile(_T("Effect/effect_flash/flash.efk"));
+	EffectManager::Instance().CreateEffect("Effect/effect_flash/", "flash");
 
 	//! Position
 	_model->SetPosition(_i_player_data->GetPosition(_tag));
@@ -81,15 +78,6 @@ int Player::Update()
 	pad->GamePadRefresh();
 
 	DebugControll();
-
-	if (_tag == "Player_1")
-	{
-		auto effect_num = effect->Play(_position + Vector3(1, 1, 0));
-		auto a = effect->GetPosition(effect_num);
-
-		effect->SetSpeed(effect_num, 1.0f);
-		effect->SetScale(effect_num, 1.0f);
-	}
 
 	//! ƒ_ƒ[ƒWó‘Ô‚Ì”»’è
 	if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
