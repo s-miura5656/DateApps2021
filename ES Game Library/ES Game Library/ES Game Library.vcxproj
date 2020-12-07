@@ -172,6 +172,7 @@
     <ClCompile Include="MyClass\Item\ItemBase.cpp" />
     <ClCompile Include="MyClass\Item\ItemFactory\ItemFactory.cpp" />
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp" />
+    <ClCompile Include="MyClass\Managers\AudioManager\AudioManager.cpp" />
     <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp" />
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp" />
     <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp" />
@@ -263,6 +264,7 @@
     <ClInclude Include="MyClass\Item\ItemCounter\ItemCounter.h" />
     <ClInclude Include="MyClass\Item\ItemFactory\ItemFactory.h" />
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h" />
+    <ClInclude Include="MyClass\Managers\AudioManager\AudioManager.h" />
     <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h" />
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h" />
     <ClInclude Include="MyClass\Managers\ManagerBase.h" />
