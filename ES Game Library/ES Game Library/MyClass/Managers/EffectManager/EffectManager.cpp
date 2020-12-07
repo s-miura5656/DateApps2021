@@ -18,25 +18,24 @@ bool EffectManager::Initialize()
 	return 0;
 }
 
-void EffectManager::Update() 
+int EffectManager::Update() 
 {
 	Effekseer.Update();
 
-	if (flag)
-	{
-		auto player_pos = player_data.GetPosition(player_tag);
-		auto effect_num = eb[EffectEnum::PUNCH].EffectPlay(player_pos);
-		eb[EffectEnum::PUNCH].SetSpeed(effect_num, 1.f);
-		eb[EffectEnum::PUNCH].SetScale(effect_num, 0.3f);
-		flag = false;
-	}
+	auto player_pos = _i_player_data.GetPosition(player_tag);
+	auto effect_num = eb[EffectEnum::PUNCH].EffectPlay(Vector3(2, 1, -1));
+	eb[EffectEnum::PUNCH].SetSpeed(effect_num, 1.f);
+	eb[EffectEnum::PUNCH].SetScale(effect_num, 0.3f);
+
+	return 0;
+}
+
+void EffectManager::Draw2D()
+{
 
 }
 
-void EffectManager::Draw() 
+void EffectManager::Draw3D()
 {
-	
 	Effekseer.Draw();
-	
-	
 }

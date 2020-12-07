@@ -124,11 +124,11 @@
     </ClCompile>
     <ClCompile Include="Extension\Effekseer\Effekseer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Extension\Effekseer\EffekseerEffect.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Extension\Kinect\Kinect.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -173,6 +173,8 @@
     <ClCompile Include="MyClass\Item\ItemFactory\ItemFactory.cpp" />
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp" />
     <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp" />
+    <ClCompile Include="MyClass\Managers\EffectManager\EffectBase.cpp" />
+    <ClCompile Include="MyClass\Managers\EffectManager\EffectManager.cpp" />
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp" />
     <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp" />
     <ClCompile Include="MyClass\Managers\ResouceManager\ResouceManager.cpp" />
@@ -264,6 +266,8 @@
     <ClInclude Include="MyClass\Item\ItemFactory\ItemFactory.h" />
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h" />
     <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h" />
+    <ClInclude Include="MyClass\Managers\EffectManager\EffectBase.h" />
+    <ClInclude Include="MyClass\Managers\EffectManager\EffectManager.h" />
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h" />
     <ClInclude Include="MyClass\Managers\ManagerBase.h" />
     <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h" />

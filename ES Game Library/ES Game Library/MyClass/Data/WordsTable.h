@@ -35,5 +35,5 @@ namespace ArmEnum {
 }
 
 namespace EffectEnum {
-	enum EffectType{ PUNCH,HIT,ALL_TYPE};
+	enum EffectType{ PUNCH, HIT, ALL_TYPE};
 }
