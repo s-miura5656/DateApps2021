@@ -23,7 +23,7 @@ int MainUiManager::Update()
 {
 	_ui->Update();
 	
-	MainUi* ui = (MainUi*)_ui;
+	/*MainUi* ui = (MainUi*)_ui;
 	KeyboardState key = Keyboard->GetState();
 	if (key.IsKeyDown(Keys_D1))
 		ui->SetDamege(0, 4);
@@ -32,7 +32,7 @@ int MainUiManager::Update()
 	if (key.IsKeyDown(Keys_D3))
 		ui->SetDamege(2, 4);
 	if (key.IsKeyDown(Keys_D4))
-		ui->SetDamege(3, 4);
+		ui->SetDamege(3, 4);*/
 
 	return 0;
 }

@@ -243,12 +243,12 @@ bool HitBox::IsHitObjectsSquare(std::string tags)
 	auto b_scale = hit_object->_model->GetScale() / 2;
 
 	//! aとbのボックスの当たり判定
-	if (a_pos.x - a_scale.x < b_pos.x + b_scale.x  &&
-		a_pos.x + a_scale.x > b_pos.x - b_scale.x  &&
-		a_pos.y - a_scale.y < b_pos.y + b_scale.y  &&
-		a_pos.y + a_scale.y > b_pos.y - b_scale.y  &&
-		a_pos.z - a_scale.z < b_pos.z + b_scale.z  &&
-		a_pos.z + a_scale.z > b_pos.z - b_scale.z )
+	if (a_pos.x - a_scale.x < b_pos.x + b_scale.x &&
+		a_pos.x + a_scale.x > b_pos.x - b_scale.x &&
+		a_pos.y - a_scale.y < b_pos.y + b_scale.y && 
+		a_pos.y + a_scale.y > b_pos.y - b_scale.y &&
+		a_pos.z - a_scale.z < b_pos.z + b_scale.z && 
+		a_pos.z + a_scale.z > b_pos.z - b_scale.z)
 	{
 		result = true;
 	}

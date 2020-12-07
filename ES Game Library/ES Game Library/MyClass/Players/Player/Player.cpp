@@ -32,7 +32,7 @@ bool Player::Initialize()
 {
 	//! file
 	_font   = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
-	_model  = ResouceManager::Instance().LoadAnimationModelFile(_T("player/Robo_animation.X"));
+	_model  = ResouceManager::Instance().LoadAnimationModelFile(_T("player/Robo_animation ver3.X"));
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
 
 	//! Position

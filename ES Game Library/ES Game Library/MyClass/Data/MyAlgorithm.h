@@ -24,12 +24,6 @@ static int GetTagNum(std::string tag)
 //! @param (max) û‚ß‚é’l‚ÌãŒÀ’l
 static float Clamp(float value, float min, float max)
 {
-	/*float ratio = max - min;
-
-	ratio /= 100.f;
-
-	value *= ratio;*/
-
 	if (value < min)
 		value = min;
 

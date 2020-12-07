@@ -10,7 +10,7 @@ SPRITE ResouceManager::LordSpriteFile(tstring sprite_file_name)
 	else
 	{
 		SPRITE sprite = GraphicsDevice.CreateSpriteFromFile(sprite_file_name.c_str());
-		_resouces_sprite.emplace(sprite_file_name, sprite);
+		_resouces_sprite.emplace_hint(_resouces_sprite.end(), sprite_file_name, sprite);
 		return _resouces_sprite[sprite_file_name];
 	}
 }
@@ -25,7 +25,7 @@ MODEL ResouceManager::LoadModelFile(tstring model_file_name)
 	else
 	{
 		MODEL model = GraphicsDevice.CreateModelFromFile(model_file_name.c_str());
-		_resouces_model.emplace(model_file_name, model);
+		_resouces_model.emplace_hint(_resouces_model.end(), model_file_name, model);
 		return _resouces_model[model_file_name];
 	}
 }
@@ -40,7 +40,7 @@ ANIMATIONMODEL ResouceManager::LoadAnimationModelFile(tstring animation_model_na
 	else
 	{
 		ANIMATIONMODEL animationmodel = GraphicsDevice.CreateAnimationModelFromFile(animation_model_name.c_str());
-		_resouces_animation_model.emplace(animation_model_name, animationmodel);
+		_resouces_animation_model.emplace_hint(_resouces_animation_model.end(), animation_model_name, animationmodel);
 		return _resouces_animation_model[animation_model_name];
 	}
 }
@@ -55,23 +55,8 @@ FONT ResouceManager::LordFontFile(tstring font_file_name,float size)
 	else
 	{
 		FONT font = GraphicsDevice.CreateSpriteFont(font_file_name.c_str(), size);
-		_resouces_font.emplace(font_file_name, font);
+		_resouces_font.emplace_hint(_resouces_font.end(), font_file_name, font);
 		return _resouces_font[font_file_name];
-	}
-}
-
-SHADER ResouceManager::LordShaderFile(tstring shader_file_name)
-{
-	auto&& it = _resouces_shader.find(shader_file_name);
-	if (it != _resouces_shader.end())
-	{
-		return it->second;
-	}
-	else
-	{
-		SHADER shader = GraphicsDevice.CreateEffectFromFile(shader_file_name.c_str());
-		_resouces_shader.emplace(shader_file_name, shader);
-		return _resouces_shader[shader_file_name];
 	}
 }
 
@@ -85,7 +70,7 @@ EFFECT ResouceManager::LordEffectFile(tstring effect_file_name)
 	else
 	{
 		EFFECT effect = GraphicsDevice.CreateEffectFromFile(effect_file_name.c_str());
-		_resouces_effect.emplace(effect_file_name, effect);
+		_resouces_effect.emplace_hint(_resouces_effect.end(), effect_file_name, effect);
 		return _resouces_effect[effect_file_name];
 	}
 }
@@ -100,7 +85,7 @@ SOUND ResouceManager::LordSoundFile(tstring sound_file_name)
 	else
 	{
 		SOUND sound = SoundDevice.CreateSoundFromFile(const_cast<LPTSTR>(sound_file_name.c_str()));
-		_resouces_sound.emplace(sound_file_name, sound);
+		_resouces_sound.emplace_hint(_resouces_sound.end(), sound_file_name, sound);
 		return _resouces_sound[sound_file_name];
 	}
 }
@@ -115,7 +100,7 @@ MUSIC ResouceManager::LordMusicFile(tstring music_file_name)
 	else
 	{
 		MUSIC music = SoundDevice.CreateMusicFromFile(const_cast<LPTSTR>(music_file_name.c_str()));
-		_resouces_music.emplace(music_file_name, music);
+		_resouces_music.emplace_hint(_resouces_music.end(), music_file_name, music);
 		return _resouces_music[music_file_name];
 	}
 }
@@ -130,7 +115,7 @@ MEDIA ResouceManager::LordMediaFile(tstring media_file_name)
 	else
 	{
 		MEDIA media = MediaManager.CreateMediaFromFile(const_cast<LPTSTR>(media_file_name.c_str()));
-		_resouces_media.emplace(media_file_name, media);
+		_resouces_media.emplace_hint(_resouces_media.end(), media_file_name, media);
 		return _resouces_media[media_file_name];
 	}
 }

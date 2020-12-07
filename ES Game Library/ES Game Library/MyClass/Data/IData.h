@@ -15,7 +15,7 @@ public:
 	~IPrayerData() {};
 
 	//! セッター
-	void SetPlayerParam(std::string& player_tag, PlayerParam& player_param) { PlayerParametor::Instance()._player_params[player_tag] = player_param; }
+	void SetParametor(std::string& player_tag, PlayerParam& player_param)   { PlayerParametor::Instance()._player_params[player_tag] = player_param; }
 	void SetHitPoint(std::string& player_tag, int hit_point)				{ PlayerParametor::Instance()._player_params[player_tag].hit_point = hit_point; }
 	void SetAttackPowor(std::string& player_tag, int attack_powor)			{ PlayerParametor::Instance()._player_params[player_tag].attack_powor = attack_powor; }
 	void SetSpeed(std::string& player_tag, float speed)						{ PlayerParametor::Instance()._player_params[player_tag].speed = speed; }
@@ -27,16 +27,17 @@ public:
 	void SetKillCount(std::string& player_tag, int kill_count)				{ PlayerParametor::Instance()._player_params[player_tag].kill_count = kill_count; }
 
 	//! ゲッター
-	PlayerParam GetPlayerPram(std::string& player_tag)  const { return PlayerParametor::Instance()._player_params[player_tag]; }
-	int GetHitPoint(std::string& player_tag)			const { return PlayerParametor::Instance()._player_params[player_tag].hit_point; }
-	int GetAttackPowor(std::string& player_tag)			const { return PlayerParametor::Instance()._player_params[player_tag].attack_powor; }
-	float GetSpeed(std::string& player_tag)				const { return PlayerParametor::Instance()._player_params[player_tag].speed; }
-	int GetWeight(std::string& player_tag)				const { return PlayerParametor::Instance()._player_params[player_tag].weight; }
-	float GetAngle(std::string& player_tag)				const { return PlayerParametor::Instance()._player_params[player_tag].angle; }
-	Vector3 GetPosition(std::string& player_tag)		const { return PlayerParametor::Instance()._player_params[player_tag].position; }
-	int GetState(std::string& player_tag)				const { return PlayerParametor::Instance()._player_params[player_tag].state; }
-	IndexNum GetIndexNum(std::string& player_tag)       const { return PlayerParametor::Instance()._index_nums[player_tag]; }
-	int GetKillCount(std::string& player_tag)			const { return PlayerParametor::Instance()._player_params[player_tag].kill_count; }
+	std::map<std::string, PlayerParam> GetAllParametor() const { return PlayerParametor::Instance()._player_params; }
+	PlayerParam GetParametor(std::string& player_tag)    const { return PlayerParametor::Instance()._player_params[player_tag]; }
+	int GetHitPoint(std::string& player_tag)			 const { return PlayerParametor::Instance()._player_params[player_tag].hit_point; }
+	int GetAttackPowor(std::string& player_tag)			 const { return PlayerParametor::Instance()._player_params[player_tag].attack_powor; }
+	float GetSpeed(std::string& player_tag)				 const { return PlayerParametor::Instance()._player_params[player_tag].speed; }
+	int GetWeight(std::string& player_tag)				 const { return PlayerParametor::Instance()._player_params[player_tag].weight; }
+	float GetAngle(std::string& player_tag)				 const { return PlayerParametor::Instance()._player_params[player_tag].angle; }
+	Vector3 GetPosition(std::string& player_tag)		 const { return PlayerParametor::Instance()._player_params[player_tag].position; }
+	int GetState(std::string& player_tag)				 const { return PlayerParametor::Instance()._player_params[player_tag].state; }
+	IndexNum GetIndexNum(std::string& player_tag)        const { return PlayerParametor::Instance()._index_nums[player_tag]; }
+	int GetKillCount(std::string& player_tag)			 const { return PlayerParametor::Instance()._player_params[player_tag].kill_count; }
 };
 
 class IArmData 

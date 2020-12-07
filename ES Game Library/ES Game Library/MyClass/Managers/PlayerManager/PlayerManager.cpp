@@ -6,9 +6,9 @@ PlayerManager::PlayerManager()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		std::string name = PLAYER_TAG + std::to_string(i + 1);
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
 
-		players.push_back(new Player(name));
+		players.push_back(new Player(tag));
 	}
 
 	i_player_data = new IPrayerData;
@@ -28,12 +28,12 @@ bool PlayerManager::Initialize()
 {
 	for (int i = 0; i < players.size(); ++i)
 	{
-		std::string name = PLAYER_TAG + std::to_string(i + 1);
-		std::string arm_name = ARM_TAG + std::to_string(i + 1);
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
+		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
 		players[i]->Initialize();
 
-		PlayerParametor::Instance().CreateParametor(name);
-		ArmParametor::Instance().CreateParametor(arm_name);
+		PlayerParametor::Instance().CreateParametor(tag);
+		ArmParametor::Instance().CreateParametor(arm_tag);
 	}
 
     return true;
@@ -41,12 +41,14 @@ bool PlayerManager::Initialize()
 
 int PlayerManager::Update()
 {
+	RankingSort();
+
 	for (int i = 0; i < players.size(); ++i)
 	{
 		players[i]->Update();
 	}
 
-	//! ここのプレイヤーが倒されたときの処理
+	//! ここにプレイヤーが倒されたときの処理
 
     return 0;
 }
@@ -66,3 +68,16 @@ void PlayerManager::Draw3D()
 		players[i]->Draw3D();
 	}
 }
+
+void PlayerManager::RankingSort()
+{
+	std::multimap<int, std::string, std::greater<int>> sorted_map;
+	auto param_list = i_player_data->GetAllParametor();
+
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
+		sorted_map.insert(std::make_pair(param_list[tag].kill_count, tag));
+	}
+}
+

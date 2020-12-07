@@ -45,15 +45,16 @@ void PlayerBase::Draw3D()
 	if (_i_player_data->GetState(_tag) != PlayerEnum::Animation::DAMAGE)
 	{
 		_shader->SetTechnique("FixModel");
-		_model->Draw(/*_shader*/);
+		_model->Draw(_shader);
 	}
 	else
 	{
 		_shader->SetTechnique("DamageModel");
 		GraphicsDevice.BeginAlphaBlend();
-		_model->Draw(/*_shader*/);
+		_model->Draw(_shader);
 		GraphicsDevice.EndAlphaBlend();
 	}
+
 	_i_player_data->SetAngle(_tag, _angle);
 	_i_player_data->SetPosition(_tag, _position);
 

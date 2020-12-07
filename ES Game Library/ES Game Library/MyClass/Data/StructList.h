@@ -8,7 +8,7 @@ struct PlayerParam {
 	Vector3 position  = Vector3_Zero;
 	float angle		  = 0.f;
 	int hit_point	  = 1000;
-	int attack_powor  = 100;
+	int attack_powor  = 1000;
 	float speed		  = 0.04f;
 	int weight        = 50;
 	int kill_count    = 0;

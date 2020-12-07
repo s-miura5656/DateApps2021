@@ -20,6 +20,8 @@ public:
 	void Draw2D() override;
 	void Draw3D() override;
 
+	void RankingSort();
+
 private:
 	//ƒvƒŒƒCƒ„[
 	std::vector<Player*> players;
