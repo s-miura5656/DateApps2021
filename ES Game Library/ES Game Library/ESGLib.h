@@ -27,7 +27,7 @@
 //------------------------------------------------------------------------------
 #include <SS5Player.h>
 // #include "DirectX\2D\Direct2D.hpp"
-// #include "Extension\Effekseer\Effekseer.hpp"
+ #include "Extension\Effekseer\Effekseer.hpp"
 // #include "Extension\Live2D\Live2D.hpp"
 // #include "Extension\Squirrel\Squirrel.hpp"
 // #include "Extension\Kinect\NUI.hpp"

@@ -6,7 +6,7 @@
 
 #include "../BaseScene.h"
 #include "../../Managers/ManagerBase.h"
-
+#include "../../Managers/EffectManager.h"
 class MainScene : public BaseScene
 {
 public:
@@ -23,4 +23,6 @@ private:
 	std::vector<ManagerBase*> _managers;
 
 	class MainUiManager* ui;
+
+	EffectManager em;
 };

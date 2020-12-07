@@ -8,6 +8,8 @@
 #include "../../Managers/UIManager/UI.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
 
+
+
 MainScene::MainScene()
 {
 	_managers.push_back(new StageManager);
@@ -22,10 +24,13 @@ MainScene::~MainScene()
 	{
 		delete _managers[i];
 	}
+
 }
 
 bool MainScene::Initialize()
 {	
+	
+
 	auto _temporary_managers = _managers;
 
 	for (auto&& manager : _temporary_managers)
@@ -34,6 +39,8 @@ bool MainScene::Initialize()
 	}
 
 	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
+
+	em.Initialize();
 
 	return true;
 }
@@ -46,6 +53,8 @@ int MainScene::Update()
 	{
 		manager->Update();
 	}
+
+	em.Update();
 
 	return 0;
 }
@@ -68,4 +77,6 @@ void MainScene::Draw3D()
 	{
 		manager->Draw3D();
 	}
+
+	em.Draw();
 }
