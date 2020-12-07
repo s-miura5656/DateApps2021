@@ -10,7 +10,7 @@ AudioManager::~AudioManager()
 bool AudioManager::Initialize()
 {
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/se.wav"),_punch,MAX_PLAY,false);
-	_mainbgm = ResouceManager::Instance().LordMusicFile(_T(""));
+	_mainbgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/MainBgm.wav"));
 	return true;
 }
 void AudioManager::PunchPlay()
