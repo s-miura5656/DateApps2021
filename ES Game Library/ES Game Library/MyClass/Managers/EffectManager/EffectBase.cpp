@@ -7,7 +7,7 @@ EffectBase::EffectBase()
 
 EffectBase::~EffectBase() 
 {
-
+	delete effect;
 };
 
 bool EffectBase::Initialize(LPCTSTR file){

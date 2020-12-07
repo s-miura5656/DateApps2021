@@ -15,7 +15,6 @@ MainScene::MainScene()
 	_managers.push_back(new PlayerManager);
 	_managers.push_back(new ItemManager);
 	_managers.push_back(new MainUiManager);
-	_managers.push_back(new EffectManager);
 }
 
 MainScene::~MainScene()
@@ -46,10 +45,13 @@ int MainScene::Update()
 {
 	auto _temporary_managers = _managers;
 
+
 	for (auto&& manager : _temporary_managers)
 	{
 		manager->Update();
 	}
+	
+	Effekseer.Update();
 
 	return 0;
 }
@@ -72,4 +74,6 @@ void MainScene::Draw3D()
 	{
 		manager->Draw3D();
 	}
+
+	Effekseer.Draw();
 }

@@ -19,4 +19,5 @@ public:
 	void PlayerStartPosition(Vector3& pos) { _model->SetPosition(pos); }
 	void DebugControll();
 private:
+	EFFEKSEER effect;
 };

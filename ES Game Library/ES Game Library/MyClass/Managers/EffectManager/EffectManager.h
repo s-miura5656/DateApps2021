@@ -12,14 +12,21 @@ public:
 	EffectManager();
 	~EffectManager();
 	
-	bool Initialize() override;
-	int Update() override;
-	void Draw2D() override;
-	void Draw3D() override;
+	static EffectManager& Instance() {
+		static EffectManager instance;
+		return instance;
+	};
 
+	bool Initialize() override { return true; }
+	int Update() override { return 0; }
+	void Draw2D() override {};
+	void Draw3D() override {};
+
+	void CreateEffect(std::string path, std::string file_name);
+	EffectBase* GetEffect(std::string file_name) { return eb[file_name]; }
 private:
-	EffectBase eb[EffectEnum::ALL_TYPE];
-	string player_tag;
-	IPrayerData _i_player_data;
-	bool flag = true;
+	EffectManager(const EffectManager&) = delete;
+	void operator=(const EffectManager&) = delete;
+
+	std::map<std::string, EffectBase*> eb;
 };

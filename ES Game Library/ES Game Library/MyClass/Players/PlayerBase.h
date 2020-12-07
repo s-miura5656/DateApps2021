@@ -3,6 +3,7 @@
 #include "../Collision/HitBox.h"
 #include "../Data/IData.h"
 #include "../Managers/ControllerManager/ContorollerManager.h"
+#include "../Managers/EffectManager/EffectManager.h"
 
 class PlayerBase
 {
@@ -11,12 +12,12 @@ public:
 	virtual ~PlayerBase();
 
 	virtual bool Initialize() { return true; }
-	virtual int Update() { return 0; }
+	virtual int  Update() { return 0; }
 	virtual void Draw2D();
 	virtual void Draw3D();
 
-	Vector3 GetPos()  { return _model->GetPosition(); }
-	float GetAngle()  { return _angle; }
+	Vector3		   GetPos()    { return _model->GetPosition(); }
+	float		   GetAngle()  { return _angle; }
 	ANIMATIONMODEL GetPlayer() { return _model; }
 	
 	void ChangeAnimation();
