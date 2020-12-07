@@ -17,18 +17,12 @@ MainUi::~MainUi()
 
 bool MainUi::Initialize()
 {
-	time_limit_font = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 50);
-	player_date = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 20);
-	HP_green = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/hp_green2.png"));
-	HP_red = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/hp_red2.png"));
-	HP_black = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/hp_white2.png"));
-
-	for (int i = 0; i < 4; ++i) {
-		green_x[i] = 320.0f;
-		red_x[i] = 320.0f;
-	}
-	/*hp_bar  = RectWH(0.0f, 0.0f, green_x * hit_points / 300.0f, 22);
-	red_bar = RectWH(0.0f, 0.0f, red_x, 22);*/
+	time_limit_font = GraphicsDevice.CreateSpriteFont(_T("チェックアンドU-Foフォント"), 50);
+	player_date     = GraphicsDevice.CreateSpriteFont(_T("SketchFlow Print"), 20);
+	red_banner      = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/red.png"));
+	blue_banner     = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/blue.png"));
+	green_banner    = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/green.png"));
+	yellow_banner   = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/yellow.png"));
 
 	powor_ui_pos[0] = Vector2(  10,   50);
 	powor_ui_pos[1] = Vector2(950 ,   50);
@@ -36,9 +30,9 @@ bool MainUi::Initialize()
 	powor_ui_pos[3] = Vector2(950 ,  570);
 	
 	hp_ui_pos[0] = Vector3(  10,  30,0);
-	hp_ui_pos[1] = Vector3(950,  30,0);
+	hp_ui_pos[1] = Vector3(1050,  30,0);
 	hp_ui_pos[2] = Vector3(  10, 650,0);
-	hp_ui_pos[3] = Vector3(950, 650,0);
+	hp_ui_pos[3] = Vector3(1050, 650,0);
 
 	/*speed_ui_pos[0] = Vector2(  10,  60);
 	speed_ui_pos[1] = Vector2(1025,  60);
@@ -57,9 +51,9 @@ bool MainUi::Initialize()
 
 void MainUi::Draw2D()
 {
-	SpriteBatch.DrawString(time_limit_font, Vector2(530, 0), Color(1.f, 1.f, 1.f), _T("TIME : %d"), int(TimeManager::Instance().GetTimeLeft()));
+	SpriteBatch.DrawString(time_limit_font, Vector2(530, 20), Color(1.f, 1.f, 1.f), _T("TIME : %d"), int(TimeManager::Instance().GetTimeLeft()));
 	DebugDraw();
-	HpAnimation();
+	PlayerBanner();
 }
 
 #ifdef _DEBUG
@@ -77,33 +71,21 @@ void MainUi::DebugDraw()
 		SpriteBatch.DrawString(player_date, power_pos + Vector2(0, 20), text_color, _T("PLAYER_SPD : %f"), iplayer_data->GetSpeed(tag));
 	}
 }
-#endif
-void MainUi::HpAnimation()
+void MainUi::PlayerBanner()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string& tag = PLAYER_TAG + std::to_string(i + 1);
-		auto hp = iplayer_data->GetHitPoint(tag);
 
-		if (green_x[i] * hp / 1000.0f < red_x[i]) {
-			red_x[i] -= 2;
-		}
+		const auto banner = powor_ui_pos[i];//スコアを書き込む
 
-		RectWH hp_bar  = RectWH(0.0f, 0.0f, green_x[i] * hp / 1000.0f, 22);
-		RectWH red_bar = RectWH(0.0f, 0.0f, red_x[i], 22);
-
-		SpriteBatch.Draw(*HP_green, hp_ui_pos[i] , hp_bar);
-		SpriteBatch.Draw(*HP_red,   hp_ui_pos[i] + Vector3(0, 0, 1), red_bar);
-		SpriteBatch.Draw(*HP_black, hp_ui_pos[i] + Vector3(0, 0, 2));
+		SpriteBatch.Draw(*red_banner, hp_ui_pos[0]);
+		SpriteBatch.Draw(*blue_banner, hp_ui_pos[1]);
+		SpriteBatch.Draw(*green_banner, hp_ui_pos[2]);
+		SpriteBatch.Draw(*yellow_banner, hp_ui_pos[3]);
 	}
-
 }
+#endif
 
-void MainUi::SetDamege(const int player_number, const int damage)
-{
-	green_x[player_number] -= damage;
-	if (green_x[player_number] < 0)
-		green_x[player_number] = 0;
-}
 
 //攻撃、hp、スピード

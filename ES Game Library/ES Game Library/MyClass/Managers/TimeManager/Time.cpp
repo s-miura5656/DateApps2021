@@ -19,14 +19,18 @@ void TimeManager::Initialize()
 	//startTime = 0;
 	//nowTime = 0;
 	//time = 0;
-	limitTime = 60.9f;
+	limitTime =60.9f;
 	time = 0.0f;
 }
  
 
 void TimeManager::Update()
 {
-	time += (float)GameTimer.GetElapsedSecond();
+	
+	if (time < 60)
+	{
+		time += (float)GameTimer.GetElapsedSecond();
+	}
 	//if (startTime == 0)
 	//{
 	//	startTime = timeGetTime();
