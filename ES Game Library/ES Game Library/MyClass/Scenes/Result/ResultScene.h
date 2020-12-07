@@ -11,5 +11,9 @@ public:
 	void Draw2D();
 	void Draw3D();
 private:
-	SPRITE result;
+	SPRITE ground;
+	SPRITE champion;
+	SPRITE totitle;
+	MODEL model;
+	CAMERA camera;
 };
