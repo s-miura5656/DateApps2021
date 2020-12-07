@@ -44,14 +44,13 @@ bool MainScene::Initialize()
 int MainScene::Update()
 {
 	auto _temporary_managers = _managers;
-
+	
+	Effekseer.Update();
 
 	for (auto&& manager : _temporary_managers)
 	{
 		manager->Update();
 	}
-	
-	Effekseer.Update();
 
 	return 0;
 }
