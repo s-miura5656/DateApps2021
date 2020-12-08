@@ -65,7 +65,7 @@ bool SceneManager::Initialize()
 	_camera_pos = Vector3(7, 11, -11.6);
 	_look_pos = Vector3(65.2, 0, 0);
 	//SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
-	SceneCamera::Instance()._camera->SetView(Vector3(7, 11, -11.6), Vector3(65.2, 0, 0));
+	SceneCamera::Instance().SetView(Vector3(7, 11, -11.6), Vector3(65.2, 0, 0));
 	SceneCamera::Instance().SetPerspectiveFieldOfView(57, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 	return true;
 }
