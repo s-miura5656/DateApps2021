@@ -15,7 +15,6 @@ public:
 	bool Initialize() override;
 	int Update() override { return 0; }
 	void Draw2D() override;
-	void DebugDraw();
 	void PlayerBanner();
 
 	FONT player_date;//各プレイヤーのステータス表記
@@ -29,5 +28,7 @@ public:
 	SPRITE blue_banner;
 	SPRITE green_banner;
 	SPRITE yellow_banner;
+
+	SPRITE time_banner;
 
 };
