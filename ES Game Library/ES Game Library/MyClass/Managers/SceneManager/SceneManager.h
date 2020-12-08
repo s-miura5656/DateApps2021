@@ -46,7 +46,7 @@ private:
 	void operator=(const SceneManager&) = delete;
 
 	BaseScene* _scene;
-	float siyakaku;
+	float _viewing_angle;
 	Vector3 _camera_pos;
 	Vector3 _look_pos;
 	Viewport view;
@@ -93,11 +93,11 @@ public:
 		_camera->SetPerspectiveFieldOfView(inFovY, inWidth, inHeight, inZn, inZf); }
 
 	Camera GetCamera() const { return _camera; }
-
+	Camera _camera;
 private:
 	SceneCamera(const SceneCamera&)    = delete;
 	void operator=(const SceneCamera&) = delete;
 
-	Camera _camera;
+	
 };
 

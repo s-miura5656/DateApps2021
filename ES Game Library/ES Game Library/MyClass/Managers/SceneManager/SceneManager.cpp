@@ -52,7 +52,7 @@ bool SceneManager::Initialize()
 	*/
 	Light light;
 	light.Type = Light_Directional;
-	light.Direction = Vector3(0, 1, 1);
+	light.Direction = Vector3(1, -1, -1);
 	light.Diffuse = Color(1.0f, 1.0f, 1.0f);
 	light.Ambient = Color(1.0f, 1.0f, 1.0f);
 	light.Specular = Color(1.0f, 1.0f, 1.0f);
@@ -60,13 +60,13 @@ bool SceneManager::Initialize()
 	SceneLight::Instance().SetLightParametor(light);
 	SceneLight::Instance().SetSceneLight();
 
-	siyakaku = 1.0;
+	_viewing_angle = 60;
 	view = GraphicsDevice.GetViewport();
-	_camera_pos = Vector3(7, 482, -400);
-	_look_pos = Vector3(7, 0, -4.6);
-
-	SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
-	SceneCamera::Instance().SetPerspectiveFieldOfView(0.93, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
+	_camera_pos = Vector3(7, 11, -11.6);
+	_look_pos = Vector3(65.2, 0, 0);
+	//SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
+	SceneCamera::Instance()._camera->SetView(Vector3(7, 11, -11.6), Vector3(65.2, 0, 0));
+	SceneCamera::Instance().SetPerspectiveFieldOfView(57, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 	return true;
 }
 
@@ -78,24 +78,33 @@ int SceneManager::Update()
 */
 
 	KeyboardState key = Keyboard->GetState();
+
+	//SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
+
 //パース調整用
 	if (key.IsKeyDown(Keys_A)) {
-		siyakaku+= 0.01;
+		_viewing_angle += 0.5;
 	}
 	if (key.IsKeyDown(Keys_Z)) {
-		siyakaku -= 0.01;
+		_viewing_angle -= 0.5;
 	}
 	if (key.IsKeyDown(Keys_S)) {
-		_camera_pos.y += 2;
+		_camera_pos.y += 0.1;
 	}
 	if (key.IsKeyDown(Keys_X)) {
-		_camera_pos.y -= 2;
+		_camera_pos.y -= 0.1;
 	}
 	if (key.IsKeyDown(Keys_D)) {
-		_look_pos.z += 0.1;
+		_camera_pos.z += 0.1;
 	}
 	if (key.IsKeyDown(Keys_C)) {
-		_look_pos.z -= 0.1;
+		_camera_pos.z -= 0.1;
+	}
+	if (key.IsKeyDown(Keys_F)) {
+		_look_pos.x += 0.1;
+	}
+	if (key.IsKeyDown(Keys_V)) {
+		_look_pos.x -= 0.1;
 	}
 	return 0;
 }
