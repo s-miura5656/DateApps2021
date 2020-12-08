@@ -34,39 +34,45 @@ void PlayerBase::Draw2D()
 
 void PlayerBase::Draw3D()
 {
-	ChangeAnimation();
-
-	_model->SetPosition(_position);
-	_model->SetRotation(Vector3(0, _angle - 180, 0));
-	
-	_shader->SetTexture("m_Texture", *_texture);
-	_shader->SetParameter("vp", SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix());
-
-	if (_i_player_data->GetState(_tag) != PlayerEnum::Animation::DAMAGE)
+	//! Ž€‚ñ‚Å‚éŽž‚Æ‚»‚¤‚Å‚È‚¢‚Æ‚«‚Ì”»’è
+	if (_death_flag)
 	{
-		_shader->SetTechnique("FixModel");
-		_model->Draw(_shader);
+
 	}
 	else
 	{
-		_shader->SetTechnique("DamageModel");
-		GraphicsDevice.BeginAlphaBlend();
-		_model->Draw(_shader);
-		GraphicsDevice.EndAlphaBlend();
+		ChangeAnimation();
+
+		_model->SetPosition(_position);
+		_model->SetRotation(Vector3(0, _angle - 180, 0));
+
+		_shader->SetTexture("m_Texture", *_texture);
+		_shader->SetParameter("vp", SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix());
+
+		if (_i_player_data->GetState(_tag) != PlayerEnum::Animation::DAMAGE)
+		{
+			_shader->SetTechnique("FixModel");
+			_model->Draw(_shader);
+		}
+		else
+		{
+			_shader->SetTechnique("DamageModel");
+			GraphicsDevice.BeginAlphaBlend();
+			_model->Draw(_shader);
+			GraphicsDevice.EndAlphaBlend();
+		}
+
+		_i_player_data->SetAngle(_tag, _angle);
+		_i_player_data->SetPosition(_tag, _position);
+
+		auto collision_pos = _model->GetPosition();
+		collision_pos.y += _model->GetScale().y / 2;
+		_hit_box->SetHitBoxPosition(collision_pos);
+		//_hit_box->Draw3D();
+
+		if (_arm != nullptr)
+			_arm->Draw3D();
 	}
-
-	
-
-	_i_player_data->SetAngle(_tag, _angle);
-	_i_player_data->SetPosition(_tag, _position);
-
-	auto collision_pos = _model->GetPosition();
-	collision_pos.y += _model->GetScale().y / 2;
-	_hit_box->SetHitBoxPosition(collision_pos);
-	//_hit_box->Draw3D();
-
-	if (_arm != nullptr)
-		_arm->Draw3D();
 }
 
 void PlayerBase::ChangeAnimation()

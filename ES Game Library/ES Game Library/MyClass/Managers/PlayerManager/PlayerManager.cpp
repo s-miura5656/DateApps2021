@@ -48,8 +48,6 @@ int PlayerManager::Update()
 		players[i]->Update();
 	}
 
-	//! ‚±‚±‚ÉƒvƒŒƒCƒ„[‚ª“|‚³‚ê‚½‚Æ‚«‚Ìˆ—
-
     return 0;
 }
 

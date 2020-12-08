@@ -23,6 +23,7 @@ public:
 	void CreateArm();
 	void DestroyArm();
 	void Move(Controller* pad);
+	bool IsDeathFlag() const { return _death_flag; }
 
 	std::string GetTag() const { return _tag; }
 	int GetPlayerNumber() const { return (*_tag.rbegin()) - '0'; }
@@ -63,12 +64,14 @@ protected:
 	int _animation_index;
 
 	//! flag 
-	bool _move_flag = false;
-	bool _flag      = false;
+	bool _move_flag  = false;
+	bool _flag       = false;
+	bool _death_flag = false;
 
 	//! count
 	float _lerp_count       = 0.f;
 	int _damage_count       = 0;
 	double _animation_count = 0;
 	int _shot_pending_count = 0;
+	int _respawn_time       = 0;
 };

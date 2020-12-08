@@ -106,6 +106,6 @@ void StageManager::Draw3D()
 //“Ç‚İ‚ñ‚¾ƒuƒƒbƒN‚Ì”‚¾‚¯•`‰æ‚·‚é
 	for (int i = 0; i < stages.size(); i++)
 	{
-		//stages[i]->Draw3D();
+		stages[i]->Draw3D();
 	}
 }

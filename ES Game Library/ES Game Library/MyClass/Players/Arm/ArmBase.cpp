@@ -268,7 +268,7 @@ void ArmBase::HitOtherObject()
 				i_player_data->SetKillCount(_player_tag, i_player_data->GetKillCount(_player_tag) + 1);
 				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 				i_arm_data->SetState(_tag, _arm_state);
-//				i_player_data->SetState(name, PlayerEnum::Animation::DEATH);
+				i_player_data->SetState(name, PlayerEnum::Animation::DEATH);
 			}
 			else
 			{
