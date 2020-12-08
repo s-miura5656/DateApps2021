@@ -24,7 +24,7 @@ public:
 
 private:
 	//ƒvƒŒƒCƒ„[
-	std::vector<Player*> players;
-	IPrayerData*		 i_player_data;
-	IArmData*			 i_arm_data;
+	std::vector<Player*>     _players;
+	IPrayerData*		     _i_player_data;
+	IArmData*			     _i_arm_data;
 };
