@@ -60,24 +60,43 @@ bool SceneManager::Initialize()
 	SceneLight::Instance().SetLightParametor(light);
 	SceneLight::Instance().SetSceneLight();
 
-	/**
-	* @brief カメラの初期設定
-	*/
-	Viewport view = GraphicsDevice.GetViewport();
-	Vector3 _camera_pos = Vector3(7, 600, -400);
-	Vector3 _look_pos   = Vector3(7, 0, -5.5f);
+	siyakaku = 1.0;
+	view = GraphicsDevice.GetViewport();
+	_camera_pos = Vector3(7, 482, -400);
+	_look_pos = Vector3(7, 0, -4.6);
 
 	SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
-	SceneCamera::Instance().SetPerspectiveFieldOfView(1.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
-
-
+	SceneCamera::Instance().SetPerspectiveFieldOfView(0.93, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 	return true;
 }
 
 int SceneManager::Update()
 {
 	_scene->Update();
+	/**
+* @brief カメラの初期設定
+*/
 
+	KeyboardState key = Keyboard->GetState();
+//パース調整用
+	if (key.IsKeyDown(Keys_A)) {
+		siyakaku+= 0.01;
+	}
+	if (key.IsKeyDown(Keys_Z)) {
+		siyakaku -= 0.01;
+	}
+	if (key.IsKeyDown(Keys_S)) {
+		_camera_pos.y += 2;
+	}
+	if (key.IsKeyDown(Keys_X)) {
+		_camera_pos.y -= 2;
+	}
+	if (key.IsKeyDown(Keys_D)) {
+		_look_pos.z += 0.1;
+	}
+	if (key.IsKeyDown(Keys_C)) {
+		_look_pos.z -= 0.1;
+	}
 	return 0;
 }
 
