@@ -32,9 +32,6 @@ private:
 	float limitTime;
 	float time;
 
-	//DWORD startTime;
-	//DWORD nowTime;
-	//DWORD time;
-	//DWORD limitTime;
+	
 	};
 
