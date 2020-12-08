@@ -51,7 +51,10 @@ bool MainUi::Initialize()
 
 void MainUi::Draw2D()
 {
-	SpriteBatch.DrawString(time_limit_font, Vector2(530, 20), Color(1.f, 1.f, 1.f), _T("TIME : %d"), int(TimeManager::Instance().GetTimeLeft()));
+	int minutes = TimeManager::Instance().GetTimeMinutes();
+	int seconds = TimeManager::Instance().GetTimeSeconds();
+
+	SpriteBatch.DrawString(time_limit_font, Vector2(530, 20), Color(1.f, 1.f, 1.f), _T("TIME  %d:%d"), minutes, seconds);
 	DebugDraw();
 	PlayerBanner();
 }
