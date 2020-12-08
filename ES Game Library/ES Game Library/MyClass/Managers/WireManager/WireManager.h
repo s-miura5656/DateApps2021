@@ -2,6 +2,7 @@
 
 #include "../../../ESGLib.h"
 #include "../ManagerBase.h"
+#include "../../Data/StructList.h"
 
 class WireManager : public ManagerBase
 {
@@ -15,5 +16,5 @@ public:
 	void Draw3D() override;
 
 private:
-
+	
 };

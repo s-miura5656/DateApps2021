@@ -33,8 +33,13 @@ bool Player::Initialize()
 
 	//! file
 	_font   = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
-	_model  = ResouceManager::Instance().LoadAnimationModelFile(_T("player/Robo_animation ver3.X"));
+	_model  = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation ver3.X"));
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
+
+	for (int i = 0; i < _i_arm_Data->GetLimitRange(_arm_tag); ++i)
+	{
+		_wire_models.push_back(ResouceManager::Instance().LoadModelFile(_T("Player/cylinder.X")));
+	}
 
 	//! Position
 	_model->SetPosition(_i_player_data->GetPosition(_tag));

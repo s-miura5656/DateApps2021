@@ -65,6 +65,14 @@ void PlayerBase::Draw3D()
 		_i_player_data->SetAngle(_tag, _angle);
 		_i_player_data->SetPosition(_tag, _position);
 
+		auto arm_data = _i_arm_Data->GetAnglePoint(_arm_tag);
+
+		for (int i = 0; i < arm_data.size(); ++i)
+		{
+			_wire_models[i]->SetPosition(arm_data[i]);
+			_wire_models[i]->Draw();
+		}
+
 		auto collision_pos = _model->GetPosition();
 		collision_pos.y += _model->GetScale().y / 2;
 		_hit_box->SetHitBoxPosition(collision_pos);

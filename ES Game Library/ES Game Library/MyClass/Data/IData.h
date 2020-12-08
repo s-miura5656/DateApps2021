@@ -47,24 +47,26 @@ public:
 	~IArmData() {};
 
 	//! セッター
-	void SetArmParam(std::string& arm_tag, ArmParam& arm_param)  { ArmParametor::Instance()._arm_params[arm_tag] = arm_param; }
-	void SetAttackPowor(std::string& arm_tag, int attack_powor)  { ArmParametor::Instance()._arm_params[arm_tag].attack_powor = attack_powor; }
-	void SetGoSpeed(std::string& arm_tag, float speed)			 { ArmParametor::Instance()._arm_params[arm_tag].go_speed = speed; }
-	void SetReturnSpeed(std::string& arm_tag, float speed)		 { ArmParametor::Instance()._arm_params[arm_tag].return_speed = speed; }
-	void SetPosition(std::string& arm_tag, Vector3 pos)			 { ArmParametor::Instance()._arm_params[arm_tag].position = pos; }
-	void SetAngle(std::string& arm_tag, float angle)			 { ArmParametor::Instance()._arm_params[arm_tag].angle = angle; }
-	void SetState(std::string& arm_tag, int state)				 { ArmParametor::Instance()._arm_params[arm_tag].state = state; }
-	void SetLimitRange(std::string& arm_tag, int limitrange)	 { ArmParametor::Instance()._arm_params[arm_tag].limit_range = limitrange; }
+	void SetArmParam(std::string& arm_tag, ArmParam& arm_param)				   { ArmParametor::Instance()._arm_params[arm_tag] = arm_param; }
+	void SetAttackPowor(std::string& arm_tag, int attack_powor)				   { ArmParametor::Instance()._arm_params[arm_tag].attack_powor = attack_powor; }
+	void SetGoSpeed(std::string& arm_tag, float speed)						   { ArmParametor::Instance()._arm_params[arm_tag].go_speed = speed; }
+	void SetReturnSpeed(std::string& arm_tag, float speed)					   { ArmParametor::Instance()._arm_params[arm_tag].return_speed = speed; }
+	void SetPosition(std::string& arm_tag, Vector3 pos)						   { ArmParametor::Instance()._arm_params[arm_tag].position = pos; }
+	void SetAngle(std::string& arm_tag, float angle)						   { ArmParametor::Instance()._arm_params[arm_tag].angle = angle; }
+	void SetState(std::string& arm_tag, int state)							   { ArmParametor::Instance()._arm_params[arm_tag].state = state; }
+	void SetLimitRange(std::string& arm_tag, int limitrange)				   { ArmParametor::Instance()._arm_params[arm_tag].limit_range = limitrange; }
+	void SetAnglePoint(std::string& arm_tag, std::vector<Vector3> angle_point) { ArmParametor::Instance()._arm_params[arm_tag].angle_point = angle_point; }
 
 	//! ゲッター
-	ArmParam GetPlayerPram(std::string& arm_tag)		   const { return ArmParametor::Instance()._arm_params[arm_tag]; }
-	int GetAttackPowor(std::string& arm_tag)			   const { return ArmParametor::Instance()._arm_params[arm_tag].attack_powor; }
-	float GetGoSpeed(std::string& arm_tag)				   const { return ArmParametor::Instance()._arm_params[arm_tag].go_speed; }
-	float GetReturnSpeed(std::string& arm_tag)			   const { return ArmParametor::Instance()._arm_params[arm_tag].return_speed; }
-	Vector3 GetPosition(std::string& arm_tag)			   const { return ArmParametor::Instance()._arm_params[arm_tag].position; }
-	float GetAngle(std::string& arm_tag)				   const { return ArmParametor::Instance()._arm_params[arm_tag].angle; }
-	int GetLimitRange(std::string& arm_tag)				   const { return ArmParametor::Instance()._arm_params[arm_tag].limit_range; }
-	int GetState(std::string& arm_tag)					   const { return ArmParametor::Instance()._arm_params[arm_tag].state; }
+	ArmParam GetPlayerPram(std::string& arm_tag)			 const { return ArmParametor::Instance()._arm_params[arm_tag]; }
+	int GetAttackPowor(std::string& arm_tag)				 const { return ArmParametor::Instance()._arm_params[arm_tag].attack_powor; }
+	float GetGoSpeed(std::string& arm_tag)					 const { return ArmParametor::Instance()._arm_params[arm_tag].go_speed; }
+	float GetReturnSpeed(std::string& arm_tag)				 const { return ArmParametor::Instance()._arm_params[arm_tag].return_speed; }
+	Vector3 GetPosition(std::string& arm_tag)				 const { return ArmParametor::Instance()._arm_params[arm_tag].position; }
+	float GetAngle(std::string& arm_tag)					 const { return ArmParametor::Instance()._arm_params[arm_tag].angle; }
+	int GetLimitRange(std::string& arm_tag)					 const { return ArmParametor::Instance()._arm_params[arm_tag].limit_range; }
+	int GetState(std::string& arm_tag)						 const { return ArmParametor::Instance()._arm_params[arm_tag].state; }
+	std::vector<Vector3> GetAnglePoint(std::string& arm_tag) const { return ArmParametor::Instance()._arm_params[arm_tag].angle_point; }
 };
 
 class IMapData {

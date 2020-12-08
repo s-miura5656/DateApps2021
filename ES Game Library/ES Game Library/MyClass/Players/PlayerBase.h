@@ -34,6 +34,7 @@ protected:
 	FONT _font;
 	EFFECT _shader;
 	SPRITE _texture;
+	std::vector<MODEL> _wire_models;
 
 	//! transform
 	const float scale		 = 0.004f;

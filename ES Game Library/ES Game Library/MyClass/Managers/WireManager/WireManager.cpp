@@ -12,7 +12,7 @@ WireManager::~WireManager()
 
 bool WireManager::Initialize()
 {
-	return false;
+	return true;
 }
 
 int WireManager::Update()

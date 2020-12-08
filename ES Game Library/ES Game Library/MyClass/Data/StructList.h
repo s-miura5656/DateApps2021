@@ -15,13 +15,14 @@ struct PlayerParam {
 };
 
 struct ArmParam {
-	int		state		 = ArmEnum::PUNCH;
-	Vector3 position	 = Vector3_Zero;
-	float   angle		 = 0.f;
-	int     attack_powor = 200;
-	float   go_speed	 = 0.06f;
-	float   return_speed = 0.3f;
-	int     limit_range  = 20;
+	int		state					 = ArmEnum::PUNCH;
+	Vector3 position				 = Vector3_Zero;
+	float   angle					 = 0.f;
+	int     attack_powor			 = 200;
+	float   go_speed				 = 0.06f;
+	float   return_speed			 = 0.3f;
+	int     limit_range				 = 20;
+	std::vector<Vector3> angle_point;
 };
 
 struct MapData {
