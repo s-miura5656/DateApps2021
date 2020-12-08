@@ -9,13 +9,68 @@ AudioManager::~AudioManager()
 }
 bool AudioManager::Initialize()
 {
-	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/se.wav"),_punch,MAX_PLAY,false);
+	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/punchshot.wav"),_punchshot,MAX_PLAY,false);
+	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/indestructible.wav"), _indestructible, MAX_PLAY, false);
+	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/destruction.wav"), _destruction, MAX_PLAY, false);
+	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/mapgimmick.wav"), _mapgimmick, MAX_PLAY, false);
+	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/pointaddition.wav"), _pointaddition, MAX_PLAY, false);
+	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/explosion.wav"), _explosion, MAX_PLAY, false);
 	_mainbgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/MainBgm.wav"));
 	return true;
 }
-void AudioManager::PunchPlay()
+void AudioManager::PunchShotPlay()
 {
-	for (auto& sound : _punch)
+	for (auto& sound : _punchshot)
+	{
+		if (!sound->IsPlaying())
+		{
+			sound->Play();
+		}
+	}
+}
+void AudioManager::IndestructiblePlay()
+{
+	for (auto& sound : _indestructible)
+	{
+		if (!sound->IsPlaying())
+		{
+			sound->Play();
+		}
+	}
+}
+void AudioManager::DestructionPlay()
+{
+	for (auto& sound : _destruction)
+	{
+		if (!sound->IsPlaying())
+		{
+			sound->Play();
+		}
+	}
+}
+void AudioManager::MapGimmickPlay()
+{
+	for (auto& sound : _mapgimmick)
+	{
+		if (!sound->IsPlaying())
+		{
+			sound->Play();
+		}
+	}
+}
+void AudioManager::PointAddition()
+{
+	for (auto& sound : _pointaddition)
+	{
+		if (!sound->IsPlaying())
+		{
+			sound->Play();
+		}
+	}
+}
+void AudioManager::Explosion()
+{
+	for (auto& sound : _explosion)
 	{
 		if (!sound->IsPlaying())
 		{

@@ -214,8 +214,8 @@
     <Filter Include="Myclass\Managers\ResouceManager">
       <UniqueIdentifier>{e6c03f7b-6c09-4b3a-b045-acfa7c994af0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Managers\EffectManager">
-      <UniqueIdentifier>{4b44ad20-c023-4b73-9040-fe9990ac3aa4}</UniqueIdentifier>
+    <Filter Include="Myclass\Managers\AudioManager">
+      <UniqueIdentifier>{fe95ad12-2c34-4f8c-81ee-870139687e4e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -457,11 +457,8 @@
     <ClCompile Include="MyClass\Data\ImpactSpeed.cpp">
       <Filter>Myclass\Data</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Managers\EffectManager\EffectBase.cpp">
-      <Filter>Myclass\Managers\EffectManager</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Managers\EffectManager\EffectManager.cpp">
-      <Filter>Myclass\Managers\EffectManager</Filter>
+    <ClCompile Include="MyClass\Managers\AudioManager\AudioManager.cpp">
+      <Filter>Myclass\Managers\AudioManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -745,11 +742,8 @@
     <ClInclude Include="MyClass\Data\ImpactSpeed.h">
       <Filter>Myclass\Data</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Managers\EffectManager\EffectBase.h">
-      <Filter>Myclass\Managers\EffectManager</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Managers\EffectManager\EffectManager.h">
-      <Filter>Myclass\Managers\EffectManager</Filter>
+    <ClInclude Include="MyClass\Managers\AudioManager\AudioManager.h">
+      <Filter>Myclass\Managers\AudioManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
