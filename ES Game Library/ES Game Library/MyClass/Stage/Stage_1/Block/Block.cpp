@@ -43,8 +43,9 @@ int Block::Update()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
-		
+		std::string arm_tag    = ARM_TAG + std::to_string(i + 1);
+		std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
+
 		if (!_hit_box->Tag_Sarch(arm_tag))
 			continue;
 
@@ -63,6 +64,10 @@ int Block::Update()
 			IArmData* arm_data = new IArmData;
 			arm_data->SetState(arm_tag, ArmEnum::PunchState::RETURN_PUNCH);
 			delete arm_data;
+
+			IPrayerData* player_data = new IPrayerData;
+			player_data->SetRankingPoint(player_tag, player_data->GetRankingPoint(player_tag) + 10);
+			delete player_data;
 			return 1;
 		}
 	}

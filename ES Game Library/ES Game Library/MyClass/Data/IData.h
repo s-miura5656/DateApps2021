@@ -19,7 +19,7 @@ public:
 	void SetHitPoint(std::string& player_tag, int hit_point)				{ PlayerParametor::Instance()._player_params[player_tag].hit_point = hit_point; }
 	void SetAttackPowor(std::string& player_tag, int attack_powor)			{ PlayerParametor::Instance()._player_params[player_tag].attack_powor = attack_powor; }
 	void SetSpeed(std::string& player_tag, float speed)						{ PlayerParametor::Instance()._player_params[player_tag].speed = speed; }
-	void SetWeight(std::string& player_tag, int weight)						{ PlayerParametor::Instance()._player_params[player_tag].weight = weight; }
+	void SetRankingPoint(std::string& player_tag, int ranking_point)		{ PlayerParametor::Instance()._player_params[player_tag].ranking_point = ranking_point; }
 	void SetAngle(std::string& player_tag, float angle)						{ PlayerParametor::Instance()._player_params[player_tag].angle = angle; }
 	void SetPosition(std::string& player_tag, Vector3 pos)					{ PlayerParametor::Instance()._player_params[player_tag].position = pos; }
 	void SetState(std::string& player_tag, int state)						{ PlayerParametor::Instance()._player_params[player_tag].state = state; }
@@ -32,7 +32,7 @@ public:
 	int GetHitPoint(std::string& player_tag)			 const { return PlayerParametor::Instance()._player_params[player_tag].hit_point; }
 	int GetAttackPowor(std::string& player_tag)			 const { return PlayerParametor::Instance()._player_params[player_tag].attack_powor; }
 	float GetSpeed(std::string& player_tag)				 const { return PlayerParametor::Instance()._player_params[player_tag].speed; }
-	int GetWeight(std::string& player_tag)				 const { return PlayerParametor::Instance()._player_params[player_tag].weight; }
+	int GetRankingPoint(std::string& player_tag)		 const { return PlayerParametor::Instance()._player_params[player_tag].ranking_point; }
 	float GetAngle(std::string& player_tag)				 const { return PlayerParametor::Instance()._player_params[player_tag].angle; }
 	Vector3 GetPosition(std::string& player_tag)		 const { return PlayerParametor::Instance()._player_params[player_tag].position; }
 	int GetState(std::string& player_tag)				 const { return PlayerParametor::Instance()._player_params[player_tag].state; }

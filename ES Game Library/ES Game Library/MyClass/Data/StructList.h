@@ -10,7 +10,7 @@ struct PlayerParam {
 	int hit_point	  = 1000;
 	int attack_powor  = 1000;
 	float speed		  = 0.04f;
-	int weight        = 50;
+	int ranking_point = 0;
 	int kill_count    = 0;
 };
 
