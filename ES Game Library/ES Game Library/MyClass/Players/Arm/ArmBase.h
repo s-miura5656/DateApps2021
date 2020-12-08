@@ -36,13 +36,14 @@ protected:
 	//! state
 	int _arm_state;
 
-	//! transform
+	//! rotation
 	float _angle = 0.f;
 	int   _old_angle = INT_MAX;
 
 	//! distnace
 	float _player_distance;
 
+	//! position
 	std::vector<Vector3> _angle_point;
 	Vector3 _position = Vector3_Zero;
 	Vector3 _old_pos  = Vector3_Zero;
