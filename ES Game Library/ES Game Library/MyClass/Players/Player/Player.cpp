@@ -35,7 +35,6 @@ bool Player::Initialize()
 	_font   = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
 	_model  = ResouceManager::Instance().LoadAnimationModelFile(_T("player/Robo_animation ver3.X"));
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
-	EffectManager::Instance().CreateEffect("Effect/effect_flash/", "flash");
 
 	//! Position
 	_model->SetPosition(_i_player_data->GetPosition(_tag));

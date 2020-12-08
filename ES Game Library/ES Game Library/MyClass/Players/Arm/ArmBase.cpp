@@ -62,6 +62,7 @@ int ArmBase::Update()
 	if (_arm_state == ArmEnum::PunchState::RETURN_PUNCH)
 	{
 		ArmReturn();
+		_shot_effect->Stop(effect_num);
 
 		if (_player_distance < 0.6f)
 		{
@@ -92,16 +93,25 @@ void ArmBase::Draw2D()
 
 void ArmBase::Draw3D()
 {
+	//! モデルの座標指定と描画
 	_model->SetPosition(_position);
 	_model->SetRotation(0, _angle - 180, 0);
 	_model->Draw();
 	_model->SetRotation(0, _angle, 0);
 
+	
+	//! ヒットボックスの座標指定と描画
 	auto box_pos = _position;
 	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
 	auto a = DirectionFromAngle(Vector3(0, _angle, 0));
 	_hit_box->SetHitBoxPosition(box_pos + a * 0.3f);
 	_hit_box->Draw3D();
+
+	//! エフェクトの座標指定と描画
+	_shot_effect->SetSpeed(effect_num, 1.0f);
+	_shot_effect->SetScale(effect_num, 1.0f);
+	_shot_effect->SetRotation(effect_num, Vector3(0, _angle, 0));
+	_shot_effect->SetPosition(effect_num, _position + (-a * 0.5f) + (Vector3_Up * 0.5f));
 }
 
 //! @fn アームの移動(曲がる)

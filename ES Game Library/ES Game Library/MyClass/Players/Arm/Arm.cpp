@@ -39,7 +39,10 @@ bool Arm::Initialize()
 	//! File
 	_font  = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
 	_model = ResouceManager::Instance().LoadModelFile(_T("Player/robot_hand01.X"));
-	
+	_shot_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch2.efk"));
+
+	effect_num = _shot_effect->Play(_position + Vector3(0, 1, 0));
+
 	//! Angle
 	_angle = _i_player_data->GetAngle(_player_tag);
 	_old_angle = _angle;

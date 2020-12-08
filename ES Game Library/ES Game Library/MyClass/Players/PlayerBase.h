@@ -3,7 +3,6 @@
 #include "../Collision/HitBox.h"
 #include "../Data/IData.h"
 #include "../Managers/ControllerManager/ContorollerManager.h"
-#include "../Managers/EffectManager/EffectManager.h"
 
 class PlayerBase
 {
@@ -65,6 +64,7 @@ protected:
 
 	//! flag 
 	bool _move_flag = false;
+	bool _flag      = false;
 
 	//! count
 	float _lerp_count       = 0.f;

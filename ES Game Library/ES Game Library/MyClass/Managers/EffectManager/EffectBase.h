@@ -9,12 +9,16 @@ public:
 
 	bool Initialize(LPCTSTR file);
 	int EffectPlay(Vector3 pos);
-	int EffectStop(int num);
-	int SetScale(int num, float scale);
-	int SetSpeed(int num, float speed);
+	void EffectStop(int track);
+    void SetPosition(int track, Vector3 position);
+    void SetScale(int track, float scale);
+    void SetSpeed(int track, float speed);
+
+	bool IsPlaying() const { return _is_playing; }
 
 	EFFEKSEER GetEffect() { return effect; }
 
 private:
 	EFFEKSEER effect;
+	bool _is_playing;
 };

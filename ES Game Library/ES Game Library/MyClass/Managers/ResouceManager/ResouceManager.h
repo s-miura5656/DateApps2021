@@ -26,6 +26,7 @@ public:
 	SOUND		   LordSoundFile(tstring sound_file_name);
 	MUSIC		   LordMusicFile(tstring music_file_name);
 	MEDIA		   LordMediaFile(tstring media_file_name);
+	EFFEKSEER	   LordEffekseerFile(tstring effekseer_file_name);
 private:
 	ResouceManager(const ResouceManager&) = delete;
 	void operator=(const ResouceManager&) = delete;
@@ -38,4 +39,5 @@ private:
 	std::map<tstring, SOUND>			_resouces_sound;
 	std::map<tstring, MUSIC>			_resouces_music;
 	std::map<tstring, MEDIA>			_resouces_media;
+	std::map<tstring, EFFEKSEER>		_resouces_effekseer;
 };

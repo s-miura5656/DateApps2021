@@ -1,7 +1,6 @@
 #include "PlayerBase.h"
 #include "../Data/MyAlgorithm.h"
 #include "../Managers/SceneManager/SceneManager.h"
-#include "../Managers/EffectManager/EffectManager.h"
 
 PlayerBase::PlayerBase()
 {
@@ -56,10 +55,7 @@ void PlayerBase::Draw3D()
 		GraphicsDevice.EndAlphaBlend();
 	}
 
-
-	auto effect_num = EffectManager::Instance().GetEffect("flash")->EffectPlay(_position + Vector3(0, 1, 0));
-	EffectManager::Instance().GetEffect("flash")->SetSpeed(effect_num, 2.0f);
-	EffectManager::Instance().GetEffect("flash")->SetScale(effect_num, 0.3f);
+	
 
 	_i_player_data->SetAngle(_tag, _angle);
 	_i_player_data->SetPosition(_tag, _position);

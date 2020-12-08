@@ -27,6 +27,7 @@ protected:
 	//! file
 	FONT  _font;
 	MODEL _model;
+	EFFEKSEER _shot_effect;
 
 	//! tag
 	std::string _tag;
@@ -60,6 +61,7 @@ protected:
 	float _lerp_count = 0.f;
 	int   _wait_count = 0;
 	static int _create_count;
+	int effect_num;
 
 	//! flag
 	bool _move_flag;
