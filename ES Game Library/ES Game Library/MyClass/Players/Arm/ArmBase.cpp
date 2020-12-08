@@ -20,6 +20,9 @@ int ArmBase::Update()
 
 	_arm_state = _i_arm_Data->GetState(_tag);
 
+	_i_arm_Data->SetAnglePositions(_tag, _angle_positions);
+	_i_arm_Data->SetAngles(_tag, _angles);
+
 	//! アームの発射状態の判定
 	if (pad->GetButtonState(GamePad_Button2) && _arm_state == ArmEnum::PunchState::PUNCH)
 	{
@@ -36,7 +39,7 @@ int ArmBase::Update()
 	if (_arm_state == ArmEnum::PunchState::PUNCH)
 	{
 		//! アームの最大距離の判定
-		if (_angle_point.size() >= _i_arm_Data->GetLimitRange(_tag))
+		if (_angle_positions.size() >= _i_arm_Data->GetLimitRange(_tag))
 		{
 			_wait_count++;
 
@@ -84,7 +87,7 @@ void ArmBase::Draw2D()
 {
 	if (_tag == "Arm_1")
 	{
-//		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(0.f, 0.f, 0.f), _T("AnglePointSize:%d"), _angle_point.size());
+//		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(0.f, 0.f, 0.f), _T("AnglePointSize:%d"), _angle_positions.size());
 //		SpriteBatch.DrawString(_font, Vector2(0, 320), Color(0.f, 0.f, 0.f), _T("CreateCount:%d"), ArmBase::_create_count);
 //		SpriteBatch.DrawString(_font, Vector2(0, 340), Color(0.f, 0.f, 0.f), _T("Pos_X:%f"), _position.x);
 //		SpriteBatch.DrawString(_font, Vector2(0, 360), Color(0.f, 0.f, 0.f), _T("Pos_Z:%f"), _position.z);
@@ -137,8 +140,9 @@ void ArmBase::MoveArm(Controller* pad)
 		if (_lerp_count >= 1.f)
 		{
 			_move_flag  = false;
-			_angle_point.push_back(_position);
 			_lerp_count = 0;
+			_angle_positions.push_back(_position);
+			_angles.push_back(_angle);
 
 			//! パッドを倒していたらアームの向き入力状態
 			if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
@@ -146,6 +150,7 @@ void ArmBase::MoveArm(Controller* pad)
 				_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
 				_angle = AngleClamp(_angle);
 
+				//! 向きが変わっていたら向きを更新
 				if (_angle != _old_angle)
 				{
 					_old_angle = _angle;
@@ -214,16 +219,16 @@ bool ArmBase::TurnArm(Controller* pad)
 //! @brief アームの戻り移動を処理する
 void ArmBase::ArmReturn()
 {
-	auto angle_point_size = _angle_point.size();
+	auto angle_point_size = _angle_positions.size();
 
-	Vector3 move_dir = Vector3_Normalize(_angle_point[angle_point_size - 1] - _position);
+	Vector3 move_dir = Vector3_Normalize(_angle_positions[angle_point_size - 1] - _position);
 
-	auto dist = Vector3_Distance(_position, _angle_point[angle_point_size - 1]);
+	auto dist = Vector3_Distance(_position, _angle_positions[angle_point_size - 1]);
 
 	//! 一定距離まで中継地点に近づいたら配列を削除
 	if (dist < 0.3f && angle_point_size > 1)
 	{
-		_angle_point.erase(_angle_point.begin() + (angle_point_size - 1));
+		_angle_positions.erase(_angle_positions.begin() + (angle_point_size - 1));
 		return;
 	}
 
@@ -236,7 +241,7 @@ void ArmBase::ArmReturn()
 	//! 移動が完了したら配列を削除
 	if (move_dir == Vector3_Zero && angle_point_size > 1)
 	{
-		_angle_point.erase(_angle_point.begin() + (angle_point_size - 1));
+		_angle_positions.erase(_angle_positions.begin() + (angle_point_size - 1));
 	}
 }
 

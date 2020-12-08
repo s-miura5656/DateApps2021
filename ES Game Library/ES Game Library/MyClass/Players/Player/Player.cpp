@@ -39,6 +39,7 @@ bool Player::Initialize()
 	for (int i = 0; i < _i_arm_Data->GetLimitRange(_arm_tag); ++i)
 	{
 		_wire_models.push_back(ResouceManager::Instance().LoadModelFile(_T("Player/cylinder.X")));
+		_wire_models[i]->SetScale(0.1f);
 	}
 
 	//! Position
@@ -61,6 +62,11 @@ bool Player::Initialize()
 	mat.Ambient = Color(1.0f, 1.0f, 1.0f);
 	mat.Specular = Color(1.0f, 1.0f, 1.0f);
 	_model->SetMaterial(mat);
+	
+	for (auto&& model : _wire_models)
+	{
+		model->SetMaterial(mat);
+	}
 
 	//! index
 	_animation_index = _i_player_data->GetState(_tag);

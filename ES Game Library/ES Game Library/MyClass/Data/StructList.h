@@ -22,7 +22,8 @@ struct ArmParam {
 	float   go_speed				 = 0.06f;
 	float   return_speed			 = 0.3f;
 	int     limit_range				 = 20;
-	std::vector<Vector3> angle_point;
+	std::vector<Vector3> angle_position;
+	std::vector<float> angles;
 };
 
 struct MapData {

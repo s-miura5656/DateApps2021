@@ -39,12 +39,13 @@ protected:
 	//! rotation
 	float _angle = 0.f;
 	int   _old_angle = INT_MAX;
+	std::vector<float> _angles;
 
 	//! distnace
 	float _player_distance;
 
 	//! position
-	std::vector<Vector3> _angle_point;
+	std::vector<Vector3> _angle_positions;
 	Vector3 _position = Vector3_Zero;
 	Vector3 _old_pos  = Vector3_Zero;
 	Vector3 _new_pos  = Vector3_Zero;

@@ -41,17 +41,16 @@ bool Arm::Initialize()
 	_model = ResouceManager::Instance().LoadModelFile(_T("Player/robot_hand01.X"));
 	_shot_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch2.efk"));
 
-	
-
 	effect_num = _shot_effect->Play(_position + Vector3(0, 1, 0));
 
 	//! Angle
 	_angle = _i_player_data->GetAngle(_player_tag);
 	_old_angle = _angle;
+	_angles.push_back(_angle);
 
 	//! Position
 	_position = _i_player_data->GetPosition(_player_tag);
-	_angle_point.push_back(_position);
+	_angle_positions.push_back(_position);
 	_old_pos = _position;
 	_new_pos = _position;
 	_index_num = _i_player_data->GetIndexNum(_player_tag);
