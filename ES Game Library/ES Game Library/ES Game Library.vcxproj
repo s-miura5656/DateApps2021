@@ -183,6 +183,7 @@
     <ClCompile Include="MyClass\Managers\StageManager\StageManager.cpp" />
     <ClCompile Include="MyClass\Managers\TimeManager\Time.cpp" />
     <ClCompile Include="MyClass\Managers\UIManager\UI.cpp" />
+    <ClCompile Include="MyClass\Managers\WireManager\WireManager.cpp" />
     <ClCompile Include="MyClass\Players\Arm\Arm.cpp" />
     <ClCompile Include="MyClass\Players\Arm\ArmBase.cpp" />
     <ClCompile Include="MyClass\Players\PlayerBase.cpp" />
@@ -278,6 +279,7 @@
     <ClInclude Include="MyClass\Managers\StageManager\StageManager.h" />
     <ClInclude Include="MyClass\Managers\TimeManager\Time.h" />
     <ClInclude Include="MyClass\Managers\UIManager\UI.h" />
+    <ClInclude Include="MyClass\Managers\WireManager\WireManager.h" />
     <ClInclude Include="MyClass\Players\Arm\Arm.h" />
     <ClInclude Include="MyClass\Players\Arm\ArmBase.h" />
     <ClInclude Include="MyClass\Players\PlayerBase.h" />
