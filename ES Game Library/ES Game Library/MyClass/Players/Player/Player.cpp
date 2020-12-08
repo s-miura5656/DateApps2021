@@ -2,6 +2,7 @@
 #include "../../Data/MyAlgorithm.h"
 #include "../../Data/Parametor.h"
 #include "../../Managers/ResouceManager/ResouceManager.h"
+#include <codecvt>
 
 Player::Player(std::string tag)
 {
@@ -20,7 +21,7 @@ Player::Player(std::string tag)
 
 Player::~Player()
 {
-	delete _arm;
+	_arm.reset();
 	delete _i_map_data;
 	delete _i_arm_Data;
 	delete _i_player_data;
@@ -29,13 +30,17 @@ Player::~Player()
 
 bool Player::Initialize()
 {
+
 	//! file
-	_font = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
-	_model = GraphicsDevice.CreateAnimationModelFromFile(_T("player/robot.X"));
+	_font   = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
+	_model  = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation ver3.X"));
+	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
 
-//	_model = ResouceManager::Instance().LoadAnimationModelFile(_T("player/robot.X"));
-
-//	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
+	for (int i = 0; i < _i_arm_Data->GetLimitRange(_arm_tag); ++i)
+	{
+		_wire_models.push_back(ResouceManager::Instance().LoadModelFile(_T("Player/cylinder.X")));
+		_wire_models[i]->SetScale(0.1f);
+	}
 
 	//! Position
 	_model->SetPosition(_i_player_data->GetPosition(_tag));
@@ -56,9 +61,24 @@ bool Player::Initialize()
 	mat.Diffuse = Color(1.0f, 1.0f, 1.0f);
 	mat.Ambient = Color(1.0f, 1.0f, 1.0f);
 	mat.Specular = Color(1.0f, 1.0f, 1.0f);
-
 	_model->SetMaterial(mat);
+	
+	for (auto&& model : _wire_models)
+	{
+		model->SetMaterial(mat);
+	}
 
+	//! index
+	_animation_index = _i_player_data->GetState(_tag);
+
+	//! count
+	_animation_count = 0;
+
+	//! shader
+	_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
+	auto path = ConvertFilePath("Player/", _tag, ".png");
+	_texture = GraphicsDevice.CreateSpriteFromFile(path.c_str());
+	
 	return true;
 }
 
@@ -67,65 +87,101 @@ int Player::Update()
 	auto pad = ControllerManager::Instance().GetController(_tag);
 	pad->GamePadRefresh();
 
-	ChangeAnimation();
-
 	DebugControll();
 
-	if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
+	//! 死んでる時とそうでないときの判定
+	if (_death_flag)
 	{
-		_damage_count++;
+		_respawn_time++;
 
-		if (_damage_count > 120)
+		if (_respawn_time  > 120)
 		{
-			_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
-			_damage_count = 0;
+			_i_player_data->SetHitPoint(_tag, 1000);
+			_i_player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
+			_respawn_time = 0;
+			_death_flag = false;
 		}
-
-		DestroyArm();
-
-		return 0;
 	}
-	
-	if (!_move_flag)
+	else
 	{
-		//! パンチ発射状態ならすぐさまリターン
-		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
+		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::DEATH)
 		{
-			_i_player_data->SetIndexNum(_tag, _index_num);
-			_arm->Update();
+			_death_flag = true;
 			return 0;
 		}
-		else
+
+		//! ダメージ状態の判定
+		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
 		{
+			_damage_count++;
+
+			if (_damage_count > 120)
+			{
+				_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
+				_damage_count = 0;
+			}
+
 			DestroyArm();
 
-			//! プレイヤー移動
-			if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
+			return 0;
+		}
+
+		//! 移動中か待機中か判定
+		if (!_move_flag)
+		{
+			//! パンチ発射状態ならすぐさまリターン
+			if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
 			{
-				_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-				_angle = AngleClamp(_angle);
-				_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
+				_i_player_data->SetIndexNum(_tag, _index_num);
+				_arm->Update();
+				return 0;
+			}
+			else if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::SHOT)
+			{
+				_shot_pending_count++;
+
+				if (_shot_pending_count > 60)
+				{
+					_i_player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
+					_i_player_data->SetPosition(_tag, _position);
+					_shot_pending_count = 0;
+					CreateArm();
+				}
+
+				return 0;
 			}
 			else
 			{
-				_i_player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
-			}
+				DestroyArm();
 
-			//! ロケットパンチ発射切り替え
-			if (pad->GetButtonState(GamePad_Button2) && !_move_flag)
-			{
-				_i_player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
-				_i_player_data->SetPosition(_tag, _position);
-				CreateArm();
+				//! プレイヤー移動
+				if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
+				{
+					_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+					_angle = AngleClamp(_angle);
+					_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
+				}
+				else
+				{
+					_i_player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
+				}
+
+				//! ロケットパンチ発射切り替え
+				if (pad->GetButtonState(GamePad_Button2))
+				{
+					_i_player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
+					_i_player_data->SetPosition(_tag, _position);
+				}
 			}
 		}
-	}
 
-	if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::MOVE)
-	{
-		//! 移動
-		Move(pad);
+		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::MOVE)
+		{
+			//! 移動
+			Move(pad);
+		}
 	}
+	
 
 	return 0;
 }

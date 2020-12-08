@@ -6,37 +6,34 @@ PlayerManager::PlayerManager()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		std::string name = PLAYER_TAG + std::to_string(i + 1);
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
 
-		players.push_back(new Player(name));
+		_players.push_back(new Player(tag));
 	}
 
-	i_player_data = new IPrayerData;
+	_i_player_data = new IPrayerData;
 }
 
 PlayerManager::~PlayerManager()
 {
-	delete i_player_data;
+	delete _i_player_data;
 
-	for (int i = players.size() - 1; i >= 0; --i)
+	for (int i = _players.size() - 1; i >= 0; --i)
 	{
-		delete players[i];
+		delete _players[i];
 	}
 }
 
 bool PlayerManager::Initialize()
 {
-	LPCTSTR model_file_name = _T("player/robot.X");
-
-	//ÉvÉåÉCÉÑÅ[
-	for (int i = 0; i < players.size(); ++i)
+	for (int i = 0; i < _players.size(); ++i)
 	{
-		std::string name = PLAYER_TAG + std::to_string(i + 1);
-		std::string arm_name = ARM_TAG + std::to_string(i + 1);
-		players[i]->Initialize();
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
+		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
+		_players[i]->Initialize();
 
-		PlayerParametor::Instance().CreateParametor(name);
-		ArmParametor::Instance().CreateParametor(arm_name);
+		PlayerParametor::Instance().CreateParametor(tag);
+		ArmParametor::Instance().CreateParametor(arm_tag);
 	}
 
     return true;
@@ -44,11 +41,11 @@ bool PlayerManager::Initialize()
 
 int PlayerManager::Update()
 {
-	for (int i = 0; i < players.size(); ++i)
+	RankingSort();
+
+	for (int i = 0; i < _players.size(); ++i)
 	{
-		std::string name = PLAYER_TAG + std::to_string(i + 1);
-		std::string arm_name = ARM_TAG + std::to_string(i + 1);
-		players[i]->Update();
+		_players[i]->Update();
 	}
 
     return 0;
@@ -56,20 +53,30 @@ int PlayerManager::Update()
 
 void PlayerManager::Draw2D()
 {
-	auto player = players;
-
-	for (int i = 0; i < players.size(); ++i)
+	for (int i = 0; i < _players.size(); ++i)
 	{
-		player[i]->Draw2D();
+		_players[i]->Draw2D();
 	}
 }
 
 void PlayerManager::Draw3D()
 {
-	auto player = players;
-
-	for (int i = 0; i < players.size(); ++i)
+	for (int i = 0; i < _players.size(); ++i)
 	{
-		player[i]->Draw3D();
+		_players[i]->Draw3D();
 	}
 }
+
+void PlayerManager::RankingSort()
+{
+	std::multimap<int, std::string, std::greater<int>> sorted_map;
+
+	auto param_list = _i_player_data->GetAllParametor();
+
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
+		sorted_map.insert(std::make_pair(param_list[tag].ranking_point, tag));
+	}
+}
+

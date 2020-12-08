@@ -52,64 +52,60 @@ bool SceneManager::Initialize()
 	*/
 	Light light;
 	light.Type = Light_Directional;
-	light.Direction = Vector3(0, 1, 1);
+	light.Direction = Vector3(1, -1, -1);
 	light.Diffuse = Color(1.0f, 1.0f, 1.0f);
 	light.Ambient = Color(1.0f, 1.0f, 1.0f);
 	light.Specular = Color(1.0f, 1.0f, 1.0f);
-	GraphicsDevice.SetLight(light);
-
-	/**
-	* @brief カメラの初期設定
-	*/
-	Viewport view = GraphicsDevice.GetViewport();
-	_camera_pos = Vector3(7, 600, -400);
-	_look_pos   = Vector3(7, 0, -5.5f);
-
-	_camera->SetLookAt(_camera_pos, _look_pos, 0);
-	_camera->SetPerspectiveFieldOfView(1.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
-	GraphicsDevice.SetCamera(_camera);
 	
-	//! 一番最初に読み込まれるシーン
-	ChangeScene(SceneState::MAIN);
+	SceneLight::Instance().SetLightParametor(light);
+	SceneLight::Instance().SetSceneLight();
 
+	_viewing_angle = 60;
+	view = GraphicsDevice.GetViewport();
+	_camera_pos = Vector3(7, 11, -11.6);
+	_look_pos = Vector3(65.2, 0, 0);
+	//SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
+	SceneCamera::Instance().SetView(Vector3(7, 11, -11.6), Vector3(65.2, 0, 0));
+	SceneCamera::Instance().SetPerspectiveFieldOfView(57, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 	return true;
 }
 
 int SceneManager::Update()
 {
 	_scene->Update();
+	/**
+* @brief カメラの初期設定
+*/
 
-#if  _DEBUG
+	KeyboardState key = Keyboard->GetState();
 
-	/*if (ControllerManager::Instance().GetController("Player_1") != nullptr)
-	{
-		auto&& pad = ControllerManager::Instance().GetController("Player_1");
+	//SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
 
-		if (pad->GetButtonState(GamePad_Button6))
-		{
-			_camera_pos.y++;
-		}
-
-		if (pad->GetButtonState(GamePad_Button8))
-		{
-			_camera_pos.y--;
-		}
-
-		if (pad->GetButtonState(GamePad_Button5))
-		{
-			_camera_pos.z++;
-		}
-
-		if (pad->GetButtonState(GamePad_Button7))
-		{
-			_camera_pos.z--;
-		}
-	}*/
-	
-	//_camera->SetLookAt(_camera_pos, Vector3(7, 0, -5.5f), 0);
-
-#endif //  _DEBUG
-
+//パース調整用
+	if (key.IsKeyDown(Keys_A)) {
+		_viewing_angle += 0.5;
+	}
+	if (key.IsKeyDown(Keys_Z)) {
+		_viewing_angle -= 0.5;
+	}
+	if (key.IsKeyDown(Keys_S)) {
+		_camera_pos.y += 0.1;
+	}
+	if (key.IsKeyDown(Keys_X)) {
+		_camera_pos.y -= 0.1;
+	}
+	if (key.IsKeyDown(Keys_D)) {
+		_camera_pos.z += 0.1;
+	}
+	if (key.IsKeyDown(Keys_C)) {
+		_camera_pos.z -= 0.1;
+	}
+	if (key.IsKeyDown(Keys_F)) {
+		_look_pos.x += 0.1;
+	}
+	if (key.IsKeyDown(Keys_V)) {
+		_look_pos.x -= 0.1;
+	}
 	return 0;
 }
 
@@ -120,7 +116,7 @@ void SceneManager::Draw2D()
 
 void SceneManager::Draw3D()
 {
-	GraphicsDevice.SetCamera(_camera);
+	SceneCamera::Instance().SetSceneCamera();
 
 	_scene->Draw3D();
 }

@@ -15,9 +15,7 @@ public:
 	bool Initialize() override;
 	int Update() override { return 0; }
 	void Draw2D() override;
-	void DebugDraw();
-	void HpAnimation();
-	void SetDamege(const int player_number, const int damage);
+	void PlayerBanner();
 
 	FONT player_date;//各プレイヤーのステータス表記
 	Vector2 powor_ui_pos[PLAYER_COUNT_MAX];//各プレイヤーのパワー
@@ -26,12 +24,11 @@ public:
 
 	Color color[PLAYER_COUNT_MAX];//各プレイヤーの色指定
 
-	//HPアニメーション
-	SPRITE HP_green;
-	SPRITE HP_red;
-	SPRITE HP_black;
-	
-	float green_x[PLAYER_COUNT_MAX];
-	float red_x[PLAYER_COUNT_MAX];
+	SPRITE red_banner;
+	SPRITE blue_banner;
+	SPRITE green_banner;
+	SPRITE yellow_banner;
+
+	SPRITE time_banner;
 
 };

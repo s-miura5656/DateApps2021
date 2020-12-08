@@ -1,6 +1,8 @@
 // #include "Extension\DirectX11\DXGraphics11.hpp"
 #include "StdAfx.h"
 #include "GameMain.h"
+#include "MyClass/Managers/SceneManager/SceneManager.h"
+#include "MyClass/Managers/TimeManager/Time.h"
 
 /// <summary>
 /// Allows the game to perform any initialization it needs to before starting to run.
@@ -11,10 +13,10 @@ bool GameMain::Initialize()
 {
 	// TODO: Add your initialization logic here
 	WindowTitle(_T("ES Game Library"));
-	_scene_manager = new SceneManager;
-
+	
 	TimeManager::Instance().Initialize();
-	_scene_manager->Initialize();
+	SceneManager::Instance().Initialize();
+	SceneManager::Instance().ChangeScene(SceneManager::Instance().MAIN);
 	return true;
 }
 
@@ -25,7 +27,6 @@ bool GameMain::Initialize()
 void GameMain::Finalize()
 {
 	// TODO: Add your finalization logic here
-	delete _scene_manager;
 }
 
 /// <summary>
@@ -40,7 +41,7 @@ int GameMain::Update()
 	// TODO: Add your update logic here
 	//_time_manager->Update();
 	TimeManager::Instance().Update();
-	_scene_manager->Update();
+	SceneManager::Instance().Update();
 	return 0;
 }
 
@@ -50,15 +51,15 @@ int GameMain::Update()
 void GameMain::Draw()
 {
 	// TODO: Add your drawing code here
-	GraphicsDevice.Clear(Color_CornflowerBlue);
+	GraphicsDevice.Clear(Color_Black);
 
 	GraphicsDevice.BeginScene();
 
-	_scene_manager->Draw3D();
+	SceneManager::Instance().Draw3D();
 
 	SpriteBatch.Begin();
 
-	_scene_manager->Draw2D();
+	SceneManager::Instance().Draw2D();
 
 	SpriteBatch.End();
 

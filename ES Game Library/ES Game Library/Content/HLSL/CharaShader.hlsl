@@ -4,7 +4,19 @@ int NumBones;
 
 float4x4 vp;
 
-sampler m_Texture : register(s0);
+//sampler m_Texture : register(s0);
+
+texture m_Texture;
+sampler s0 = sampler_state
+{
+    Texture = <m_Texture>;
+    MipFilter = LINEAR;
+    MinFilter = LINEAR;
+    MagFilter = NONE;
+
+	AddressU = WRAP;
+	AddressV = WRAP;
+};
 
 struct VSINPUT
 {
@@ -44,7 +56,6 @@ VSOUTPUT VS(VSINPUT vsin)
     
     LastWeight = 1.0f - LastWeight;
     
-    // Now that we have the calculated weight, add in the final influence
     vsout.Pos.xyz += (mul(vsin.Pos, WorldMatrixArray[IndexArray[NumBones - 1]])
                       * LastWeight);
 
@@ -53,7 +64,6 @@ VSOUTPUT VS(VSINPUT vsin)
     
     vsout.Normal = normalize(vsout.Normal);
     
-    // Transform the position into screen space
     vsout.Pos.w = 1.0f;
     vsout.Pos = mul(vsout.Pos, vp);
 	
@@ -64,7 +74,16 @@ VSOUTPUT VS(VSINPUT vsin)
 
 float4 PS(VSOUTPUT psin) : COLOR
 {
-    return tex2D(m_Texture, psin.Uv);
+    return tex2D(s0, psin.Uv);
+}
+
+float4 DAMAGE_PS(VSOUTPUT psin) : COLOR
+{
+    float4 color = tex2D(s0, psin.Uv) + float4(1.0f, 0.0f, 0.0f, 1.0f);
+    
+    color.a = 0.5f;
+    
+    return color;
 }
 
 technique FixModel
@@ -74,4 +93,13 @@ technique FixModel
 		VertexShader = compile vs_3_0 VS();
 		PixelShader  = compile ps_3_0 PS();
 	}
+}
+
+technique DamageModel
+{
+    pass Pass0
+    {
+        VertexShader = compile vs_3_0 VS();
+        PixelShader  = compile ps_3_0 DAMAGE_PS();
+    }
 }

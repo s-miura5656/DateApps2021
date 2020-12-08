@@ -2,6 +2,7 @@
 
 #include "../../ESGLib.h"
 #include <sstream>
+#include <codecvt>
 
 //! @fn 文字列から数字を取り出す関数
 //! @brief 文字列の _ があるところの後の数字を抜き出す 
@@ -23,16 +24,10 @@ static int GetTagNum(std::string tag)
 //! @param (max) 収める値の上限値
 static float Clamp(float value, float min, float max)
 {
-	/*float ratio = max - min;
-
-	ratio /= 100.f;
-
-	value *= ratio;*/
-
-	if (value <= min)
+	if (value < min)
 		value = min;
 
-	if (value >= max)
+	if (value > max)
 		value = max;
 
 	return value;
@@ -138,5 +133,22 @@ static Vector3 DirectionFromAngle(Vector3 angle)
 
 	Matrix front_matrix = matrix_x * matrix_y * matrix_z;
 
-	return Vector3(front_matrix._31, front_matrix._32, front_matrix._33);
+	return Vector3_Normalize(Vector3((int)front_matrix._31, (int)front_matrix._32, (int)front_matrix._33));
+}
+
+//! @fn  Path変換
+//! @brief マルチバイト文字列をユニコード文字列に変換してパスにする
+//! @param (path) ファイルのあるパス
+//! @param (name) ファイルの名前 (拡張子は含まない)
+//! @param (extension) ファイルの拡張子 (.pngや.X等)
+//! @return 前方向
+static std::wstring ConvertFilePath(string path, string name, string extension)
+{
+	std::wstring file_path = std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(path);
+
+	std::wstring file_name = std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(name);
+
+	std::wstring file_extension = std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes(extension);
+
+	return file_path = file_path + file_name + file_extension;
 }

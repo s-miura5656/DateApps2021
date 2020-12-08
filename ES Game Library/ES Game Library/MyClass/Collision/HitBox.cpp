@@ -1,7 +1,10 @@
 #include "HitBox.h"
+#include "../Data/MyAlgorithm.h"
 
 //static
 std::list<HitBox*> HitBox::_HitBox_list;
+
+MODEL HitBox::_model = nullptr;
 
 //デストラクタ
 HitBox::~HitBox() 
@@ -22,12 +25,16 @@ void HitBox::Init() {
 
 void HitBox::Draw3D() 
 {
-	_model->SetScale(_scale);
 #if _DEBUG
 	GraphicsDevice.BeginAlphaBlend();
 	_model->DrawAlpha(0.5f);
 	GraphicsDevice.EndAlphaBlend();
 #endif
+}
+
+void HitBox::SetScale()
+{
+	_model->SetScale(_scale);
 }
 
 void HitBox::Settags(string tags) 
@@ -42,13 +49,18 @@ void HitBox::SetHitBox(float width, float height, float depth)
 	_width  = width;
 	_height = height;
 	_depth  = depth ;
+
 	//Model設定
-	SimpleShape   shape;
-	shape.Type = Shape_Box;
-	shape.Width = _width;
-	shape.Height = _height;
-	shape.Depth = _depth;
-	_model = GraphicsDevice.CreateModelFromSimpleShape(shape);
+	if (_model == nullptr )
+	{
+		SimpleShape   shape;
+		shape.Type   = Shape_Box;
+		shape.Width  = _width;
+		shape.Height = _height;
+		shape.Depth  = _depth;
+		_model = GraphicsDevice.CreateModelFromSimpleShape(shape);
+	}
+
 	//Material設定
 	Material _mtrl;
 	_mtrl.Diffuse = Color(1.f, 1.f, 1.f);
@@ -193,6 +205,58 @@ bool HitBox::IsHitObjects(std::string tags) {
 		if (other->_tag == tags)
 			result = true;
 	}
+	return result;
+}
+
+/**
+ * @fn 当たり判定
+ * @brief OBBを使用せず当たり判定のBOXを用いた判定
+ * @param (std::string tags) 衝突判定をしたいタグを代入する
+ * @return 戻り値の説明　当たっていればTRUE　当たってなかったらFALSE
+ */
+bool HitBox::IsHitObjectsSquare(std::string tags)
+{
+	bool result = false;
+
+	HitBox* hit_object;
+
+	float dist = FLT_MAX;
+
+	std::vector<float> dists;
+
+	for (auto it = _HitBox_list.begin(); it != _HitBox_list.end(); ++it)
+	{
+		//! 自分は飛ばして次へ
+		if ((*it)->_tag == this->_tag)
+			continue;
+
+		//! 探している HitBox* がが見つかったらループを抜ける
+		if ((*it)->_tag == tags)
+		{
+			hit_object = (*it);
+			break;
+		}
+	}
+
+	//! 当たり判定を行っている方のモデルの座標とサイズ
+	auto a_pos   = this->_position;
+	auto a_scale = this->_model->GetScale() / 2;
+
+	//! 当たっている方の座標とサイズ
+	auto b_pos   = hit_object->_position;
+	auto b_scale = hit_object->_model->GetScale() / 2;
+
+	//! aとbのボックスの当たり判定
+	if (a_pos.x - a_scale.x < b_pos.x + b_scale.x &&
+		a_pos.x + a_scale.x > b_pos.x - b_scale.x &&
+		a_pos.y - a_scale.y < b_pos.y + b_scale.y && 
+		a_pos.y + a_scale.y > b_pos.y - b_scale.y &&
+		a_pos.z - a_scale.z < b_pos.z + b_scale.z && 
+		a_pos.z + a_scale.z > b_pos.z - b_scale.z)
+	{
+		result = true;
+	}
+
 	return result;
 }
 

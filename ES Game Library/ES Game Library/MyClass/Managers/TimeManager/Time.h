@@ -25,14 +25,13 @@ public:
 	inline float GetLimitTime() const { return limitTime; }
 	inline float GetTime()		const { return time; }
 	inline float GetTimeLeft()  const { return limitTime - time; }
+	int GetTimeMinutes();
+	int GetTimeSeconds();
 
 private:
 	float limitTime;
 	float time;
 
-	//DWORD startTime;
-	//DWORD nowTime;
-	//DWORD time;
-	//DWORD limitTime;
+	
 	};
 

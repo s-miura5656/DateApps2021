@@ -15,20 +15,20 @@ Arm::Arm(std::string name)
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_hit_box->Settags(_tag);
-	_hit_box->SetHitBoxScale(0.8f);
+	_hit_box->SetHitBoxScale(0.6f);
 
-	_i_player_data = new IPrayerData;
-	_i_arm_Data	   = new IArmData;
-	_i_map_data    = new IMapData;
+	_i_player_data.reset(new IPrayerData);
+	_i_arm_Data.reset(new IArmData);
+	_i_map_data.reset(new IMapData);
 
 	_create_count++;
 }
 
 Arm::~Arm()
 {
-	delete _i_map_data;
-	delete _i_arm_Data;
-	delete _i_player_data;
+	_i_map_data.reset();
+	_i_arm_Data.reset();
+	_i_player_data.reset();
 	_hit_box.reset();
 
 	_create_count--;
@@ -39,17 +39,26 @@ bool Arm::Initialize()
 	//! File
 	_font  = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
 	_model = ResouceManager::Instance().LoadModelFile(_T("Player/robot_hand01.X"));
-	
+	_shot_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch2.efk"));
+
+	effect_num = _shot_effect->Play(_position + Vector3(0, 1, 0));
+
 	//! Angle
 	_angle = _i_player_data->GetAngle(_player_tag);
 	_old_angle = _angle;
+	_angles.push_back(_angle);
 
 	//! Position
 	_position = _i_player_data->GetPosition(_player_tag);
-	_angle_point.push_back(_position);
+	_angle_positions.push_back(_position);
 	_old_pos = _position;
 	_new_pos = _position;
 	_index_num = _i_player_data->GetIndexNum(_player_tag);
+
+	auto box_pos = _position;
+	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
+	_hit_box->SetHitBoxPosition(box_pos);
+	
 
 	//! State
 	_arm_state = ArmEnum::PunchState::PUNCH;
@@ -70,8 +79,8 @@ bool Arm::Initialize()
 	_model->SetMaterial(mat);
 
 	//! Flag
-	_shot_flag = true;
 	_move_flag = false;
+	_turn_flag = false;
 
 	return true;
 }

@@ -23,7 +23,7 @@ void StageBase::Draw3D()
 
 	if (_hit_box != nullptr)
 	{
-		_hit_box->Draw3D();
+		//_hit_box->Draw3D();
 	}
 }
 

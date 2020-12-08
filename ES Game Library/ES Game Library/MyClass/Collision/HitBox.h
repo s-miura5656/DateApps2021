@@ -32,6 +32,7 @@ public:
 
 	void    Settags(string tags);
 	void    SetColor(Vector3 colors);
+	void	SetScale();
 	void    HitBoxMove(Vector3 move);
 
 	Vector3 GetHitBoxPosition() const { return _model->GetPosition(); };
@@ -43,6 +44,7 @@ public:
 	bool    Tag_Sarch(string _tag);
 
 	bool IsHitObjects(std::string tags);
+	bool IsHitObjectsSquare(std::string tags);
 	HitBox* IsHitObjectsPointer(std::string tags);
 
 	Vector3 WallShavingObjects(std::list<HitBox*> is_hit_list, Vector3 pos, Vector3 front_vec);
@@ -60,7 +62,7 @@ private:
 
 	string _tag;
 	//判定用のモデル
-	MODEL _model = nullptr;
+	static MODEL _model;
 
 	//パラメータ
 	float _width  = 1.0f;

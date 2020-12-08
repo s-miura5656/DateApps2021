@@ -7,6 +7,8 @@
 #include "../../Managers/StageManager/StageManager.h"
 #include "../../Managers/UIManager/UI.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
+#include "../../Managers/EffectManager/EffectManager.h"
+#include "../../Managers/SceneManager/SceneManager.h"
 
 MainScene::MainScene()
 {
@@ -28,10 +30,14 @@ bool MainScene::Initialize()
 {	
 	auto _temporary_managers = _managers;
 
+	Effekseer.Attach(GraphicsDevice);
+
 	for (auto&& manager : _temporary_managers)
 	{
 		manager->Initialize();
 	}
+
+	Effekseer.SetCamera(SceneCamera::Instance().GetCamera());
 
 	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
 
@@ -41,6 +47,8 @@ bool MainScene::Initialize()
 int MainScene::Update()
 {
 	auto _temporary_managers = _managers;
+	
+	Effekseer.Update();
 
 	for (auto&& manager : _temporary_managers)
 	{
@@ -68,4 +76,6 @@ void MainScene::Draw3D()
 	{
 		manager->Draw3D();
 	}
+
+	Effekseer.Draw();
 }

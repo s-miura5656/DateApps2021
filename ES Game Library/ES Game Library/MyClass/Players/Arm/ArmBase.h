@@ -18,15 +18,16 @@ public:
 	virtual void Draw2D();
 	virtual void Draw3D();
 
-	void MoveTurn(Controller* pad);
+	void MoveArm(Controller* pad);
+	bool TurnArm(Controller* pad);
 	void ArmReturn();
 	void HitOtherObject();
-
 protected:
 
 	//! file
 	FONT  _font;
 	MODEL _model;
+	EFFEKSEER _shot_effect;
 
 	//! tag
 	std::string _tag;
@@ -35,33 +36,36 @@ protected:
 	//! state
 	int _arm_state;
 
-	//! transform
+	//! rotation
 	float _angle = 0.f;
 	int   _old_angle = INT_MAX;
+	std::vector<float> _angles;
 
 	//! distnace
 	float _player_distance;
 
-	std::vector<Vector3> _angle_point;
+	//! position
+	std::vector<Vector3> _angle_positions;
 	Vector3 _position = Vector3_Zero;
 	Vector3 _old_pos  = Vector3_Zero;
 	Vector3 _new_pos  = Vector3_Zero;
 
-	IPrayerData* _i_player_data;
-	IArmData*	 _i_arm_Data;
-	IMapData*	 _i_map_data;
-
-	
+	//! pointer
+	std::unique_ptr<IPrayerData> _i_player_data;
+	std::unique_ptr<IArmData> 	 _i_arm_Data;
+	std::unique_ptr<IMapData> 	 _i_map_data;
 	std::unique_ptr<HitBox> _hit_box;
 
+	//! index
 	IndexNum _index_num;
 
 	//! count
 	float _lerp_count = 0.f;
 	int   _wait_count = 0;
 	static int _create_count;
+	int effect_num;
 
 	//! flag
-	bool _shot_flag;
 	bool _move_flag;
+	bool _turn_flag;
 };
