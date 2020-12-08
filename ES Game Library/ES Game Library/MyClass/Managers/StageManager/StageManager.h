@@ -26,5 +26,6 @@ public:
 private:
 	std::vector<StageBase*>		stages;
 	std::vector<cstring>		mapdate; //! マップデータの読み込み
+	SPRITE _bg_sprite;
 	int _count = 0;
 };

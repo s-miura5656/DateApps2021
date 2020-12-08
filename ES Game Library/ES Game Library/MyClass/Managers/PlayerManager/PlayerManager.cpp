@@ -33,6 +33,7 @@ bool PlayerManager::Initialize()
 		_players[i]->Initialize();
 
 		PlayerParametor::Instance().CreateParametor(tag);
+
 		ArmParametor::Instance().CreateParametor(arm_tag);
 	}
 
