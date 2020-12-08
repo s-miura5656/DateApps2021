@@ -12,6 +12,7 @@ Block::Block(std::string tag)
 	_tag = tag;
 	_hit_box->Settags(_tag);
 	_hit_box->SetHitBoxScale(1.0f);
+	_hit_box->SetScale();
 }
 
 Block::~Block()
@@ -50,6 +51,15 @@ int Block::Update()
 
 		if (_hit_box->IsHitObjectsSquare(arm_tag)) 
 		{
+			IArmData* arm_data = new IArmData;
+			int state = arm_data->GetState(arm_tag);
+			if (state == ArmEnum::PunchState::RETURN_PUNCH)
+			{
+				delete arm_data;
+				return 0;
+			}
+				
+
 			IMapData* map_data = new IMapData;
 			auto data = map_data->GetData();
 
@@ -60,7 +70,6 @@ int Block::Update()
 			map_data->SetData(data);
 			delete map_data;
 
-			IArmData* arm_data = new IArmData;
 			arm_data->SetState(arm_tag, ArmEnum::PunchState::RETURN_PUNCH);
 			delete arm_data;
 			return 1;
