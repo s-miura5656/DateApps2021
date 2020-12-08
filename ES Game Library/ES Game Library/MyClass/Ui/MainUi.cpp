@@ -55,12 +55,16 @@ void MainUi::Draw2D()
 	
 	int minutes = TimeManager::Instance().GetTimeMinutes();
 	int seconds = TimeManager::Instance().GetTimeSeconds();
-
+	
 	if (seconds < 10)
 	{
 		SpriteBatch.DrawString(time_limit_font, Vector2(600, 20), Color(1.f, 1.f, 1.f), _T("%d:0%d"), minutes, seconds);
 	}
-	else
+	else if (seconds < 20 && seconds >= 10)
+	{
+		SpriteBatch.DrawString(time_limit_font, Vector2(600, 20), Color(1.f, 1.f, 1.f), _T("%d: %d"), minutes, seconds);
+	}
+	else 
 	{
 		SpriteBatch.DrawString(time_limit_font, Vector2(600, 20), Color(1.f, 1.f, 1.f), _T("%d:%d"), minutes, seconds);
 	}
