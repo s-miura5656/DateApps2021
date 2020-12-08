@@ -25,12 +25,16 @@ void HitBox::Init() {
 
 void HitBox::Draw3D() 
 {
-	_model->SetScale(_scale);
 #if _DEBUG
 	GraphicsDevice.BeginAlphaBlend();
 	_model->DrawAlpha(0.5f);
 	GraphicsDevice.EndAlphaBlend();
 #endif
+}
+
+void HitBox::SetScale()
+{
+	_model->SetScale(_scale);
 }
 
 void HitBox::Settags(string tags) 

@@ -46,6 +46,10 @@ private:
 	void operator=(const SceneManager&) = delete;
 
 	BaseScene* _scene;
+	float siyakaku;
+	Vector3 _camera_pos;
+	Vector3 _look_pos;
+	Viewport view;
 };
 
 

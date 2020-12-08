@@ -57,6 +57,7 @@ bool Arm::Initialize()
 	auto box_pos = _position;
 	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
 	_hit_box->SetHitBoxPosition(box_pos);
+	
 
 	//! State
 	_arm_state = ArmEnum::PunchState::PUNCH;

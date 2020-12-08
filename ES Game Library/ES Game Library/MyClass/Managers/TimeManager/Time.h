@@ -36,5 +36,5 @@ private:
 	//DWORD nowTime;
 	//DWORD time;
 	//DWORD limitTime;
-	};
+};
 

@@ -89,6 +89,8 @@ void ArmBase::Draw2D()
 		SpriteBatch.DrawString(_font, Vector2(0, 340), Color(0.f, 0.f, 0.f), _T("Pos_X:%f"), _position.x);
 		SpriteBatch.DrawString(_font, Vector2(0, 360), Color(0.f, 0.f, 0.f), _T("Pos_Z:%f"), _position.z);
 	}
+	auto scale = _hit_box->GetModelTag()->GetScale();
+	SpriteBatch.DrawString(_font, Vector2(0, 380), Color(255.f, 0.f, 0.f), _T("Scale:%0.1f, %0.1f, %0.1f"), scale.x, scale.y, scale.z);
 }
 
 void ArmBase::Draw3D()
@@ -105,11 +107,13 @@ void ArmBase::Draw3D()
 	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
 	auto a = DirectionFromAngle(Vector3(0, _angle, 0));
 	_hit_box->SetHitBoxPosition(box_pos + a * 0.3f);
-	_hit_box->Draw3D();
+	_hit_box->SetScale();
+
+
 
 	//! エフェクトの座標指定と描画
 	_shot_effect->SetSpeed(effect_num, 1.0f);
-	_shot_effect->SetScale(effect_num, 1.0f);
+	_shot_effect->SetScale(effect_num, 0.5f);
 	_shot_effect->SetRotation(effect_num, Vector3(0, _angle, 0));
 	_shot_effect->SetPosition(effect_num, _position + (-a * 0.5f) + (Vector3_Up * 0.5f));
 }
