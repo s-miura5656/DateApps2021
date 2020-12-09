@@ -13,7 +13,7 @@ Player::Player(std::string tag)
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_hit_box->Settags(tag);
-	_hit_box->SetHitBoxScale(0.8f);
+	_hit_box->SetHitBoxScale(0.6f);
 	_i_player_data = new IPrayerData;
 	_i_arm_Data    = new IArmData;
 	_i_map_data    = new IMapData;
@@ -53,6 +53,9 @@ bool Player::Initialize()
 
 	//! Scale
 	_model->SetScale(player_scale);
+
+	//! hit_box
+	SetCollisionPosition();
 
 	//! Pad
 	ControllerManager::Instance().CreateGamePad(_tag);
@@ -192,6 +195,7 @@ int Player::Update()
 		}
 	}
 	
+	SetCollisionPosition();
 
 	return 0;
 }

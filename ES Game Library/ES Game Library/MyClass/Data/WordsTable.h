@@ -19,7 +19,7 @@ static const std::string HITPOINT_ITEM_TAG = "HitPointItem_";
 static const std::string DESTRUCTION_BLOCK_TAG    = "DestructionBlock_";
 static const std::string INDESTRUCTIBIEPILLAR_TAG = "InDestructiblePillar_";
 static const std::string WALL_METAL_TAG           = "WallMetal_";
-
+static const std::string ROTATION_FLOOR_TAG = "RotationFloor_";
 namespace PlayerEnum {
 	//プレイヤーのアニメーション
 	enum Animation { WAIT, MOVE, SHOT, ATTACK, DAMAGE, DEATH, ANIMATION_ALL_TYPE };

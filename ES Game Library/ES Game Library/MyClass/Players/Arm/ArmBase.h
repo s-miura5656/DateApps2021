@@ -23,6 +23,7 @@ public:
 	void ArmReturn();
 	void HitOtherObject();
 protected:
+	void SetCollisionPosition();
 
 	//! file
 	FONT  _font;

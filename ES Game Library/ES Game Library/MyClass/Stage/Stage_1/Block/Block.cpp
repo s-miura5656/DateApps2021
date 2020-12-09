@@ -12,7 +12,6 @@ Block::Block(std::string tag)
 	_tag = tag;
 	_hit_box->Settags(_tag);
 	_hit_box->SetHitBoxScale(1.0f);
-	_hit_box->SetScale();
 }
 
 Block::~Block()
@@ -116,6 +115,8 @@ void Block::Draw3D()
 
 	if (_hit_box != nullptr)
 	{
-		//_hit_box->Draw3D();
+		_hit_box->SetModelPosition();
+		_hit_box->SetModelScale();
+		_hit_box->Draw3D();
 	}
 }
