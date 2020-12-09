@@ -35,6 +35,7 @@ protected:
 	EFFECT				_shader;
 	EFFECT              _wire_shader;
 	SPRITE				_texture;
+	SPRITE				_wire_texture;
 	std::vector<MODEL>  _wire_models;
 	EFFEKSEER			_destroy_effect;
 

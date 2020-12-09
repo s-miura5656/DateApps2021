@@ -39,8 +39,8 @@ bool Player::Initialize()
 
 	for (int i = 0; i < _i_arm_Data->GetLimitRange(_arm_tag); ++i)
 	{
-		_wire_models.push_back(ResouceManager::Instance().LoadModelFile(_T("Player/cylinder.X")));
-		_wire_models[i]->SetScale(0.1f);
+		_wire_models.push_back(ResouceManager::Instance().LoadModelFile(_T("Player/wire.X")));
+		_wire_models[i]->SetScale(1.0f);
 	}
 
 	//! Position
@@ -64,9 +64,9 @@ bool Player::Initialize()
 	mat.Specular = Color(1.0f, 1.0f, 1.0f);
 	_model->SetMaterial(mat);
 	
-	mat.Diffuse  = Color(1.0f, 0.0f, 0.0f);
-	mat.Ambient  = Color(1.0f, 0.0f, 0.0f);
-	mat.Specular = Color(1.0f, 0.0f, 0.0f);
+	mat.Diffuse  = Color(1.0f, 1.0f, 1.0f);
+	mat.Ambient  = Color(1.0f, 1.0f, 1.0f);
+	mat.Specular = Color(1.0f, 1.0f, 1.0f);
 	for (auto&& model : _wire_models)
 	{
 		model->SetMaterial(mat);
@@ -83,7 +83,10 @@ bool Player::Initialize()
 	_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
 	auto path = ConvertFilePath("Player/", _tag, ".png");
 	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
-	
+
+	path = ConvertFilePath("Player/", "wire", ".png");
+	_wire_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
+	_wire_shader->SetTexture("m_Texture", *_wire_texture);
 
 	return true;
 }

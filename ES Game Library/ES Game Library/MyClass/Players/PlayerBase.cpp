@@ -84,10 +84,10 @@ void PlayerBase::Draw3D()
 			for (int i = 1; i < arm_positions.size(); ++i)
 			{
 				_wire_models[i]->SetPosition(arm_positions[i] + Vector3(0, 0.5f, 0));
-				_wire_models[i]->SetRotation(Vector3(0, arm_angles[i] - 90, 0));
-				Matrix world = _wire_models[i]->GetWorldMatrix();
-				_wire_shader->SetParameter("wvp", world * vp);
-				_wire_models[i]->Draw(_wire_shader);
+				_wire_models[i]->SetRotation(Vector3(0, arm_angles[i] + 90, 0));
+//				Matrix world = _wire_models[i]->GetWorldMatrix();
+//				_wire_shader->SetParameter("wvp", world * vp);
+				_wire_models[i]->Draw(/*_wire_shader*/);
 			}
 		}
 	}
