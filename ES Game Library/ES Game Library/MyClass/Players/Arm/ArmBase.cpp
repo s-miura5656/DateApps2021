@@ -23,6 +23,11 @@ int ArmBase::Update()
 	_i_arm_Data->SetAnglePositions(_tag, _angle_positions);
 	_i_arm_Data->SetAngles(_tag, _angles);
 
+	if (_scale < 2) 
+	{
+		_scale += 2.0f / 10.0f;
+	}
+
 	//! アームの発射状態の判定
 	if (pad->GetButtonState(GamePad_Button2) && _arm_state == ArmEnum::PunchState::PUNCH)
 	{
@@ -100,6 +105,7 @@ void ArmBase::Draw3D()
 {
 	//! モデルの座標指定と描画
 	_model->SetPosition(_position);
+	_model->SetScale(_scale);
 	_model->SetRotation(0, _angle - 180, 0);
 	_model->Draw();
 	_model->SetRotation(0, _angle, 0);
@@ -113,12 +119,11 @@ void ArmBase::Draw3D()
 	_hit_box->SetScale();
 
 
-
 	//! エフェクトの座標指定と描画
 	_shot_effect->SetSpeed(effect_num, 1.0f);
-	_shot_effect->SetScale(effect_num, 0.5f);
+	_shot_effect->SetScale(effect_num, 1.0f);
 	_shot_effect->SetRotation(effect_num, Vector3(0, _angle, 0));
-	_shot_effect->SetPosition(effect_num, _position + (-a * 0.5f) + (Vector3_Up * 0.5f));
+	_shot_effect->SetPosition(effect_num, _position + (-a * 0.45f) + (Vector3_Up * 0.5f));
 }
 
 //! @fn アームの移動(曲がる)
@@ -205,7 +210,7 @@ bool ArmBase::TurnArm(Controller* pad)
 	{
 		_wait_count++;
 
-		if (_wait_count > 30)
+		if (_wait_count > 15)
 		{
 			_wait_count = 0;
 			_turn_flag = false;

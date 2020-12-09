@@ -37,17 +37,20 @@ void PlayerBase::Draw3D()
 	//! Ž€‚ñ‚Å‚éŽž‚Æ‚»‚¤‚Å‚È‚¢‚Æ‚«‚Ì”»’è
 	if (_death_flag)
 	{
-
+		_handle = _destroy_effect->Play(_position);
 	}
 	else
 	{
+		_destroy_effect->Stop(_handle);
+
 		ChangeAnimation();
 
 		_model->SetPosition(_position);
 		_model->SetRotation(Vector3(0, _angle - 180, 0));
 
 		_shader->SetTexture("m_Texture", *_texture);
-		_shader->SetParameter("vp", SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix());
+		Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
+		_shader->SetParameter("vp", vp);
 
 		if (_i_player_data->GetState(_tag) != PlayerEnum::Animation::DAMAGE)
 		{
@@ -65,7 +68,6 @@ void PlayerBase::Draw3D()
 		_i_player_data->SetAngle(_tag, _angle);
 		_i_player_data->SetPosition(_tag, _position);
 
-
 		auto collision_pos = _model->GetPosition();
 		collision_pos.y += _model->GetScale().y / 2;
 		_hit_box->SetHitBoxPosition(collision_pos);
@@ -80,9 +82,12 @@ void PlayerBase::Draw3D()
 
 			for (int i = 1; i < arm_positions.size(); ++i)
 			{
+				Matrix world = _wire_models[i]->GetWorldMatrix();
 				_wire_models[i]->SetPosition(arm_positions[i] + Vector3(0, 0.5f, 0));
 				_wire_models[i]->SetRotation(Vector3(0, arm_angles[i] - 90, 0));
-				_wire_models[i]->Draw();
+				_wire_shader->SetParameter("wvp", world * vp);
+				_wire_shader->SetParameter("red", 1.0f);
+				_wire_models[i]->Draw(_wire_shader);
 			}
 		}
 	}

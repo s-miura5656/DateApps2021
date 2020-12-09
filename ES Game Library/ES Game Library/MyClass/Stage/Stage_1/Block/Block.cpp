@@ -18,6 +18,7 @@ Block::Block(std::string tag)
 Block::~Block()
 {
 	_hit_box.reset();
+	_effect->Stop(_handle);
 }
 
 bool Block::Initialize()
@@ -25,13 +26,17 @@ bool Block::Initialize()
 	//Xファイルの読み込み
 	_model = ResouceManager::Instance().LoadModelFile(_T("MapSprite/capsule.X"));
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StageShader.hlsl"));
+	_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/effekseer_blake02/blake_effect.efk"));
 
 	//スケールの設定
+	_scale = 0.85f;
 	_model->SetScale(_scale);
 	//マテリアルの設定
 	_model->SetMaterial(GetMaterial());
 	//当たり判定を破壊可能ブロックと同じポジションにする
-	_hit_box->SetHitBoxPosition(_position + Vector3(0,1,0));
+	_hit_box->SetHitBoxPosition(_position + Vector3(0, 1, 0));
+
+	_handle = INT_MAX;
 
 	return _model != nullptr;
 }
@@ -77,6 +82,9 @@ int Block::Update()
 			IPrayerData* player_data = new IPrayerData;
 			player_data->SetRankingPoint(player_tag, player_data->GetRankingPoint(player_tag) + 10);
 			delete player_data;
+
+			_handle = _effect->Play(_position + Vector3(0, 0.5f, 0));
+
 			return 1;
 		}
 	}
@@ -96,6 +104,9 @@ void Block::Draw3D()
 	_model->Draw(_shader);
 	GraphicsDevice.SetRenderState(CullMode_CullCounterClockwiseFace);
 	GraphicsDevice.EndAlphaBlend();
+
+	_effect->SetSpeed(_handle, 0.5f);
+	_effect->SetScale(_handle, 1.0f);
 
 	if (_hit_box != nullptr)
 	{

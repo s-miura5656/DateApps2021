@@ -26,10 +26,17 @@ Arm::Arm(std::string name)
 
 Arm::~Arm()
 {
+	_angle_positions.clear();
+	_i_arm_Data->SetAnglePositions(_tag, _angle_positions);
+
+	_angles.clear();
+	_i_arm_Data->SetAngles(_tag, _angles);
+
 	_i_map_data.reset();
 	_i_arm_Data.reset();
 	_i_player_data.reset();
 	_hit_box.reset();
+	_shot_effect->Stop(effect_num);
 
 	_create_count--;
 }
@@ -39,7 +46,7 @@ bool Arm::Initialize()
 	//! File
 	_font  = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
 	_model = ResouceManager::Instance().LoadModelFile(_T("Player/robot_hand01.X"));
-	_shot_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch2.efk"));
+	_shot_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch_fixed.efk"));
 
 	effect_num = _shot_effect->Play(_position + Vector3(0, 1, 0));
 
@@ -65,7 +72,8 @@ bool Arm::Initialize()
 	_i_arm_Data->SetState(_tag, _arm_state);
 
 	//! Scale
-	_model->SetScale(2.f);
+	_scale = 0;
+	_model->SetScale(_scale);
 
 	//! distance
 	_player_distance = FLT_MAX;

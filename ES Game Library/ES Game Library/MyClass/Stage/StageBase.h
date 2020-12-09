@@ -26,7 +26,7 @@ protected:
 	MODEL _model;//!継承されるモデルのベース
 	EFFECT _shader;
 
-	const float _scale = 1.0f;//!基準のスケールを設定する
+	float _scale = 1.0f;
 	Vector3 _position;//!継承されるモデルのポジション
 	
 	std::unique_ptr<HitBox> _hit_box;

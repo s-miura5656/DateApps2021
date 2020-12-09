@@ -30,11 +30,13 @@ public:
 
 protected:
 	//! file
-	ANIMATIONMODEL _model;
-	FONT _font;
-	EFFECT _shader;
-	SPRITE _texture;
-	std::vector<MODEL> _wire_models;
+	ANIMATIONMODEL		_model;
+	FONT				_font;
+	EFFECT				_shader;
+	EFFECT              _wire_shader;
+	SPRITE				_texture;
+	std::vector<MODEL>  _wire_models;
+	EFFEKSEER			_destroy_effect;
 
 	//! transform
 	const float scale		 = 0.004f;
@@ -63,6 +65,7 @@ protected:
 	//! index
 	IndexNum _index_num;
 	int _animation_index;
+	int _handle;
 
 	//! flag 
 	bool _move_flag  = false;

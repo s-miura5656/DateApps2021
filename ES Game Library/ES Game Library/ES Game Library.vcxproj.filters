@@ -217,9 +217,6 @@
     <Filter Include="Myclass\Managers\AudioManager">
       <UniqueIdentifier>{fe95ad12-2c34-4f8c-81ee-870139687e4e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Managers\WireManager">
-      <UniqueIdentifier>{1adc8626-1b80-4d9d-8c11-983a72b94401}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -468,9 +465,6 @@
     </ClCompile>
     <ClCompile Include="MyClass\Managers\EffectManager\EffectManager.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Managers\WireManager\WireManager.cpp">
-      <Filter>Myclass\Managers\WireManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -762,9 +756,6 @@
     </ClInclude>
     <ClInclude Include="MyClass\Managers\EffectManager\EffectManager.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Managers\WireManager\WireManager.h">
-      <Filter>Myclass\Managers\WireManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -35,6 +35,8 @@ bool PlayerManager::Initialize()
 		PlayerParametor::Instance().CreateParametor(tag);
 
 		ArmParametor::Instance().CreateParametor(arm_tag);
+
+		_i_player_data->SetAngle(tag, 0);
 	}
 
     return true;

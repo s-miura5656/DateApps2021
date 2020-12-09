@@ -30,11 +30,12 @@ Player::~Player()
 
 bool Player::Initialize()
 {
-
 	//! file
-	_font   = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
-	_model  = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation ver3.X"));
-	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
+	_font			= ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
+	_model			= ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation ver3.X"));
+	_shader			= ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
+	_wire_shader	= ResouceManager::Instance().LordEffectFile(_T("HLSL/WireShader.hlsl"));
+	_destroy_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damage_effect02.efk"));
 
 	for (int i = 0; i < _i_arm_Data->GetLimitRange(_arm_tag); ++i)
 	{
@@ -70,6 +71,7 @@ bool Player::Initialize()
 
 	//! index
 	_animation_index = _i_player_data->GetState(_tag);
+	_handle = INT_MAX;
 
 	//! count
 	_animation_count = 0;
@@ -77,8 +79,11 @@ bool Player::Initialize()
 	//! shader
 	_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
 	auto path = ConvertFilePath("Player/", _tag, ".png");
-	_texture = GraphicsDevice.CreateSpriteFromFile(path.c_str());
+	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 	
+	//! ワイヤー用シェーダー
+	_wire_shader->SetParameter("red", 1.0f);
+
 	return true;
 }
 
@@ -107,6 +112,7 @@ int Player::Update()
 		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::DEATH)
 		{
 			_death_flag = true;
+			DestroyArm();
 			return 0;
 		}
 

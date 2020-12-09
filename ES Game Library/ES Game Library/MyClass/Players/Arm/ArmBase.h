@@ -50,6 +50,9 @@ protected:
 	Vector3 _old_pos  = Vector3_Zero;
 	Vector3 _new_pos  = Vector3_Zero;
 
+	//! scale
+	float _scale;
+
 	//! pointer
 	std::unique_ptr<IPrayerData> _i_player_data;
 	std::unique_ptr<IArmData> 	 _i_arm_Data;
@@ -63,6 +66,7 @@ protected:
 	float _lerp_count = 0.f;
 	int   _wait_count = 0;
 	static int _create_count;
+	float _scale_count = 0.f;
 	int effect_num;
 
 	//! flag
