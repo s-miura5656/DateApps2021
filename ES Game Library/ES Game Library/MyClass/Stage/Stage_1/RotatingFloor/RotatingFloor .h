@@ -19,4 +19,5 @@ public:
 	void Draw3D() override;
 private:
 	int rotation;
+	bool flag;
 };

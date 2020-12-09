@@ -26,6 +26,8 @@ bool RotatingFloor::Initialize()
 	_model->SetMaterial(GetMaterial());
 
 	_hit_box->SetHitBoxPosition(_position);
+
+	flag = false;
 	return _model != nullptr;
 }
 int RotatingFloor::Update()
@@ -36,11 +38,16 @@ int RotatingFloor::Update()
 
 		if (!_hit_box->Tag_Sarch(player_tag))
 			continue;
-
-		if (_hit_box->IsHitObjectsSquare(player_tag))
-		{
-			rotation += 90;
-			return 0;
+		if (!flag) {
+			if (_hit_box->IsHitObjectsSquare(player_tag))
+			{
+				rotation += 90;
+				flag = true;
+				break;
+			}
+		}
+		else {
+			flag = false;
 		}
 	}
 	return 0;
