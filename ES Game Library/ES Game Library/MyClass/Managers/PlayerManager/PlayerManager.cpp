@@ -40,7 +40,6 @@ bool PlayerManager::Initialize()
 		PlayerParametor::Instance().CreateParametor(tag);
 
 		ArmParametor::Instance().CreateParametor(arm_tag);
-
 	}
 
 	_crown_rotation->Initialize();

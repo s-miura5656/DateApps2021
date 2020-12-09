@@ -54,7 +54,6 @@ bool Arm::Initialize()
 	_angle = _i_player_data->GetAngle(_player_tag);
 	_old_angle = _angle;
 	_angles.push_back(_angle);
-	_i_arm_Data->SetAngles(_tag, _angles);
 
 	//! Position
 	_position = _i_player_data->GetPosition(_player_tag);
@@ -62,7 +61,6 @@ bool Arm::Initialize()
 	_old_pos = _position;
 	_new_pos = _position;
 	_index_num = _i_player_data->GetIndexNum(_player_tag);
-	_i_arm_Data->SetAnglePositions(_tag, _angle_positions);
 	auto box_pos = _position;
 	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
 	_hit_box->SetHitBoxPosition(box_pos);
