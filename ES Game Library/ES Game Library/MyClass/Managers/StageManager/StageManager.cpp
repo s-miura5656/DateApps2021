@@ -66,11 +66,16 @@ bool StageManager::Initialize()
 				iplayer_data->SetPosition(tag, Vector3(x, 0, -z));
 				player_num++;
 				break;
+			case 'r':
+				tag = ROTATION_FLOOR_TAG + tag;
+				stages.push_back(new RotatingFloor(tag));
+				stages[_count]->SetPosition(Vector3(x, 1, -z));
+				stages[_count]->Initialize();
+				_count++;
+				break;
 			}
 		}
 	}
-
-	imap_data->SetData(mapdate);
 
 	stages.push_back(new Indestructible);
 	stages[stages.size() - 1]->Initialize();

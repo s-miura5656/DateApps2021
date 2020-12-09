@@ -217,6 +217,9 @@
     <Filter Include="Myclass\Managers\AudioManager">
       <UniqueIdentifier>{fe95ad12-2c34-4f8c-81ee-870139687e4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Stage\Stage_1\RotatingFloor">
+      <UniqueIdentifier>{bde155dc-5ed4-48e9-afed-23ccdf9e13fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -465,6 +468,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Managers\EffectManager\EffectManager.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Stage_1\RotatingFloor\RotatingFloor.cpp">
+      <Filter>Myclass\Stage\Stage_1\RotatingFloor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -756,6 +762,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Managers\EffectManager\EffectManager.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Stage_1\RotatingFloor\RotatingFloor .h">
+      <Filter>Myclass\Stage\Stage_1\RotatingFloor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

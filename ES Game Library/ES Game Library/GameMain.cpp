@@ -16,7 +16,7 @@ bool GameMain::Initialize()
 	
 	TimeManager::Instance().Initialize();
 	SceneManager::Instance().Initialize();
-	SceneManager::Instance().ChangeScene(SceneManager::Instance().RESULT);
+	SceneManager::Instance().ChangeScene(SceneManager::Instance().MAIN);
 	return true;
 }
 
