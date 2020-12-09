@@ -1,6 +1,8 @@
 #include"RotatingFloor .h"
 #include"../../../Managers/ResouceManager/ResouceManager.h"
 #include "../../../Data/WordsTable.h"
+#include "../../../Data/MyAlgorithm.h"
+
 RotatingFloor::RotatingFloor(std::string tag)
 {
 	_model = nullptr;
@@ -34,19 +36,18 @@ bool RotatingFloor::Initialize()
 int RotatingFloor::Update()
 {
     bool isPlayerHit = PlayerHitCheck();
-    if (isPlayerHit) {
-        rotation += 90;
-    }
-  /*  if (isHitEnter == false && isPlayerHit == true)
+    
+    if (isHitEnter == false && isPlayerHit == true)
     {
         isHitEnter = true;
         rotation += 90;
+        rotation = AngleClamp(rotation);
     }
 
     if (isPlayerHit == false)
     {
         isHitEnter = false;
-    }*/
+    }
 
     return 0;
 }
@@ -65,6 +66,7 @@ bool RotatingFloor::PlayerHitCheck()
             return true;
         }
     }
+
     return false;
 }
 

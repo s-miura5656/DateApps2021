@@ -68,10 +68,9 @@ void PlayerBase::Draw3D()
 		_i_player_data->SetAngle(_tag, _angle);
 		_i_player_data->SetPosition(_tag, _position);
 
-		auto collision_pos = _model->GetPosition();
-		collision_pos.y += _model->GetScale().y / 2;
-		_hit_box->SetHitBoxPosition(collision_pos);
-		//_hit_box->Draw3D();
+		_hit_box->SetModelPosition();
+		_hit_box->SetModelScale();
+		_hit_box->Draw3D();
 		
 		auto arm_positions = _i_arm_Data->GetAnglePositions(_arm_tag);
 		auto arm_angles = _i_arm_Data->GetAngles(_arm_tag);
@@ -173,6 +172,13 @@ void PlayerBase::Move(Controller* pad)
 
 		_old_pos = _position;
 	}
+}
+
+void PlayerBase::SetCollisionPosition()
+{
+	auto collision_pos = _position;
+	collision_pos.y += _model->GetScale().y / 2;
+	_hit_box->SetHitBoxPosition(collision_pos);
 }
 
 void PlayerBase::CreateArm()

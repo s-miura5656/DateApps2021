@@ -63,6 +63,7 @@ int ArmBase::Update()
 		//! 当たり判定
 		HitOtherObject();
 
+		SetCollisionPosition();
 		return 0;
 	}
 
@@ -112,18 +113,15 @@ void ArmBase::Draw3D()
 
 	
 	//! ヒットボックスの座標指定と描画
-	auto box_pos = _position;
-	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
-	auto a = DirectionFromAngle(Vector3(0, _angle, 0));
-	_hit_box->SetHitBoxPosition(box_pos + a * 0.3f);
-	_hit_box->SetScale();
-
+	_hit_box->SetModelPosition();
+	_hit_box->SetModelScale();
+	_hit_box->Draw3D();
 
 	//! エフェクトの座標指定と描画
 	_shot_effect->SetSpeed(effect_num, 1.0f);
 	_shot_effect->SetScale(effect_num, 1.0f);
 	_shot_effect->SetRotation(effect_num, Vector3(0, _angle, 0));
-	_shot_effect->SetPosition(effect_num, _position + (-a * 0.45f) + (Vector3_Up * 0.5f));
+	_shot_effect->SetPosition(effect_num, _position + (Vector3_Up * 0.5f));
 }
 
 //! @fn アームの移動(曲がる)
@@ -295,4 +293,12 @@ void ArmBase::HitOtherObject()
 			break;
 		}
 	}
+}
+
+void ArmBase::SetCollisionPosition()
+{
+	auto box_pos = _position;
+	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
+	auto a = DirectionFromAngle(Vector3(0, _angle, 0));
+	_hit_box->SetHitBoxPosition(box_pos + a * 0.3f);
 }

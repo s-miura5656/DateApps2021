@@ -29,6 +29,8 @@ public:
 	int GetPlayerNumber() const { return (*_tag.rbegin()) - '0'; }
 
 protected:
+	void SetCollisionPosition();
+
 	//! file
 	ANIMATIONMODEL		_model;
 	FONT				_font;

@@ -32,9 +32,14 @@ void HitBox::Draw3D()
 #endif
 }
 
-void HitBox::SetScale()
+void HitBox::SetModelScale()
 {
 	_model->SetScale(_scale);
+}
+
+void HitBox::SetModelPosition()
+{
+	_model->SetPosition(_position);
 }
 
 void HitBox::Settags(string tags) 
@@ -124,7 +129,6 @@ bool HitBox::Tag_Sarch(string _tag)
 
 void HitBox::SetHitBoxPosition(Vector3 pos) {
 	_position = pos;
-	_model->SetPosition(pos);
 }
 
 void HitBox::SetHitBoxScale(float sca) {

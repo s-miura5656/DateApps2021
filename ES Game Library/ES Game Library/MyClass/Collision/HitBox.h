@@ -32,7 +32,8 @@ public:
 
 	void    Settags(string tags);
 	void    SetColor(Vector3 colors);
-	void	SetScale();
+	void	SetModelScale();
+	void    SetModelPosition();
 	void    HitBoxMove(Vector3 move);
 
 	Vector3 GetHitBoxPosition() const { return _model->GetPosition(); };
