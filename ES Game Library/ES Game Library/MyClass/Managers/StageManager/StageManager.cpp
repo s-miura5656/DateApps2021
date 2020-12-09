@@ -40,6 +40,7 @@ bool StageManager::Initialize()
 			}
 		}
 	}
+
 	//ƒtƒ@ƒCƒ‹‚ð•Â‚¶‚é
 	fclose(fp);
 

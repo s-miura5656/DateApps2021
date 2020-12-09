@@ -72,6 +72,7 @@ protected:
 	bool _move_flag  = false;
 	bool _flag       = false;
 	bool _death_flag = false;
+	bool _a = false;
 
 	//! count
 	float _lerp_count       = 0.f;

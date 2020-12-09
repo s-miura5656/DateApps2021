@@ -42,7 +42,7 @@ void PlayerBase::Draw3D()
 	else
 	{
 		_destroy_effect->Stop(_handle);
-
+		
 		ChangeAnimation();
 
 		_model->SetPosition(_position);
