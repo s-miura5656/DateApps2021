@@ -12,6 +12,8 @@ PlayerManager::PlayerManager()
 
 		name[i] = PLAYER_TAG + std::to_string(i + 1);
 	}
+
+	_i_player_data = new IPrayerData;
 }
 
 PlayerManager::~PlayerManager()
