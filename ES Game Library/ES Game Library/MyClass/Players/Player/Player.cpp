@@ -59,11 +59,14 @@ bool Player::Initialize()
 
 	//! Material
 	Material mat;
-	mat.Diffuse = Color(1.0f, 1.0f, 1.0f);
-	mat.Ambient = Color(1.0f, 1.0f, 1.0f);
+	mat.Diffuse  = Color(1.0f, 1.0f, 1.0f);
+	mat.Ambient  = Color(1.0f, 1.0f, 1.0f);
 	mat.Specular = Color(1.0f, 1.0f, 1.0f);
 	_model->SetMaterial(mat);
 	
+	mat.Diffuse  = Color(1.0f, 0.0f, 0.0f);
+	mat.Ambient  = Color(1.0f, 0.0f, 0.0f);
+	mat.Specular = Color(1.0f, 0.0f, 0.0f);
 	for (auto&& model : _wire_models)
 	{
 		model->SetMaterial(mat);
@@ -81,8 +84,6 @@ bool Player::Initialize()
 	auto path = ConvertFilePath("Player/", _tag, ".png");
 	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 	
-	//! ワイヤー用シェーダー
-	_wire_shader->SetParameter("red", 1.0f);
 
 	return true;
 }

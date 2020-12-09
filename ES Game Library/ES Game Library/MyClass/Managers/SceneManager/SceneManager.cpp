@@ -52,7 +52,7 @@ bool SceneManager::Initialize()
 	*/
 	Light light;
 	light.Type = Light_Directional;
-	light.Direction = Vector3(1, -1, -1);
+	light.Direction = Vector3(1, -1, 1);
 	light.Diffuse = Color(1.0f, 1.0f, 1.0f);
 	light.Ambient = Color(1.0f, 1.0f, 1.0f);
 	light.Specular = Color(1.0f, 1.0f, 1.0f);

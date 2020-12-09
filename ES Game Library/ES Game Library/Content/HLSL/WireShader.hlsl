@@ -1,7 +1,5 @@
 float4x4 wvp;
 
-float red;
-
 sampler m_Texture : register(s0);
 
 struct VSINPUT
@@ -29,9 +27,8 @@ VSOUTPUT VS(VSINPUT vsin)
 
 float4 PS(VSOUTPUT psin) : COLOR
 {
-    float4 color = tex2D(m_Texture, psin.Uv);
-	
-    color.r += red;
+//    float4 color = tex2D(m_Texture, psin.Uv);
+    float4 color = float4(1.0f, 0.0f, 0.0f, 1.0f);
 	
     return color;
 }

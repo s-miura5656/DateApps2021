@@ -38,6 +38,10 @@ bool Block::Initialize()
 
 	_handle = INT_MAX;
 
+	//! shader
+	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
+	_shader->SetParameter("model_ambient", _model->GetMaterial().Ambient);
+
 	return _model != nullptr;
 }
 /**
@@ -96,8 +100,10 @@ void Block::Draw3D()
 {
 	_model->SetPosition(_position);
 	_model->SetRotation(0, 0, 0);
+
 	Matrix world = _model->GetWorldMatrix();
 	_shader->SetParameter("wvp", world * SceneCamera::Instance().GetCamera().GetViewProjectionMatrix());
+	_shader->SetParameter("eye_pos", SceneCamera::Instance().GetCamera().GetPosition());
 
 	GraphicsDevice.BeginAlphaBlend();
 	GraphicsDevice.SetRenderState(CullMode_None);

@@ -86,7 +86,6 @@ void PlayerBase::Draw3D()
 				_wire_models[i]->SetPosition(arm_positions[i] + Vector3(0, 0.5f, 0));
 				_wire_models[i]->SetRotation(Vector3(0, arm_angles[i] - 90, 0));
 				_wire_shader->SetParameter("wvp", world * vp);
-				_wire_shader->SetParameter("red", 1.0f);
 				_wire_models[i]->Draw(_wire_shader);
 			}
 		}
