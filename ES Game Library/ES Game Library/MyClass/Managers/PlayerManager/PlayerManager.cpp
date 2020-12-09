@@ -86,6 +86,7 @@ void PlayerManager::RankingSort()
 	for (auto& i : sorted_map)
 	{
 		name[a] = i.second;
+		_i_player_data->SetRankNum(i.second, a);
 		a++;
 	}
 	return;
