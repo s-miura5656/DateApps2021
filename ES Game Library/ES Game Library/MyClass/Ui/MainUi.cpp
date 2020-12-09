@@ -25,6 +25,7 @@ bool MainUi::Initialize()
 	green_banner    = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/green2.png"));
 	yellow_banner   = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/yellow2.png"));
 	time_banner     = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/time_2.png"));
+	score_num       = GraphicsDevice.CreateSpriteFromFile(_T("NumberSprite/number_3.png"));
 
 	banner_pos[0] = Vector3(80  , 30, 1);
 	banner_pos[1] = Vector3(300 , 30, 1);
@@ -56,29 +57,36 @@ bool MainUi::Initialize()
 void MainUi::Draw2D()
 {
 	
+
 	int minutes = TimeManager::Instance().GetTimeMinutes();
 	int seconds = TimeManager::Instance().GetTimeSeconds();
+
+	
+	/*SpriteBatch.DrawString(time_limit_font, Vector2(570, 20), Color(1.f, 1.f, 1.f), _T("%d"), TimeManager::Instance().TimeLeft());
+	SpriteBatch.DrawString(time_limit_font, Vector2(590, 20), Color(1.f, 1.f, 1.f), _T("%d"), TimeManager::Instance().TimeMid());
+	SpriteBatch.DrawString(time_limit_font, Vector2(610, 20), Color(1.f, 1.f, 1.f), _T("%d"), TimeManager::Instance().TimeRight());*/
+	/*SpriteBatch.DrawString(time_limit_font, Vector2(570, 20), Color(1.f, 1.f, 1.f), _T("%1.0f"), TimeManager::Instance().GetTimeLeft());*/
 	if (minutes == 3) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(550, 20), Color(1.f, 1.f, 1.f), _T("%d : 0%d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d:0%d"), minutes, seconds);
 	}
 	else if ( ((minutes == 2) && (seconds < 20 && seconds >= 10)) || (minutes == 0) && (seconds < 20 && seconds >= 10) ) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(550, 20), Color(1.f, 1.f, 1.f), _T("%d : %d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d: %d"), minutes, seconds);
 	}
 	else if ( (minutes == 2 && seconds < 10) || (minutes == 0 && seconds < 10) ) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(550, 20), Color(1.f, 1.f, 1.f), _T("%d : 0%d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d:0%d"), minutes, seconds);
 	}
 	else if ((minutes == 1) && (seconds < 20 && seconds >= 10)) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(550, 20), Color(1.f, 1.f, 1.f), _T(" %d : %d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d : %d"), minutes, seconds);
 	}
 	else if (minutes == 1 && seconds < 10) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(550, 20), Color(1.f, 1.f, 1.f), _T(" %d : 0%d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d :0%d"), minutes, seconds);
 	}
 	else if (minutes == 1) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(550, 20), Color(1.f, 1.f, 1.f), _T(" %d : %d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d :%d"), minutes, seconds);
 	} 
 	else 
 	{
-		SpriteBatch.DrawString(time_limit_font, Vector2(550, 20), Color(1.f, 1.f, 1.f), _T("%d : %d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d:%d"), minutes, seconds);
 	}
 
 	
@@ -95,7 +103,8 @@ void MainUi::PlayerBanner()
 		std::string& tag = PLAYER_TAG + std::to_string(i + 1);
 	
 		
-		int score = param_list[tag].ranking_point;
+		//int score = param_list[tag].ranking_point;
+		int score = iplayer_data->GetRankingPoint(tag);
 
 		SpriteBatch.DrawString(player_date, score_pos[i], color[i], _T("%dp_Point : %d"), i+1, iplayer_data->GetRankingPoint(tag));
 		SpriteBatch.Draw(*red_banner, banner_pos[0]);
@@ -104,9 +113,30 @@ void MainUi::PlayerBanner()
 		SpriteBatch.Draw(*yellow_banner, banner_pos[3]);
 
 
+		//スコアアニメーション
+		if (score > 999)
+		{
+			SpriteBatch.Draw(*score_num, banner_pos[i] + Vector3(100, 0, -1), RectWH((int)(score / 1000) * 64  , 0, 64, 64));
+			SpriteBatch.Draw(*score_num, banner_pos[i] + Vector3(200, 0, -1), RectWH((int)((score % 1000) / 100) * 64, 0, 64, 64));
+			SpriteBatch.Draw(*score_num, banner_pos[i] + Vector3(300, 0, -1), RectWH((int)((score % 1000) % 100 / 10) * 64, 0, 64, 64));
+			SpriteBatch.Draw(*score_num, banner_pos[i] + Vector3(400, 0, -1), RectWH((int)((score % 1000) % 100 % 10) * 64, 0, 64, 64));
+		}
+		else if (score > 99)
+		{
+			SpriteBatch.Draw(*score_num, banner_pos[i] + Vector3(100, 0, -1), RectWH((int)(score / 100) * 64, 0, 100, 64));
+			SpriteBatch.Draw(*score_num, banner_pos[i] + Vector3(200, 0, -1), RectWH((int)((score % 100) / 10) * 64, 0, 64, 64));
+			SpriteBatch.Draw(*score_num, banner_pos[i] + Vector3(300, 0, -1), RectWH((int)((score % 100) % 10) * 64, 0, 64, 64));
+		}
+		else if (score > 9)
+		{
+			SpriteBatch.Draw(*score_num, banner_pos[i] + Vector3(100, 0, -1), RectWH((int)(score / 10) * 64, 0, 64, 64));
+			SpriteBatch.Draw(*score_num, banner_pos[i] + Vector3(200, 0, -1), RectWH((int)(score % 10) * 64, 0, 64, 64));
+		}
+		else
+		{
+			SpriteBatch.Draw(*score_num, banner_pos[i] + Vector3(100, 0, -1), RectWH((int)(score) * 64, 0, 64, 64));
+		}
+
 	}
 }
 
-
-
-//攻撃、hp、スピード

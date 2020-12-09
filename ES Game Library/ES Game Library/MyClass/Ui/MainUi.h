@@ -18,6 +18,7 @@ public:
 	void Draw2D() override;
 	void PlayerBanner();
 
+
 	FONT player_date;//各プレイヤーのステータス表記
 
 	Vector3 banner_pos[PLAYER_COUNT_MAX];//各プレイヤーのバナー
@@ -33,6 +34,8 @@ public:
 	SPRITE yellow_banner;
 
 	SPRITE time_banner;
+
+	SPRITE score_num;
 
 	FONT score_data[PLAYER_COUNT_MAX];
 	IPrayerData* i_player_data;
