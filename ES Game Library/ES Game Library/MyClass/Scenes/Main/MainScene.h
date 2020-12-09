@@ -6,7 +6,7 @@
 
 #include "../BaseScene.h"
 #include "../../Managers/ManagerBase.h"
-#include"../../../MyClass/CrownRotation.h"
+#include"../../Players/Crown/CrownRotation.h"
 
 class MainScene : public BaseScene
 {

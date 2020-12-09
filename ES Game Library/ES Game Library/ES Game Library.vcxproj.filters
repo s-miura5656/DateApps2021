@@ -217,6 +217,9 @@
     <Filter Include="Myclass\Managers\AudioManager">
       <UniqueIdentifier>{fe95ad12-2c34-4f8c-81ee-870139687e4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Players\Crown">
+      <UniqueIdentifier>{ab30e242-a519-4a7a-880a-c10770832f9c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -460,11 +463,8 @@
     <ClCompile Include="MyClass\Managers\AudioManager\AudioManager.cpp">
       <Filter>Myclass\Managers\AudioManager</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Managers\EffectManager\EffectBase.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Managers\EffectManager\EffectManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp">
+      <Filter>Myclass\Players\Crown</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -742,20 +742,14 @@
     <ClInclude Include="MyClass\Managers\ResouceManager\ResouceManager.h">
       <Filter>Myclass\Managers\ResouceManager</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Scenes\Title\ModelAnimation\ModelAnimation.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Data\ImpactSpeed.h">
       <Filter>Myclass\Data</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Managers\AudioManager\AudioManager.h">
       <Filter>Myclass\Managers\AudioManager</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Managers\EffectManager\EffectBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Managers\EffectManager\EffectManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="MyClass\Players\Crown\CrownRotation.h">
+      <Filter>Myclass\Players\Crown</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

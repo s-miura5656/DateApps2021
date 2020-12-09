@@ -1,6 +1,7 @@
 #include "PlayerManager.h"
 #include "../../Players/Player/Player.h"
 #include "../../Data/WordsTable.h"
+#include "../../Players/Crown/CrownRotation.h"
 
 PlayerManager::PlayerManager()
 {
@@ -14,10 +15,12 @@ PlayerManager::PlayerManager()
 	}
 
 	_i_player_data = new IPrayerData;
+	_crown_rotation = new CrownRotation;
 }
 
 PlayerManager::~PlayerManager()
 {
+	delete _crown_rotation;
 	delete _i_player_data;
 
 	for (int i = _players.size() - 1; i >= 0; --i)
@@ -41,7 +44,7 @@ bool PlayerManager::Initialize()
 		_i_player_data->SetAngle(tag, 0);
 	}
 
-	crownrotation.Initialize();
+	_crown_rotation->Initialize();
 	
     return true;
 }
@@ -55,7 +58,7 @@ int PlayerManager::Update()
 		_players[i]->Update();
 	}
 
-	crownrotation.Update();
+	_crown_rotation->Update();
 
     return 0;
 }
@@ -75,7 +78,7 @@ void PlayerManager::Draw3D()
 		_players[i]->Draw3D();
 	}
 
-	crownrotation.Draw3D();
+	_crown_rotation->Draw3D();
 }
 
 void PlayerManager::RankingSort()

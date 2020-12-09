@@ -1,6 +1,6 @@
 #include"CrownRotation.h"
-#include"../MyClass/Data/ModelAnimation.h"
-#include"Managers/ResouceManager/ResouceManager.h"
+#include"../../Data/ModelAnimation.h"
+#include"../../Managers/ResouceManager/ResouceManager.h"
 
 bool CrownRotation::Initialize()
 {
@@ -49,7 +49,7 @@ void CrownRotation::Draw3D()
 	//Effekseer.Draw();
 }
 
-void CrownRotation::SetPosition(Vector3 position)
-{
-	_model->SetPosition(Vector3(position));
-}
+//void CrownRotation::SetPosition(Vector3 position)
+//{
+//	_model->SetPosition(Vector3(position));
+//}

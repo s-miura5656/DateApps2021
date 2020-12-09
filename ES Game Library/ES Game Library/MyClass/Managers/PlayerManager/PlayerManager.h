@@ -8,6 +8,7 @@
 #include "../../Data/IData.h"
 
 class Player;
+class CrownRotation;
 
 class PlayerManager : public ManagerBase
 {
@@ -27,5 +28,6 @@ private:
 	std::vector<Player*>     _players;
 	IPrayerData*		     _i_player_data;
 	IArmData*			     _i_arm_data;
+	CrownRotation*			 _crown_rotation;
 	string name[PLAYER_COUNT_MAX];
 };

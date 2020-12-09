@@ -7,7 +7,6 @@
 #include "../../Managers/StageManager/StageManager.h"
 #include "../../Managers/UIManager/UI.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
-#include "../../Managers/EffectManager/EffectManager.h"
 #include "../../Managers/SceneManager/SceneManager.h"
 
 MainScene::MainScene()

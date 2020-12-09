@@ -166,7 +166,6 @@
     </ClCompile>
     <ClCompile Include="MyClass\Collision\HitBox.cpp" />
     <ClCompile Include="MyClass\Controller\ControllerConfig.cpp" />
-    <ClCompile Include="MyClass\CrownRotation.cpp" />
     <ClCompile Include="MyClass\Data\ImpactSpeed.cpp" />
     <ClCompile Include="MyClass\Item\AttackPowerItem\AttackPowerItem.cpp" />
     <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp" />
@@ -175,8 +174,6 @@
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp" />
     <ClCompile Include="MyClass\Managers\AudioManager\AudioManager.cpp" />
     <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp" />
-    <ClCompile Include="MyClass\Managers\EffectManager\EffectBase.cpp" />
-    <ClCompile Include="MyClass\Managers\EffectManager\EffectManager.cpp" />
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp" />
     <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp" />
     <ClCompile Include="MyClass\Managers\ResouceManager\ResouceManager.cpp" />
@@ -186,6 +183,7 @@
     <ClCompile Include="MyClass\Managers\UIManager\UI.cpp" />
     <ClCompile Include="MyClass\Players\Arm\Arm.cpp" />
     <ClCompile Include="MyClass\Players\Arm\ArmBase.cpp" />
+    <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp" />
     <ClCompile Include="MyClass\Players\PlayerBase.cpp" />
     <ClCompile Include="MyClass\Players\Player\Player.cpp" />
     <ClCompile Include="MyClass\Scenes\Main\MainScene.cpp" />
@@ -255,7 +253,6 @@
     <ClInclude Include="GameScene\TemplateScene.hpp" />
     <ClInclude Include="MyClass\Collision\HitBox.h" />
     <ClInclude Include="MyClass\Controller\ControllerConfig.h" />
-    <ClInclude Include="MyClass\CrownRotation.h" />
     <ClInclude Include="MyClass\Data\IData.h" />
     <ClInclude Include="MyClass\Data\ImpactSpeed.h" />
     <ClInclude Include="MyClass\Data\MyAlgorithm.h" />
@@ -270,8 +267,6 @@
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h" />
     <ClInclude Include="MyClass\Managers\AudioManager\AudioManager.h" />
     <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h" />
-    <ClInclude Include="MyClass\Managers\EffectManager\EffectBase.h" />
-    <ClInclude Include="MyClass\Managers\EffectManager\EffectManager.h" />
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h" />
     <ClInclude Include="MyClass\Managers\ManagerBase.h" />
     <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h" />
@@ -282,12 +277,12 @@
     <ClInclude Include="MyClass\Managers\UIManager\UI.h" />
     <ClInclude Include="MyClass\Players\Arm\Arm.h" />
     <ClInclude Include="MyClass\Players\Arm\ArmBase.h" />
+    <ClInclude Include="MyClass\Players\Crown\CrownRotation.h" />
     <ClInclude Include="MyClass\Players\PlayerBase.h" />
     <ClInclude Include="MyClass\Players\Player\Player.h" />
     <ClInclude Include="MyClass\Scenes\BaseScene.h" />
     <ClInclude Include="MyClass\Scenes\Main\MainScene.h" />
     <ClInclude Include="MyClass\Scenes\Result\ResultScene.h" />
-    <ClInclude Include="MyClass\Scenes\Title\ModelAnimation\ModelAnimation.h" />
     <ClInclude Include="MyClass\Scenes\Title\TitleScene.h" />
     <ClInclude Include="MyClass\Stage\StageBase.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Block\Block.h" />
