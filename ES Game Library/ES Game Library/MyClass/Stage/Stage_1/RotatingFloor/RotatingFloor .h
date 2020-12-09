@@ -20,4 +20,6 @@ public:
 private:
 	int rotation;
 	bool flag;
+	bool isHitEnter = false;
+	bool PlayerHitCheck();
 };

@@ -8,7 +8,7 @@ RotatingFloor::RotatingFloor(std::string tag)
 	_hit_box->Init();
 	_tag = tag;
 	_hit_box->Settags(_tag);
-	_hit_box->SetHitBoxScale(1.0f);
+	_hit_box->SetHitBoxScale(0.5f);
 }
 
 RotatingFloor::~RotatingFloor()
@@ -30,28 +30,44 @@ bool RotatingFloor::Initialize()
 	flag = false;
 	return _model != nullptr;
 }
+
 int RotatingFloor::Update()
 {
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
+    bool isPlayerHit = PlayerHitCheck();
+    if (isPlayerHit) {
+        rotation += 90;
+    }
+  /*  if (isHitEnter == false && isPlayerHit == true)
+    {
+        isHitEnter = true;
+        rotation += 90;
+    }
 
-		if (!_hit_box->Tag_Sarch(player_tag))
-			continue;
-		if (!flag) {
-			if (_hit_box->IsHitObjectsSquare(player_tag))
-			{
-				rotation += 90;
-				flag = true;
-				break;
-			}
-		}
-		else {
-			flag = false;
-		}
-	}
-	return 0;
+    if (isPlayerHit == false)
+    {
+        isHitEnter = false;
+    }*/
+
+    return 0;
 }
+
+bool RotatingFloor::PlayerHitCheck()
+{
+    for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+    {
+        std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
+
+        if (!_hit_box->Tag_Sarch(player_tag))
+            continue;
+
+        if (_hit_box->IsHitObjectsSquare(player_tag))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void RotatingFloor::Draw3D()
 {
 	_model->SetPosition(_position);
