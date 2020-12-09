@@ -71,12 +71,20 @@ void PlayerManager::RankingSort()
 {
 	std::multimap<int, std::string, std::greater<int>> sorted_map;
 
-	auto param_list = _i_player_data->GetAllParametor();
+	string name[4];
 
+	auto param_list = _i_player_data->GetAllParametor();
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string tag = PLAYER_TAG + std::to_string(i + 1);
 		sorted_map.insert(std::make_pair(param_list[tag].ranking_point, tag));
 	}
+	int a = 0;
+	for (auto& i : sorted_map)
+	{
+		name[a] = i.second;
+		a++;
+	}
+	return;
 }
 
