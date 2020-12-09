@@ -166,6 +166,7 @@
     </ClCompile>
     <ClCompile Include="MyClass\Collision\HitBox.cpp" />
     <ClCompile Include="MyClass\Controller\ControllerConfig.cpp" />
+    <ClCompile Include="MyClass\CrownRotation.cpp" />
     <ClCompile Include="MyClass\Data\ImpactSpeed.cpp" />
     <ClCompile Include="MyClass\Item\AttackPowerItem\AttackPowerItem.cpp" />
     <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="GameScene\TemplateScene.hpp" />
     <ClInclude Include="MyClass\Collision\HitBox.h" />
     <ClInclude Include="MyClass\Controller\ControllerConfig.h" />
+    <ClInclude Include="MyClass\CrownRotation.h" />
     <ClInclude Include="MyClass\Data\IData.h" />
     <ClInclude Include="MyClass\Data\ImpactSpeed.h" />
     <ClInclude Include="MyClass\Data\MyAlgorithm.h" />

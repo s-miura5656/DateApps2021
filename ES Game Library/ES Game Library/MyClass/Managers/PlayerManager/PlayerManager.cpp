@@ -41,6 +41,8 @@ bool PlayerManager::Initialize()
 		_i_player_data->SetAngle(tag, 0);
 	}
 
+	crownrotation.Initialize();
+	
     return true;
 }
 
@@ -52,6 +54,8 @@ int PlayerManager::Update()
 	{
 		_players[i]->Update();
 	}
+
+	crownrotation.Update();
 
     return 0;
 }
@@ -70,6 +74,8 @@ void PlayerManager::Draw3D()
 	{
 		_players[i]->Draw3D();
 	}
+
+	crownrotation.Draw3D();
 }
 
 void PlayerManager::RankingSort()

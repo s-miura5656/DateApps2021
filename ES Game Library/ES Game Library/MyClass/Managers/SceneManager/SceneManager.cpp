@@ -117,7 +117,7 @@ void SceneManager::Draw2D()
 void SceneManager::Draw3D()
 {
 	SceneCamera::Instance().SetSceneCamera();
-
+	
 	_scene->Draw3D();
 }
 
