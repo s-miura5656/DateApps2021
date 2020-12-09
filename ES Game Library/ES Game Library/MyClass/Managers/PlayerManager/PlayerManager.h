@@ -27,4 +27,5 @@ private:
 	std::vector<Player*>     _players;
 	IPrayerData*		     _i_player_data;
 	IArmData*			     _i_arm_data;
+	string name[PLAYER_COUNT_MAX];
 };
