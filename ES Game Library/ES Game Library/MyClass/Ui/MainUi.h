@@ -2,6 +2,7 @@
 #include "../../ESGLib.h"
 #include"../Ui/BaseUi.h"
 #include "../Data/WordsTable.h"
+#include"../Data/IData.h"
 
 class MainUi : public BaseUi
 {
@@ -18,8 +19,10 @@ public:
 	void PlayerBanner();
 
 	FONT player_date;//各プレイヤーのステータス表記
-	Vector2 powor_ui_pos[PLAYER_COUNT_MAX];//各プレイヤーのパワー
-	Vector3 hp_ui_pos[PLAYER_COUNT_MAX];//各プレイヤーの㏋
+
+	Vector3 banner_pos[PLAYER_COUNT_MAX];//各プレイヤーのバナー
+	Vector2 score_pos[PLAYER_COUNT_MAX];//各プレイヤーのスコア
+
 	Vector2 speed_ui_pos[PLAYER_COUNT_MAX];//各プレイヤーのスピード
 
 	Color color[PLAYER_COUNT_MAX];//各プレイヤーの色指定
@@ -31,4 +34,6 @@ public:
 
 	SPRITE time_banner;
 
+	FONT score_data[PLAYER_COUNT_MAX];
+	IPrayerData* i_player_data;
 };
