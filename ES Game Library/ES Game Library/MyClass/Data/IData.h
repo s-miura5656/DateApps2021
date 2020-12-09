@@ -44,6 +44,9 @@ public:
 	void SetKillCount(std::string& player_tag, int kill_count)				{ PlayerParametor::Instance()._player_params[player_tag].kill_count = kill_count; }
 	int GetKillCount(std::string& player_tag)						  const { return PlayerParametor::Instance()._player_params[player_tag].kill_count; }
 
+	void SetRankNum(std::string& player_tag, int rank_num) { PlayerParametor::Instance()._player_params[player_tag].rank_num = rank_num; }
+	int GetRankNum(std::string& player_tag)						  const { return PlayerParametor::Instance()._player_params[player_tag].rank_num; }
+
 	std::map<std::string, PlayerParam> GetAllParametor()			  const { return PlayerParametor::Instance()._player_params; }
 };
 
