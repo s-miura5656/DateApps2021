@@ -26,15 +26,15 @@ bool MainUi::Initialize()
 	yellow_banner   = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/yellow.png"));
 	time_banner     = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/time.png"));
 
-	banner_pos[0] = Vector3(80, 30, 0);
-	banner_pos[1] = Vector3(300, 30, 0);
-	banner_pos[2] = Vector3(800, 30, 0);
-	banner_pos[3] = Vector3(1020, 30, 0);
+	banner_pos[0] = Vector3(80  , 30, 1);
+	banner_pos[1] = Vector3(300 , 30, 1);
+	banner_pos[2] = Vector3(800 , 30, 1);
+	banner_pos[3] = Vector3(1020, 30, 1);
 
-	score_pos[0] = Vector2(  80,   80);
-	score_pos[1] = Vector2( 300,   80);
-	score_pos[2] = Vector2( 800,   80);
-	score_pos[3] = Vector2(1020,   80);
+	score_pos[0] = Vector2( 100,   40);
+	score_pos[1] = Vector2( 320,   40);
+	score_pos[2] = Vector2( 820,   40);
+	score_pos[3] = Vector2(1040,   40);
 	
 	
 
@@ -43,10 +43,10 @@ bool MainUi::Initialize()
 	speed_ui_pos[2] = Vector2(  10, 680);
 	speed_ui_pos[3] = Vector2(1025, 680);
 
-	color[0] = Color(255, 0  , 0);
-	color[1] = Color(0  , 255, 0);
-	color[2] = Color(0  ,  0 ,255);
-	color[3] = Color(255, 255,  0);
+	color[0] = Color(255,   0, 0  );
+	color[1] = Color(0  ,   0, 255);
+	color[2] = Color(0  , 255, 0  );
+	color[3] = Color(255, 255,  0 );
 
 	InputDevice.CreateKeyboard();
 
@@ -95,7 +95,7 @@ void MainUi::PlayerBanner()
 		
 		int score = param_list[tag].ranking_point;
 
-		SpriteBatch.DrawString(player_date, score_pos[i], color[i], _T("PLAYER_Point : %d"), iplayer_data->GetRankingPoint(tag));
+		SpriteBatch.DrawString(player_date, score_pos[i], color[i], _T("%d :p_Point : %d"), i+1, iplayer_data->GetRankingPoint(tag));
 		SpriteBatch.Draw(*red_banner, banner_pos[0]);
 		SpriteBatch.Draw(*blue_banner, banner_pos[1]);
 		SpriteBatch.Draw(*green_banner, banner_pos[2]);
