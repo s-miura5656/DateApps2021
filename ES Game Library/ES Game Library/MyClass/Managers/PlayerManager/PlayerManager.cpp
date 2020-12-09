@@ -41,7 +41,6 @@ bool PlayerManager::Initialize()
 
 		ArmParametor::Instance().CreateParametor(arm_tag);
 
-		_i_player_data->SetAngle(tag, 0);
 	}
 
 	_crown_rotation->Initialize();
