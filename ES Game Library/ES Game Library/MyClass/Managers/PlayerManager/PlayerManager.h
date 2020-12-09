@@ -6,6 +6,7 @@
 
 #include "../ManagerBase.h"
 #include "../../Data/IData.h"
+#include"../../CrownRotation.h"
 
 class Player;
 
@@ -27,4 +28,5 @@ private:
 	std::vector<Player*> players;
 	IPrayerData*		 i_player_data;
 	IArmData*			 i_arm_data;
+	CrownRotation        crownrotation;
 };

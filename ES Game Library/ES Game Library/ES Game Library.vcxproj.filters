@@ -460,6 +460,15 @@
     <ClCompile Include="MyClass\Managers\AudioManager\AudioManager.cpp">
       <Filter>Myclass\Managers\AudioManager</Filter>
     </ClCompile>
+    <ClCompile Include="MyClass\Managers\EffectManager\EffectBase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\EffectManager\EffectManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\CrownRotation.cpp">
+      <Filter>Myclass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h">
@@ -744,6 +753,15 @@
     </ClInclude>
     <ClInclude Include="MyClass\Managers\AudioManager\AudioManager.h">
       <Filter>Myclass\Managers\AudioManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\EffectManager\EffectBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\EffectManager\EffectManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\CrownRotation.h">
+      <Filter>Myclass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

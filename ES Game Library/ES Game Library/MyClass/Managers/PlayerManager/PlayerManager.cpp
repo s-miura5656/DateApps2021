@@ -36,6 +36,8 @@ bool PlayerManager::Initialize()
 		ArmParametor::Instance().CreateParametor(arm_tag);
 	}
 
+	crownrotation.Initialize();
+	
     return true;
 }
 
@@ -47,6 +49,8 @@ int PlayerManager::Update()
 	{
 		players[i]->Update();
 	}
+
+	crownrotation.Update();
 
     return 0;
 }
@@ -65,6 +69,8 @@ void PlayerManager::Draw3D()
 	{
 		players[i]->Draw3D();
 	}
+
+	crownrotation.Draw3D();
 }
 
 void PlayerManager::RankingSort()
