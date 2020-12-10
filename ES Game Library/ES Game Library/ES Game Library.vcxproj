@@ -181,6 +181,7 @@
     <ClCompile Include="MyClass\Managers\StageManager\StageManager.cpp" />
     <ClCompile Include="MyClass\Managers\TimeManager\Time.cpp" />
     <ClCompile Include="MyClass\Managers\UIManager\UI.cpp" />
+    <ClCompile Include="MyClass\ParticleSystem\Particle.cpp" />
     <ClCompile Include="MyClass\Players\Arm\Arm.cpp" />
     <ClCompile Include="MyClass\Players\Arm\ArmBase.cpp" />
     <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp" />
@@ -276,6 +277,7 @@
     <ClInclude Include="MyClass\Managers\StageManager\StageManager.h" />
     <ClInclude Include="MyClass\Managers\TimeManager\Time.h" />
     <ClInclude Include="MyClass\Managers\UIManager\UI.h" />
+    <ClInclude Include="MyClass\ParticleSystem\Particle.h" />
     <ClInclude Include="MyClass\Players\Arm\Arm.h" />
     <ClInclude Include="MyClass\Players\Arm\ArmBase.h" />
     <ClInclude Include="MyClass\Players\Crown\CrownRotation.h" />

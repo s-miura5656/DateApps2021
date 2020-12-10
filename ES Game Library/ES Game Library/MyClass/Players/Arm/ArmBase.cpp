@@ -301,3 +301,4 @@ void ArmBase::SetCollisionPosition()
 	auto a = DirectionFromAngle(Vector3(0, _angle, 0));
 	_hit_box->SetHitBoxPosition(box_pos + a * 0.3f);
 }
+
