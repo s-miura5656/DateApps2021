@@ -18,6 +18,7 @@ public:
 	virtual void Draw2D();
 	virtual void Draw3D();
 
+	void EffectAngle(float angle);
 	void MoveArm(Controller* pad);
 	bool TurnArm(Controller* pad);
 	void ArmReturn();
@@ -66,4 +67,8 @@ protected:
 	//! flag
 	bool _move_flag;
 	bool _turn_flag;
+
+	float efk_angle;
+	
+
 };

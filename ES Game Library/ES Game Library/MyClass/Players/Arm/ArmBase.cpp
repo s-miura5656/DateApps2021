@@ -35,6 +35,7 @@ int ArmBase::Update()
 	//! アームを発射している状態の処理
 	if (_arm_state == ArmEnum::PunchState::PUNCH)
 	{
+
 		//! アームの最大距離の判定
 		if (_angle_point.size() >= _i_arm_Data->GetLimitRange(_tag))
 		{
@@ -75,10 +76,12 @@ int ArmBase::Update()
 	if (_arm_state == ArmEnum::PunchState::NO_PUNCH)
 	{
 		_i_player_data->SetState(_player_tag, PlayerEnum::Animation::WAIT);
+
 	}
 
 	return 0;
 }
+
 
 void ArmBase::Draw2D()
 {
@@ -108,11 +111,13 @@ void ArmBase::Draw3D()
 	_hit_box->Draw3D();
 
 	//! エフェクトの座標指定と描画
-	_shot_effect->SetSpeed(effect_num, 1.0f);
+	_shot_effect->SetSpeed(effect_num, 1.f);
 	_shot_effect->SetScale(effect_num, 1.0f);
-	_shot_effect->SetRotation(effect_num, Vector3(0, _angle, 0));
+	//_shot_effect->SetRotation(effect_num, Vector3(MathHelper_ToDegrees(_angle + 180), 0.0f, 0.0f));//z軸固定　エフェクト方向Y軸
+
 	_shot_effect->SetPosition(effect_num, _position + (-a * 0.5f) + (Vector3_Up * 0.5f));
 }
+
 
 //! @fn アームの移動(曲がる)
 //! @brief アームの移動を処理する
@@ -148,7 +153,9 @@ void ArmBase::MoveArm(Controller* pad)
 					_turn_flag = true;
 				}
 			}
+
 		}
+
 	}
 	else
 	{
@@ -279,5 +286,21 @@ void ArmBase::HitOtherObject()
 			
 			break;
 		}
+	}
+}
+
+void ArmBase::EffectAngle(float angle)
+{
+	if (pad->GetPadStateY() != Axis_Center)
+	{
+		_shot_effect->SetRotation(effect_num, Vector3(MathHelper_ToDegrees(angle + 180), 0.0f, 0.0f));
+	}
+	else if (pad->GetPadStateX() > Axis_Center)
+	{
+		_shot_effect->SetRotation(effect_num, Vector3(0.0, 0.0f, MathHelper_ToDegrees(angle + 180)));
+	}
+	else if (pad->GetPadStateX() < Axis_Center)
+	{
+		_shot_effect->SetRotation(effect_num, Vector3(0.0, 0.0f, MathHelper_ToDegrees(angle + 90)));
 	}
 }
