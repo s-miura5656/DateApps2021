@@ -37,12 +37,16 @@ void PlayerBase::Draw3D()
 	//! Ž€‚ñ‚Å‚éŽž‚Æ‚»‚¤‚Å‚È‚¢‚Æ‚«‚Ì”»’è
 	if (_death_flag)
 	{
-		_handle = _destroy_effect->Play(_position);
+		if (_handle == INT_MAX)
+		{
+			_handle = _destroy_effect->Play(_position + Vector3_Up);
+		}
 	}
 	else
 	{
 		_destroy_effect->Stop(_handle);
-		
+		_handle = INT_MAX;
+
 		ChangeAnimation();
 
 		_model->SetPosition(_position);
@@ -71,7 +75,7 @@ void PlayerBase::Draw3D()
 
 		_hit_box->SetModelPosition();
 		_hit_box->SetModelScale();
-		_hit_box->Draw3D();
+		//_hit_box->Draw3D();
 		
 		auto arm_positions = _i_arm_Data->GetAnglePositions(_arm_tag);
 		auto arm_angles = _i_arm_Data->GetAngles(_arm_tag);
@@ -179,6 +183,14 @@ void PlayerBase::SetCollisionPosition()
 	auto collision_pos = _position;
 	collision_pos.y += _model->GetScale().y / 2;
 	_hit_box->SetHitBoxPosition(collision_pos);
+}
+
+void PlayerBase::PlayOneShotEffekseer(EFFEKSEER effekseer)
+{
+	if (_handle == INT_MAX)
+	{
+		_handle = effekseer->Play(_position + Vector3_Up);
+	}
 }
 
 void PlayerBase::CreateArm()

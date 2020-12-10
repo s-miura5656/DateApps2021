@@ -128,9 +128,9 @@ int Player::Update()
 		{
 			_damage_count++;
 
-			if (_damage_count > 120)
+			if (_damage_count > 30)
 			{
-				_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
+				_i_player_data->SetState(_tag, PlayerEnum::Animation::DEATH);
 				_damage_count = 0;
 			}
 

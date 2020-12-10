@@ -111,11 +111,10 @@ void ArmBase::Draw3D()
 	_model->Draw();
 	_model->SetRotation(0, _angle, 0);
 
-	
 	//! ヒットボックスの座標指定と描画
 	_hit_box->SetModelPosition();
 	_hit_box->SetModelScale();
-	_hit_box->Draw3D();
+	//_hit_box->Draw3D();
 
 	//! エフェクトの座標指定と描画
 	_shot_effect->SetSpeed(effect_num, 1.0f);
@@ -281,7 +280,7 @@ void ArmBase::HitOtherObject()
 				i_player_data->SetRankingPoint(_player_tag, i_player_data->GetRankingPoint(_player_tag) + 100);
 				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 				i_arm_data->SetState(_tag, _arm_state);
-				i_player_data->SetState(name, PlayerEnum::Animation::DEATH);
+				i_player_data->SetState(name, PlayerEnum::Animation::DAMAGE);
 			}
 			else
 			{

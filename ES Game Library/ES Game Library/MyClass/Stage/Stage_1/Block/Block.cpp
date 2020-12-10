@@ -25,7 +25,7 @@ bool Block::Initialize()
 	//Xファイルの読み込み
 	_model = ResouceManager::Instance().LoadModelFile(_T("MapSprite/capsule.X"));
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StageShader.hlsl"));
-	_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/effekseer_blake02/blake_effect.efk"));
+	_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/effekseer_break02/break_effect.efk"));
 
 	//スケールの設定
 	_scale = 0.85f;
@@ -117,6 +117,6 @@ void Block::Draw3D()
 	{
 		_hit_box->SetModelPosition();
 		_hit_box->SetModelScale();
-		_hit_box->Draw3D();
+		//_hit_box->Draw3D();
 	}
 }

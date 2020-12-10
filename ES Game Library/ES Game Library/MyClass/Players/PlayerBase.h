@@ -30,6 +30,7 @@ public:
 
 protected:
 	void SetCollisionPosition();
+	void PlayOneShotEffekseer(EFFEKSEER effekseer);
 
 	//! file
 	ANIMATIONMODEL		_model;
