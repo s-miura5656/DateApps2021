@@ -106,9 +106,11 @@ void Block::Draw3D()
 
 	GraphicsDevice.BeginAlphaBlend();
 	GraphicsDevice.SetRenderState(CullMode_None);
-	_model->Draw(_shader);
+	//_model->Draw(_shader);
 	GraphicsDevice.SetRenderState(CullMode_CullCounterClockwiseFace);
 	GraphicsDevice.EndAlphaBlend();
+	_model->Draw(_shader);
+
 
 	_effect->SetSpeed(_handle, 0.5f);
 	_effect->SetScale(_handle, 1.0f);

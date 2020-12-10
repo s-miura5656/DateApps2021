@@ -26,9 +26,11 @@ protected:
 	void SetCollisionPosition();
 
 	//! file
-	FONT  _font;
-	MODEL _model;
+	FONT	  _font;
+	MODEL	  _model;
 	EFFEKSEER _shot_effect;
+	EFFECT    _shader;
+	SPRITE	  _texture;
 
 	//! tag
 	std::string _tag;

@@ -44,9 +44,11 @@ Arm::~Arm()
 bool Arm::Initialize()
 {
 	//! File
-	_font  = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
-	_model = ResouceManager::Instance().LoadModelFile(_T("Player/robot_hand01.X"));
+	_font		 = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
+	_model		 = ResouceManager::Instance().LoadModelFile(_T("Player/robot_arm.X"));
+
 	_shot_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch_fixed.efk"));
+	_shader		 = ResouceManager::Instance().LordEffectFile(_T("HLSL/BaseShader.hlsl"));
 
 	effect_num = _shot_effect->Play(_position + Vector3(0, 1, 0));
 
@@ -88,6 +90,9 @@ bool Arm::Initialize()
 	_move_flag = false;
 	_turn_flag = false;
 
+	//! texture
+	auto path = ConvertFilePath("Player/", _tag, ".png");
+	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 	return true;
 }
 

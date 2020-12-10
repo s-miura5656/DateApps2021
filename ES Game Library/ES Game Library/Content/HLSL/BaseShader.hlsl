@@ -38,7 +38,9 @@ VSOUTPUT VS(VSINPUT vsin)
 
 float4 PS(VSOUTPUT psin) : COLOR
 {
-    return tex2D(s0, psin.Uv);
+    float4 color = tex2D(s0, psin.Uv);
+	
+    return color;
 }
 
 technique FixModel

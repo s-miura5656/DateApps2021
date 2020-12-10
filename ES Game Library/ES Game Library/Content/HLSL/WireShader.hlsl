@@ -1,7 +1,6 @@
 float4x4 wvp;
 
 texture m_Texture;
-
 sampler s0 = sampler_state
 {
     Texture = <m_Texture>;

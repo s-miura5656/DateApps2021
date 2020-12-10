@@ -32,7 +32,7 @@ bool Player::Initialize()
 {
 	//! file
 	_font			= ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
-	_model			= ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation ver3.X"));
+	_model			= ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 	_shader			= ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
 	_wire_shader	= ResouceManager::Instance().LordEffectFile(_T("HLSL/WireShader.hlsl"));
 	_destroy_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damage_effect02.efk"));
@@ -112,6 +112,8 @@ int Player::Update()
 			_i_player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 			_respawn_time = 0;
 			_death_flag = false;
+			_move_flag  = false;
+			_position = _new_pos;
 		}
 	}
 	else

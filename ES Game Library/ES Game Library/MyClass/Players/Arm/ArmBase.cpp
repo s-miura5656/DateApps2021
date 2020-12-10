@@ -1,6 +1,7 @@
 #include "ArmBase.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
 #include "../../Data/MyAlgorithm.h"
+#include "../../Managers/SceneManager/SceneManager.h"
 
 ArmBase::ArmBase()
 {
@@ -108,7 +109,11 @@ void ArmBase::Draw3D()
 	_model->SetPosition(_position);
 	_model->SetScale(_scale);
 	_model->SetRotation(0, _angle - 180, 0);
-	_model->Draw();
+	
+	_shader->SetTexture("m_Texture", *_texture);
+	Matrix world = _model->GetWorldMatrix();
+	_shader->SetParameter("wvp", world * SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix());
+	_model->Draw(/*_shader*/);
 	_model->SetRotation(0, _angle, 0);
 
 	//! ヒットボックスの座標指定と描画
@@ -143,8 +148,6 @@ void ArmBase::MoveArm(Controller* pad)
 		{
 			_move_flag  = false;
 			_lerp_count = 0;
-			_angle_positions.push_back(_position);
-			_angles.push_back(_angle);
 
 			//! パッドを倒していたらアームの向き入力状態
 			if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
@@ -159,6 +162,9 @@ void ArmBase::MoveArm(Controller* pad)
 					_turn_flag = true;
 				}
 			}
+
+			_angle_positions.push_back(_position);
+			_angles.push_back(_angle);
 		}
 	}
 	else
