@@ -17,6 +17,10 @@ bool GameMain::Initialize()
 	TimeManager::Instance().Initialize();
 	SceneManager::Instance().Initialize();
 	SceneManager::Instance().ChangeScene(SceneManager::Instance().MAIN);
+
+	hdr = GraphicsDevice.CreateHDRRenderTarget(1280, 720, DepthFormat_Unknown);
+	_shader = GraphicsDevice.CreateEffectFromFile(_T("HLSL/Hdr.hlsl"));
+	_shader->SetParameter("exposure", 1.0f);
 	return true;
 }
 
@@ -55,6 +59,8 @@ void GameMain::Draw()
 
 	GraphicsDevice.BeginScene();
 
+	GraphicsDevice.SetRenderTarget(hdr);
+	GraphicsDevice.Clear(Color_Black);
 	SceneManager::Instance().Draw3D();
 
 	SpriteBatch.Begin();
@@ -62,6 +68,6 @@ void GameMain::Draw()
 	SceneManager::Instance().Draw2D();
 
 	SpriteBatch.End();
-
+	GraphicsDevice.RenderTargetToBackBuffer(hdr, _shader);
 	GraphicsDevice.EndScene();
 }
