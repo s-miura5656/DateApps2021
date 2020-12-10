@@ -1,21 +1,26 @@
 #include"CrownRotation.h"
 #include"../../Data/ModelAnimation.h"
 #include"../../Managers/ResouceManager/ResouceManager.h"
+#include "../../ParticleSystem/Particle.h"
 
 CrownRotation::CrownRotation()
 {
 	_i_player_data = new IPrayerData;
+	_effect.reset(new ParticleSystem);
 }
 
 CrownRotation::~CrownRotation()
 {
+	_effect.reset();
 	delete _i_player_data;
 }
 
 bool CrownRotation::Initialize()
 {
 	_model = ResouceManager::Instance().LoadModelFile(_T("Crown/crown.X"));
-	_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/crown_effect/star_05.efk"));
+	auto effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/crown_effect/star_05.efk"));
+
+	_effect->RegisterParticle(effect);
 
 	Material material;
 	material.Diffuse  = Color(1.0f, 1.0f, 1.0f);
@@ -26,7 +31,8 @@ bool CrownRotation::Initialize()
 	_model->SetMaterial(material);
 	_model->SetScale(0.75f, 0.75f, 0.75f);
 
-	effectnum= _effect->Play(Vector3(0.0f, 0.0f, 0.0f));
+	_effect->SetScale(0.3f);
+	_effect->Play();
 
 	return true;
 }
@@ -40,14 +46,12 @@ int CrownRotation::Update()
 
 		if (_i_player_data->GetRankNum(tag) == 0)
 		{
-			camp = tag;
 			_position = _i_player_data->GetPosition(tag) + Vector3(0, 1.1f, 0);
 		}
 	}
 
-	auto a = _i_player_data->GetAllParametor();
-
 	ModelRotation(Vector3(0.0f, 3.0f, 0.0f), _model);
+	_effect->SetPosition(_position + Vector3_Up * 0.1f);
 
 	return 0;
 }
@@ -56,8 +60,7 @@ void CrownRotation::Draw3D()
 {
 	_model->SetPosition(_position);
 	_model->Draw();
-	_effect->SetPosition(effectnum, _position + Vector3_Up * 0.1f);
-	_effect->SetScale(effectnum, 0.3f);
+	_effect->Draw();
 	
 }
 

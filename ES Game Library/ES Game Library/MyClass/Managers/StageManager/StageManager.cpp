@@ -106,12 +106,12 @@ int StageManager::Update()
 
 void StageManager::Draw2D()
 {
-	//SpriteBatch.Draw(*_bg_sprite, Vector3(0, 0, 10000), 1.0f);
+	SpriteBatch.Draw(*_bg_sprite, Vector3(0, 0, 10000), 1.0f);
 }
 
 void StageManager::Draw3D()
 {
-//読み込んだブロックの数だけ描画する
+	//読み込んだブロックの数だけ描画する
 	for (int i = 0; i < stages.size(); i++)
 	{
 		stages[i]->Draw3D();

@@ -1,6 +1,8 @@
 #include"../../../ESGLib.h"
 #include"../../Data/IData.h"
 
+class ParticleSystem;
+
 class CrownRotation
 {
 public:
@@ -14,13 +16,8 @@ public:
 private:
 
 	MODEL _model;
-	EFFEKSEER _effect;
-
-	float time;
+	std::unique_ptr<ParticleSystem> _effect;
 	IPrayerData* _i_player_data;
-	Vector3 _position;
-	string camp;
-	string camp_2;
 
-	int effectnum;
+	Vector3 _position;
 };
