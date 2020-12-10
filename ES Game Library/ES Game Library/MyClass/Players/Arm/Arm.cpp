@@ -57,7 +57,7 @@ bool Arm::Initialize()
 	_angles.push_back(_angle);
 
 	//! Position
-	_position = _i_player_data->GetPosition(_player_tag);
+	_position = _i_player_data->GetPosition(_player_tag) + Vector3(0, 0.5f, 0);
 	_angle_positions.push_back(_position);
 	_old_pos = _position;
 	_new_pos = _position;

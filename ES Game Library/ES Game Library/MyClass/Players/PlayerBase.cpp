@@ -16,7 +16,7 @@ void PlayerBase::Draw2D()
 {
 	if (_tag == "Player_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤーの所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
+//		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤーの所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
 //		SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("プレイヤーのHP:%d"), _i_player_data->GetHitPoint(_tag));
 //		SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("プレイヤーの移動速度:%f"), _i_player_data->GetSpeed(_tag));
 	}
@@ -75,7 +75,7 @@ void PlayerBase::Draw3D()
 
 		_hit_box->SetModelPosition();
 		_hit_box->SetModelScale();
-		//_hit_box->Draw3D();
+		_hit_box->Draw3D();
 		
 		auto arm_positions = _i_arm_Data->GetAnglePositions(_arm_tag);
 		auto arm_angles = _i_arm_Data->GetAngles(_arm_tag);
@@ -84,9 +84,9 @@ void PlayerBase::Draw3D()
 		{
 			_arm->Draw3D();
 
-			for (int i = 1; i < arm_positions.size(); ++i)
+			for (int i = 0; i < arm_positions.size(); ++i)
 			{
-				_wire_models[i]->SetPosition(arm_positions[i] + Vector3(0, 0.5f, 0));
+				_wire_models[i]->SetPosition(arm_positions[i]);
 				_wire_models[i]->SetRotation(Vector3(0, arm_angles[i] + 180, 0));
 				Matrix world = _wire_models[i]->GetWorldMatrix();
 				_wire_shader->SetParameter("wvp", world * vp);

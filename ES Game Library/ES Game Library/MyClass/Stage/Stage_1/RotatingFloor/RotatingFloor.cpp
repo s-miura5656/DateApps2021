@@ -74,5 +74,5 @@ void RotatingFloor::Draw3D()
 {
 	_model->SetPosition(_position);
 	_model->SetRotation(0, rotation, 0);
-	_model->Draw();
+	//_model->Draw();
 }

@@ -67,7 +67,8 @@ int ArmBase::Update()
 
 		SetCollisionPosition();
 
-		_shot_effect->SetPosition(_position + (Vector3_Up * 0.5f));
+		_shot_effect->SetPosition(_position);
+
 		return 0;
 	}
 
@@ -122,7 +123,7 @@ void ArmBase::Draw3D()
 	//! ヒットボックスの座標指定と描画
 	_hit_box->SetModelPosition();
 	_hit_box->SetModelScale();
-	//_hit_box->Draw3D();
+	_hit_box->Draw3D();
 
 	//! エフェクトの座標指定と描画
 	_shot_effect->SetDrawRotationY(_angle, DirectionFromAngle(Vector3(0, _angle, 0)));
@@ -150,7 +151,6 @@ void ArmBase::MoveArm(Controller* pad)
 			_move_flag  = false;
 			_lerp_count = 0;
 			_angle_positions.push_back(_position);
-			_angles.push_back(_angle);
 			//! パッドを倒していたらアームの向き入力状態
 			if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
 			{
@@ -164,6 +164,7 @@ void ArmBase::MoveArm(Controller* pad)
 					_turn_flag = true;
 				}
 			}
+			_angles.push_back(_angle);
 		}
 	}
 	else
@@ -192,7 +193,7 @@ void ArmBase::MoveArm(Controller* pad)
 		if (map_data[_index_num.z][_index_num.x] != 'i' &&
 			map_data[_index_num.z][_index_num.x] != 'w')
 		{
-			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
+			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z + Vector3(0, 0.5f, 0);
 			_move_flag = true;
 		}
 		else
@@ -301,9 +302,9 @@ void ArmBase::HitOtherObject()
 
 void ArmBase::SetCollisionPosition()
 {
-	auto box_pos = _position;
-	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
+	auto box_pos = _position/* - Vector3(0, 0.5f, 0)*/;
+	//box_pos.y += _hit_box->GetModelTag()->GetScale().y;
 	auto a = DirectionFromAngle(Vector3(0, _angle, 0));
-	_hit_box->SetHitBoxPosition(box_pos + a * 0.3f);
+	_hit_box->SetHitBoxPosition(box_pos + a * 0.6f);
 }
 
