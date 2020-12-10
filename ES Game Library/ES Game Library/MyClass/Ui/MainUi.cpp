@@ -67,26 +67,26 @@ void MainUi::Draw2D()
 	SpriteBatch.DrawString(time_limit_font, Vector2(610, 20), Color(1.f, 1.f, 1.f), _T("%d"), TimeManager::Instance().TimeRight());*/
 	/*SpriteBatch.DrawString(time_limit_font, Vector2(570, 20), Color(1.f, 1.f, 1.f), _T("%1.0f"), TimeManager::Instance().GetTimeLeft());*/
 	if (minutes == 3) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d:0%d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d:0%d"), minutes, seconds);
 	}
 	else if ( ((minutes == 2) && (seconds < 20 && seconds >= 10)) || (minutes == 0) && (seconds < 20 && seconds >= 10) ) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d: %d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d: %d"), minutes, seconds);
 	}
 	else if ( (minutes == 2 && seconds < 10) || (minutes == 0 && seconds < 10) ) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d:0%d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d:0%d"), minutes, seconds);
 	}
 	else if ((minutes == 1) && (seconds < 20 && seconds >= 10)) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d : %d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d : %d"), minutes, seconds);
 	}
 	else if (minutes == 1 && seconds < 10) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d :0%d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d :0%d"), minutes, seconds);
 	}
 	else if (minutes == 1) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d :%d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d :%d"), minutes, seconds);
 	} 
 	else 
 	{
-		SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("0%d:%d"), minutes, seconds);
+		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d:%d"), minutes, seconds);
 	}
 
 	
