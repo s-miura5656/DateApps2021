@@ -280,6 +280,9 @@ void ArmBase::HitOtherObject()
 				i_player_data->SetHitPoint(name, hitpoint);
 			}
 
+			if (i_player_data->GetState(name) == PlayerEnum::Animation::DEATH)
+				break;
+
 			if (i_player_data->GetHitPoint(name) <= 0)
 			{
 				i_player_data->SetKillCount(_player_tag, i_player_data->GetKillCount(_player_tag) + 1);
@@ -302,8 +305,7 @@ void ArmBase::HitOtherObject()
 
 void ArmBase::SetCollisionPosition()
 {
-	auto box_pos = _position/* - Vector3(0, 0.5f, 0)*/;
-	//box_pos.y += _hit_box->GetModelTag()->GetScale().y;
+	auto box_pos = _position;
 	auto a = DirectionFromAngle(Vector3(0, _angle, 0));
 	_hit_box->SetHitBoxPosition(box_pos + a * 0.6f);
 }

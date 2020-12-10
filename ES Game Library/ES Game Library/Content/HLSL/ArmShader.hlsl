@@ -1,7 +1,9 @@
 float4x4 wvp;
 
+sampler _Texture : register(s0);
+
 texture m_Texture;
-sampler s0 = sampler_state
+sampler s1 = sampler_state
 {
 	Texture = <m_Texture>;
 
@@ -9,8 +11,8 @@ sampler s0 = sampler_state
 	MinFilter = LINEAR;
 	MagFilter = NONE;
 
-	//AddressU = WRAP;
-	//AddressV = WRAP;
+	AddressU = WRAP;
+	AddressV = WRAP;
 };
 
 struct VSINPUT
@@ -38,7 +40,7 @@ VSOUTPUT VS(VSINPUT vsin)
 
 float4 PS(VSOUTPUT psin) : COLOR
 {
-    float4 color = tex2D(s0, psin.Uv);
+    float4 color = tex2D(s1, psin.Uv);
 	
     return color;
 }

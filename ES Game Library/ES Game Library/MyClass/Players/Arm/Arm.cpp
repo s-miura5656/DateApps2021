@@ -98,6 +98,7 @@ bool Arm::Initialize()
 	//! texture
 	auto path = ConvertFilePath("Player/", _tag, ".png");
 	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
+
 	return true;
 }
 
