@@ -6,7 +6,6 @@
 
 #include "../BaseScene.h"
 #include "../../Managers/ManagerBase.h"
-#include"../../Players/Crown/CrownRotation.h"
 
 class MainScene : public BaseScene
 {
@@ -22,6 +21,4 @@ public:
 private:
 
 	std::vector<ManagerBase*> _managers;
-
-	CrownRotation crownrotation;
 };

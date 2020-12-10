@@ -1,7 +1,6 @@
 #include "PlayerManager.h"
 #include "../../Players/Player/Player.h"
 #include "../../Data/WordsTable.h"
-#include "../../Players/Crown/CrownRotation.h"
 
 PlayerManager::PlayerManager()
 {
@@ -76,7 +75,6 @@ void PlayerManager::Draw3D()
 	{
 		_players[i]->Draw3D();
 	}
-
 	_crown_rotation->Draw3D();
 }
 
@@ -91,12 +89,17 @@ void PlayerManager::RankingSort()
 		sorted_map.insert(std::make_pair(param_list[tag].ranking_point, tag));
 	}
 	int a = 0;
+
 	for (auto& i : sorted_map)
 	{
-		name[a] = i.second;
-		_i_player_data->SetRankNum(i.second, a);
-		a++;
+		_i_player_data->SetRankNum(i.second, i);
 	}
+
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		_i_player_data->SetRankNum(sorted_map[i].second, i);
+	}
+
 	return;
 }
 

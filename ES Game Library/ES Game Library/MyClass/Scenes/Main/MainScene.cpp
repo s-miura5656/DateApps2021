@@ -1,7 +1,5 @@
 #include "MainScene.h"
 
-#include "../../Data/WordsTable.h"
-
 #include "../../Managers/ItemManager/ItemManager.h"
 #include "../../Managers/PlayerManager/PlayerManager.h"
 #include "../../Managers/StageManager/StageManager.h"

@@ -6,6 +6,7 @@
 
 #include "../ManagerBase.h"
 #include "../../Data/IData.h"
+#include "../../Players/Crown/CrownRotation.h"
 
 class Player;
 class CrownRotation;
