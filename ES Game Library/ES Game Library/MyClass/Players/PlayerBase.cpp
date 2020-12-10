@@ -16,7 +16,7 @@ void PlayerBase::Draw2D()
 {
 	if (_tag == "Player_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤーの所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
+//		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤーの所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
 //		SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("プレイヤーのHP:%d"), _i_player_data->GetHitPoint(_tag));
 //		SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("プレイヤーの移動速度:%f"), _i_player_data->GetSpeed(_tag));
 	}
@@ -37,17 +37,24 @@ void PlayerBase::Draw3D()
 	//! 死んでる時とそうでないときの判定
 	if (_death_flag)
 	{
-
+		if (_handle == INT_MAX)
+		{
+			_handle = _destroy_effect->Play(_position + Vector3_Up);
+		}
 	}
 	else
 	{
+		_destroy_effect->Stop(_handle);
+		_handle = INT_MAX;
+
 		ChangeAnimation();
 
 		_model->SetPosition(_position);
 		_model->SetRotation(Vector3(0, _angle - 180, 0));
 
 		_shader->SetTexture("m_Texture", *_texture);
-		_shader->SetParameter("vp", SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix());
+		Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
+		_shader->SetParameter("vp", vp);
 
 		if (_i_player_data->GetState(_tag) != PlayerEnum::Animation::DAMAGE)
 		{
@@ -61,15 +68,14 @@ void PlayerBase::Draw3D()
 			_model->Draw(_shader);
 			GraphicsDevice.EndAlphaBlend();
 		}
+		_model->SetRotation(Vector3(0, _angle, 0));
 
 		_i_player_data->SetAngle(_tag, _angle);
 		_i_player_data->SetPosition(_tag, _position);
 
-
-		auto collision_pos = _model->GetPosition();
-		collision_pos.y += _model->GetScale().y / 2;
-		_hit_box->SetHitBoxPosition(collision_pos);
-		//_hit_box->Draw3D();
+		_hit_box->SetModelPosition();
+		_hit_box->SetModelScale();
+		_hit_box->Draw3D();
 		
 		auto arm_positions = _i_arm_Data->GetAnglePositions(_arm_tag);
 		auto arm_angles = _i_arm_Data->GetAngles(_arm_tag);
@@ -78,11 +84,13 @@ void PlayerBase::Draw3D()
 		{
 			_arm->Draw3D();
 
-			for (int i = 1; i < arm_positions.size(); ++i)
+			for (int i = 0; i < arm_positions.size(); ++i)
 			{
-				_wire_models[i]->SetPosition(arm_positions[i] + Vector3(0, 0.5f, 0));
-				_wire_models[i]->SetRotation(Vector3(0, arm_angles[i] - 90, 0));
-				_wire_models[i]->Draw();
+				_wire_models[i]->SetPosition(arm_positions[i]);
+				_wire_models[i]->SetRotation(Vector3(0, arm_angles[i] + 180, 0));
+				Matrix world = _wire_models[i]->GetWorldMatrix();
+				_wire_shader->SetParameter("wvp", world * vp);
+				_wire_models[i]->Draw(_wire_shader);
 			}
 		}
 	}
@@ -167,6 +175,21 @@ void PlayerBase::Move(Controller* pad)
 		}
 
 		_old_pos = _position;
+	}
+}
+
+void PlayerBase::SetCollisionPosition()
+{
+	auto collision_pos = _position;
+	collision_pos.y += _model->GetScale().y / 2;
+	_hit_box->SetHitBoxPosition(collision_pos);
+}
+
+void PlayerBase::PlayOneShotEffekseer(EFFEKSEER effekseer)
+{
+	if (_handle == INT_MAX)
+	{
+		_handle = effekseer->Play(_position + Vector3_Up);
 	}
 }
 

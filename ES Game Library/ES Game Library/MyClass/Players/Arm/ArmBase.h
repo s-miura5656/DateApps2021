@@ -7,6 +7,8 @@
 
 using namespace PlayerEnum;
 
+class ParticleSystem;
+
 class ArmBase
 {
 public:
@@ -23,11 +25,13 @@ public:
 	void ArmReturn();
 	void HitOtherObject();
 protected:
+	void SetCollisionPosition();
 
 	//! file
-	FONT  _font;
-	MODEL _model;
-	EFFEKSEER _shot_effect;
+	FONT	  _font;
+	MODEL	  _model;
+	EFFECT    _shader;
+	SPRITE	  _texture;
 
 	//! tag
 	std::string _tag;
@@ -50,11 +54,15 @@ protected:
 	Vector3 _old_pos  = Vector3_Zero;
 	Vector3 _new_pos  = Vector3_Zero;
 
+	//! scale
+	float _scale;
+
 	//! pointer
-	std::unique_ptr<IPrayerData> _i_player_data;
-	std::unique_ptr<IArmData> 	 _i_arm_Data;
-	std::unique_ptr<IMapData> 	 _i_map_data;
-	std::unique_ptr<HitBox> _hit_box;
+	std::unique_ptr<IPrayerData>	_i_player_data;
+	std::unique_ptr<IArmData> 		_i_arm_Data;
+	std::unique_ptr<IMapData> 		_i_map_data;
+	std::unique_ptr<HitBox>			_hit_box;
+	std::unique_ptr<ParticleSystem> _shot_effect;
 
 	//! index
 	IndexNum _index_num;
@@ -63,6 +71,7 @@ protected:
 	float _lerp_count = 0.f;
 	int   _wait_count = 0;
 	static int _create_count;
+	float _scale_count = 0.f;
 	int effect_num;
 
 	//! flag

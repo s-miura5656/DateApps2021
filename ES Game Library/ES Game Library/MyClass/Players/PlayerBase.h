@@ -29,12 +29,18 @@ public:
 	int GetPlayerNumber() const { return (*_tag.rbegin()) - '0'; }
 
 protected:
+	void SetCollisionPosition();
+	void PlayOneShotEffekseer(EFFEKSEER effekseer);
+
 	//! file
-	ANIMATIONMODEL _model;
-	FONT _font;
-	EFFECT _shader;
-	SPRITE _texture;
-	std::vector<MODEL> _wire_models;
+	ANIMATIONMODEL		_model;
+	FONT				_font;
+	EFFECT				_shader;
+	EFFECT              _wire_shader;
+	SPRITE				_texture;
+	SPRITE				_wire_texture;
+	std::vector<MODEL>  _wire_models;
+	EFFEKSEER			_destroy_effect;
 
 	//! transform
 	const float scale		 = 0.004f;
@@ -63,11 +69,13 @@ protected:
 	//! index
 	IndexNum _index_num;
 	int _animation_index;
+	int _handle;
 
 	//! flag 
 	bool _move_flag  = false;
 	bool _flag       = false;
 	bool _death_flag = false;
+	bool _a = false;
 
 	//! count
 	float _lerp_count       = 0.f;

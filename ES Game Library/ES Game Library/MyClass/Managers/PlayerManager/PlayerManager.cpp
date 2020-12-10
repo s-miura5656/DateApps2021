@@ -1,6 +1,7 @@
 #include "PlayerManager.h"
 #include "../../Players/Player/Player.h"
 #include "../../Data/WordsTable.h"
+#include "../../Players/Crown/CrownRotation.h"
 
 PlayerManager::PlayerManager()
 {
@@ -9,13 +10,17 @@ PlayerManager::PlayerManager()
 		std::string tag = PLAYER_TAG + std::to_string(i + 1);
 
 		_players.push_back(new Player(tag));
+
+		name[i] = PLAYER_TAG + std::to_string(i + 1);
 	}
 
 	_i_player_data = new IPrayerData;
+	_crown_rotation = new CrownRotation;
 }
 
 PlayerManager::~PlayerManager()
 {
+	delete _crown_rotation;
 	delete _i_player_data;
 
 	for (int i = _players.size() - 1; i >= 0; --i)
@@ -33,9 +38,12 @@ bool PlayerManager::Initialize()
 		_players[i]->Initialize();
 
 		PlayerParametor::Instance().CreateParametor(tag);
+
 		ArmParametor::Instance().CreateParametor(arm_tag);
 	}
 
+	_crown_rotation->Initialize();
+	
     return true;
 }
 
@@ -47,6 +55,8 @@ int PlayerManager::Update()
 	{
 		_players[i]->Update();
 	}
+
+	_crown_rotation->Update();
 
     return 0;
 }
@@ -65,6 +75,8 @@ void PlayerManager::Draw3D()
 	{
 		_players[i]->Draw3D();
 	}
+
+	_crown_rotation->Draw3D();
 }
 
 void PlayerManager::RankingSort()
@@ -72,11 +84,18 @@ void PlayerManager::RankingSort()
 	std::multimap<int, std::string, std::greater<int>> sorted_map;
 
 	auto param_list = _i_player_data->GetAllParametor();
-
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string tag = PLAYER_TAG + std::to_string(i + 1);
 		sorted_map.insert(std::make_pair(param_list[tag].ranking_point, tag));
 	}
+	int a = 0;
+	for (auto& i : sorted_map)
+	{
+		name[a] = i.second;
+		_i_player_data->SetRankNum(i.second, a);
+		a++;
+	}
+	return;
 }
 

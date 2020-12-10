@@ -1,6 +1,7 @@
 #include "Arm.h"
 #include "../../Data/MyAlgorithm.h"
 #include "../../Managers/ResouceManager/ResouceManager.h"
+#include "../../ParticleSystem/Particle.h"
 
 int Arm::_create_count = 0;
 
@@ -20,12 +21,19 @@ Arm::Arm(std::string name)
 	_i_player_data.reset(new IPrayerData);
 	_i_arm_Data.reset(new IArmData);
 	_i_map_data.reset(new IMapData);
-
+	_shot_effect.reset(new ParticleSystem);
 	_create_count++;
 }
 
 Arm::~Arm()
 {
+	_angle_positions.clear();
+	_i_arm_Data->SetAnglePositions(_tag, _angle_positions);
+
+	_angles.clear();
+	_i_arm_Data->SetAngles(_tag, _angles);
+
+	_shot_effect.reset();
 	_i_map_data.reset();
 	_i_arm_Data.reset();
 	_i_player_data.reset();
@@ -37,11 +45,11 @@ Arm::~Arm()
 bool Arm::Initialize()
 {
 	//! File
-	_font  = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
-	_model = ResouceManager::Instance().LoadModelFile(_T("Player/robot_hand01.X"));
-	_shot_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch2.efk"));
+	_font		 = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
+	_model		 = ResouceManager::Instance().LoadModelFile(_T("Player/R_arm.X"));
 
-	effect_num = _shot_effect->Play(_position + Vector3(0, 1, 0));
+	auto&& effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch_fixed.efk"));
+	_shader		 = ResouceManager::Instance().LordEffectFile(_T("HLSL/ArmShader.hlsl"));
 
 	//! Angle
 	_angle = _i_player_data->GetAngle(_player_tag);
@@ -49,23 +57,28 @@ bool Arm::Initialize()
 	_angles.push_back(_angle);
 
 	//! Position
-	_position = _i_player_data->GetPosition(_player_tag);
+	_position = _i_player_data->GetPosition(_player_tag) + Vector3(0, 0.5f, 0);
 	_angle_positions.push_back(_position);
 	_old_pos = _position;
 	_new_pos = _position;
 	_index_num = _i_player_data->GetIndexNum(_player_tag);
 
-	auto box_pos = _position;
-	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
-	_hit_box->SetHitBoxPosition(box_pos);
-	
+	//! hit_box
+	SetCollisionPosition();
 
 	//! State
 	_arm_state = ArmEnum::PunchState::PUNCH;
 	_i_arm_Data->SetState(_tag, _arm_state);
 
+	//! effect
+	_shot_effect->RegisterParticle(effect);
+	_shot_effect->SetSpeed(1.0f);
+	_shot_effect->SetScale(1.0f);
+	_shot_effect->Play();
+
 	//! Scale
-	_model->SetScale(2.f);
+	_scale = 0;
+	_model->SetScale(_scale);
 
 	//! distance
 	_player_distance = FLT_MAX;
@@ -82,6 +95,9 @@ bool Arm::Initialize()
 	_move_flag = false;
 	_turn_flag = false;
 
+	//! texture
+	auto path = ConvertFilePath("Player/", _tag, ".png");
+	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 	return true;
 }
 

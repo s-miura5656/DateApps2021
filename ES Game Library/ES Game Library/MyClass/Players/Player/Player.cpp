@@ -13,7 +13,7 @@ Player::Player(std::string tag)
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
 	_hit_box->Settags(tag);
-	_hit_box->SetHitBoxScale(0.8f);
+	_hit_box->SetHitBoxScale(0.6f);
 	_i_player_data = new IPrayerData;
 	_i_arm_Data    = new IArmData;
 	_i_map_data    = new IMapData;
@@ -30,16 +30,17 @@ Player::~Player()
 
 bool Player::Initialize()
 {
-
 	//! file
-	_font   = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
-	_model  = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation ver3.X"));
-	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
+	_font			= ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
+	_model			= ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
+	_shader			= ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
+	_wire_shader	= ResouceManager::Instance().LordEffectFile(_T("HLSL/WireShader.hlsl"));
+	_destroy_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damage_effect02.efk"));
 
 	for (int i = 0; i < _i_arm_Data->GetLimitRange(_arm_tag); ++i)
 	{
-		_wire_models.push_back(ResouceManager::Instance().LoadModelFile(_T("Player/cylinder.X")));
-		_wire_models[i]->SetScale(0.1f);
+		_wire_models.push_back(ResouceManager::Instance().LoadModelFile(_T("Player/wire.X")));
+		_wire_models[i]->SetScale(1.0f);
 	}
 
 	//! Position
@@ -53,16 +54,22 @@ bool Player::Initialize()
 	//! Scale
 	_model->SetScale(player_scale);
 
+	//! hit_box
+	SetCollisionPosition();
+
 	//! Pad
 	ControllerManager::Instance().CreateGamePad(_tag);
 
 	//! Material
 	Material mat;
-	mat.Diffuse = Color(1.0f, 1.0f, 1.0f);
-	mat.Ambient = Color(1.0f, 1.0f, 1.0f);
+	mat.Diffuse  = Color(1.0f, 1.0f, 1.0f);
+	mat.Ambient  = Color(1.0f, 1.0f, 1.0f);
 	mat.Specular = Color(1.0f, 1.0f, 1.0f);
 	_model->SetMaterial(mat);
 	
+	mat.Diffuse  = Color(1.0f, 1.0f, 1.0f);
+	mat.Ambient  = Color(1.0f, 1.0f, 1.0f);
+	mat.Specular = Color(1.0f, 1.0f, 1.0f);
 	for (auto&& model : _wire_models)
 	{
 		model->SetMaterial(mat);
@@ -70,6 +77,7 @@ bool Player::Initialize()
 
 	//! index
 	_animation_index = _i_player_data->GetState(_tag);
+	_handle = INT_MAX;
 
 	//! count
 	_animation_count = 0;
@@ -77,8 +85,12 @@ bool Player::Initialize()
 	//! shader
 	_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
 	auto path = ConvertFilePath("Player/", _tag, ".png");
-	_texture = GraphicsDevice.CreateSpriteFromFile(path.c_str());
-	
+	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
+
+	path = ConvertFilePath("Player/", "wire", ".png");
+	_wire_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
+	_wire_shader->SetTexture("m_Texture", *_wire_texture);
+
 	return true;
 }
 
@@ -100,6 +112,8 @@ int Player::Update()
 			_i_player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 			_respawn_time = 0;
 			_death_flag = false;
+			_move_flag  = false;
+			_position = _new_pos;
 		}
 	}
 	else
@@ -107,6 +121,7 @@ int Player::Update()
 		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::DEATH)
 		{
 			_death_flag = true;
+			DestroyArm();
 			return 0;
 		}
 
@@ -115,9 +130,9 @@ int Player::Update()
 		{
 			_damage_count++;
 
-			if (_damage_count > 120)
+			if (_damage_count > 30)
 			{
-				_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
+				_i_player_data->SetState(_tag, PlayerEnum::Animation::DEATH);
 				_damage_count = 0;
 			}
 
@@ -182,6 +197,7 @@ int Player::Update()
 		}
 	}
 	
+	SetCollisionPosition();
 
 	return 0;
 }

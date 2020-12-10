@@ -123,11 +123,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Extension\Effekseer\Effekseer.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Extension\Effekseer\EffekseerEffect.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Extension\Kinect\Kinect.cpp">
@@ -174,8 +174,6 @@
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp" />
     <ClCompile Include="MyClass\Managers\AudioManager\AudioManager.cpp" />
     <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp" />
-    <ClCompile Include="MyClass\Managers\EffectManager\EffectBase.cpp" />
-    <ClCompile Include="MyClass\Managers\EffectManager\EffectManager.cpp" />
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp" />
     <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp" />
     <ClCompile Include="MyClass\Managers\ResouceManager\ResouceManager.cpp" />
@@ -183,9 +181,10 @@
     <ClCompile Include="MyClass\Managers\StageManager\StageManager.cpp" />
     <ClCompile Include="MyClass\Managers\TimeManager\Time.cpp" />
     <ClCompile Include="MyClass\Managers\UIManager\UI.cpp" />
-    <ClCompile Include="MyClass\Managers\WireManager\WireManager.cpp" />
+    <ClCompile Include="MyClass\ParticleSystem\Particle.cpp" />
     <ClCompile Include="MyClass\Players\Arm\Arm.cpp" />
     <ClCompile Include="MyClass\Players\Arm\ArmBase.cpp" />
+    <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp" />
     <ClCompile Include="MyClass\Players\PlayerBase.cpp" />
     <ClCompile Include="MyClass\Players\Player\Player.cpp" />
     <ClCompile Include="MyClass\Scenes\Main\MainScene.cpp" />
@@ -196,6 +195,7 @@
     <ClCompile Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Metal\Metal.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Pillar\Pillar.cpp" />
+    <ClCompile Include="MyClass\Stage\Stage_1\RotatingFloor\RotatingFloor.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.cpp" />
     <ClCompile Include="MyClass\Ui\MainUi.cpp" />
     <ClCompile Include="MyClass\Ui\ResultUi.cpp" />
@@ -269,8 +269,6 @@
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h" />
     <ClInclude Include="MyClass\Managers\AudioManager\AudioManager.h" />
     <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h" />
-    <ClInclude Include="MyClass\Managers\EffectManager\EffectBase.h" />
-    <ClInclude Include="MyClass\Managers\EffectManager\EffectManager.h" />
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h" />
     <ClInclude Include="MyClass\Managers\ManagerBase.h" />
     <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h" />
@@ -279,21 +277,22 @@
     <ClInclude Include="MyClass\Managers\StageManager\StageManager.h" />
     <ClInclude Include="MyClass\Managers\TimeManager\Time.h" />
     <ClInclude Include="MyClass\Managers\UIManager\UI.h" />
-    <ClInclude Include="MyClass\Managers\WireManager\WireManager.h" />
+    <ClInclude Include="MyClass\ParticleSystem\Particle.h" />
     <ClInclude Include="MyClass\Players\Arm\Arm.h" />
     <ClInclude Include="MyClass\Players\Arm\ArmBase.h" />
+    <ClInclude Include="MyClass\Players\Crown\CrownRotation.h" />
     <ClInclude Include="MyClass\Players\PlayerBase.h" />
     <ClInclude Include="MyClass\Players\Player\Player.h" />
     <ClInclude Include="MyClass\Scenes\BaseScene.h" />
     <ClInclude Include="MyClass\Scenes\Main\MainScene.h" />
     <ClInclude Include="MyClass\Scenes\Result\ResultScene.h" />
-    <ClInclude Include="MyClass\Scenes\Title\ModelAnimation\ModelAnimation.h" />
     <ClInclude Include="MyClass\Scenes\Title\TitleScene.h" />
     <ClInclude Include="MyClass\Stage\StageBase.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Block\Block.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Metal\Metal.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Pillar\Pillar.h" />
+    <ClInclude Include="MyClass\Stage\Stage_1\RotatingFloor\RotatingFloor .h" />
     <ClInclude Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.h" />
     <ClInclude Include="MyClass\Ui\BaseUi.h" />
     <ClInclude Include="MyClass\Ui\MainUi.h" />

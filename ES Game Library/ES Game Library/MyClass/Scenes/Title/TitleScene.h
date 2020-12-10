@@ -13,17 +13,23 @@ public:
 	void Draw2D();
 	void Draw3D();
 
+	float Flashing();
+	float Scaling();
+
 private:
 	SPRITE _title;
+	SPRITE _sprite;
+
+	float sprite_alpha;
+
+	Vector3 sprite_pos;
+	Vector2 sprite_scale;
 
 	enum {MODEL_MAX = 5};
 	MODEL model[MODEL_MAX];
 	CAMERA camera;
 
 	MODEL item;
-
-	//Vector3 impact;
-	//Vector3 attenuate;
 
 	float _scale = 1.f;
 
@@ -35,4 +41,5 @@ private:
 
 
 	ImpactSpeed impactspeed;
+	
 };

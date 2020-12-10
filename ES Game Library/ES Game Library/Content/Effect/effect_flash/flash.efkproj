@@ -101,6 +101,15 @@
             <Frame>4</Frame>
           </FadeOut>
         </RendererCommonValues>
+        <DrawingValues>
+          <Sprite>
+            <ColorAll_Fixed>
+              <R>251</R>
+              <G>245</G>
+              <B>162</B>
+            </ColorAll_Fixed>
+          </Sprite>
+        </DrawingValues>
         <Name>bou_side</Name>
         <Children />
       </Node>
@@ -150,12 +159,21 @@
             <Frame>4</Frame>
           </FadeOut>
         </RendererCommonValues>
+        <DrawingValues>
+          <Sprite>
+            <ColorAll_Fixed>
+              <R>251</R>
+              <G>245</G>
+              <B>162</B>
+            </ColorAll_Fixed>
+          </Sprite>
+        </DrawingValues>
         <Name>bou_up</Name>
         <Children />
       </Node>
     </Children>
   </Root>
-  <ToolVersion>1.43f</ToolVersion>
+  <ToolVersion>1.42f</ToolVersion>
   <Version>3</Version>
   <StartFrame>0</StartFrame>
   <EndFrame>300</EndFrame>

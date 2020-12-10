@@ -20,4 +20,6 @@ public:
 	void Draw3D() override;
 private:
 	ItemCounter* itemcounter;
+	EFFEKSEER _effect;
+	int _handle;
 };

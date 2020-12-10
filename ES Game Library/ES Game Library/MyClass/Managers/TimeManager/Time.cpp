@@ -13,8 +13,7 @@ TimeManager::~TimeManager()
 
 void TimeManager::Initialize()
 {
-	
-	limitTime =30.9f;
+	limitTime =180.9f;
 	time = 0.0f;
 }
  

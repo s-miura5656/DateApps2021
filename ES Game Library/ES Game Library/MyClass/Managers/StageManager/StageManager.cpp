@@ -17,6 +17,8 @@ StageManager::~StageManager()
 
 bool StageManager::Initialize()
 {
+	_bg_sprite = ResouceManager::Instance().LordSpriteFile(_T("MapSprite/BG.png"));
+
 	FILE* fp = fopen("MapSprite/map.csv","r");
 
 	//マップデータを読み込む
@@ -38,6 +40,7 @@ bool StageManager::Initialize()
 			}
 		}
 	}
+
 	//ファイルを閉じる
 	fclose(fp);
 
@@ -45,7 +48,7 @@ bool StageManager::Initialize()
 	int player_num = 1;
 
 	IMapData* imap_data = new IMapData;
-
+	imap_data->SetData(mapdate);
 	for (int z = 0; z < mapdate.size(); z++)
 	{
 		for (int x = 0; x < mapdate[z].size(); x++)
@@ -64,11 +67,16 @@ bool StageManager::Initialize()
 				iplayer_data->SetPosition(tag, Vector3(x, 0, -z));
 				player_num++;
 				break;
+			case 'r':
+				tag = ROTATION_FLOOR_TAG + tag;
+				stages.push_back(new RotatingFloor(tag));
+				stages[_count]->SetPosition(Vector3(x, 0.1, -z));
+				stages[_count]->Initialize();
+				_count++;
+				break;
 			}
 		}
 	}
-
-	imap_data->SetData(mapdate);
 
 	stages.push_back(new Indestructible);
 	stages[stages.size() - 1]->Initialize();
@@ -98,7 +106,7 @@ int StageManager::Update()
 
 void StageManager::Draw2D()
 {
-
+	//SpriteBatch.Draw(*_bg_sprite, Vector3(0, 0, 10000), 1.0f);
 }
 
 void StageManager::Draw3D()

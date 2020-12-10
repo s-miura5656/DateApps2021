@@ -1,6 +1,8 @@
 #include "ArmBase.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
 #include "../../Data/MyAlgorithm.h"
+#include "../../Managers/SceneManager/SceneManager.h"
+#include "../../ParticleSystem/Particle.h"
 
 ArmBase::ArmBase()
 {
@@ -22,6 +24,11 @@ int ArmBase::Update()
 
 	_i_arm_Data->SetAnglePositions(_tag, _angle_positions);
 	_i_arm_Data->SetAngles(_tag, _angles);
+
+	if (_scale < 2) 
+	{
+		_scale += 2.0f / 10.0f;
+	}
 
 	//! アームの発射状態の判定
 	if (pad->GetButtonState(GamePad_Button2) && _arm_state == ArmEnum::PunchState::PUNCH)
@@ -58,6 +65,10 @@ int ArmBase::Update()
 		//! 当たり判定
 		HitOtherObject();
 
+		SetCollisionPosition();
+
+		_shot_effect->SetPosition(_position);
+
 		return 0;
 	}
 
@@ -65,7 +76,7 @@ int ArmBase::Update()
 	if (_arm_state == ArmEnum::PunchState::RETURN_PUNCH)
 	{
 		ArmReturn();
-		_shot_effect->Stop(effect_num);
+		_shot_effect->Stop();
 
 		if (_player_distance < 0.6f)
 		{
@@ -100,25 +111,23 @@ void ArmBase::Draw3D()
 {
 	//! モデルの座標指定と描画
 	_model->SetPosition(_position);
+	_model->SetScale(_scale);
 	_model->SetRotation(0, _angle - 180, 0);
-	_model->Draw();
+	
+	_shader->SetTexture("m_Texture", *_texture);
+	Matrix world = _model->GetWorldMatrix();
+	_shader->SetParameter("wvp", world * SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix());
+	_model->Draw(_shader);
 	_model->SetRotation(0, _angle, 0);
 
-	
 	//! ヒットボックスの座標指定と描画
-	auto box_pos = _position;
-	box_pos.y += _hit_box->GetModelTag()->GetScale().y;
-	auto a = DirectionFromAngle(Vector3(0, _angle, 0));
-	_hit_box->SetHitBoxPosition(box_pos + a * 0.3f);
-	_hit_box->SetScale();
-
-
+	_hit_box->SetModelPosition();
+	_hit_box->SetModelScale();
+	_hit_box->Draw3D();
 
 	//! エフェクトの座標指定と描画
-	_shot_effect->SetSpeed(effect_num, 1.0f);
-	_shot_effect->SetScale(effect_num, 0.5f);
-	_shot_effect->SetRotation(effect_num, Vector3(0, _angle, 0));
-	_shot_effect->SetPosition(effect_num, _position + (-a * 0.5f) + (Vector3_Up * 0.5f));
+	_shot_effect->SetDrawRotationY(_angle, DirectionFromAngle(Vector3(0, _angle, 0)));
+	_shot_effect->Draw();
 }
 
 //! @fn アームの移動(曲がる)
@@ -142,8 +151,6 @@ void ArmBase::MoveArm(Controller* pad)
 			_move_flag  = false;
 			_lerp_count = 0;
 			_angle_positions.push_back(_position);
-			_angles.push_back(_angle);
-
 			//! パッドを倒していたらアームの向き入力状態
 			if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
 			{
@@ -157,6 +164,7 @@ void ArmBase::MoveArm(Controller* pad)
 					_turn_flag = true;
 				}
 			}
+			_angles.push_back(_angle);
 		}
 	}
 	else
@@ -185,7 +193,7 @@ void ArmBase::MoveArm(Controller* pad)
 		if (map_data[_index_num.z][_index_num.x] != 'i' &&
 			map_data[_index_num.z][_index_num.x] != 'w')
 		{
-			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
+			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z + Vector3(0, 0.5f, 0);
 			_move_flag = true;
 		}
 		else
@@ -205,7 +213,7 @@ bool ArmBase::TurnArm(Controller* pad)
 	{
 		_wait_count++;
 
-		if (_wait_count > 30)
+		if (_wait_count > 15)
 		{
 			_wait_count = 0;
 			_turn_flag = false;
@@ -278,7 +286,7 @@ void ArmBase::HitOtherObject()
 				i_player_data->SetRankingPoint(_player_tag, i_player_data->GetRankingPoint(_player_tag) + 100);
 				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 				i_arm_data->SetState(_tag, _arm_state);
-				i_player_data->SetState(name, PlayerEnum::Animation::DEATH);
+				i_player_data->SetState(name, PlayerEnum::Animation::DAMAGE);
 			}
 			else
 			{
@@ -291,3 +299,12 @@ void ArmBase::HitOtherObject()
 		}
 	}
 }
+
+void ArmBase::SetCollisionPosition()
+{
+	auto box_pos = _position/* - Vector3(0, 0.5f, 0)*/;
+	//box_pos.y += _hit_box->GetModelTag()->GetScale().y;
+	auto a = DirectionFromAngle(Vector3(0, _angle, 0));
+	_hit_box->SetHitBoxPosition(box_pos + a * 0.6f);
+}
+

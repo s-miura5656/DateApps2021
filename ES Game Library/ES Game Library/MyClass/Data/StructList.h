@@ -12,6 +12,7 @@ struct PlayerParam {
 	float speed		  = 0.04f;
 	int ranking_point = 0;
 	int kill_count    = 0;
+	int rank_num      = 0;
 };
 
 struct ArmParam {
