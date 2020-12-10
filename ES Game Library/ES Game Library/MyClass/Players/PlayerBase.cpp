@@ -84,7 +84,7 @@ void PlayerBase::Draw3D()
 		{
 			_arm->Draw3D();
 
-			for (int i = 0; i < arm_positions.size(); ++i)
+			for (int i = 1; i < arm_positions.size(); ++i)
 			{
 				_wire_models[i]->SetPosition(arm_positions[i] + Vector3(0, 0.5f, 0));
 				_wire_models[i]->SetRotation(Vector3(0, arm_angles[i] + 180, 0));

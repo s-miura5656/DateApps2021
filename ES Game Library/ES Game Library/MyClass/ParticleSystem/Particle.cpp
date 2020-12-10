@@ -6,7 +6,7 @@ ParticleSystem::ParticleSystem()
 
 ParticleSystem::~ParticleSystem()
 {
-	delete _particle;
+	//delete _particle;
 }
 
 void ParticleSystem::RegisterParticle(EFFEKSEER& particle)
@@ -37,6 +37,9 @@ void ParticleSystem::PlayOneShot()
 
 void ParticleSystem::Stop()
 {
+	if (_handle == INT_MAX)
+		return;
+
 	_particle->Stop(_handle);
 	_handle = INT_MAX;
 }

@@ -7,6 +7,8 @@
 
 using namespace PlayerEnum;
 
+class ParticleSystem;
+
 class ArmBase
 {
 public:
@@ -28,7 +30,6 @@ protected:
 	//! file
 	FONT	  _font;
 	MODEL	  _model;
-	EFFEKSEER _shot_effect;
 	EFFECT    _shader;
 	SPRITE	  _texture;
 
@@ -57,10 +58,11 @@ protected:
 	float _scale;
 
 	//! pointer
-	std::unique_ptr<IPrayerData> _i_player_data;
-	std::unique_ptr<IArmData> 	 _i_arm_Data;
-	std::unique_ptr<IMapData> 	 _i_map_data;
-	std::unique_ptr<HitBox> _hit_box;
+	std::unique_ptr<IPrayerData>	_i_player_data;
+	std::unique_ptr<IArmData> 		_i_arm_Data;
+	std::unique_ptr<IMapData> 		_i_map_data;
+	std::unique_ptr<HitBox>			_hit_box;
+	std::unique_ptr<ParticleSystem> _shot_effect;
 
 	//! index
 	IndexNum _index_num;

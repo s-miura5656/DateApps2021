@@ -2,6 +2,7 @@
 #include "../../Managers/ControllerManager/ContorollerManager.h"
 #include "../../Data/MyAlgorithm.h"
 #include "../../Managers/SceneManager/SceneManager.h"
+#include "../../ParticleSystem/Particle.h"
 
 ArmBase::ArmBase()
 {
@@ -65,6 +66,8 @@ int ArmBase::Update()
 		HitOtherObject();
 
 		SetCollisionPosition();
+
+		_shot_effect->SetPosition(_position + (Vector3_Up * 0.5f));
 		return 0;
 	}
 
@@ -72,7 +75,7 @@ int ArmBase::Update()
 	if (_arm_state == ArmEnum::PunchState::RETURN_PUNCH)
 	{
 		ArmReturn();
-		_shot_effect->Stop(effect_num);
+		_shot_effect->Stop();
 
 		if (_player_distance < 0.6f)
 		{
@@ -113,7 +116,7 @@ void ArmBase::Draw3D()
 	_shader->SetTexture("m_Texture", *_texture);
 	Matrix world = _model->GetWorldMatrix();
 	_shader->SetParameter("wvp", world * SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix());
-	_model->Draw(/*_shader*/);
+	_model->Draw(_shader);
 	_model->SetRotation(0, _angle, 0);
 
 	//! ヒットボックスの座標指定と描画
@@ -122,10 +125,8 @@ void ArmBase::Draw3D()
 	//_hit_box->Draw3D();
 
 	//! エフェクトの座標指定と描画
-	_shot_effect->SetSpeed(effect_num, 1.0f);
-	_shot_effect->SetScale(effect_num, 1.0f);
-	_shot_effect->SetRotation(effect_num, Vector3(0, _angle, 0));
-	_shot_effect->SetPosition(effect_num, _position + (Vector3_Up * 0.5f));
+	_shot_effect->SetDrawRotationY(_angle, DirectionFromAngle(Vector3(0, _angle, 0)));
+	_shot_effect->Draw();
 }
 
 //! @fn アームの移動(曲がる)
@@ -148,7 +149,8 @@ void ArmBase::MoveArm(Controller* pad)
 		{
 			_move_flag  = false;
 			_lerp_count = 0;
-
+			_angle_positions.push_back(_position);
+			_angles.push_back(_angle);
 			//! パッドを倒していたらアームの向き入力状態
 			if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
 			{
@@ -162,9 +164,6 @@ void ArmBase::MoveArm(Controller* pad)
 					_turn_flag = true;
 				}
 			}
-
-			_angle_positions.push_back(_position);
-			_angles.push_back(_angle);
 		}
 	}
 	else

@@ -1,6 +1,7 @@
 #include "Arm.h"
 #include "../../Data/MyAlgorithm.h"
 #include "../../Managers/ResouceManager/ResouceManager.h"
+#include "../../ParticleSystem/Particle.h"
 
 int Arm::_create_count = 0;
 
@@ -20,7 +21,7 @@ Arm::Arm(std::string name)
 	_i_player_data.reset(new IPrayerData);
 	_i_arm_Data.reset(new IArmData);
 	_i_map_data.reset(new IMapData);
-
+	_shot_effect.reset(new ParticleSystem);
 	_create_count++;
 }
 
@@ -32,11 +33,11 @@ Arm::~Arm()
 	_angles.clear();
 	_i_arm_Data->SetAngles(_tag, _angles);
 
+	_shot_effect.reset();
 	_i_map_data.reset();
 	_i_arm_Data.reset();
 	_i_player_data.reset();
 	_hit_box.reset();
-	_shot_effect->Stop(effect_num);
 
 	_create_count--;
 }
@@ -45,12 +46,10 @@ bool Arm::Initialize()
 {
 	//! File
 	_font		 = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
-	_model		 = ResouceManager::Instance().LoadModelFile(_T("Player/robot_arm.X"));
+	_model		 = ResouceManager::Instance().LoadModelFile(_T("Player/R_arm.X"));
 
-	_shot_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch_fixed.efk"));
-	_shader		 = ResouceManager::Instance().LordEffectFile(_T("HLSL/BaseShader.hlsl"));
-
-	effect_num = _shot_effect->Play(_position + Vector3(0, 1, 0));
+	auto&& effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch_fixed.efk"));
+	_shader		 = ResouceManager::Instance().LordEffectFile(_T("HLSL/ArmShader.hlsl"));
 
 	//! Angle
 	_angle = _i_player_data->GetAngle(_player_tag);
@@ -70,6 +69,12 @@ bool Arm::Initialize()
 	//! State
 	_arm_state = ArmEnum::PunchState::PUNCH;
 	_i_arm_Data->SetState(_tag, _arm_state);
+
+	//! effect
+	_shot_effect->RegisterParticle(effect);
+	_shot_effect->SetSpeed(1.0f);
+	_shot_effect->SetScale(1.0f);
+	_shot_effect->Play();
 
 	//! Scale
 	_scale = 0;
