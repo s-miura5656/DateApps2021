@@ -19,6 +19,7 @@ public:
 	void Draw3D() override;
 	Vector3 GetRot() { return front; }
 private:
+	void orthodontics();
 	float rotation;
 	Vector3 front;
 	bool flag;

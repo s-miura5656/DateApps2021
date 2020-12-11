@@ -52,19 +52,7 @@ int RotatingFloor::Update()
         isHitEnter = false;
     }
     front = _model->GetFrontVector();
-    
-    front.z = ceil(front.z);
-    if (front.x >= 0.9) {
-        front.x = 1.0;
-        front.z = 0;
-    }
-    if (front.x <= -0.9) {
-        front.x = -1.0;
-        front.z = 0;
-    }
-    if (front.z == -1) {
-        front.x = 0;
-    }
+    orthodontics();
     return 0;
 }
 
@@ -91,4 +79,19 @@ void RotatingFloor::Draw3D()
 	_model->SetPosition(_position);
 	_model->SetRotation(0, rotation, 0);
 	_model->Draw();
+}
+
+void RotatingFloor::orthodontics()
+{
+    if (front.x >= 0.9) {
+        front.x = 1.0;
+        front.z = 0;
+    }
+    if (front.x <= -0.9) {
+        front.x = -1.0;
+        front.z = 0;
+    }
+    if (front.z == -1) {
+        front.x = 0;
+    }
 }
