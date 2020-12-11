@@ -129,8 +129,8 @@ void TitleScene::Draw2D()
 {
 	SpriteBatch.Draw(*_title, Vector3(0, 0, +10000.0f));
 
-	SpriteBatch.Draw(*_sprite, Vector3(sprite_pos), sprite_alpha, Vector3(0, 0, 0),
-		             Vector3(0, 0, 0), Vector2(sprite_scale));
+	//SpriteBatch.Draw(*_sprite, Vector3(sprite_pos), sprite_alpha, Vector3(0, 0, 0),
+	//	             Vector3(0, 0, 0), Vector2(sprite_scale));
 }
 void TitleScene::Draw3D()
 {
