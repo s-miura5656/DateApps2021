@@ -52,8 +52,7 @@ int RotatingFloor::Update()
         isHitEnter = false;
     }
     front = _model->GetFrontVector();
-    
-    front.z = ceil(front.z);
+
     if (front.x >= 0.9) {
         front.x = 1.0;
         front.z = 0;
