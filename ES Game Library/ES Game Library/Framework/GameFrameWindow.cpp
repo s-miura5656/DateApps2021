@@ -74,7 +74,7 @@ bool CGameFrameWindow::Create(const HINSTANCE hInstance, const WNDPROC inWndProc
 	}
 
 	// ウィンドウ生成
-	m_hWnd = ::CreateWindowEx(0, WindowClassName, TEXT("ES Game Library - 初期化中"), 0,
+	m_hWnd = ::CreateWindowEx(0, WindowClassName, TEXT("Roke Pun Fighters - 初期化中"), 0,
 							  0, 0, 0, 0, NULL, NULL, hInstance, NULL);
 	if(m_hWnd == NULL) {
 		::OutputDebugString(TEXT("*** Error - ウィンドウ生成失敗(CGameWindow_Create)\n"));

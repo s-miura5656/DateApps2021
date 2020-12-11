@@ -12,7 +12,7 @@
 bool GameMain::Initialize()
 {
 	// TODO: Add your initialization logic here
-	WindowTitle(_T("ES Game Library"));
+	WindowTitle(_T("Roke Pun Fighters"));
 	
 	TimeManager::Instance().Initialize();
 	SceneManager::Instance().Initialize();

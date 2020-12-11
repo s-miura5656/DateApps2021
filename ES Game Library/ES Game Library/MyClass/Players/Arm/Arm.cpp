@@ -33,6 +33,8 @@ Arm::~Arm()
 	_angles.clear();
 	_i_arm_Data->SetAngles(_tag, _angles);
 
+	_shot_effect->Stop();
+
 	_shot_effect.reset();
 	_i_map_data.reset();
 	_i_arm_Data.reset();

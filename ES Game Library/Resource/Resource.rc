@@ -28,6 +28,7 @@ LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
 // remains consistent on all systems.
 IDI_MENUICON            ICON                    "DirectX.ico"
 
+
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -81,7 +82,7 @@ BEGIN
             VALUE "FileVersion", "1, 0, 0, 0"
             VALUE "InternalName", "ES Game Library"
             VALUE "LegalCopyright", "Copyright (C) 2011"
-            VALUE "OriginalFilename", "ES Game Library.exe"
+            VALUE "OriginalFilename", "RokePunFighters.exe"
             VALUE "ProductName", "ヒューマンアカデミー仙台校 ES Game Library"
             VALUE "ProductVersion", "1, 0, 0, 0"
         END
@@ -101,6 +102,10 @@ END
 STRINGTABLE
 BEGIN
     IDS_SCREENWIDTH         "1280"
+END
+
+STRINGTABLE
+BEGIN
     IDS_SCREENHEIGHT        "720"
     IDS_FRAMERATE           "60"
     IDS_FULLSCREEN          "0"
