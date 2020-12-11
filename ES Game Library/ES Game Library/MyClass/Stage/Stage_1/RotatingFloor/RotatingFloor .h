@@ -17,8 +17,10 @@ public:
 	bool Initialize() override;
 	int Update() override;
 	void Draw3D() override;
+	Vector3 GetRot() { return front; }
 private:
-	int rotation;
+	float rotation;
+	Vector3 front;
 	bool flag;
 	bool isHitEnter = false;
 	bool PlayerHitCheck();
