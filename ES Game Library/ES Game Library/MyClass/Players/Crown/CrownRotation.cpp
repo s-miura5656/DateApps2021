@@ -32,7 +32,6 @@ bool CrownRotation::Initialize()
 	_model->SetScale(0.75f, 0.75f, 0.75f);
 
 	_effect->SetScale(0.3f);
-	_effect->Play();
 
 	crown_flag = false;
 
@@ -94,6 +93,7 @@ void CrownRotation::Draw3D()
 	if (crown_flag)
 	{
 		_model->Draw();
+		_effect->PlayOneShot();
 		_effect->Draw();
 	}
 }

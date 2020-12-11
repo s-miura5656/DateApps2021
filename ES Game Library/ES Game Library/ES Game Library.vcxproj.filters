@@ -226,6 +226,9 @@
     <Filter Include="Myclass\Stage\Stage_1\Warp">
       <UniqueIdentifier>{9bd3434f-3e9f-4e15-966c-6e823f83cbcd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Players\Player\Crown">
+      <UniqueIdentifier>{643cd3d4-3574-4056-930c-704e664ed175}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -472,14 +475,14 @@
     <ClCompile Include="MyClass\Stage\Stage_1\RotatingFloor\RotatingFloor.cpp">
       <Filter>Myclass\Stage\Stage_1\RotatingFloor</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\ParticleSystem\Particle.cpp">
       <Filter>Myclass\ParticleSystem</Filter>
     </ClCompile>
     <ClCompile Include="MyClass\Stage\Stage_1\Warp\Warp.cpp">
       <Filter>Myclass\Stage\Stage_1\Warp</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp">
+      <Filter>Myclass\Players\Player\Crown</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -766,14 +769,14 @@
     <ClInclude Include="MyClass\Stage\Stage_1\RotatingFloor\RotatingFloor .h">
       <Filter>Myclass\Stage\Stage_1\RotatingFloor</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Players\Crown\CrownRotation.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\ParticleSystem\Particle.h">
       <Filter>Myclass\ParticleSystem</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Stage\Stage_1\Warp\Warp.h">
       <Filter>Myclass\Stage\Stage_1\Warp</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\Crown\CrownRotation.h">
+      <Filter>Myclass\Players\Player\Crown</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
