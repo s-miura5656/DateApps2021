@@ -20,4 +20,8 @@ private:
 	IPrayerData* _i_player_data;
 
 	Vector3 _position;
+	float rankingpoint_max;
+	float rankingpoint_min;
+
+	bool crown_flag;
 };
