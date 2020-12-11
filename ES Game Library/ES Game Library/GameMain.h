@@ -54,8 +54,8 @@ public:
 private:
 	void Finalize();
 	FONT DefaultFont;
-	RENDERTARGET hdr;
-	EFFECT _shader;
+	//RENDERTARGET hdr;
+	//EFFECT _shader;
 private:
 	// •Ï”éŒ¾
 	
