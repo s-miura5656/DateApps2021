@@ -21,6 +21,7 @@ public:
 
 	void Initialize();
 	void Update();
+	
 
 	inline float GetLimitTime() const { return limitTime; }
 	inline float GetTime()		const { return time; }
