@@ -3,6 +3,7 @@
 #include "../Data/WordsTable.h"
 #include "../Managers/TimeManager/Time.h"
 #include "../Players/PlayerBase.h"
+#include <codecvt>
 
 MainUi::MainUi()
 {
@@ -62,31 +63,9 @@ void MainUi::Draw2D()
 	int minutes = TimeManager::Instance().GetTimeMinutes();
 	int seconds = TimeManager::Instance().GetTimeSeconds();
 
+	tstring a = std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes("");
+	SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("%02d:%02d"), minutes, seconds);
 
-	if (minutes == 3) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d:0%d"), minutes, seconds);
-	}
-	else if ( ((minutes == 2) && (seconds < 20 && seconds >= 10)) || (minutes == 0) && (seconds < 20 && seconds >= 10) ) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d: %d"), minutes, seconds);
-	}
-	else if ( (minutes == 2 && seconds < 10) || (minutes == 0 && seconds < 10) ) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d:0%d"), minutes, seconds);
-	}
-	else if ((minutes == 1) && (seconds < 20 && seconds >= 10)) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d : %d"), minutes, seconds);
-	}
-	else if (minutes == 1 && seconds < 10) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d :0%d"), minutes, seconds);
-	}
-	else if (minutes == 1) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d :%d"), minutes, seconds);
-	} 
-	else 
-	{
-		SpriteBatch.DrawString(time_limit_font, Vector2(525, 20), Color(1.f, 1.f, 1.f), _T(" 0%d:%d"), minutes, seconds);
-	}
-
-	
 	SpriteBatch.Draw(*time_banner, Vector3(640-125, 5,1));
 	PlayerBanner();
 }
