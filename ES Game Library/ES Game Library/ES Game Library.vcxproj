@@ -197,6 +197,7 @@
     <ClCompile Include="MyClass\Stage\Stage_1\Pillar\Pillar.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\RotatingFloor\RotatingFloor.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.cpp" />
+    <ClCompile Include="MyClass\Stage\Stage_1\Warp\Warp.cpp" />
     <ClCompile Include="MyClass\Ui\MainUi.cpp" />
     <ClCompile Include="MyClass\Ui\ResultUi.cpp" />
     <ClCompile Include="MyClass\Ui\TitleUi.cpp" />
@@ -294,6 +295,7 @@
     <ClInclude Include="MyClass\Stage\Stage_1\Pillar\Pillar.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\RotatingFloor\RotatingFloor .h" />
     <ClInclude Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.h" />
+    <ClInclude Include="MyClass\Stage\Stage_1\Warp\Warp.h" />
     <ClInclude Include="MyClass\Ui\BaseUi.h" />
     <ClInclude Include="MyClass\Ui\MainUi.h" />
     <ClInclude Include="MyClass\Ui\ResultUi.h" />

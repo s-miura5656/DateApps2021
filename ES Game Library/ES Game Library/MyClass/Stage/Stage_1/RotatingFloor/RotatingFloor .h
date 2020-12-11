@@ -1,8 +1,8 @@
 /**
  * @file Floor.h
- * @brief ステージベースを継承した外壁のクラス
+ * @brief ステージベースを継承した矢印床のクラス
  * @author 岩井瑞希
- * @date 2020/11/11
+ * @date 2020/12/11
  */
 #pragma once
 
