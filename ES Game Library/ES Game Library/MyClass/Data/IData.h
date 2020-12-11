@@ -93,4 +93,7 @@ public:
 	~IMapData() {};
 	void SetData(std::vector<cstring> map_data) { MapParam::Instance()._map_data = map_data; }
 	std::vector<cstring> GetData() const { return MapParam::Instance()._map_data; }
+
+	void SetWarp(std::vector<int> warp_suffix) { MapParam::Instance()._warp_suffix = warp_suffix; }
+	std::vector<int> GetWarp() const { return MapParam::Instance()._warp_suffix; }
 };

@@ -8,7 +8,7 @@
 #include"../../Stage/Stage_1/Block/Block.h"
 #include"../../Stage/Stage_1/Indestructible/Indestructible.h"
 #include"../../Stage/Stage_1/RotatingFloor/RotatingFloor .h"
-
+#include"../../Stage/Stage_1/Warp/Warp.h"
 class StageBase;
 class HitBox;
 

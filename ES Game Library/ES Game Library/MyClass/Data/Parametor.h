@@ -70,4 +70,5 @@ private:
 	void operator=(const MapParam&) = delete;
 
 	std::vector<cstring> _map_data;
+	std::vector<int> _warp_suffix;
 };

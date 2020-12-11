@@ -49,6 +49,8 @@ bool StageManager::Initialize()
 
 	IMapData* imap_data = new IMapData;
 	imap_data->SetData(mapdate);
+
+	std::vector<int> warpdata;
 	for (int z = 0; z < mapdate.size(); z++)
 	{
 		for (int x = 0; x < mapdate[z].size(); x++)
@@ -74,9 +76,19 @@ bool StageManager::Initialize()
 				stages[_count]->Initialize();
 				_count++;
 				break;
+			case 'o':
+				tag = WARP_TAG + tag;
+				stages.push_back(new Warp(tag));
+				stages[_count]->SetPosition(Vector3(x, 0.1, -z));
+				stages[_count]->Initialize();
+				warpdata.push_back(_count);
+				_count++;
+				break;
 			}
 		}
 	}
+
+	imap_data->SetWarp(warpdata);
 
 	stages.push_back(new Indestructible);
 	stages[stages.size() - 1]->Initialize();
