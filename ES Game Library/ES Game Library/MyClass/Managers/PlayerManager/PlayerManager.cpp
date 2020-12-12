@@ -77,6 +77,14 @@ void PlayerManager::Draw3D()
 	_crown_rotation->Draw3D();
 }
 
+void PlayerManager::DrawAlpha3D()
+{
+	for (int i = 0; i < _players.size(); ++i)
+	{
+		_players[i]->DrawAlpha3D();
+	}
+}
+
 void PlayerManager::RankingSort()
 {
 	std::multimap<int, std::string, std::greater<int>> sorted_map;

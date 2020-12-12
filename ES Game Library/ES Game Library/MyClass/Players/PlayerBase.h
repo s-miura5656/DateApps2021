@@ -11,27 +11,21 @@ public:
 	virtual ~PlayerBase();
 
 	virtual bool Initialize() { return true; }
-	virtual int  Update() { return 0; }
+	virtual int  Update();
 	virtual void Draw2D();
 	virtual void Draw3D();
+	virtual void DrawAlpha3D();
 
-	Vector3		   GetPos()    { return _model->GetPosition(); }
-	float		   GetAngle()  { return _angle; }
-	ANIMATIONMODEL GetPlayer() { return _model; }
-	
+protected:
+	//! function
+	void DrawModel();
+	void DrawWireModel();
 	void ChangeAnimation();
 	void CreateArm();
 	void DestroyArm();
 	void Move(Controller* pad);
-	bool IsDeathFlag() const { return _death_flag; }
-
-	std::string GetTag() const { return _tag; }
-	int GetPlayerNumber() const { return (*_tag.rbegin()) - '0'; }
-
-protected:
 	void SetCollisionPosition();
-	void PlayOneShotEffekseer(EFFEKSEER effekseer);
-
+	void DebugControll();
 	//! file
 	ANIMATIONMODEL		_model;
 	FONT				_font;
@@ -75,7 +69,6 @@ protected:
 	bool _move_flag  = false;
 	bool _flag       = false;
 	bool _death_flag = false;
-	bool _a = false;
 
 	//! count
 	float _lerp_count       = 0.f;
@@ -83,4 +76,7 @@ protected:
 	double _animation_count = 0;
 	int _shot_pending_count = 0;
 	int _respawn_time       = 0;
+
+	//! material
+	Material _model_material;
 };

@@ -16,6 +16,7 @@ public:
 private:
 
 	MODEL _model;
+	EFFECT _shader;
 	std::unique_ptr<ParticleSystem> _effect;
 	IPrayerData* _i_player_data;
 

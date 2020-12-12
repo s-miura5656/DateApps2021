@@ -47,6 +47,10 @@ void ItemManager::Draw3D()
 	std::for_each(item_base.begin(), item_base.end(), [](ItemBase* itembase) { itembase->Draw3D(); });
 }
 
+void ItemManager::DrawAlpha3D()
+{
+}
+
 void ItemManager::AddItemBase(std::string name, Vector3 position)
 {
 	ItemFactory* itemfactory = new ItemStationeryFactory;

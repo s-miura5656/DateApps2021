@@ -2,6 +2,7 @@
 #include"../../Data/ModelAnimation.h"
 #include"../../Managers/ResouceManager/ResouceManager.h"
 #include "../../ParticleSystem/Particle.h"
+#include "../../Managers/SceneManager/SceneManager.h"
 
 CrownRotation::CrownRotation()
 {
@@ -18,6 +19,7 @@ CrownRotation::~CrownRotation()
 bool CrownRotation::Initialize()
 {
 	_model = ResouceManager::Instance().LoadModelFile(_T("Crown/crown.X"));
+	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StageShader.hlsl"));
 	auto effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/crown_effect/star_05.efk"));
 
 	_effect->RegisterParticle(effect);
@@ -38,6 +40,8 @@ bool CrownRotation::Initialize()
 	rankingpoint_max = 0;
 	rankingpoint_min = 0;
 
+	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
+
 	return true;
 }
 
@@ -47,39 +51,17 @@ int CrownRotation::Update()
 		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 		{
 			std::string tag = PLAYER_TAG + std::to_string(i + 1);
-			if (rankingpoint_max < param_list[tag].ranking_point) {
-				/*float point = rankingpoint_max;
-				rankingpoint_max = param_list[tag].ranking_point;
-				rankingpoint_min = point;*/
+			if (rankingpoint_max < param_list[tag].ranking_point) 
+			{
 				crown_flag = true;
 			}
-			/*else if (rankingpoint_max == param_list[tag].ranking_point)
-			{
-				rankingpoint_min = param_list[tag].ranking_point;
-
-			}*/
 			
-			
-
-
-			/*if(param_list[tag].ranking_point == param_list[tag2].ranking_point)*/
-		
-		
 			if (_i_player_data->GetRankNum(tag) == 0)
 			{
 				_position = _i_player_data->GetPosition(tag) + Vector3(0, 1.1f, 0);
 			}
-			
-
 		}
 
-
-	/*	if (rankingpoint_max == rankingpoint_min)
-			crown_flag = false;
-		else
-			crown_flag = true;*/
-		
-		
 		ModelRotation(Vector3(0.0f, 3.0f, 0.0f), _model);
 		_effect->SetPosition(_position + Vector3_Up * 0.1f);
 
@@ -92,7 +74,11 @@ void CrownRotation::Draw3D()
 
 	if (crown_flag)
 	{
-		_model->Draw();
+		Matrix world = _model->GetWorldMatrix();
+		_shader->SetParameter("model_ambient", _model->GetMaterial().Ambient);
+		_shader->SetParameter("wvp", world * SceneCamera::Instance().GetCamera().GetViewProjectionMatrix());
+		_shader->SetParameter("eye_pos", SceneCamera::Instance().GetCamera().GetPosition());
+		_model->Draw(_shader);
 		_effect->PlayOneShot();
 		_effect->Draw();
 	}

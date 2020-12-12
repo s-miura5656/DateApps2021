@@ -23,6 +23,8 @@ public:
 	int Update() override;
 	void Draw2D() override;
 	void Draw3D() override;
+	void DrawAlpha3D() override;
+
 private:
 	std::vector<StageBase*>		stages;
 	std::vector<cstring>		mapdate; //! マップデータの読み込み

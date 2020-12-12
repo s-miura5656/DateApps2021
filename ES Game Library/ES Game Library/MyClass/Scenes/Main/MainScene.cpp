@@ -73,6 +73,16 @@ void MainScene::Draw3D()
 	{
 		manager->Draw3D();
 	}
+}
+
+void MainScene::DrawAlpha3D()
+{
+	auto _temporary_managers = _managers;
+
+	for (auto&& manager : _temporary_managers)
+	{
+		manager->DrawAlpha3D();
+	}
 
 	Effekseer.Draw();
 }

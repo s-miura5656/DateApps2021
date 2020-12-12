@@ -20,7 +20,7 @@ bool GameMain::Initialize()
 
 	//hdr = GraphicsDevice.CreateHDRRenderTarget(1280, 720, DepthFormat_Unknown);
 	//_shader = GraphicsDevice.CreateEffectFromFile(_T("HLSL/Hdr.hlsl"));
-	//_shader->SetParameter("exposure", 1.0f);
+	//_shader->SetParameter("exposure", 0.5f);
 	return true;
 }
 
@@ -69,6 +69,12 @@ void GameMain::Draw()
 	SpriteBatch.End();
 
 	SceneManager::Instance().Draw3D();
+
+	GraphicsDevice.BeginAlphaBlend();
+	GraphicsDevice.SetRenderState(CullMode_None);
+	SceneManager::Instance().DrawAlpha3D();
+	GraphicsDevice.SetRenderState(CullMode_CullCounterClockwiseFace);
+	GraphicsDevice.EndAlphaBlend();
 
 	//GraphicsDevice.RenderTargetToBackBuffer(hdr, _shader);
 	GraphicsDevice.EndScene();

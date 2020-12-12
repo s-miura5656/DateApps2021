@@ -160,8 +160,10 @@ void ArmBase::MoveArm(Controller* pad)
 				//! Œü‚«‚ª•Ï‚í‚Á‚Ä‚¢‚½‚çŒü‚«‚ðXV
 				if (_angle != _old_angle)
 				{
+					_shot_effect->Stop();
 					_old_angle = _angle;
 					_turn_flag = true;
+					_shot_effect->Play();
 				}
 			}
 			_angles.push_back(_angle);
@@ -307,6 +309,6 @@ void ArmBase::SetCollisionPosition()
 {
 	auto box_pos = _position;
 	auto a = DirectionFromAngle(Vector3(0, _angle, 0));
-	_hit_box->SetHitBoxPosition(box_pos + a * 0.6f);
+	_hit_box->SetHitBoxPosition(box_pos + a * 0.4f);
 }
 

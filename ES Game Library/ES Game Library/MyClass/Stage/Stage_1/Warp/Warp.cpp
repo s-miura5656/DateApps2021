@@ -50,3 +50,9 @@ int Warp::Update()
 
 	return 0;
 }
+
+void Warp::Draw3D()
+{
+	_model->SetPosition(_position);
+	//_model->Draw();
+}

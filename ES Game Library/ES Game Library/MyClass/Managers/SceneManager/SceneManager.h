@@ -32,6 +32,7 @@ public:
 	int Update() override;
 	void Draw2D() override;
 	void Draw3D() override;
+	void DrawAlpha3D() override;
 
 	//! シングルトンオブジェクトを他で呼び出す時の記述
 	static SceneManager& Instance() {

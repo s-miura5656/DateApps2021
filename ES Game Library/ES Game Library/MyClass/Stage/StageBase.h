@@ -16,6 +16,8 @@ public:
 	virtual bool Initialize() { return true; };
 	virtual int Update();
 	virtual void Draw3D();
+	virtual void DrawAlpha3D();
+
 	Material GetMaterial();
 
 	//引数でステージを構成するブロックのポジションをセットする

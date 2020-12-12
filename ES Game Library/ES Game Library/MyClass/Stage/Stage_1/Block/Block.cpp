@@ -23,7 +23,7 @@ Block::~Block()
 bool Block::Initialize()
 {
 	//Xファイルの読み込み
-	_model = ResouceManager::Instance().LoadModelFile(_T("MapSprite/capsule.X"));
+	_model = ResouceManager::Instance().LoadModelFile(_T("MapSprite/capsule2.X"));
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StageShader.hlsl"));
 	_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/effekseer_break02/break_effect.efk"));
 
@@ -31,7 +31,7 @@ bool Block::Initialize()
 	_scale = 0.85f;
 	_model->SetScale(_scale);
 	//マテリアルの設定
-	_model->SetMaterial(GetMaterial());
+	
 	//当たり判定を破壊可能ブロックと同じポジションにする
 	_hit_box->SetHitBoxPosition(_position + Vector3(0, 1, 0));
 
@@ -39,7 +39,7 @@ bool Block::Initialize()
 
 	//! shader
 	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
-	_shader->SetParameter("model_ambient", _model->GetMaterial().Ambient);
+	
 
 	return _model != nullptr;
 }
@@ -97,21 +97,6 @@ int Block::Update()
 
 void Block::Draw3D()
 {
-	_model->SetPosition(_position);
-	_model->SetRotation(0, 0, 0);
-
-	Matrix world = _model->GetWorldMatrix();
-	_shader->SetParameter("wvp", world * SceneCamera::Instance().GetCamera().GetViewProjectionMatrix());
-	_shader->SetParameter("eye_pos", SceneCamera::Instance().GetCamera().GetPosition());
-
-	GraphicsDevice.BeginAlphaBlend();
-	GraphicsDevice.SetRenderState(CullMode_None);
-	//_model->Draw(_shader);
-	GraphicsDevice.SetRenderState(CullMode_CullCounterClockwiseFace);
-	GraphicsDevice.EndAlphaBlend();
-	_model->Draw(_shader);
-
-
 	_effect->SetSpeed(_handle, 0.5f);
 	_effect->SetScale(_handle, 1.0f);
 
@@ -121,4 +106,22 @@ void Block::Draw3D()
 		_hit_box->SetModelScale();
 		//_hit_box->Draw3D();
 	}
+}
+
+void Block::DrawAlpha3D()
+{
+	Material mat;
+	mat.Diffuse = Color(0.5f, 0.5f, 0.5f);
+	mat.Ambient = Color(1.0f, 1.0f, 1.0f);
+	mat.Specular = Color(0.5f, 0.5f, 0.5f);
+
+	_model->SetMaterial(mat);
+	_model->SetPosition(_position);
+	_model->SetRotation(0, 0, 0);
+
+	Matrix world = _model->GetWorldMatrix();
+	_shader->SetParameter("model_ambient", _model->GetMaterial().Ambient);
+	_shader->SetParameter("wvp", world * SceneCamera::Instance().GetCamera().GetViewProjectionMatrix());
+	_shader->SetParameter("eye_pos", SceneCamera::Instance().GetCamera().GetPosition());
+	_model->Draw(_shader);
 }

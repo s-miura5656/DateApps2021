@@ -5,6 +5,7 @@
 #include "../../Data/WordsTable.h"
 #include "../../Data/StructList.h"
 #include"../ResouceManager/ResouceManager.h"
+
 StageManager::StageManager()
 {
 	
@@ -124,8 +125,16 @@ void StageManager::Draw2D()
 void StageManager::Draw3D()
 {
 	//“Ç‚İ‚ñ‚¾ƒuƒƒbƒN‚Ì”‚¾‚¯•`‰æ‚·‚é
-	for (int i = 0; i < stages.size(); i++)
+	for (int i = 0; i < stages.size(); ++i)
 	{
 		stages[i]->Draw3D();
+	}
+}
+
+void StageManager::DrawAlpha3D()
+{
+	for (int i = 0; i < stages.size(); ++i)
+	{
+		stages[i]->DrawAlpha3D();
 	}
 }

@@ -18,6 +18,7 @@ public:
 	bool Initialize() override;
 	int Update() override;
 	void Draw3D() override;
+	void DrawAlpha3D() override;
 private:
 	ItemCounter* itemcounter;
 	EFFEKSEER _effect;
