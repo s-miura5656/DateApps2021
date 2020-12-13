@@ -77,4 +77,7 @@ protected:
 	//! flag
 	bool _move_flag;
 	bool _turn_flag;
+
+	//! material
+	Material _model_material;
 };

@@ -113,10 +113,16 @@ void ArmBase::Draw3D()
 	_model->SetPosition(_position);
 	_model->SetScale(_scale);
 	_model->SetRotation(0, _angle - 180, 0);
-	
-	_shader->SetTexture("m_Texture", *_texture);
+	_model->SetMaterial(_model_material);
+
+	auto camera = SceneCamera::Instance().GetCamera();
+
 	Matrix world = _model->GetWorldMatrix();
-	_shader->SetParameter("wvp", world * SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix());
+	_shader->SetParameter("wvp", world * camera->GetViewProjectionMatrix());
+	_shader->SetParameter("eye_pos", camera.GetPosition());
+	_shader->SetParameter("model_ambient", _model_material.Ambient);
+	_shader->SetTexture("m_Texture", *_texture);
+	_shader->SetTechnique("FixModel");
 	_model->Draw(_shader);
 	_model->SetRotation(0, _angle, 0);
 

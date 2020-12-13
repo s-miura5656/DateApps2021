@@ -1,6 +1,7 @@
 #include "PlayerBase.h"
 #include "../Data/MyAlgorithm.h"
 #include "../Managers/SceneManager/SceneManager.h"
+#include "../ParticleSystem/Particle.h"
 
 PlayerBase::PlayerBase()
 {
@@ -31,7 +32,7 @@ int PlayerBase::Update()
 			_respawn_time = 0;
 			_death_flag = false;
 			_move_flag = false;
-			_position = _new_pos;
+			_transform.position = _new_pos;
 		}
 	}
 	else
@@ -46,12 +47,12 @@ int PlayerBase::Update()
 		//! ダメージ状態の判定
 		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
 		{
-			_damage_count++;
+			_damage_hit_count++;
 
-			if (_damage_count > 30)
+			if (_damage_hit_count > 30)
 			{
 				_i_player_data->SetState(_tag, PlayerEnum::Animation::DEATH);
-				_damage_count = 0;
+				_damage_hit_count = 0;
 			}
 
 			DestroyArm();
@@ -76,7 +77,7 @@ int PlayerBase::Update()
 				if (_shot_pending_count > 60)
 				{
 					_i_player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
-					_i_player_data->SetPosition(_tag, _position);
+					_i_player_data->SetPosition(_tag, _transform.position);
 					_shot_pending_count = 0;
 					CreateArm();
 				}
@@ -90,8 +91,8 @@ int PlayerBase::Update()
 				//! プレイヤー移動
 				if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
 				{
-					_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-					_angle = AngleClamp(_angle);
+					_transform.rotation.y = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+					_transform.rotation.y = AngleClamp(_transform.rotation.y);
 					_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
 				}
 				else
@@ -103,7 +104,7 @@ int PlayerBase::Update()
 				if (pad->GetButtonState(GamePad_Button2))
 				{
 					_i_player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
-					_i_player_data->SetPosition(_tag, _position);
+					_i_player_data->SetPosition(_tag, _transform.position);
 				}
 			}
 		}
@@ -145,15 +146,12 @@ void PlayerBase::Draw3D()
 	//! 死んでる時とそうでないときの判定
 	if (_death_flag)
 	{
-		if (_handle == INT_MAX)
-		{
-			_handle = _destroy_effect->Play(_position + Vector3_Up);
-		}
+		_destroy_effect->SetPosition(_transform.position + Vector3_Up);
+		_destroy_effect->PlayOneShot();
 	}
 	else
 	{
-		_destroy_effect->Stop(_handle);
-		_handle = INT_MAX;
+		_destroy_effect->Stop();
 
 		ChangeAnimation();
 
@@ -180,8 +178,8 @@ void PlayerBase::DrawAlpha3D()
 void PlayerBase::DrawModel()
 {
 	//! モデルのパラメーターをセット
-	_model->SetPosition(_position);
-	_model->SetRotation(Vector3(0, _angle - 180, 0));
+	_model->SetPosition(_transform.position);
+	_model->SetRotation(Vector3(0, _transform.rotation.y - 180, 0));
 	_model->SetMaterial(_model_material);
 
 	//! シェーダー側に値をセット
@@ -195,21 +193,21 @@ void PlayerBase::DrawModel()
 
 	if (_i_player_data->GetState(_tag) != PlayerEnum::Animation::DAMAGE)
 	{
-		_shader->SetTechnique("FixModel");
+		_shader->SetTechnique("FixAnimationModel");
 		_model->Draw(_shader);
 	}
 	else
 	{
-		_shader->SetTechnique("DamageModel");
+		_shader->SetTechnique("DamageAnimationModel");
 		GraphicsDevice.BeginAlphaBlend();
 		_model->Draw(_shader);
 		GraphicsDevice.EndAlphaBlend();
 	}
 
-	_model->SetRotation(Vector3(0, _angle, 0));
+	_model->SetRotation(_transform.rotation);
 
-	_i_player_data->SetAngle(_tag, _angle);
-	_i_player_data->SetPosition(_tag, _position);
+	_i_player_data->SetAngle(_tag, _transform.rotation.y);
+	_i_player_data->SetPosition(_tag, _transform.position);
 }
 
 //! @fn ワイヤーモデルの描画
@@ -265,6 +263,7 @@ void PlayerBase::ChangeAnimation()
 	_model->SetTrackPosition(_animation_index, _animation_count);
 }
 
+//! @fn 移動処理
 void PlayerBase::Move(Controller* pad)
 {
 	auto&& map_data = _i_map_data->GetData();
@@ -272,7 +271,7 @@ void PlayerBase::Move(Controller* pad)
 	//! 移動中か入力受付状態か判定
 	if (_move_flag)
 	{
-		_position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
+		_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
 		_lerp_count += _i_player_data->GetSpeed(_tag);
 
 		_lerp_count = Clamp(_lerp_count, 0, 1);
@@ -281,7 +280,7 @@ void PlayerBase::Move(Controller* pad)
 		{
 			_move_flag  = false;
 			_lerp_count = 0;
-			_i_player_data->SetPosition(_tag, _position);
+			_i_player_data->SetPosition(_tag, _transform.position);
 		}
 	}
 	else
@@ -319,14 +318,14 @@ void PlayerBase::Move(Controller* pad)
 			_index_num.z = old_index_z;
 		}
 
-		_old_pos = _position;
+		_old_pos = _transform.position;
 	}
 }
 
 //! 当たり判定の座標設定
 void PlayerBase::SetCollisionPosition()
 {
-	auto collision_pos = _position;
+	auto collision_pos = _transform.position;
 	collision_pos.y += _model->GetScale().y / 2;
 	_hit_box->SetHitBoxPosition(collision_pos);
 }

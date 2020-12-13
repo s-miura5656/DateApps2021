@@ -2,6 +2,7 @@
 #include "../../Data/MyAlgorithm.h"
 #include "../../Managers/ResouceManager/ResouceManager.h"
 #include "../../ParticleSystem/Particle.h"
+#include "../../Managers/SceneManager/SceneManager.h"
 
 int Arm::_create_count = 0;
 
@@ -47,11 +48,10 @@ Arm::~Arm()
 bool Arm::Initialize()
 {
 	//! File
-	_font		 = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
-	_model		 = ResouceManager::Instance().LoadModelFile(_T("Player/R_arm.X"));
-
+	_font		  = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
+	_model		  = ResouceManager::Instance().LoadModelFile(_T("Player/R_arm.X"));
 	auto&& effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch_fixed.efk"));
-	_shader		 = ResouceManager::Instance().LordEffectFile(_T("HLSL/ArmShader.hlsl"));
+	_shader		  = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
 
 	//! Angle
 	_angle = _i_player_data->GetAngle(_player_tag);
@@ -86,12 +86,9 @@ bool Arm::Initialize()
 	_player_distance = FLT_MAX;
 
 	//! Material
-	Material mat;
-	mat.Diffuse  = Color(1.0f, 1.0f, 1.0f);
-	mat.Ambient  = Color(1.0f, 1.0f, 1.0f);
-	mat.Specular = Color(1.0f, 1.0f, 1.0f);
-
-	_model->SetMaterial(mat);
+	_model_material.Diffuse  = Color(1.0f, 1.0f, 1.0f);
+	_model_material.Ambient  = Color(1.0f, 1.0f, 1.0f);
+	_model_material.Specular = Color(1.0f, 1.0f, 1.0f);
 
 	//! Flag
 	_move_flag = false;
@@ -101,6 +98,8 @@ bool Arm::Initialize()
 	auto path = ConvertFilePath("Player/", _tag, ".png");
 	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 
+	//! shader
+	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
 	return true;
 }
 

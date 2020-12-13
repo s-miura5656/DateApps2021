@@ -1,5 +1,9 @@
 float4x4 wvp;
 
+float3 model_ambient;
+float3 light_dir;
+float3 eye_pos;
+
 sampler _Texture : register(s0);
 
 texture m_Texture;
@@ -18,13 +22,16 @@ sampler s1 = sampler_state
 struct VSINPUT
 {
 	float4 Pos          : POSITION;
+    float3 Normal		: NORMAL;
 	float2 Uv           : TEXCOORD0;
 };
 
 struct VSOUTPUT
 {
 	float4 Pos	  : POSITION;
+    float3 Normal : NORMAL;
 	float2 Uv     : TEXCOORD0;
+    float3 EyePos : TEXCOORD1;
 };
 
 VSOUTPUT VS(VSINPUT vsin)
@@ -40,7 +47,13 @@ VSOUTPUT VS(VSINPUT vsin)
 
 float4 PS(VSOUTPUT psin) : COLOR
 {
+    float3 N = psin.Normal;
+    float3 L = -light_dir;
+    float3 H = normalize(L + psin.EyePos);
+	
     float4 color = tex2D(s1, psin.Uv);
+	
+    color.rgb *= max(model_ambient, dot(psin.Normal, -light_dir)) + pow(max(0, dot(N, H)), 10);
 	
     return color;
 }

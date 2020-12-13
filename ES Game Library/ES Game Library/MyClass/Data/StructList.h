@@ -38,3 +38,9 @@ struct IndexNum {
 	int z = 0;
 	void Initialize(int X, int Y, int Z) { x = X; y = Y; z = Z; }
 };
+
+struct Transform {
+	Vector3 position = Vector3_Zero;
+	Vector3 rotation = Vector3_Zero;
+	Vector3 scale	 = Vector3_One;
+};

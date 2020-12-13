@@ -52,7 +52,8 @@ bool SceneManager::Initialize()
 	*/
 	Light light;
 	light.Type = Light_Directional;
-	light.Direction = Vector3(0.0f, -1.0f, 1.0f);
+	light.Direction = Vector3(-0.5f, -1.0f, 1.3f);
+	light.Position  = Vector3(7.0f, 11.0f, -11.6f);
 	light.Diffuse	= Color(1.0f, 1.0f, 1.0f);
 	light.Ambient	= Color(1.0f, 1.0f, 1.0f);
 	light.Specular  = Color(1.0f, 1.0f, 1.0f);
@@ -64,7 +65,6 @@ bool SceneManager::Initialize()
 	view = GraphicsDevice.GetViewport();
 	_camera_pos = Vector3(7, 11, -11.6);
 	_look_pos = Vector3(65.2, 0, 0);
-	//SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
 	SceneCamera::Instance().SetView(_camera_pos, _look_pos);
 	SceneCamera::Instance().SetPerspectiveFieldOfView(57, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 	return true;
@@ -78,8 +78,6 @@ int SceneManager::Update()
 */
 
 	KeyboardState key = Keyboard->GetState();
-
-	//SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
 
 //パース調整用
 	if (key.IsKeyDown(Keys_A)) {
