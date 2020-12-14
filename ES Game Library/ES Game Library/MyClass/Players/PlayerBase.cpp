@@ -294,7 +294,6 @@ void PlayerBase::Move(Controller* pad)
 		if (abs_x > abs_z)
 		{
 			std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
-
 			_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
 		}
 		else if (abs_x < abs_z)
@@ -347,6 +346,7 @@ void PlayerBase::DestroyArm()
 	_arm = nullptr;
 }
 
+//! @fn デバッグ用パラメーター調整
 void PlayerBase::DebugControll()
 {
 	KeyboardBuffer keybuffer = Keyboard->GetBuffer();

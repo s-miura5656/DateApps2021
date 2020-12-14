@@ -4,33 +4,25 @@
 #include "../../ParticleSystem/Particle.h"
 #include "../../Managers/SceneManager/SceneManager.h"
 
-int Arm::_create_count = 0;
-
 Arm::Arm(std::string name)
 {
+	//! tag
 	_player_tag = name;
-
 	int arm_num = GetTagNum(name);
-
 	_tag = ARM_TAG + std::to_string(arm_num);
 
+	//! pointer
 	_hit_box.reset(new HitBox());
-	_hit_box->Init();
-	_hit_box->Settags(_tag);
-	_hit_box->SetHitBoxScale(0.6f);
-
 	_i_player_data.reset(new IPrayerData);
 	_i_arm_Data.reset(new IArmData);
 	_i_map_data.reset(new IMapData);
 	_shot_effect.reset(new ParticleSystem);
-	_create_count++;
 }
 
 Arm::~Arm()
 {
 	_angle_positions.clear();
 	_i_arm_Data->SetAnglePositions(_tag, _angle_positions);
-
 	_angles.clear();
 	_i_arm_Data->SetAngles(_tag, _angles);
 
@@ -41,8 +33,6 @@ Arm::~Arm()
 	_i_arm_Data.reset();
 	_i_player_data.reset();
 	_hit_box.reset();
-
-	_create_count--;
 }
 
 bool Arm::Initialize()
@@ -54,15 +44,15 @@ bool Arm::Initialize()
 	_shader		  = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
 
 	//! Angle
-	_angle = _i_player_data->GetAngle(_player_tag);
-	_old_angle = _angle;
-	_angles.push_back(_angle);
+	_transform.rotation.y = _i_player_data->GetAngle(_player_tag);
+	_old_angle = _transform.rotation.y;
+	_angles.push_back(_transform.rotation.y);
 
 	//! Position
-	_position = _i_player_data->GetPosition(_player_tag) + Vector3(0, 0.5f, 0);
-	_angle_positions.push_back(_position);
-	_old_pos = _position;
-	_new_pos = _position;
+	_transform.position = _i_player_data->GetPosition(_player_tag) + Vector3(0, 0.5f, 0);
+	_angle_positions.push_back(_transform.position);
+	_old_pos = _transform.position;
+	_new_pos = _transform.position;
 	_index_num = _i_player_data->GetIndexNum(_player_tag);
 
 	//! hit_box
@@ -89,6 +79,11 @@ bool Arm::Initialize()
 	_model_material.Diffuse  = Color(1.0f, 1.0f, 1.0f);
 	_model_material.Ambient  = Color(1.0f, 1.0f, 1.0f);
 	_model_material.Specular = Color(1.0f, 1.0f, 1.0f);
+
+	//! collision
+	_hit_box->Init();
+	_hit_box->Settags(_tag);
+	_hit_box->SetHitBoxScale(0.6f);
 
 	//! Flag
 	_move_flag = false;

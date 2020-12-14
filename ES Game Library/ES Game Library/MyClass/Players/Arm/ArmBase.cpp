@@ -18,7 +18,7 @@ int ArmBase::Update()
 {
 	auto pad = ControllerManager::Instance().GetController(_player_tag);
 
-	_player_distance = Vector3_Distance(_i_player_data->GetPosition(_player_tag), _position);
+	_player_distance = Vector3_Distance(_i_player_data->GetPosition(_player_tag), _transform.position);
 
 	_arm_state = _i_arm_Data->GetState(_tag);
 
@@ -67,7 +67,7 @@ int ArmBase::Update()
 
 		SetCollisionPosition();
 
-		_shot_effect->SetPosition(_position);
+		_shot_effect->SetPosition(_transform.position);
 
 		return 0;
 	}
@@ -109,12 +109,13 @@ void ArmBase::Draw2D()
 
 void ArmBase::Draw3D()
 {
-	//! モデルの座標指定と描画
-	_model->SetPosition(_position);
+	//! モデルの座標を
+	_model->SetPosition(_transform.position);
 	_model->SetScale(_scale);
-	_model->SetRotation(0, _angle - 180, 0);
+	_model->SetRotation(0, _transform.rotation.y - 180, 0);
 	_model->SetMaterial(_model_material);
 
+	//! シェーダーにパラメーターを送る
 	auto camera = SceneCamera::Instance().GetCamera();
 
 	Matrix world = _model->GetWorldMatrix();
@@ -122,9 +123,10 @@ void ArmBase::Draw3D()
 	_shader->SetParameter("eye_pos", camera.GetPosition());
 	_shader->SetParameter("model_ambient", _model_material.Ambient);
 	_shader->SetTexture("m_Texture", *_texture);
-	_shader->SetTechnique("FixModel");
+	_shader->SetTechnique("FixModel_S1");
+
 	_model->Draw(_shader);
-	_model->SetRotation(0, _angle, 0);
+	_model->SetRotation(0, _transform.rotation.y, 0);
 
 	//! ヒットボックスの座標指定と描画
 	_hit_box->SetModelPosition();
@@ -132,7 +134,7 @@ void ArmBase::Draw3D()
 	_hit_box->Draw3D();
 
 	//! エフェクトの座標指定と描画
-	_shot_effect->SetDrawRotationY(_angle, DirectionFromAngle(Vector3(0, _angle, 0)));
+	_shot_effect->SetDrawRotationY(_transform.rotation.y, DirectionFromAngle(Vector3(0, _transform.rotation.y, 0)));
 	_shot_effect->Draw();
 }
 
@@ -149,30 +151,19 @@ void ArmBase::MoveArm(Controller* pad)
 	//! 移動中かそうでないか判定
 	if (_move_flag)
 	{
-		_position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
+		_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
 		_lerp_count += _i_arm_Data->GetGoSpeed(_tag);
+		_shot_effect->PlayOneShot();
 
 		if (_lerp_count >= 1.f)
 		{
 			_move_flag  = false;
 			_lerp_count = 0;
-			_angle_positions.push_back(_position);
-			//! パッドを倒していたらアームの向き入力状態
-			if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
-			{
-				_angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-				_angle = AngleClamp(_angle);
+			_angle_positions.push_back(_transform.position);
 
-				//! 向きが変わっていたら向きを更新
-				if (_angle != _old_angle)
-				{
-					_shot_effect->Stop();
-					_old_angle = _angle;
-					_turn_flag = true;
-					_shot_effect->Play();
-				}
-			}
-			_angles.push_back(_angle);
+			ChangeDirection(pad);
+
+			_angles.push_back(_transform.rotation.y);
 		}
 	}
 	else
@@ -180,7 +171,7 @@ void ArmBase::MoveArm(Controller* pad)
 		int old_index_x = _index_num.x;
 		int old_index_z = _index_num.z;
 		
-		Vector3 dir = DirectionFromAngle(Vector3(0, _angle, 0));
+		Vector3 dir = DirectionFromAngle(Vector3(0, _transform.rotation.y, 0));
 
 		auto abs_x = fabs(dir.x);
 		auto abs_z = fabs(dir.z);
@@ -210,7 +201,7 @@ void ArmBase::MoveArm(Controller* pad)
 			_index_num.z = old_index_z;
 		}
 
-		_old_pos = _position;
+		_old_pos = _transform.position;
 	}
 }
 
@@ -237,9 +228,9 @@ void ArmBase::ArmReturn()
 {
 	auto angle_point_size = _angle_positions.size();
 
-	Vector3 move_dir = Vector3_Normalize(_angle_positions[angle_point_size - 1] - _position);
+	Vector3 move_dir = Vector3_Normalize(_angle_positions[angle_point_size - 1] - _transform.position);
 
-	auto dist = Vector3_Distance(_position, _angle_positions[angle_point_size - 1]);
+	auto dist = Vector3_Distance(_transform.position, _angle_positions[angle_point_size - 1]);
 
 	//! 一定距離まで中継地点に近づいたら配列を削除
 	if (dist < 0.3f && angle_point_size > 1)
@@ -250,9 +241,9 @@ void ArmBase::ArmReturn()
 
 	move_dir *= _i_arm_Data->GetReturnSpeed(_tag);
 
-	_angle = -AngleCalculating(move_dir.x, move_dir.z);
+	_transform.rotation.y = -AngleCalculating(move_dir.x, move_dir.z);
 
-	_position += move_dir;
+	_transform.position += move_dir;
 
 	//! 移動が完了したら配列を削除
 	if (move_dir == Vector3_Zero && angle_point_size > 1)
@@ -261,6 +252,8 @@ void ArmBase::ArmReturn()
 	}
 }
 
+//! @fn アームの当たり判定
+//! @brief アームが他の当たり判定と当たった時に判定する
 void ArmBase::HitOtherObject()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
@@ -311,10 +304,32 @@ void ArmBase::HitOtherObject()
 	}
 }
 
+//! @fn 当たり判定の座標設定
+//! @brief 当たり判定の座標を設定する
 void ArmBase::SetCollisionPosition()
 {
-	auto box_pos = _position;
-	auto a = DirectionFromAngle(Vector3(0, _angle, 0));
-	_hit_box->SetHitBoxPosition(box_pos + a * 0.4f);
+	auto box_pos = _transform.position;
+	auto dir = DirectionFromAngle(Vector3(0, _transform.rotation.y, 0));
+	_hit_box->SetHitBoxPosition(box_pos + dir * 0.4f);
+}
+
+//! @fn アームの向きを変更
+//! @brief パッドの向きからアームの向きを変更
+void ArmBase::ChangeDirection(Controller* pad)
+{
+	//! パッドを倒していたらアームの向き入力状態
+	if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
+	{
+		_transform.rotation.y = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+		_transform.rotation.y = AngleClamp(_transform.rotation.y);
+
+		//! 向きが変わっていたら向きを更新
+		if (_transform.rotation.y != _old_angle)
+		{
+			_shot_effect->Stop();
+			_old_angle = _transform.rotation.y;
+			_turn_flag = true;
+		}
+	}
 }
 

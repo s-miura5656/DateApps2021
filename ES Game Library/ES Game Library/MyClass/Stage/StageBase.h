@@ -27,12 +27,13 @@ public:
 protected:
 	MODEL _model;//!継承されるモデルのベース
 	EFFECT _shader;
+	SPRITE _texture;
 
 	float _scale = 1.0f;
 	Vector3 _position;//!継承されるモデルのポジション
 	
 	std::unique_ptr<HitBox> _hit_box;
 	std::string _tag;
-
+	Material _model_material;
 private:
 };

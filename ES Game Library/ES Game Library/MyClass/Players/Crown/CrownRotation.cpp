@@ -19,18 +19,16 @@ CrownRotation::~CrownRotation()
 bool CrownRotation::Initialize()
 {
 	_model = ResouceManager::Instance().LoadModelFile(_T("Crown/crown.X"));
-	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StageShader.hlsl"));
+	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
 	auto effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/crown_effect/star_05.efk"));
 
 	_effect->RegisterParticle(effect);
 
-	Material material;
-	material.Diffuse  = Color(1.0f, 1.0f, 1.0f);
-	material.Ambient  = Color(1.0f, 1.0f, 1.0f);
-	material.Specular = Color(1.0f, 1.0f, 1.0f);
-	material.Power    = 10.0f;
+	_model_material.Diffuse  = Color(1.0f, 1.0f, 1.0f);
+	_model_material.Ambient  = Color(1.0f, 1.0f, 1.0f);
+	_model_material.Specular = Color(1.0f, 1.0f, 1.0f);
+	_model_material.Power    = 10.0f;
 
-	_model->SetMaterial(material);
 	_model->SetScale(0.75f, 0.75f, 0.75f);
 
 	_effect->SetScale(0.3f);
@@ -71,13 +69,16 @@ int CrownRotation::Update()
 void CrownRotation::Draw3D()
 {
 	_model->SetPosition(_position);
+	_model->SetMaterial(_model_material);
 
 	if (crown_flag)
 	{
+		auto camera = SceneCamera::Instance().GetCamera();
 		Matrix world = _model->GetWorldMatrix();
-		_shader->SetParameter("model_ambient", _model->GetMaterial().Ambient);
-		_shader->SetParameter("wvp", world * SceneCamera::Instance().GetCamera().GetViewProjectionMatrix());
-		_shader->SetParameter("eye_pos", SceneCamera::Instance().GetCamera().GetPosition());
+		_shader->SetParameter("model_ambient", _model_material.Ambient);
+		_shader->SetParameter("wvp", world * camera.GetViewProjectionMatrix());
+		_shader->SetParameter("eye_pos", camera.GetPosition());
+		_shader->SetTechnique("FixModel_S0");
 		_model->Draw(_shader);
 		_effect->PlayOneShot();
 		_effect->Draw();

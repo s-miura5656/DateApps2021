@@ -2,6 +2,7 @@
 #include "../../../ESGLib.h"
 #include "../../Data/WordsTable.h"
 #include "../../Data/IData.h"
+#include "../../Data/StructList.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
 #include "../../Collision/HitBox.h"
 
@@ -20,12 +21,13 @@ public:
 	virtual void Draw2D();
 	virtual void Draw3D();
 
+protected:
 	void MoveArm(Controller* pad);
 	bool TurnArm(Controller* pad);
 	void ArmReturn();
 	void HitOtherObject();
-protected:
 	void SetCollisionPosition();
+	void ChangeDirection(Controller* pad);
 
 	//! file
 	FONT	  _font;
@@ -40,8 +42,10 @@ protected:
 	//! state
 	int _arm_state;
 
+	//! transform
+	Transform _transform;
+	
 	//! rotation
-	float _angle = 0.f;
 	int   _old_angle = INT_MAX;
 	std::vector<float> _angles;
 
@@ -50,7 +54,6 @@ protected:
 
 	//! position
 	std::vector<Vector3> _angle_positions;
-	Vector3 _position = Vector3_Zero;
 	Vector3 _old_pos  = Vector3_Zero;
 	Vector3 _new_pos  = Vector3_Zero;
 
@@ -70,7 +73,6 @@ protected:
 	//! count
 	float _lerp_count = 0.f;
 	int   _wait_count = 0;
-	static int _create_count;
 	float _scale_count = 0.f;
 	int effect_num;
 

@@ -23,10 +23,10 @@ Block::~Block()
 bool Block::Initialize()
 {
 	//Xファイルの読み込み
-	_model = ResouceManager::Instance().LoadModelFile(_T("MapSprite/capsule2.X"));
-	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StageShader.hlsl"));
+	_model  = ResouceManager::Instance().LoadModelFile(_T("MapSprite/capsule2.X"));
+	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
 	_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/effekseer_break02/break_effect.efk"));
-
+	
 	//スケールの設定
 	_scale = 0.85f;
 	_model->SetScale(_scale);
@@ -123,5 +123,6 @@ void Block::DrawAlpha3D()
 	_shader->SetParameter("model_ambient", _model->GetMaterial().Ambient);
 	_shader->SetParameter("wvp", world * SceneCamera::Instance().GetCamera().GetViewProjectionMatrix());
 	_shader->SetParameter("eye_pos", SceneCamera::Instance().GetCamera().GetPosition());
+	_shader->SetTechnique("FixModel_S0");
 	_model->Draw(_shader);
 }

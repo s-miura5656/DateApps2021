@@ -40,12 +40,29 @@ VSOUTPUT VS(VSINPUT vsin)
     
     vsout.Pos = mul(vsin.Pos, wvp);
 	
-	vsout.Uv  = vsin.Uv;
+    vsout.Normal = vsin.Normal;
+	
+    vsout.Uv = vsin.Uv;
+
+    vsout.EyePos = normalize(eye_pos - vsin.Pos.xyz);
 
 	return vsout;
 }
 
-float4 PS(VSOUTPUT psin) : COLOR
+float4 S0_PS(VSOUTPUT psin) : COLOR
+{
+    float3 N = psin.Normal;
+    float3 L = -light_dir;
+    float3 H = normalize(L + psin.EyePos);
+	
+    float4 color = tex2D(_Texture, psin.Uv);
+	
+    color.rgb *= max(model_ambient, dot(psin.Normal, -light_dir)) + pow(max(0, dot(N, H)), 10);
+	
+    return color;
+}
+
+float4 S1_PS(VSOUTPUT psin) : COLOR
 {
     float3 N = psin.Normal;
     float3 L = -light_dir;
@@ -58,11 +75,20 @@ float4 PS(VSOUTPUT psin) : COLOR
     return color;
 }
 
-technique FixModel
+technique FixModel_S0
 {
 	pass Pass0
 	{
 		VertexShader = compile vs_3_0 VS();
-		PixelShader  = compile ps_3_0 PS();
-	}
+        PixelShader  = compile ps_3_0 S0_PS();
+    }
+}
+
+technique FixModel_S1
+{
+    pass Pass0
+    {
+        VertexShader = compile vs_3_0 VS();
+        PixelShader  = compile ps_3_0 S1_PS();
+    }
 }

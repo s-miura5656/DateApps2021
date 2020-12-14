@@ -31,11 +31,11 @@ Player::~Player()
 bool Player::Initialize()
 {
 	//! file
-	_font			= ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
-	_model			= ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
-	_shader			= ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
-	_wire_shader	= ResouceManager::Instance().LordEffectFile(_T("HLSL/WireShader.hlsl"));
-	auto&& effect   = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damage_effect02.efk"));
+	_font         = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
+	_model        = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
+	_shader		  = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
+	_wire_shader  = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
+	auto&& effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damage_effect02.efk"));
 
 	for (int i = 0; i < _i_arm_Data->GetLimitRange(_arm_tag); ++i)
 	{
