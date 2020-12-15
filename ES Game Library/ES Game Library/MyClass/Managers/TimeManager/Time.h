@@ -28,11 +28,14 @@ public:
 	inline float GetTimeLeft()  const { return limitTime - time; }
 	int GetTimeMinutes();
 	int GetTimeSeconds();
+	int Countdown();
 
 private:
 	float limitTime;
 	float time;
 
+	float startTime;
+	int countTime;
 	
 	};
 

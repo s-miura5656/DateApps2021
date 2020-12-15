@@ -8,6 +8,7 @@
 MainUi::MainUi()
 {
 	i_player_data = new IPrayerData;
+	i_arm_data    = new IArmData;
 	
 }
 
@@ -27,6 +28,10 @@ bool MainUi::Initialize()
 	yellow_banner   = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/yellow_banner.png"));
 	time_banner     = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/time_2.png"));
 	score_num       = GraphicsDevice.CreateSpriteFromFile(_T("NumberSprite/namber.png"));
+
+	test = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/ゲージベース2.png"));
+	flag = 0;
+
 
 	banner_pos[0] = Vector3(80  , 30, 1);
 	banner_pos[1] = Vector3(300 , 30, 1);
@@ -60,14 +65,20 @@ void MainUi::Draw2D()
 {
 	
 
-	int minutes = TimeManager::Instance().GetTimeMinutes();
-	int seconds = TimeManager::Instance().GetTimeSeconds();
+	int minutes   = TimeManager::Instance().GetTimeMinutes();
+	int seconds   = TimeManager::Instance().GetTimeSeconds();
+	int Countdown = TimeManager::Instance().Countdown();
 
 	tstring a = std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes("");
 	SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("%02d:%02d"), minutes, seconds);
 
 	SpriteBatch.Draw(*time_banner, Vector3(640-125, 5,1));
 	PlayerBanner();
+	PointAnimation();
+	if (Countdown >= 1) {
+		SpriteBatch.Draw(*score_num, Vector3(640, 360, 10), RectWH(Countdown * 64, 0, 64, 64));
+	}
+	//(int)(Countdown)
 }
 
 
@@ -95,5 +106,18 @@ void MainUi::PlayerBanner()
 		SpriteBatch.Draw(*score_num, banner_pos[i] + Vector3( (138 * 0.3) + 90, 10, -1), RectWH((int)((score % 1000) % 100 / 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
 		SpriteBatch.Draw(*score_num, banner_pos[i] + Vector3( (204 * 0.3) + 90, 10, -1), RectWH((int)((score % 1000) % 100 % 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
 	}
+}
+
+void MainUi::PointAnimation()
+{
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string& arm_tag = ARM_TAG + std::to_string(i + 1);
+		auto pos = i_arm_data->GetHitPosition(arm_tag);
+		if (pos != (0, 0, 0)) {
+			SpriteBatch.Draw(*test, pos);
+		}
+	}
+
 }
 
