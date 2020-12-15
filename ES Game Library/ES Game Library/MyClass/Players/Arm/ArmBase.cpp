@@ -195,6 +195,13 @@ void ArmBase::MoveArm(Controller* pad)
 			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z + Vector3(0, 0.5f, 0);
 			_move_flag = true;
 		}
+		else if (map_data[_index_num.z][_index_num.x] == 'i')
+		{
+			_index_num.x = old_index_x;
+			_index_num.z = old_index_z;
+			_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+			_i_arm_Data->SetState(_tag, _arm_state);
+		}
 		else
 		{
 			_index_num.x = old_index_x;

@@ -48,28 +48,8 @@ void SceneManager::ChangeScene(SceneState scene)
 
 bool SceneManager::Initialize()
 {
-	/**
-	* @brief ÉâÉCÉgÇÃèâä˙ê›íË
-	*/
-	Light light;
-	light.Type = Light_Directional;
-	light.Direction = Vector3(1, -1, 1);
-	light.Diffuse = Color(1.0f, 1.0f, 1.0f);
-	light.Ambient = Color(1.0f, 1.0f, 1.0f);
-	light.Specular = Color(1.0f, 1.0f, 1.0f);
-	
-	SceneLight::Instance().SetLightParametor(light);
-	SceneLight::Instance().SetSceneLight();
-
 	_result_data = new ResultData();
 
-	_viewing_angle = 60;
-	view = GraphicsDevice.GetViewport();
-	_camera_pos = Vector3(7, 11, -11.6);
-	_look_pos = Vector3(65.2, 0, 0);
-	//SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
-	SceneCamera::Instance().SetView(Vector3(7, 11, -11.6), Vector3(65.2, 0, 0));
-	SceneCamera::Instance().SetPerspectiveFieldOfView(57, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 	return true;
 }
 
