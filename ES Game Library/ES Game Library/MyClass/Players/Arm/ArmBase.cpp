@@ -279,6 +279,7 @@ void ArmBase::HitOtherObject()
 			if (i_player_data->GetState(name) != PlayerEnum::Animation::DAMAGE)
 			{
 				i_player_data->SetHitPoint(name, hitpoint);
+				i_arm_data->SetHitPosition(_tag, _transform.position);
 			}
 
 			if (i_player_data->GetState(name) == PlayerEnum::Animation::DEATH)

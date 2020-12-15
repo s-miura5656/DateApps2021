@@ -123,6 +123,14 @@ void SceneManager::Draw3D()
 	
 	_scene->Draw3D();
 }
+
+void SceneManager::DrawAlpha3D()
+{
+	SceneCamera::Instance().SetSceneCamera();
+
+	_scene->DrawAlpha3D();
+}
+
 void SceneManager::SetResultData(std::string tag, int points[PLAYER_COUNT_MAX]) {
 	_result_data->tag = tag;
 	
