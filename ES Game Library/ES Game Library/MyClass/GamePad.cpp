@@ -8,17 +8,17 @@
 
 #pragma comment(lib,"xinput9_1_0.lib")
 
-GamePad::GamePad()
+XGamePad::XGamePad()
 {
 	XInputEnable(true);
 }
 
-GamePad::State GetState(const DWORD index)
+XGamePad::State GetState(const DWORD index)
 {
 	XINPUT_STATE xstate;
 	const auto result = XInputGetState(index, &xstate);
 
-	GamePad::State state;
+	XGamePad::State state;
 
 	state.connected = (result != 0);
 	if (state.connected == 0) {

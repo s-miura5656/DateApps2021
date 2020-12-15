@@ -484,6 +484,9 @@
     <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp">
       <Filter>Myclass\Players\Player\Crown</Filter>
     </ClCompile>
+    <ClCompile Include="MyClass\GamePad.cpp">
+      <Filter>Myclass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h">
@@ -777,6 +780,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Players\Crown\CrownRotation.h">
       <Filter>Myclass\Players\Player\Crown</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\GamePad.h">
+      <Filter>Myclass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

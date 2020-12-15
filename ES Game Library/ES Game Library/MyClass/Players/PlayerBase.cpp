@@ -18,6 +18,11 @@ int PlayerBase::Update()
 	auto pad = ControllerManager::Instance().GetController(_tag);
 	pad->GamePadRefresh();
 
+	if (ControllerManager::Instance().GetPad()->GetState(0).IsAPressed())
+	{
+		exit(0);
+	}
+
 	DebugControll();
 
 	//! Ž€‚ñ‚Å‚éŽž‚Æ‚»‚¤‚Å‚È‚¢‚Æ‚«‚Ì”»’è

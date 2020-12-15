@@ -167,6 +167,7 @@
     <ClCompile Include="MyClass\Collision\HitBox.cpp" />
     <ClCompile Include="MyClass\Controller\ControllerConfig.cpp" />
     <ClCompile Include="MyClass\Data\ImpactSpeed.cpp" />
+    <ClCompile Include="MyClass\GamePad.cpp" />
     <ClCompile Include="MyClass\Item\AttackPowerItem\AttackPowerItem.cpp" />
     <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp" />
     <ClCompile Include="MyClass\Item\ItemBase.cpp" />
@@ -262,6 +263,7 @@
     <ClInclude Include="MyClass\Data\Parametor.h" />
     <ClInclude Include="MyClass\Data\StructList.h" />
     <ClInclude Include="MyClass\Data\WordsTable.h" />
+    <ClInclude Include="MyClass\GamePad.h" />
     <ClInclude Include="MyClass\Item\AttackPowerItem\AttackPowerItem.h" />
     <ClInclude Include="MyClass\Item\HitPointItem\HitPointItem.h" />
     <ClInclude Include="MyClass\Item\Itembase.hpp" />

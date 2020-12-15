@@ -16,7 +16,7 @@ bool GameMain::Initialize()
 	
 	TimeManager::Instance().Initialize();
 	SceneManager::Instance().Initialize();
-	SceneManager::Instance().ChangeScene(SceneManager::Instance().TITLE);
+	SceneManager::Instance().ChangeScene(SceneManager::Instance().MAIN);
 
 	//hdr = GraphicsDevice.CreateHDRRenderTarget(1280, 720, DepthFormat_Unknown);
 	//_shader = GraphicsDevice.CreateEffectFromFile(_T("HLSL/Hdr.hlsl"));

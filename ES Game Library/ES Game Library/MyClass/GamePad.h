@@ -47,15 +47,15 @@ struct Triggers
     float right;
 };
 
-class GamePad
+class XGamePad
 {
 public:
-    GamePad();
+    XGamePad();
 
-    GamePad(GamePad const&) = delete;
-    GamePad& operator=(GamePad const&) = delete;
+    XGamePad(XGamePad const&) = delete;
+    XGamePad& operator=(XGamePad const&) = delete;
 
-    virtual ~GamePad();
+    virtual ~XGamePad();
 
     struct State
     {
