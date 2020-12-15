@@ -56,7 +56,7 @@ bool ResultScene::Initialize()
 	auto path = ConvertFilePath("Player/", data->tag, ".png");
 	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 
-	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
+	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
 	model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
 	return true;
 }
