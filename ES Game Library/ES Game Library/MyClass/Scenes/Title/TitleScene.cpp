@@ -11,23 +11,28 @@
 */
 bool TitleScene::Initialize()
 {
+	_background = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/background.png"));
 
 	_title = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/Title.png"));
 
+	_robot = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/robot.png"));
+
+	_b_button = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/b_button.png"));
+
 	_sprite = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/Chara.png"));
-	
+
 	
 	sprite_alpha = 1.0f;
+	alpha_flag = true;
+	button_flag = false;
 
-	sprite_pos = Vector3(0,0,-100);
-	sprite_scale = Vector2(1, 1);
+	sprite_pos = Vector3(0.0f,0.0f,-100.0f);
+	sprite_scale = Vector2(0.9f, 0.9f);
+	
 
+	ControllerManager::Instance().CreateGamePad(PLAYER_TAG + std::to_string(1));
+	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
 
-	// = GraphicsDevice.CreateSpriteFromFile(_T("TitleSprite/Title.png"));
-
-	//ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
-
-	//ControllerManager::Instance().CreateGamePad(PLAYER_TAG + std::to_string(1));
 
 	//for (int i = 0; i < MODEL_MAX; i++)
 	//{
@@ -63,8 +68,6 @@ bool TitleScene::Initialize()
 	
 
 
-
-
 	Viewport view = GraphicsDevice.GetViewport();
 	Vector3 _camera_pos = Vector3(0, 0, -10);
 	Vector3 _look_pos = Vector3(0, 0, 0);
@@ -83,12 +86,45 @@ bool TitleScene::Initialize()
 */
 int TitleScene::Update()
 {
-	//auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(1));
-	//
-	//if (pad->GetButtonBuffer(GamePad_Button1))
-	//{
-	//	//exit(0);
-	//}
+	auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(1));
+	pad->GamePadRefresh();
+	
+	if (pad->GetButtonBuffer(GamePad_Button1))
+	{
+		SceneManager::Instance().ChangeScene(SceneManager::MAIN);
+		button_flag;
+	}
+
+
+	if (!button_flag)
+	{
+		if (alpha_flag)
+		{
+
+			sprite_alpha -= 0.04f;
+
+			if (sprite_alpha <= 0.0f)
+			{
+
+				alpha_flag = !alpha_flag;
+			}
+		}
+		else
+		{
+
+			sprite_alpha += 0.04f;
+
+			if (sprite_alpha >= 1.0f)
+			{
+
+				alpha_flag = !alpha_flag;
+			}
+		}
+	}
+
+
+
+
 
 	//KeyboardBuffer key = Keyboard->GetBuffer();
 
@@ -108,8 +144,7 @@ int TitleScene::Update()
 	//_bound = ModelBound(0.0f, 2.0f, 0.0f, 1.0f, model[3]);
 
 
-	//
-	//
+	
 	//if (key.IsPressed(Keys_Enter))
 	//{
 	//	impactspeed.Update(Vector3(0.5f, 0.0f,0.0f),Vector3(0.01f, 0.0f,0.0f));
@@ -127,10 +162,14 @@ int TitleScene::Update()
 */
 void TitleScene::Draw2D()
 {
-	SpriteBatch.Draw(*_title, Vector3(0, 0, +10000.0f));
+	SpriteBatch.Draw(*_background, Vector3(0.0f, 0.0f, +10000.0f));
+	SpriteBatch.Draw(*_title, Vector3(65.0f, 125.0f, +100.0f));
+	SpriteBatch.Draw(*_b_button, Vector3(410.0f, 340.0f, +100.0f), sprite_alpha, Vector3(0, 0, 0),
+		              Vector3(0, 0, 0), Vector2(sprite_scale));
+	SpriteBatch.Draw(*_robot, Vector3(0.0f, 0.0f, +100.0f));
 
-	//SpriteBatch.Draw(*_sprite, Vector3(sprite_pos), sprite_alpha, Vector3(0, 0, 0),
-	//	             Vector3(0, 0, 0), Vector2(sprite_scale));
+	/*SpriteBatch.Draw(*_sprite, Vector3(sprite_pos), sprite_alpha, Vector3(0, 0, 0),
+		             Vector3(0, 0, 0), Vector2(sprite_scale));*/
 }
 void TitleScene::Draw3D()
 {

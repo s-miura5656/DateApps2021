@@ -19,9 +19,15 @@ public:
 
 private:
 	SPRITE _title;
+	SPRITE _background;
+	SPRITE _robot;
+	SPRITE _b_button;
+
 	SPRITE _sprite;
 
 	float sprite_alpha;
+	bool alpha_flag;
+	bool button_flag;
 
 	Vector3 sprite_pos;
 	Vector2 sprite_scale;
