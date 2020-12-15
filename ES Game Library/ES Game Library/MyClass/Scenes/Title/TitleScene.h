@@ -29,6 +29,8 @@ private:
 	bool alpha_flag;
 	bool button_flag;
 
+	Vector3 title_pos;
+
 	Vector3 sprite_pos;
 	Vector2 sprite_scale;
 

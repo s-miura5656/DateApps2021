@@ -26,6 +26,9 @@ bool TitleScene::Initialize()
 	alpha_flag = true;
 	button_flag = false;
 
+	title_pos = Vector3(65.0f, -200.0f, +100.0f);
+
+
 	sprite_pos = Vector3(0.0f,0.0f,-100.0f);
 	sprite_scale = Vector2(0.9f, 0.9f);
 	
@@ -89,7 +92,7 @@ int TitleScene::Update()
 	auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(1));
 	pad->GamePadRefresh();
 	
-	if (pad->GetButtonBuffer(GamePad_Button1))
+	if (pad->GetButtonBuffer(GamePad_Button2))
 	{
 		SceneManager::Instance().ChangeScene(SceneManager::MAIN);
 		button_flag;
@@ -122,8 +125,12 @@ int TitleScene::Update()
 		}
 	}
 
+	title_pos.y += 2.0f;
 
-
+	if (title_pos.y > 125.0f)
+	{
+		title_pos.y = 125.0f;
+	}
 
 
 	//KeyboardBuffer key = Keyboard->GetBuffer();
@@ -163,7 +170,7 @@ int TitleScene::Update()
 void TitleScene::Draw2D()
 {
 	SpriteBatch.Draw(*_background, Vector3(0.0f, 0.0f, +10000.0f));
-	SpriteBatch.Draw(*_title, Vector3(65.0f, 125.0f, +100.0f));
+	SpriteBatch.Draw(*_title, Vector3(title_pos));
 	SpriteBatch.Draw(*_b_button, Vector3(410.0f, 340.0f, +100.0f), sprite_alpha, Vector3(0, 0, 0),
 		              Vector3(0, 0, 0), Vector2(sprite_scale));
 	SpriteBatch.Draw(*_robot, Vector3(0.0f, 0.0f, +100.0f));
