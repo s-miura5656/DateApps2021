@@ -22,7 +22,7 @@ bool ResultScene::Initialize()
 	ground = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/ground.png"));
 	champion = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/Champion.png"));
 	totitle = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/Totitle.png"));
-	model = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation ver3.X"));
+	model = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 	txt = ResouceManager::Instance().LordFontFile(_T("Yu Gothic UI"), 70);
 
 	camera->SetView(Vector3(0, 0, -3), Vector3(0, 0, 0)); // Ž‹“_
