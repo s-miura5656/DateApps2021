@@ -5,7 +5,7 @@
 
 #include "GamePad.h"
 
-#pragma comment(lib,"xinput9_1_0.lib")
+#pragma comment(lib,"xinput.lib")
 
 XGamePad::XGamePad()
 {

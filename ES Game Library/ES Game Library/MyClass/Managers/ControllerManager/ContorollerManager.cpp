@@ -4,7 +4,7 @@
 
 ControllerManager::~ControllerManager()
 {
-	delete _game_pad;
+	//delete _game_pad;
 
 	for (auto& it = _controller.rbegin(); it != _controller.rend(); ++it)
 	{
@@ -15,7 +15,7 @@ ControllerManager::~ControllerManager()
 void ControllerManager::SetGamePadMaxCount(int pad_count)
 {
 	InputDevice.CreateGamePad(pad_count);
-	_game_pad = new XGamePad;
+	//_game_pad = new XGamePad;
 }
 
 void ControllerManager::CreateGamePad(std::string player_tag)
