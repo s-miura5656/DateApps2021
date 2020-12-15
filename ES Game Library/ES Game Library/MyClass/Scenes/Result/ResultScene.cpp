@@ -22,7 +22,7 @@ bool ResultScene::Initialize()
 	ground = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/ground.png"));
 	champion = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/Champion.png"));
 	totitle = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/Totitle.png"));
-	model = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation ver3.X"));
+	model = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 	txt = ResouceManager::Instance().LordFontFile(_T("Yu Gothic UI"), 70);
 
 	camera->SetView(Vector3(0, 0, -3), Vector3(0, 0, 0)); // 視点
@@ -41,6 +41,8 @@ bool ResultScene::Initialize()
 
 	_i_player_data = new IPrayerData;
 
+	auto data = SceneManager::Instance().GetResultData();
+
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string tag = PLAYER_TAG + std::to_string(i + 1);
@@ -50,23 +52,10 @@ bool ResultScene::Initialize()
 			break;
 		}
 	}
-	std::string playertag = PLAYER_TAG + std::to_string(num);
-	if (num == 1) {
-		auto path = ConvertFilePath("Player/", playertag, ".png");
-		_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
-	}
-	else if (num == 2) {
-		auto path = ConvertFilePath("Player/", playertag, ".png");
-		_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
-	}
-	else if (num == 3) {
-		auto path = ConvertFilePath("Player/", playertag, ".png");
-		_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
-	}
-	else if (num == 4) {
-		auto path = ConvertFilePath("Player/", playertag, ".png");
-		_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
-	}
+	
+	auto path = ConvertFilePath("Player/", data->tag, ".png");
+	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
+
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
 	model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
 	return true;
@@ -88,11 +77,33 @@ int ResultScene::Update()
 */
 void ResultScene::Draw2D()
 {
+	auto data = SceneManager::Instance().GetResultData();
 
 	SpriteBatch.Draw(*ground, Vector3(0,0,10000));
 	SpriteBatch.Draw(*champion, Vector3(800,50,0));
 	SpriteBatch.Draw(*totitle, Vector3(800, 600, 0));
-	SpriteBatch.DrawString(txt, Vector2(750, 100), Color(255, 255, 0), _T("チャンピオンはプレイヤー%d"), num);
+
+	if (data->tag == PLAYER_TAG + "1")
+	{
+		SpriteBatch.DrawString(txt, Vector2(700, 100), Color(255, 255, 0), _T("チャンピオンはPLAYER_1です"));
+	}
+	else if (data->tag == PLAYER_TAG + "2")
+	{
+		SpriteBatch.DrawString(txt, Vector2(700, 100), Color(255, 255, 0), _T("チャンピオンはPLAYER_2です"));
+	}
+	else if (data->tag == PLAYER_TAG + "3")
+	{
+		SpriteBatch.DrawString(txt, Vector2(700, 100), Color(255, 255, 0), _T("チャンピオンはPLAYER_3です"));
+	}
+	else if (data->tag == PLAYER_TAG + "4")
+	{
+		SpriteBatch.DrawString(txt, Vector2(700, 100), Color(255, 255, 0), _T("チャンピオンはPLAYER_4です"));
+	}
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		SpriteBatch.DrawString(txt, Vector2(750, 150 + 50 * i), Color(255, 255, 0), _T("Player_%d"),i + 1);
+		SpriteBatch.DrawString(txt, Vector2(950, 150 + 50 * i), Color(255, 255, 0), _T("POINT::%d"),data->points[i]);
+	}
 }
 void ResultScene::Draw3D()
 {
