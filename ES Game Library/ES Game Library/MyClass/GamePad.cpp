@@ -4,7 +4,6 @@
 #define NOMINMAX
 
 #include "GamePad.h"
-#include <XInput.h>
 
 #pragma comment(lib,"xinput9_1_0.lib")
 

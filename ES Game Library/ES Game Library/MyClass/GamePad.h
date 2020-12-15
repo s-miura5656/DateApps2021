@@ -2,6 +2,8 @@
 // File: GamePad.h
 //--------------------------------------------------------------------------------------
 #pragma once
+#include <XInput.h>
+#include <Windows.h>
 
 struct Buttons
 {
