@@ -5,10 +5,17 @@
 #pragma once
 
 #include "../../../ESGLib.h"
+#include "../../Data/WordsTable.h"
 #include "../ManagerBase.h"
 
 //! 型宣言の時だけ使いたいのでここでBaseSceneの名前だけ使うよって宣言
 class BaseScene;
+
+struct ResultData
+{
+	std::string tag;
+	int points[PLAYER_COUNT_MAX];
+};
 
 class SceneManager : public ManagerBase
 {
@@ -39,6 +46,9 @@ public:
 		return instance;
 	};
 
+	ResultData* GetResultData() { return _result_data; };
+	void SetResultData(std::string, int[PLAYER_COUNT_MAX]);
+
 private:
 
 	//! シングルトンオブジェクトを他で作らせないための記述
@@ -50,6 +60,7 @@ private:
 	Vector3 _camera_pos;
 	Vector3 _look_pos;
 	Viewport view;
+	ResultData* _result_data;
 };
 
 

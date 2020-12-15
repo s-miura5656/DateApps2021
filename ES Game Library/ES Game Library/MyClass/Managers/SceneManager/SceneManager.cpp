@@ -18,6 +18,7 @@ SceneManager::SceneManager()
 //! @detail SceneManager ‚ªÁ‚¦‚é‚Æ‚«‚ÉŒÄ‚Ño‚³‚ê‚é‚æ
 SceneManager::~SceneManager()
 {
+	delete _result_data;
 	delete _scene;
 }
 
@@ -59,6 +60,8 @@ bool SceneManager::Initialize()
 	
 	SceneLight::Instance().SetLightParametor(light);
 	SceneLight::Instance().SetSceneLight();
+
+	_result_data = new ResultData();
 
 	_viewing_angle = 60;
 	view = GraphicsDevice.GetViewport();
@@ -120,5 +123,12 @@ void SceneManager::Draw3D()
 	
 	_scene->Draw3D();
 }
-
+void SceneManager::SetResultData(std::string tag, int points[PLAYER_COUNT_MAX]) {
+	_result_data->tag = tag;
+	
+	for (int number = 0 ; number < PLAYER_COUNT_MAX;number++)
+	{
+		_result_data->points[number] = points[number];
+	}
+}
 
