@@ -23,6 +23,7 @@ struct ArmParam {
 	float   go_speed				 = 0.06f;
 	float   return_speed			 = 0.3f;
 	int     limit_range				 = 20;
+	Vector3 hit_position = Vector3_Zero;
 	std::vector<Vector3> angle_position;
 	std::vector<float> angles;
 };
