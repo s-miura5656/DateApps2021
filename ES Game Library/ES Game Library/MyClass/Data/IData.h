@@ -85,6 +85,9 @@ public:
 
 	void SetAngles(std::string& arm_tag, std::vector<float> angles)						  { ArmParametor::Instance()._arm_params[arm_tag].angles = angles; }
 	std::vector<float> GetAngles(std::string& arm_tag)								const { return ArmParametor::Instance()._arm_params[arm_tag].angles; }
+
+	void SetHitPosition(std::string& arm_tag, Vector3 pos) { ArmParametor::Instance()._arm_params[arm_tag].hit_position = pos; }
+	Vector3 GetHitPosition(std::string& arm_tag)									const { return ArmParametor::Instance()._arm_params[arm_tag].hit_position; }
 };
 
 class IMapData {
