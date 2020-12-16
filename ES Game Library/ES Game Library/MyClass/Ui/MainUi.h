@@ -17,7 +17,8 @@ public:
 	int Update() override { return 0; }
 	void Draw2D() override;
 	void PlayerBanner();
-
+	void PointAnimation();
+	
 
 	FONT player_date;//各プレイヤーのステータス表記
 
@@ -39,4 +40,11 @@ public:
 
 	FONT score_data[PLAYER_COUNT_MAX];
 	IPrayerData* i_player_data;
+	IArmData* i_arm_data;
+
+	//test
+	SPRITE test;
+	int flag;
+	Vector3 point_pos;
+
 };
