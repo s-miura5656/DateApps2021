@@ -119,11 +119,10 @@ void MainUi::PointAnimation()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		
 		std::string& arm_tag = ARM_TAG + std::to_string(i + 1);
 		auto pos = i_arm_data->GetHitPosition(arm_tag);
 		if (pos != Vector3_Zero) {
-			SpriteBatch.Draw(*test, pos);
+//			SpriteBatch.Draw(*test, pos);
 		}
 	}
 

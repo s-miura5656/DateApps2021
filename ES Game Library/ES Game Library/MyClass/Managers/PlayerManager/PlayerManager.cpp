@@ -1,6 +1,7 @@
 #include "PlayerManager.h"
 #include "../../Players/Player/Player.h"
 #include "../../Data/WordsTable.h"
+#include "../TimeManager/Time.h"
 
 PlayerManager::PlayerManager()
 {
@@ -56,14 +57,17 @@ bool PlayerManager::Initialize()
 
 int PlayerManager::Update()
 {
-	RankingSort();
-
-	for (int i = 0; i < _players.size(); ++i)
+	if (TimeManager::Instance().StartFlag())
 	{
-		_players[i]->Update();
-	}
+		RankingSort();
 
-	_crown_rotation->Update();
+		for (int i = 0; i < _players.size(); ++i)
+		{
+			_players[i]->Update();
+		}
+
+		_crown_rotation->Update();
+	}
 
     return 0;
 }

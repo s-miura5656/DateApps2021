@@ -11,10 +11,11 @@
 bool GameMain::Initialize()
 {
 	// TODO: Add your initialization logic here
-	WindowTitle(_T("Roke Pun Fighters"));
+	WindowTitle(_T("ロケパンファイターズ"));
+
 	Effekseer.Attach(GraphicsDevice);
 	SceneManager::Instance().Initialize();
-	SceneManager::Instance().ChangeScene(SceneManager::Instance().MAIN);
+	SceneManager::Instance().ChangeScene(SceneManager::Instance().TITLE);
 
 	//hdr = GraphicsDevice.CreateHDRRenderTarget(1280, 720, DepthFormat_Unknown);
 	//_shader = GraphicsDevice.CreateEffectFromFile(_T("HLSL/Hdr.hlsl"));
