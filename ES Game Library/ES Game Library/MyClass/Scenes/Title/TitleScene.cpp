@@ -12,25 +12,31 @@
 bool TitleScene::Initialize()
 {
 	_background = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/background.png"));
+	_title      = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/Title.png"));
+	_robot      = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/robot.png"));
+	_b_button   = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/b_button.png"));
+	_tutorial     = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/tutorial.png"));
 
-	_title = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/Title.png"));
+	
+	button_alpha = 1.0f;
+	alpha_flag   = true;
+	button_flag  = false;
 
-	_robot = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/robot.png"));
-
-	_b_button = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/b_button.png"));
-
-	_sprite = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/Chara.png"));
-
-	sprite_alpha = 1.0f;
-	alpha_flag = true;
-	button_flag = false;
+	tutorial_flag = false;
 
 	title_pos = Vector3(65.0f, -200.0f, +100.0f);
 
 
-	sprite_pos = Vector3(0.0f,0.0f,-100.0f);
-	sprite_scale = Vector2(0.9f, 0.9f);
+	//sprite_pos = Vector3(0.0f,0.0f,-100.0f);
+
+	title_scale  = Vector2(1.0f, 1.0f);
+	button_scale = Vector2(0.9f, 0.9f);
 	
+
+	ControllerManager::Instance().CreateGamePad(PLAYER_TAG + std::to_string(1));
+	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
+
+
 	//for (int i = 0; i < MODEL_MAX; i++)
 	//{
 	//	model[i] = GraphicsDevice.CreateModelFromFile(_T("Player/robot.x"));
@@ -72,7 +78,7 @@ bool TitleScene::Initialize()
 	SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
 	SceneCamera::Instance().SetPerspectiveFieldOfView(60.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 
-	SceneCamera::Instance().SetSceneCamera();
+	GraphicsDevice.SetCamera(camera);
 
 	return true;
 }
@@ -86,25 +92,51 @@ int TitleScene::Update()
 	auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(1));
 	pad->GamePadRefresh();
 	
-	if (title_pos.y >= 125.0f)
-	{
-		title_pos.y = 125.0f;
 
+	if (!tutorial_flag)
+	{
+		if (pad->GetButtonBuffer(GamePad_Button2))
+		{
+			tutorial_flag = true;
+		}
+	}
+	else
+	{
 		if (pad->GetButtonBuffer(GamePad_Button2))
 		{
 			SceneManager::Instance().ChangeScene(SceneManager::MAIN);
-			button_flag;
 		}
+
 	}
 
-	if (!button_flag)
+
+	title_pos.y += 4.0f;
+
+	if (title_pos.y > 125.0f)
+	{
+
+		title_pos.y = 125.0f;
+		button_flag = true;
+
+	}
+
+	title_scale += Vector2(0.0075f, 0.0075f);
+
+	if (title_scale.x > 1.0f)
+	{
+		title_scale = Vector2(1.0f, 1.0f);
+	}
+
+
+
+	if (button_flag)
 	{
 		if (alpha_flag)
 		{
 
-			sprite_alpha -= 0.04f;
+			button_alpha -= 0.04f;
 
-			if (sprite_alpha <= 0.0f)
+			if (button_alpha <= 0.0f)
 			{
 
 				alpha_flag = !alpha_flag;
@@ -113,9 +145,9 @@ int TitleScene::Update()
 		else
 		{
 
-			sprite_alpha += 0.04f;
+			button_alpha += 0.04f;
 
-			if (sprite_alpha >= 1.0f)
+			if (button_alpha >= 1.0f)
 			{
 
 				alpha_flag = !alpha_flag;
@@ -123,9 +155,6 @@ int TitleScene::Update()
 		}
 	}
 
-	title_pos.y += 2.0f;
-
-	//KeyboardBuffer key = Keyboard->GetBuffer();
 
 	//// ƒ‚ƒfƒ‹‚Ì‰ñ“]
 	//ModelRotation(Vector3(0.0f, 0.0f, 5.0f), model[0]);
@@ -143,11 +172,12 @@ int TitleScene::Update()
 	//_bound = ModelBound(0.0f, 2.0f, 0.0f, 1.0f, model[3]);
 
 
+	KeyboardBuffer key = Keyboard->GetBuffer();
 	
-	//if (key.IsPressed(Keys_Enter))
-	//{
-	//	impactspeed.Update(Vector3(0.5f, 0.0f,0.0f),Vector3(0.01f, 0.0f,0.0f));
-	//}
+	if (key.IsPressed(Keys_Enter))
+	{
+		SceneManager::Instance().ChangeScene(SceneManager::MAIN);
+	}
 
 	//impactspeed.impactSpeed(Vector3(0.005f, 0.0f, 0.0f), model[4]);
 
@@ -161,11 +191,23 @@ int TitleScene::Update()
 */
 void TitleScene::Draw2D()
 {
-	SpriteBatch.Draw(*_background, Vector3(0.0f, 0.0f, +10000.0f));
-	SpriteBatch.Draw(*_title, Vector3(title_pos));
-	SpriteBatch.Draw(*_b_button, Vector3(410.0f, 340.0f, +100.0f), sprite_alpha, Vector3(0, 0, 0),
-		              Vector3(0, 0, 0), Vector2(sprite_scale));
-	SpriteBatch.Draw(*_robot, Vector3(0.0f, 0.0f, +100.0f));
+	if (!tutorial_flag)
+	{
+		SpriteBatch.Draw(*_background, Vector3(0.0f, 0.0f, +10000.0f));
+
+		SpriteBatch.Draw(*_title, Vector3(title_pos), 1.0f, Vector3(0, 0, 0),
+			Vector3(0, 0, 0), Vector2(title_scale));
+		if (button_flag)
+		{
+			SpriteBatch.Draw(*_b_button, Vector3(410.0f, 340.0f, +100.0f), button_alpha, Vector3(0, 0, 0),
+				Vector3(0, 0, 0), Vector2(button_scale));
+		}
+		SpriteBatch.Draw(*_robot, Vector3(0.0f, 0.0f, +100.0f));
+	}
+
+	if (tutorial_flag)
+		SpriteBatch.Draw(*_tutorial, Vector3(0.0f, 0.0f, +10000.0f));
+
 
 	/*SpriteBatch.Draw(*_sprite, Vector3(sprite_pos), sprite_alpha, Vector3(0, 0, 0),
 		             Vector3(0, 0, 0), Vector2(sprite_scale));*/
