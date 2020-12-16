@@ -113,7 +113,7 @@ void ResultScene::Draw2D()
 	int count = 0;
 	for (int i = arrival; i < PLAYER_COUNT_MAX; i++)
 	{
-		SpriteBatch.DrawString(txt, Vector2(950, pos_y + 50 + 100 * (count + 1)), Color(0, 0, 0), _T("%d"), data->points[i]);
+		SpriteBatch.DrawString(txt, Vector2(950 - 30 * i, pos_y + 50 + 100 * (count + 1)), Color(0, 0, 0), _T("%d"), data->points[i]);
 		SpriteBatch.Draw(*player,Vector3(750 - 30 * i, pos_y + 50 + 100 * (count + 1),0),RectWH((data->ranknum[i] - 1) * 128,0,128,64));
 		count++;
 	}
