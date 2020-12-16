@@ -56,6 +56,9 @@ bool ResultScene::Initialize()
 
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
 	model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
+
+	ControllerManager::Instance().CreateGamePad(PLAYER_TAG + std::to_string(1));
+	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
 	return true;
 }
 /*
@@ -65,6 +68,16 @@ bool ResultScene::Initialize()
 */
 int ResultScene::Update()
 {
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(i + 1));
+		pad->GamePadRefresh();
+
+		if (pad->GetButtonBuffer(GamePad_Button2))
+		{
+			SceneManager::Instance().ChangeScene(SceneManager::TITLE);
+		}
+	}
 	return 0;
 }
 
