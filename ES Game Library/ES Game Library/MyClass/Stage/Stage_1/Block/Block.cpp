@@ -13,6 +13,7 @@ Block::Block(std::string tag)
 
 Block::~Block()
 {
+	_effect->Stop();
 	_hit_box.reset();
 	_effect.reset();
 }
@@ -92,7 +93,7 @@ int Block::Update()
 			player_data->SetRankingPoint(player_tag, player_data->GetRankingPoint(player_tag) + 10);
 			delete player_data;
 
-			_effect->SetPosition(_position);
+			_effect->SetPosition(_position + Vector3_Up * 0.5f);
 			_effect->PlayOneShot();
 
 			return 1;

@@ -1,5 +1,7 @@
 #include"Warp.h"
 #include "../../../Data/WordsTable.h"
+#include "../../../Managers/ResouceManager/ResouceManager.h"
+
 Warp::Warp(std::string tag)
 {
 	_model = nullptr;
@@ -12,13 +14,13 @@ Warp::Warp(std::string tag)
 
 Warp::~Warp()
 {
-
+	_hit_box.reset();
 }
 
 bool Warp::Initialize()
 {
 	//Xファイルの読み込み
-	_model = GraphicsDevice.CreateModelFromFile(_T("MapSprite/warp.X"));
+	_model = ResouceManager::Instance().LoadModelFile(_T("MapSprite/warp.X"));
 	//スケールの設定
 	_model->SetScale(_scale);
 	//マテリアルの設定

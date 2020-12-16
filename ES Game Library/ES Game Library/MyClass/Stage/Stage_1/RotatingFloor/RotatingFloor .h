@@ -9,7 +9,7 @@
 #include"../../../../ESGLib.h"
 #include"../../StageBase.h"
 
-class RotatingFloor :public StageBase
+class RotatingFloor : public StageBase
 {
 public:
 	RotatingFloor(std::string tag);

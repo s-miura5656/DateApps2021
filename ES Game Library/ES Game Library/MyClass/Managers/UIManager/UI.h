@@ -24,5 +24,5 @@ public:
     void Draw3D() override {}
     void DrawAlpha3D() override {}
 private:
-    BaseUi*_ui;
+    std::unique_ptr<BaseUi> _ui;
 };

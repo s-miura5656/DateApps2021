@@ -4,18 +4,17 @@
 #include"../../Managers/ControllerManager/ContorollerManager.h"
 #include"../../Data/ImpactSpeed.h"
 
-
 class TitleScene : public BaseScene
 {
 public:
+	TitleScene();
+	~TitleScene();
+
 	bool Initialize() override;
 	int Update() override;
 	void Draw2D() override;
 	void Draw3D() override;
 	void DrawAlpha3D() override {}
-
-	float Flashing();
-	float Scaling();
 
 private:
 	SPRITE _title;
@@ -25,31 +24,16 @@ private:
 	SPRITE _tutorial;
 
 	float button_alpha;
-	bool alpha_flag;
-	bool button_flag;
-	bool tutorial_flag;
+	bool  alpha_flag;
+	bool  button_flag;
+	bool  tutorial_flag;
 
 	Vector3 title_pos;
-
-	//Vector3 sprite_pos;
 	Vector2 title_scale;
 	Vector2 button_scale;
 
-	enum {MODEL_MAX = 5};
-	MODEL model[MODEL_MAX];
-	CAMERA camera;
-
-	MODEL item;
-
 	float _scale = 1.f;
-
 	float _alpha = 1.f;
-
-	float _wave = 1.f;
-
+	float _wave  = 1.f;
 	float _bound = 5.f;
-
-
-	ImpactSpeed impactspeed;
-	
 };

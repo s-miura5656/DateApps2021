@@ -67,24 +67,11 @@ void ParticleSystem::SetScale(float scale)
 
 void ParticleSystem::SetSpeed(float speed)
 {
-	
 	_speed = speed;
 }
 
 void ParticleSystem::SetDrawRotationY(float angle_y, Vector3 front_dir)
 {
-	/*auto abs_x = fabs(front_dir.x);
-	auto abs_z = fabs(front_dir.z);
-
-	if (abs_x > abs_z)
-	{
-		signbit(front_dir.x) ? -abs_x : abs_x;
-	}
-	else if (abs_x < abs_z)
-	{
-		signbit(front_dir.z) ? -abs_z : abs_z;
-	}*/
-
 	if (front_dir.z != 0)
 	{
 		_rotation = Vector3(MathHelper_ToDegrees(angle_y + 180), 0.0f, 0.0f);

@@ -16,7 +16,7 @@ RotatingFloor::RotatingFloor(std::string tag)
 
 RotatingFloor::~RotatingFloor()
 {
-
+    _hit_box.reset();
 }
 
 bool RotatingFloor::Initialize()

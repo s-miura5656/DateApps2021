@@ -8,28 +8,31 @@
 
 MainUi::MainUi()
 {
-	i_player_data = new IPrayerData;
-	i_arm_data    = new IArmData;
+	_i_player_data.reset(new IPrayerData);
+	_i_arm_data.reset(new IArmData);
 }
 
 MainUi::~MainUi()
 {
-
+	_i_arm_data.reset();
+	_i_player_data.reset();
 }
 
 bool MainUi::Initialize()
 {
-	time_limit_font = GraphicsDevice.CreateSpriteFont(_T("チェックアンドU-Foフォント"), 50);
+	time_limit_font = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 50);
+	kuro			= ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 95);
+	siro			= ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 90);
+
 	red_banner      = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/red_banner.png"));
 	blue_banner     = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/blue_banner.png"));
 	green_banner    = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/green_banner.png"));
 	yellow_banner   = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/yellow_banner.png"));
 	time_banner     = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/time_2.png"));
 	score_num       = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber.png"));
-	kuro            = GraphicsDevice.CreateSpriteFont(_T("チェックアンドU-Foフォント"), 95);
-	siro            = GraphicsDevice.CreateSpriteFont(_T("チェックアンドU-Foフォント"), 90);
+	
 
-	test = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/ゲージベース2.png"));
+	//test = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/ゲージベース2.png"));
 	
 	flag = 0;
 
@@ -56,8 +59,6 @@ bool MainUi::Initialize()
 	color[2] = Color(255, 255,   0);
 	color[3] = Color(  0, 255,   0);
 	
-	InputDevice.CreateKeyboard();
-
 	return true;
 }
 
@@ -80,10 +81,10 @@ void MainUi::Draw2D()
 		SpriteBatch.DrawString(siro, Vector2(605, 345), Color(1.f, 1.f, 1.f), _T("%d"), Countdown);
 	}
 	if (Countdown == 0) {
-		SpriteBatch.DrawString(kuro, Vector2(387, 340), Color(0.f, 0.f, 0.f), _T("S T A R T !!"));
+		SpriteBatch.DrawString(kuro, Vector2(487, 340), Color(0.f, 0.f, 0.f), _T("S T A R T !!"));
 	}
 	if (Countdown == 0) {
-		SpriteBatch.DrawString(siro, Vector2(400, 340), Color(1.f, 1.f, 1.f), _T("S T A R T !!"));
+		SpriteBatch.DrawString(siro, Vector2(500, 340), Color(1.f, 1.f, 1.f), _T("S T A R T !!"));
 	}
 }
 
@@ -99,7 +100,7 @@ void MainUi::PlayerBanner()
 	{
 		std::string& tag = PLAYER_TAG + std::to_string(i + 1);
 
-		int score = iplayer_data->GetRankingPoint(tag);
+		int score = _i_player_data->GetRankingPoint(tag);
 
 		//スコアアニメーション
 		SpriteBatch.Draw(*score_num, banner_pos[i] + Vector3( (10 * 0.3) + 90,  10, -1), RectWH((int)(score / 1000) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0),Vector3(0,0,0),0.3f);
@@ -114,7 +115,7 @@ void MainUi::PointAnimation()
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string& arm_tag = ARM_TAG + std::to_string(i + 1);
-		auto pos = i_arm_data->GetHitPosition(arm_tag);
+		auto pos = _i_arm_data->GetHitPosition(arm_tag);
 		if (pos != Vector3_Zero) {
 //			SpriteBatch.Draw(*test, pos);
 		}

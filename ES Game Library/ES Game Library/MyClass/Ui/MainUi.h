@@ -39,8 +39,10 @@ public:
 	SPRITE score_num;
 
 	FONT score_data[PLAYER_COUNT_MAX];
-	IPrayerData* i_player_data;
-	IArmData* i_arm_data;
+	FONT time_limit_font;
+
+	std::unique_ptr<IPrayerData> _i_player_data;
+	std::unique_ptr<IArmData> _i_arm_data;
 
 	FONT kuro;
 	FONT siro;

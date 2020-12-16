@@ -45,7 +45,7 @@ ANIMATIONMODEL ResouceManager::LoadAnimationModelFile(tstring animation_model_na
 	}
 }
 
-FONT ResouceManager::LordFontFile(tstring font_file_name,float size)
+FONT ResouceManager::LordFontFile(tstring font_file_name, float size)
 {
 	auto&& it = _resouces_font.find(font_file_name);
 	if (it != _resouces_font.end())

@@ -115,6 +115,8 @@ int MainScene::Update()
 		}
 		SceneManager::Instance().SetResultData(ranknum, points);	// ここで誰が一位だったかをPlayerタグで判定するため、引数1はstring,引数2はintのポインタ		
 		SceneManager::Instance().ChangeScene(SceneManager::Instance().RESULT);
+
+		delete pPlayerData;
 	}
 
 	return 0;

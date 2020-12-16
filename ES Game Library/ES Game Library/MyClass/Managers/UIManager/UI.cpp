@@ -5,12 +5,12 @@
 
 MainUiManager::MainUiManager()
 {
-	_ui = new MainUi;
+	_ui.reset(new MainUi);
 }
 
 MainUiManager::~MainUiManager()
 {
-	delete _ui;
+	_ui.reset();
 }
 
 bool MainUiManager::Initialize()
@@ -24,8 +24,6 @@ int MainUiManager::Update()
 {
 	_ui->Update();
 	
-	KeyboardState key = Keyboard->GetState();
-
 	return 0;
 }
 
