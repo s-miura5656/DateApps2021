@@ -77,31 +77,45 @@ int MainScene::Update()
 	{
 		// ここでプレイヤーマネージャーから各プレイヤーのポイントを取得
 		int points[PLAYER_COUNT_MAX] = {};
-
-		// ポイントを比較して1位を判定
-		// GetRankNum()をして一位のプレイヤーを取得
-		std::vector<std::string> playerTable;
-		playerTable.push_back(PLAYER_TAG + "1");
-		playerTable.push_back(PLAYER_TAG + "2");
-		playerTable.push_back(PLAYER_TAG + "3");
-		playerTable.push_back(PLAYER_TAG + "4");
-
-		std::string winner;
+		int ranknum[PLAYER_COUNT_MAX] = {};
 		IPrayerData* pPlayerData = new IPrayerData;
-		for (auto&& tag : playerTable)
+		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 		{
-			if ((pPlayerData->GetRankNum(tag) + 1) == 1)
-			{
-				winner = tag;
+			std::string tag = PLAYER_TAG + std::to_string(i + 1);
+			if (pPlayerData->GetRankNum(tag) == 0) {
+				points[0] = pPlayerData->GetRankingPoint(tag);
+				ranknum[0] = i + 1;
 				break;
 			}
 		}
 		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 		{
 			std::string tag = PLAYER_TAG + std::to_string(i + 1);
-			points[i] = pPlayerData->GetRankingPoint(tag);
+			if (pPlayerData->GetRankNum(tag) == 1) {
+				points[1] = pPlayerData->GetRankingPoint(tag);
+				ranknum[1] = i + 1;
+				break;
+			}
 		}
-		SceneManager::Instance().SetResultData(winner, points);	// ここで誰が一位だったかをPlayerタグで判定するため、引数1はstring,引数2はintのポインタ		
+		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+		{
+			std::string tag = PLAYER_TAG + std::to_string(i + 1);
+			if (pPlayerData->GetRankNum(tag) == 2) {
+				points[2] = pPlayerData->GetRankingPoint(tag);
+				ranknum[2] = i + 1;
+				break;
+			}
+		}
+		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+		{
+			std::string tag = PLAYER_TAG + std::to_string(i + 1);
+			if (pPlayerData->GetRankNum(tag) == 3) {
+				points[3] = pPlayerData->GetRankingPoint(tag);
+				ranknum[3] = i + 1;
+				break;
+			}
+		}
+		SceneManager::Instance().SetResultData(ranknum, points);	// ここで誰が一位だったかをPlayerタグで判定するため、引数1はstring,引数2はintのポインタ		
 		SceneManager::Instance().ChangeScene(SceneManager::Instance().RESULT);
 	}
 

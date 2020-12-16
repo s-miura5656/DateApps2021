@@ -13,7 +13,7 @@ class BaseScene;
 
 struct ResultData
 {
-	std::string tag;
+	int ranknum[PLAYER_COUNT_MAX];
 	int points[PLAYER_COUNT_MAX];
 };
 
@@ -48,7 +48,7 @@ public:
 	};
 
 	ResultData* GetResultData() { return _result_data; };
-	void SetResultData(std::string, int[PLAYER_COUNT_MAX]);
+	void SetResultData(int[PLAYER_COUNT_MAX], int[PLAYER_COUNT_MAX]);
 
 private:
 

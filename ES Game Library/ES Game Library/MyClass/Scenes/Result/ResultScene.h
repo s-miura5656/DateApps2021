@@ -15,8 +15,8 @@ public:
 	void DrawAlpha3D() override {}
 
 private:
+	SPRITE player;
 	SPRITE ground;
-	SPRITE champion;
 	SPRITE totitle;
 	FONT txt;
 	int num;
