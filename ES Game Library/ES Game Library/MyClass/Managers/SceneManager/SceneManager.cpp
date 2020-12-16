@@ -123,6 +123,12 @@ void SceneManager::Draw3D()
 	
 	_scene->Draw3D();
 }
+
+void SceneManager::DrawAlpha3D()
+{
+	_scene->DrawAlpha3D();
+}
+
 void SceneManager::SetResultData(int ranknum[PLAYER_COUNT_MAX], int points[PLAYER_COUNT_MAX]) {
 	
 	for (int number = 0 ; number < PLAYER_COUNT_MAX;number++)
