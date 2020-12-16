@@ -22,17 +22,18 @@ private:
 	SPRITE _background;
 	SPRITE _robot;
 	SPRITE _b_button;
+	SPRITE _tutorial;
 
-	SPRITE _sprite;
-
-	float sprite_alpha;
+	float button_alpha;
 	bool alpha_flag;
 	bool button_flag;
+	bool tutorial_flag;
 
 	Vector3 title_pos;
 
-	Vector3 sprite_pos;
-	Vector2 sprite_scale;
+	//Vector3 sprite_pos;
+	Vector2 title_scale;
+	Vector2 button_scale;
 
 	enum {MODEL_MAX = 5};
 	MODEL model[MODEL_MAX];
