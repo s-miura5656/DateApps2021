@@ -13,8 +13,8 @@ public:
 	void Draw2D();
 	void Draw3D();
 private:
+	SPRITE player;
 	SPRITE ground;
-	SPRITE champion;
 	SPRITE totitle;
 	FONT txt;
 	int num;

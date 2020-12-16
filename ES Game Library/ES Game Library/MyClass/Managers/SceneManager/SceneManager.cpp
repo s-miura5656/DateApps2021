@@ -123,11 +123,11 @@ void SceneManager::Draw3D()
 	
 	_scene->Draw3D();
 }
-void SceneManager::SetResultData(std::string tag, int points[PLAYER_COUNT_MAX]) {
-	_result_data->tag = tag;
+void SceneManager::SetResultData(int ranknum[PLAYER_COUNT_MAX], int points[PLAYER_COUNT_MAX]) {
 	
 	for (int number = 0 ; number < PLAYER_COUNT_MAX;number++)
 	{
+		_result_data->ranknum[number] = ranknum[number];
 		_result_data->points[number] = points[number];
 	}
 }
