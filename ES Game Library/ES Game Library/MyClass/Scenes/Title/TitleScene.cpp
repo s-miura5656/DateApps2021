@@ -93,31 +93,31 @@ int TitleScene::Update()
 	pad->GamePadRefresh();
 	
 
-	if (!tutorial_flag)
-	{
-		if (pad->GetButtonBuffer(GamePad_Button2))
-		{
-			tutorial_flag = true;
-		}
-	}
-	else
-	{
-		if (pad->GetButtonBuffer(GamePad_Button2))
-		{
-			SceneManager::Instance().ChangeScene(SceneManager::MAIN);
-		}
-
-	}
+	
 
 
 	title_pos.y += 4.0f;
 
-	if (title_pos.y > 125.0f)
+	if (title_pos.y >= 125.0f)
 	{
 
 		title_pos.y = 125.0f;
 		button_flag = true;
 
+		if (!tutorial_flag)
+		{
+			if (pad->GetButtonBuffer(GamePad_Button2))
+			{
+				tutorial_flag = true;
+			}
+		}
+		else
+		{
+			if (pad->GetButtonBuffer(GamePad_Button2))
+			{
+				SceneManager::Instance().ChangeScene(SceneManager::MAIN);
+			}
+		}
 	}
 
 	title_scale += Vector2(0.0075f, 0.0075f);
@@ -133,7 +133,6 @@ int TitleScene::Update()
 	{
 		if (alpha_flag)
 		{
-
 			button_alpha -= 0.04f;
 
 			if (button_alpha <= 0.0f)
@@ -144,12 +143,10 @@ int TitleScene::Update()
 		}
 		else
 		{
-
 			button_alpha += 0.04f;
 
 			if (button_alpha >= 1.0f)
 			{
-
 				alpha_flag = !alpha_flag;
 			}
 		}
