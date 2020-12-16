@@ -18,6 +18,7 @@ private:
 	SPRITE totitle;
 	FONT txt;
 	int num;
+	int arrival;
 	ANIMATIONMODEL model;
 	CAMERA camera;
 	IPrayerData* _i_player_data;

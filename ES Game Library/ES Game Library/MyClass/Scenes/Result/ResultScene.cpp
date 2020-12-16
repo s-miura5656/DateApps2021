@@ -50,6 +50,17 @@ bool ResultScene::Initialize()
 			break;
 		}
 	}
+	arrival = 1;
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		if (data->points[i] == data->points[i + 1]) {
+			arrival++;
+		}
+		else
+		{
+			break;
+		}
+	}
 
 	auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(data->ranknum[0]), ".png");
 	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
@@ -92,12 +103,19 @@ void ResultScene::Draw2D()
 	SpriteBatch.Draw(*ground, Vector3(0,0,10000));
 	SpriteBatch.Draw(*totitle, Vector3(900, 600, 0));
 
-	SpriteBatch.DrawString(txt, Vector2(950, 100), Color(255, 0, 0),_T("%d"), data->points[0]);
-	SpriteBatch.Draw(*player, Vector3(750, 130,0), RectWH((data->ranknum[0] - 1), 0, 128, 64),1,Vector3(0, 0, 0), Vector3(0, 0, 0), Vector2(1.5f, 1.5f));
-	for (int i = 1; i < PLAYER_COUNT_MAX; i++)
+	float pos_y;
+	for (int i = 0; i < arrival; i++)
 	{
-		SpriteBatch.DrawString(txt, Vector2(950, 150 + 100 * i), Color(0, 0, 0), _T("%d"), data->points[i]);
-		SpriteBatch.Draw(*player,Vector3(750 - 30 * i ,150 + 100 * i,0),RectWH((data->ranknum[i] - 1) * 128,0,128,64));
+		pos_y = 130 + 130 * i;
+		SpriteBatch.DrawString(txt, Vector2(950, 150 + 150 * i), Color(255, 0, 0), _T("%d"), data->points[i]);
+		SpriteBatch.Draw(*player, Vector3(750, pos_y, 0), RectWH((data->ranknum[i] - 1) * 128, 0, 128, 64), 1, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector2(1.5f, 1.5f));
+	}
+	int count = 0;
+	for (int i = arrival; i < PLAYER_COUNT_MAX; i++)
+	{
+		SpriteBatch.DrawString(txt, Vector2(950, pos_y + 50 + 100 * (count + 1)), Color(0, 0, 0), _T("%d"), data->points[i]);
+		SpriteBatch.Draw(*player,Vector3(750 - 30 * i, pos_y + 50 + 100 * (count + 1),0),RectWH((data->ranknum[i] - 1) * 128,0,128,64));
+		count++;
 	}
 }
 void ResultScene::Draw3D()
