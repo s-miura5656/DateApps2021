@@ -102,6 +102,7 @@ bool StageManager::Initialize()
 	delete iplayer_data;
 
 	int size = stages.size();
+
 	return true;
 }
 

@@ -69,8 +69,6 @@ bool TitleScene::Initialize()
 	
 	//impactspeed.Initialize(Vector3(0.01f,0.0f,0.0f));
 	
-
-
 	Viewport view = GraphicsDevice.GetViewport();
 	Vector3 _camera_pos = Vector3(0, 0, -10);
 	Vector3 _look_pos = Vector3(0, 0, 0);
@@ -92,10 +90,6 @@ int TitleScene::Update()
 	auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(1));
 	pad->GamePadRefresh();
 	
-
-	
-
-
 	title_pos.y += 4.0f;
 
 	if (title_pos.y >= 125.0f)

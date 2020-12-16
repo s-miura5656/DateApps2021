@@ -38,8 +38,6 @@ bool ResultScene::Initialize()
 	model->SetRotation(0, 0, 0);
 	model->SetScale(1.5f);
 
-	_i_player_data = new IPrayerData;
-
 	auto data = SceneManager::Instance().GetResultData();
 
 	auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(data->ranknum[0]), ".png");

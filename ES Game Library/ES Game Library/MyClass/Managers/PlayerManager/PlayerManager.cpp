@@ -20,21 +20,17 @@ PlayerManager::PlayerManager()
 
 PlayerManager::~PlayerManager()
 {
-	delete _crown_rotation;
-	delete _i_player_data;
+	auto a = PlayerParametor::Instance()._player_params;
+
+	PlayerParametor::Instance().ResetParametor();
+	ArmParametor::Instance().ResetParametor();
+
+	delete _crown_rotation;	_crown_rotation = nullptr;
+	delete _i_player_data;	_i_player_data  = nullptr;
 
 	for (int i = _players.size() - 1; i >= 0; --i)
 	{
 		delete _players[i];
-	}
-
-	for (int i = 0; i < _players.size(); ++i)
-	{
-		std::string tag = PLAYER_TAG + std::to_string(i + 1);
-		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
-
-		PlayerParametor::Instance().ResetParametor(tag);
-		ArmParametor::Instance().ResetParametor(arm_tag);
 	}
 }
 
@@ -50,6 +46,7 @@ bool PlayerManager::Initialize()
 		ArmParametor::Instance().CreateParametor(arm_tag);
 	}
 
+	
 	_crown_rotation->Initialize();
 	
     return true;
