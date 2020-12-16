@@ -3,6 +3,7 @@
 #include "../BaseScene.h"
 #include"../../Managers/ControllerManager/ContorollerManager.h"
 #include"../../Data/IData.h"
+#include"../../Managers/SceneManager/SceneManager.h"
 class ResultScene : public BaseScene
 {
 public:
@@ -19,10 +20,10 @@ private:
 	FONT txt;
 	int num;
 	int arrival;
+	int fix;
+	std::vector<Vector3> pos;
 	ANIMATIONMODEL model;
-	CAMERA camera;
 	IPrayerData* _i_player_data;
-
 	EFFECT _shader;
-	SPRITE _texture;
+	std::vector<SPRITE>_texture;
 };

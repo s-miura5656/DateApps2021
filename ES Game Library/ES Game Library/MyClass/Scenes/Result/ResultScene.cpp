@@ -18,38 +18,9 @@ ResultScene::~ResultScene()
 */
 bool ResultScene::Initialize()
 {
-	player = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/number.png"));
-	ground = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/ground.png"));
-	totitle = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/button.png"));
-	model = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
-	txt = ResouceManager::Instance().LordFontFile(_T("Yu Gothic UI"), 70);
-	camera->SetView(Vector3(0, 0, -3), Vector3(0, 0, 0)); // 視点
-	camera->SetPerspectiveFieldOfView(45.0f, 16.0f / 9.0f, 1.0f, 10000.0f); // 視界
-
-	Material material;
-	material.Diffuse = Color(1.0f, 1.0f, 1.0f); // 陰影のグラデーション 明るい部分
-	material.Ambient = Color(1.0f, 1.0f, 1.0f); // ベースの色　暗い部分
-	material.Specular = Color(1.0f, 1.0f, 1.0f); // テカリ
-	material.Power = 10.0f; // テカリの効果の強さ
-
-	model->SetMaterial(material);
-	model->SetPosition(Vector3(-1, -0.5, 0));
-	model->SetRotation(0, 0, 0);
-	model->SetScale(1.0f);
-
 	_i_player_data = new IPrayerData;
-
 	auto data = SceneManager::Instance().GetResultData();
 
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		std::string tag = PLAYER_TAG + std::to_string(i + 1);
-		if (_i_player_data->GetRankNum(tag) == 0)
-		{
-			num = _i_player_data->GetRankNum(tag) + 1;
-			break;
-		}
-	}
 	arrival = 1;
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
@@ -61,17 +32,52 @@ bool ResultScene::Initialize()
 			break;
 		}
 	}
-
-	auto _rank = data->ranknum[0];
-
-	auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(data->ranknum[0]), ".png");
-	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(data->ranknum[i]), ".png");
+		SPRITE texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
+		_texture.push_back(texture);
+		pos.push_back(Vector3(-1.5 + (1 * i), -0.3, 0));
+	}
+	Material material;
+	material.Diffuse = Color(1.0f, 1.0f, 1.0f); // 陰影のグラデーション 明るい部分
+	material.Ambient = Color(1.0f, 1.0f, 1.0f); // ベースの色　暗い部分
+	material.Specular = Color(1.0f, 1.0f, 1.0f); // テカリ
+	material.Power = 10.0f; // テカリの効果の強さ
 
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/CharaShader.hlsl"));
+	model = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
+	model->SetMaterial(material);
+	model->SetRotation(0, 0, 0);
 	model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
+	player = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/number.png"));
+	ground = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/ground.png"));
+	totitle = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/button.png"));
+	txt = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 100);
+	SceneCamera::Instance().SetView(Vector3(0, 0, -3), Vector3(0, 0, 0));
+	SceneCamera::Instance().SetPerspectiveFieldOfView(45.0f, 16.0f, 9.0f, 1.0f, 10000.0f);
+
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
+		if (_i_player_data->GetRankNum(tag) == 0)
+		{
+			num = _i_player_data->GetRankNum(tag) + 1;
+			break;
+		}
+	}
 
 	ControllerManager::Instance().CreateGamePad(PLAYER_TAG + std::to_string(1));
 	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
+	if (data->points[0] >= 1000) {
+		fix = -30;
+	}
+	else if (data->points[0] >= 100) {
+		fix = 0;
+	}
+	else if (data->points[0] >= 10) {
+		fix = 30;
+	}
 	return true;
 }
 /*
@@ -104,32 +110,41 @@ void ResultScene::Draw2D()
 	auto data = SceneManager::Instance().GetResultData();
 	SpriteBatch.Draw(*ground, Vector3(0,0,10000));
 	SpriteBatch.Draw(*totitle, Vector3(900, 600, 0));
-
-	float pos_y;
+	float pos_x;
 	for (int i = 0; i < arrival; i++)
 	{
-		pos_y = 130 + 130 * i;
-		SpriteBatch.DrawString(txt, Vector2(200, 150 + 130 * i), Color(255, 0, 0), _T("%d"), data->points[i]);
-		SpriteBatch.Draw(*player, Vector3(750, pos_y, 0), RectWH((data->ranknum[i] - 1) * 128, 0, 128, 64), 1, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector2(1.5f, 1.5f));
+		pos_x = 80 + 300 * i;
+		SpriteBatch.DrawString(txt, Vector2(pos_x + fix,550), Color(255, 0, 0), _T("%d"), data->points[i]);
+		SpriteBatch.Draw(*player, Vector3(pos_x, 450, 0), RectWH((data->ranknum[i] - 1) * 128, 0, 128, 64), 1, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector2(1.5f, 1.5f));
 	}
 	int count = 0;
 	for (int i = arrival; i < PLAYER_COUNT_MAX; i++)
 	{
-		SpriteBatch.DrawString(txt, Vector2(950 - 30 * i, pos_y + 50 + 100 * (count + 1)), Color(0, 0, 0), _T("%d"), data->points[i]);
-		SpriteBatch.Draw(*player,Vector3(750 - 30 * i, pos_y + 50 + 100 * (count + 1),0),RectWH((data->ranknum[i] - 1) * 128,0,128,64));
+		SpriteBatch.DrawString(txt, Vector2(pos_x + 400 + 300 * count, 500), Color(0, 0, 0), _T("%d"), data->points[i]);
+		SpriteBatch.Draw(*player,Vector3(pos_x + 330 * i, 430,0),RectWH((data->ranknum[i] - 1) * 128,0,128,64));
 		count++;
 	}
 }
 void ResultScene::Draw3D()
 {
-	Matrix vp = camera->GetViewProjectionMatrix();
-	_shader->SetTexture("m_Texture", *_texture);
-	_shader->SetTechnique("FixModel");
-	_shader->SetParameter("vp", vp);
-	GraphicsDevice.SetCamera(camera);
-	model->Draw(_shader);
+	Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
+	GraphicsDevice.SetCamera(SceneCamera::Instance().GetCamera());
 	for (int i = 0; i < arrival; i++)
 	{
-
+		_shader->SetTexture("m_Texture", *_texture[i]);
+		_shader->SetTechnique("FixModel");
+		_shader->SetParameter("vp", vp);
+		model->SetScale(1.0f);
+		model->SetPosition(pos[i]);
+		model->Draw(_shader);
+	}
+	for (int i = arrival; i < PLAYER_COUNT_MAX; i++)
+	{
+		_shader->SetTexture("m_Texture", *_texture[i]);
+		_shader->SetTechnique("FixModel");
+		_shader->SetParameter("vp", vp);
+		model->SetScale(0.5f);
+		model->SetPosition(pos[i] + Vector3(0,0.1,0));
+		model->Draw(_shader);
 	}
 }
