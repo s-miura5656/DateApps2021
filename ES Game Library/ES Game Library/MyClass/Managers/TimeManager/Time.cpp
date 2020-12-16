@@ -23,7 +23,7 @@ void TimeManager::Initialize()
 
 void TimeManager::Update()
 {
-	if (countTime == 0) {
+	if (countTime == -1) {
 		if (time < limitTime - 0.9f)
 		{
 			time += (float)GameTimer.GetElapsedSecond();
@@ -36,9 +36,12 @@ void TimeManager::Update()
 	if (startTime == 60) {
 		countTime = 1;
 	}
-	if (startTime <= 0) {
+	if (startTime == 0) {
 		countTime = 0;
-		startTime = 0;
+	}
+	if (startTime == -60) {
+		countTime = -1;
+		startTime = -60;
 	}
 }
 
@@ -62,11 +65,12 @@ int TimeManager::GetTimeSeconds()
 
 int  TimeManager::Countdown()
 {
-	int ret = 0;
-	
-	ret = countTime;
+	return countTime;
+}
 
-	return ret;
+float TimeManager::GetstartTime()
+{
+	return startTime;
 }
 
 

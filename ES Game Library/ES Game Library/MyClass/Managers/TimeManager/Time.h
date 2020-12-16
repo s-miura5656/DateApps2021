@@ -29,7 +29,7 @@ public:
 	int GetTimeMinutes();
 	int GetTimeSeconds();
 	int Countdown();
-
+	float GetstartTime();
 private:
 	float limitTime;
 	float time;

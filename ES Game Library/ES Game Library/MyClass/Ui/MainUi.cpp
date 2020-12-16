@@ -21,7 +21,6 @@ MainUi::~MainUi()
 bool MainUi::Initialize()
 {
 	time_limit_font = GraphicsDevice.CreateSpriteFont(_T("チェックアンドU-Foフォント"), 50);
-	player_date     = GraphicsDevice.CreateSpriteFont(_T("MS ゴシック"), 20);
 	red_banner      = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/red_banner.png"));
 	blue_banner     = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/blue_banner.png"));
 	green_banner    = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/green_banner.png"));
@@ -68,17 +67,20 @@ void MainUi::Draw2D()
 	int minutes   = TimeManager::Instance().GetTimeMinutes();
 	int seconds   = TimeManager::Instance().GetTimeSeconds();
 	int Countdown = TimeManager::Instance().Countdown();
-
+	float Start   = TimeManager::Instance().GetstartTime();
+	
 	tstring a = std::wstring_convert<std::codecvt_utf8<wchar_t>>().from_bytes("");
 	SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("%02d:%02d"), minutes, seconds);
 
 	SpriteBatch.Draw(*time_banner, Vector3(640-125, 5,1));
 	PlayerBanner();
 	PointAnimation();
-	if (Countdown >= 1) {
-		SpriteBatch.Draw(*score_num, Vector3(640, 360, 10), RectWH(Countdown * 64, 0, 64, 64));
+	if (Start > 0) {
+		SpriteBatch.Draw(*score_num, Vector3(620, 340, 10), RectWH(Countdown * 64, 0, 64, 64));
 	}
-	//(int)(Countdown)
+	if (Countdown == 0) {
+		SpriteBatch.DrawString(time_limit_font, Vector2(500, 340), Color(1.f, 1.f, 1.f), _T("S T A R T !!"));
+	}
 }
 
 
@@ -89,11 +91,9 @@ void MainUi::PlayerBanner()
 	{
 		std::string& tag = PLAYER_TAG + std::to_string(i + 1);
 
-
-		//int score = param_list[tag].ranking_point;
 		int score = iplayer_data->GetRankingPoint(tag);
 
-		//SpriteBatch.DrawString(player_date, score_pos[i], color[i], _T("%dp_Point : "), i + 1, iplayer_data->GetRankingPoint(tag));
+		
 		SpriteBatch.Draw(*red_banner, banner_pos[0]);
 		SpriteBatch.Draw(*blue_banner, banner_pos[1]);
 		SpriteBatch.Draw(*yellow_banner, banner_pos[2]);
@@ -115,7 +115,7 @@ void MainUi::PointAnimation()
 		std::string& arm_tag = ARM_TAG + std::to_string(i + 1);
 		auto pos = i_arm_data->GetHitPosition(arm_tag);
 		if (pos != (0, 0, 0)) {
-			SpriteBatch.Draw(*test, pos);
+			//SpriteBatch.Draw(*test, pos);
 		}
 	}
 
