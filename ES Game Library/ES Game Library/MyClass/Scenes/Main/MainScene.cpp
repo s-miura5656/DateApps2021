@@ -104,15 +104,9 @@ void MainScene::ChangeSceneResult()
 				temp = points[j - 1];
 				points[j - 1] = points[j];
 				points[j] = temp;
-			}
-		}
-		for (int n = PLAYER_COUNT_MAX - 1; n > i; n--)
-		{
-			if (ranknum[n - 1] > ranknum[n])
-			{
-				temp = ranknum[n - 1];
-				ranknum[n - 1] = ranknum[n];
-				ranknum[n] = temp;
+				temp = ranknum[j - 1];
+				ranknum[j - 1] = ranknum[j];
+				ranknum[j] = temp;
 			}
 		}
 	}

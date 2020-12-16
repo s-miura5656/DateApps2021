@@ -35,7 +35,7 @@ bool ResultScene::Initialize()
 	model->SetMaterial(material);
 	model->SetPosition(Vector3(-1, -0.5, 0));
 	model->SetRotation(0, 0, 0);
-	model->SetScale(1.5f);
+	model->SetScale(1.0f);
 
 	_i_player_data = new IPrayerData;
 
@@ -61,6 +61,8 @@ bool ResultScene::Initialize()
 			break;
 		}
 	}
+
+	auto _rank = data->ranknum[0];
 
 	auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(data->ranknum[0]), ".png");
 	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
@@ -107,7 +109,7 @@ void ResultScene::Draw2D()
 	for (int i = 0; i < arrival; i++)
 	{
 		pos_y = 130 + 130 * i;
-		SpriteBatch.DrawString(txt, Vector2(950, 150 + 150 * i), Color(255, 0, 0), _T("%d"), data->points[i]);
+		SpriteBatch.DrawString(txt, Vector2(200, 150 + 130 * i), Color(255, 0, 0), _T("%d"), data->points[i]);
 		SpriteBatch.Draw(*player, Vector3(750, pos_y, 0), RectWH((data->ranknum[i] - 1) * 128, 0, 128, 64), 1, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector2(1.5f, 1.5f));
 	}
 	int count = 0;
@@ -126,4 +128,8 @@ void ResultScene::Draw3D()
 	_shader->SetParameter("vp", vp);
 	GraphicsDevice.SetCamera(camera);
 	model->Draw(_shader);
+	for (int i = 0; i < arrival; i++)
+	{
+
+	}
 }
