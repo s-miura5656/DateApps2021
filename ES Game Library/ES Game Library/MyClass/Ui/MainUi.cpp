@@ -27,6 +27,8 @@ bool MainUi::Initialize()
 	yellow_banner   = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/yellow_banner.png"));
 	time_banner     = GraphicsDevice.CreateSpriteFromFile(_T("BannerFrameSprite/time_2.png"));
 	score_num       = GraphicsDevice.CreateSpriteFromFile(_T("NumberSprite/namber.png"));
+	kuro            = GraphicsDevice.CreateSpriteFont(_T("チェックアンドU-Foフォント"), 95);
+	siro            = GraphicsDevice.CreateSpriteFont(_T("チェックアンドU-Foフォント"), 90);
 
 	test = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/ゲージベース2.png"));
 	flag = 0;
@@ -54,7 +56,6 @@ bool MainUi::Initialize()
 	color[2] = Color(255, 255,   0);
 	color[3] = Color(  0, 255,   0);
 	
-
 	InputDevice.CreateKeyboard();
 
 	return true;
@@ -76,10 +77,16 @@ void MainUi::Draw2D()
 	PlayerBanner();
 	PointAnimation();
 	if (Start > 0) {
-		SpriteBatch.Draw(*score_num, Vector3(620, 340, 10), RectWH(Countdown * 64, 0, 64, 64));
+		SpriteBatch.DrawString(kuro, Vector2(600, 340), Color(0.f, 0.f, 0.f), _T("%d"), Countdown);
+	}
+	if (Start > 0) {
+		SpriteBatch.DrawString(siro, Vector2(605, 345), Color(1.f, 1.f, 1.f), _T("%d"), Countdown);
 	}
 	if (Countdown == 0) {
-		SpriteBatch.DrawString(time_limit_font, Vector2(500, 340), Color(1.f, 1.f, 1.f), _T("S T A R T !!"));
+		SpriteBatch.DrawString(kuro, Vector2(387, 340), Color(0.f, 0.f, 0.f), _T("S T A R T !!"));
+	}
+	if (Countdown == 0) {
+		SpriteBatch.DrawString(siro, Vector2(400, 340), Color(1.f, 1.f, 1.f), _T("S T A R T !!"));
 	}
 }
 
@@ -112,10 +119,11 @@ void MainUi::PointAnimation()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
+		
 		std::string& arm_tag = ARM_TAG + std::to_string(i + 1);
 		auto pos = i_arm_data->GetHitPosition(arm_tag);
-		if (pos != (0, 0, 0)) {
-			//SpriteBatch.Draw(*test, pos);
+		if (pos != Vector3_Zero) {
+			SpriteBatch.Draw(*test, pos);
 		}
 	}
 

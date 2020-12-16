@@ -42,6 +42,9 @@ public:
 	IPrayerData* i_player_data;
 	IArmData* i_arm_data;
 
+	FONT kuro;
+	FONT siro;
+
 	//test
 	SPRITE test;
 	int flag;
