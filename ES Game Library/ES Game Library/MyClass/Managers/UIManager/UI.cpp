@@ -16,6 +16,7 @@ MainUiManager::~MainUiManager()
 bool MainUiManager::Initialize()
 {
 	_ui->Initialize();
+
 	return true;
 }
 
@@ -23,9 +24,7 @@ int MainUiManager::Update()
 {
 	_ui->Update();
 	
-	MainUi* ui = (MainUi*)_ui;
 	KeyboardState key = Keyboard->GetState();
-	
 
 	return 0;
 }
