@@ -279,7 +279,9 @@ void ArmBase::HitOtherObject()
 			if (i_player_data->GetState(name) != PlayerEnum::Animation::DAMAGE)
 			{
 				i_player_data->SetHitPoint(name, hitpoint);
-				i_arm_data->SetHitPosition(_tag, _transform.position);
+				auto screen_pos = GraphicsDevice.WorldToScreen(_transform.position);
+				screen_pos.z = SpriteBatch_TopMost;
+				i_arm_data->SetHitPosition(_tag, screen_pos);
 			}
 
 			if (i_player_data->GetState(name) == PlayerEnum::Animation::DEATH)

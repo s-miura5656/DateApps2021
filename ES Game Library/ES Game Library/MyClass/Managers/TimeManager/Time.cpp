@@ -18,12 +18,14 @@ void TimeManager::Initialize()
 
 	startTime  = 180.0f;
 	countTime  = 3;
+
+	startFlag = false;
 }
  
 
 void TimeManager::Update()
 {
-	if (countTime == -1) {
+	if (startFlag == true) {
 		if (time < limitTime - 0.9f)
 		{
 			time += (float)GameTimer.GetElapsedSecond();
@@ -42,6 +44,10 @@ void TimeManager::Update()
 	if (startTime == -60) {
 		countTime = -1;
 		startTime = -60;
+	}
+
+	if (countTime == -1) {
+		startFlag = true;
 	}
 }
 
@@ -71,6 +77,11 @@ int  TimeManager::Countdown()
 float TimeManager::GetstartTime()
 {
 	return startTime;
+}
+
+bool TimeManager::StartFlag()
+{ 
+	return 	startFlag;
 }
 
 

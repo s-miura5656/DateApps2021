@@ -30,12 +30,16 @@ public:
 	int GetTimeSeconds();
 	int Countdown();
 	float GetstartTime();
+	bool StartFlag();
+
 private:
 	float limitTime;
 	float time;
 
 	float startTime;
 	int countTime;
+
+	bool startFlag;
 	
 	};
 
