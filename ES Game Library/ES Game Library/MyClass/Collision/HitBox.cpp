@@ -1,5 +1,6 @@
 #include "HitBox.h"
 #include "../Data/MyAlgorithm.h"
+#include <algorithm>
 
 //static
 std::list<HitBox*> HitBox::_HitBox_list;
@@ -42,7 +43,7 @@ void HitBox::SetModelPosition()
 	_model->SetPosition(_position);
 }
 
-void HitBox::Settags(string tags) 
+void HitBox::Settags(std::string tags) 
 {
 	_tag = tags;
 }
@@ -118,7 +119,7 @@ std::list<HitBox*> HitBox::HitHitBoxlist() {
 };
 
 //É^ÉOÇåüçıÇ∑ÇÈ
-bool HitBox::Tag_Sarch(string _tag)
+bool HitBox::Tag_Sarch(std::string _tag)
 {
 	bool f = false;
 	for (auto&& h : _HitBox_list) {
@@ -303,7 +304,7 @@ Vector3 HitBox::WallShavingObjects(std::list<HitBox*> is_hit_list, Vector3 pos, 
 	auto it = std::min_element(dists.begin(), dists.end());
 
 	int index = std::distance(dists.begin(), it);
-
+	
 	auto box = std::next(is_hit_list.begin(), index);
 
 	Vector3 _normal = Vector3_Zero;

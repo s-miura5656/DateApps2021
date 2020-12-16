@@ -1,6 +1,7 @@
 #include "ItemManager.h"
 #include "../../Item/ItemFactory/ItemFactory.h"
 #include "../../Data/WordsTable.h"
+#include <algorithm>
 
 std::vector<ItemBase*> ItemManager::item_base;
 

@@ -4,6 +4,8 @@
 #include <sstream>
 #include <codecvt>
 
+using namespace std;
+
 //! @fn •¶š—ñ‚©‚ç”š‚ğæ‚èo‚·ŠÖ”
 //! @brief •¶š—ñ‚Ì _ ‚ª‚ ‚é‚Æ‚±‚ë‚ÌŒã‚Ì”š‚ğ”²‚«o‚· 
 //! @detail name_1 ‚¾‚Æ 1 ‚Ì•”•ª‚ªintŒ^‚Æ‚µ‚Äæ‚èo‚³‚ê‚é

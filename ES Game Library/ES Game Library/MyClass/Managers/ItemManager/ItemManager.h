@@ -4,6 +4,8 @@
 
 class ItemBase;
 
+using namespace std;
+
 class ItemManager : public ManagerBase
 {
 public:

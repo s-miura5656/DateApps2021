@@ -61,8 +61,8 @@ int PlayerBase::Update()
 		}
 
 		//! 移動中か待機中か判定
-		//if (!_move_flag)
-		//{
+		if (!_move_flag)
+		{
 			//! パンチ発射状態ならすぐさまリターン
 			if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
 			{
@@ -107,12 +107,12 @@ int PlayerBase::Update()
 					_i_player_data->SetPosition(_tag, _transform.position);
 				}
 			}
-		//}
+		}
 
 		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::MOVE)
 		{
 			//! 移動
-			IsMove(pad);
+			Move(pad);
 		}
 	}
 
@@ -349,7 +349,7 @@ void PlayerBase::Move(Controller* pad)
 
 void PlayerBase::IsMove(Controller* pad)
 {
-	auto&& map_data = _i_map_data->GetData();
+	/*auto&& map_data = _i_map_data->GetData();
 	
 	float abs_x = fabsf(pad->GetPadStateX());
 	float abs_z = fabsf(pad->GetPadStateY());
@@ -361,11 +361,13 @@ void PlayerBase::IsMove(Controller* pad)
 	{
 		std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
 		_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
+		abs_z = 0;
 	}
 	else if (abs_x < abs_z)
 	{
 		std::signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
 		_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
+		abs_x = 0;
 	}
 
 	if (map_data[_index_num.z][_index_num.x] != 'i' &&
@@ -384,7 +386,7 @@ void PlayerBase::IsMove(Controller* pad)
 	_old_pos = _transform.position;
 
 	_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
-	_lerp_count += _i_player_data->GetSpeed(_tag);
+	_lerp_count += (abs_x + abs_z) * _i_player_data->GetSpeed(_tag);
 
 	_lerp_count = Clamp(_lerp_count, 0, 1);
 
@@ -392,7 +394,7 @@ void PlayerBase::IsMove(Controller* pad)
 	{
 		_lerp_count = 0;
 		_i_player_data->SetPosition(_tag, _transform.position);
-	}
+	}*/
 }
 
 //! 当たり判定の座標設定
@@ -424,7 +426,7 @@ void PlayerBase::DestroyArm()
 void PlayerBase::DebugControll()
 {
 	KeyboardBuffer keybuffer = Keyboard->GetBuffer();
-	KeyboardState keystate = Keyboard->GetState();
+	KeyboardState keystate   = Keyboard->GetState();
 
 
 	//! アームの飛ぶ速度調整

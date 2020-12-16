@@ -2,6 +2,8 @@
 #include "../../ESGLib.h"
 #include <functional>
 
+using namespace std;
+
 class HitBox {
 public:
 	//デストラクタ
@@ -30,7 +32,7 @@ public:
 	//衝突しているHitBoxのリストを取得
 	std::list<HitBox*> HitBox::HitHitBoxlist();
 
-	void    Settags(string tags);
+	void    Settags(std::string tags);
 	void    SetColor(Vector3 colors);
 	void	SetModelScale();
 	void    SetModelPosition();
@@ -42,7 +44,7 @@ public:
 	HitBox* TypeRayRange(std::string tag, Vector3 position, Vector3 angle, float& range);
 	HitBox* GetHitBoxTag(std::string tag);
 	MODEL   GetModelTag() const { return _model; }
-	bool    Tag_Sarch(string _tag);
+	bool    Tag_Sarch(std::string _tag);
 
 	bool IsHitObjects(std::string tags);
 	bool IsHitObjectsSquare(std::string tags);
@@ -61,7 +63,7 @@ private:
 	//全てのHitBoxを格納しておくリスト
 	static std::list<HitBox*> _HitBox_list;
 
-	string _tag;
+	std::string _tag;
 	//判定用のモデル
 	static MODEL _model;
 

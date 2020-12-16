@@ -11,6 +11,8 @@
 class Player;
 class CrownRotation;
 
+using namespace std;
+
 class PlayerManager : public ManagerBase
 {
 public:
