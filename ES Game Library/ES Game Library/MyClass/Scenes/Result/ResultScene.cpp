@@ -87,10 +87,10 @@ void ResultScene::Draw2D()
 	SpriteBatch.Draw(*ground, Vector3(0,0,10000));
 	SpriteBatch.Draw(*totitle, Vector3(900, 600, 0));
 
-	SpriteBatch.DrawString(txt, Vector2(960, 150), Color(255, 0, 0),_T("%d"), data->points[0]);
-	SpriteBatch.Draw(*player, Vector3(750, 130,0), RectWH((data->ranknum[0] - 1), 0, 128, 64),1,Vector3(0, 0, 0), Vector3(0, 0, 0), Vector2(1.5f, 1.5f));
+	//SpriteBatch.DrawString(txt, Vector2(960, 150), Color(255, 0, 0),_T("%d"), data->points[0]);
+	//SpriteBatch.Draw(*player, Vector3(750, 130,0), RectWH((data->ranknum[0] - 1), 0, 128, 64),1,Vector3(0, 0, 0), Vector3(0, 0, 0), Vector2(1.5f, 1.5f));
 	
-	for (int i = 1; i < PLAYER_COUNT_MAX; i++)
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		SpriteBatch.DrawString(txt, Vector2(960, 150 + (105 * i)), Color(0, 0, 0), _T("%d"), data->points[i]);
 		SpriteBatch.Draw(*player, Vector3(750 - 30 * i, 150 + (100 * i), 0), RectWH((data->ranknum[i] - 1) * 128, 0, 128, 64));

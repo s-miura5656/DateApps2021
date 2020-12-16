@@ -11,6 +11,8 @@
 */
 bool TitleScene::Initialize()
 {
+	
+
 	_background = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/background.png"));
 	_title      = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/Title.png"));
 	_robot      = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/robot.png"));

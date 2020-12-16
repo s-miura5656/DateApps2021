@@ -6,12 +6,15 @@
 #include "../../Managers/UIManager/UI.h"
 #include "../../Managers/ControllerManager/ContorollerManager.h"
 #include "../../Managers/SceneManager/SceneManager.h"
-#include"../../Managers/TimeManager/Time.h"
+#include "../../Managers/TimeManager/Time.h"
+#include "../../Data/IData.h"
+#include "../../Data/Parametor.h"
+
 MainScene::MainScene()
 {
 	_managers.push_back(new StageManager);
 	_managers.push_back(new PlayerManager);
-	_managers.push_back(new ItemManager);
+	//_managers.push_back(new ItemManager);
 	_managers.push_back(new MainUiManager);
 }
 
@@ -44,6 +47,9 @@ bool MainScene::Initialize()
 	//SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
 	SceneCamera::Instance().SetView(Vector3(7, 11, -11.6), Vector3(65.2, 0, 0));
 	SceneCamera::Instance().SetPerspectiveFieldOfView(57, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
+
+	PlayerParametor::Instance().ResetParametor();
+	ArmParametor::Instance().ResetParametor();
 
 	auto _temporary_managers = _managers;
 
