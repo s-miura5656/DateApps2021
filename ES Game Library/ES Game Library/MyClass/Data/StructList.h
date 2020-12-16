@@ -9,7 +9,7 @@ struct PlayerParam {
 	float angle		  = 0.f;
 	int hit_point	  = 1000;
 	int attack_powor  = 1000;
-	float speed		  = 0.04f;
+	float speed		  = 0.05f;
 	int ranking_point = 0;
 	int kill_count    = 0;
 	int rank_num      = 0;
@@ -20,7 +20,7 @@ struct ArmParam {
 	Vector3 position				 = Vector3_Zero;
 	float   angle					 = 0.f;
 	int     attack_powor			 = 200;
-	float   go_speed				 = 0.1f;
+	float   go_speed				 = 0.06f;
 	float   return_speed			 = 0.3f;
 	int     limit_range				 = 20;
 	Vector3 hit_position = Vector3_Zero;
