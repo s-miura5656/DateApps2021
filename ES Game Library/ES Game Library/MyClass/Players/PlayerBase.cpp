@@ -67,7 +67,9 @@ int PlayerBase::Update()
 			if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
 			{
 				_i_player_data->SetIndexNum(_tag, _index_num);
+				
 				_arm->Update();
+
 				return 0;
 			}
 			else if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::SHOT)

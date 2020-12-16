@@ -26,6 +26,15 @@ PlayerManager::~PlayerManager()
 	{
 		delete _players[i];
 	}
+
+	for (int i = 0; i < _players.size(); ++i)
+	{
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
+		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
+
+		PlayerParametor::Instance().ResetParametor(tag);
+		ArmParametor::Instance().ResetParametor(arm_tag);
+	}
 }
 
 bool PlayerManager::Initialize()

@@ -47,16 +47,10 @@ bool MainScene::Initialize()
 
 	auto _temporary_managers = _managers;
 
-	Effekseer.Attach(GraphicsDevice);
-
 	for (auto&& manager : _temporary_managers)
 	{
 		manager->Initialize();
 	}
-
-	Effekseer.SetCamera(SceneCamera::Instance().GetCamera());
-
-	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
 
 	return true;
 }
@@ -64,8 +58,6 @@ bool MainScene::Initialize()
 int MainScene::Update()
 {
 	auto _temporary_managers = _managers;
-
-	Effekseer.Update();
 
 	for (auto&& manager : _temporary_managers)
 	{
@@ -150,6 +142,4 @@ void MainScene::DrawAlpha3D()
 	{
 		manager->DrawAlpha3D();
 	}
-
-	Effekseer.Draw();
 }

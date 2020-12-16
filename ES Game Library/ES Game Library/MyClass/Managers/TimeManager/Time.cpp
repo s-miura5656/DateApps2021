@@ -13,20 +13,17 @@ TimeManager::~TimeManager()
 
 void TimeManager::Initialize()
 {
-	limitTime =180.9f;
+	limitTime = 5.9f;
 	time = 0.0f;
 }
  
 
 void TimeManager::Update()
 {
-	
 	if (time < limitTime - 0.9f)
 	{
 		time += (float)GameTimer.GetElapsedSecond();
 	}
-	
-	
 }
 
 int TimeManager::GetTimeMinutes()

@@ -57,9 +57,6 @@ bool Player::Initialize()
 	//! hit_box
 	SetCollisionPosition();
 
-	//! Pad
-	ControllerManager::Instance().CreateGamePad(_tag);
-
 	//! index
 	_animation_index = _i_player_data->GetState(_tag);
 

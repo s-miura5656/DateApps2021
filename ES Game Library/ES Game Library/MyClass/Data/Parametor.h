@@ -21,8 +21,8 @@ public:
 		return instance;
 	};
 
-	void CreateParametor(std::string name) { _player_params.emplace_hint(_player_params.end(), name, _player_param); }
-
+	void CreateParametor(std::string tag) { _player_params.emplace_hint(_player_params.end(), tag, _player_param); }
+	void ResetParametor(std::string tag) { _player_params.clear(); }
 private:
 	PlayerParametor(const PlayerParametor&) = delete;
 	void operator=(const PlayerParametor&) = delete;
@@ -45,7 +45,9 @@ public:
 		return instance;
 	};
 
-	void CreateParametor(std::string name) { _arm_params.emplace_hint(_arm_params.end(), name, _arm_param); }
+	void CreateParametor(std::string tag) { _arm_params.emplace_hint(_arm_params.end(), tag, _arm_param); }
+	void ResetParametor(std::string tag) { _arm_params.clear(); }
+
 private:
 	ArmParametor(const ArmParametor&) = delete;
 	void operator=(const ArmParametor&) = delete;

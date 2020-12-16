@@ -11,7 +11,7 @@ class Player : public PlayerBase
 {
 public:
 	Player (std::string name);
-	~Player ();
+	~Player () override;
 
 	bool Initialize() override;
 

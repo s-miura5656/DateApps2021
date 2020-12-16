@@ -12,6 +12,7 @@ CrownRotation::CrownRotation()
 
 CrownRotation::~CrownRotation()
 {
+	_effect->Stop();
 	_effect.reset();
 	delete _i_player_data;
 }
@@ -23,6 +24,8 @@ bool CrownRotation::Initialize()
 	auto effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/crown_effect/star_05.efk"));
 
 	_effect->RegisterParticle(effect);
+	_effect->SetSpeed(1.0f);
+	_effect->SetScale(0.3f);
 
 	_model_material.Diffuse  = Color(1.0f, 1.0f, 1.0f);
 	_model_material.Ambient  = Color(1.0f, 1.0f, 1.0f);
@@ -30,8 +33,6 @@ bool CrownRotation::Initialize()
 	_model_material.Power    = 10.0f;
 
 	_model->SetScale(0.75f, 0.75f, 0.75f);
-
-	_effect->SetScale(0.3f);
 
 	crown_flag = false;
 

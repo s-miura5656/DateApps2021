@@ -47,7 +47,8 @@ public:
 		return instance;
 	};
 
-	ResultData* GetResultData() { return _result_data; };
+	ResultData* GetResultData() { return _result_data.get(); }
+
 	void SetResultData(int[PLAYER_COUNT_MAX], int[PLAYER_COUNT_MAX]);
 
 private:
@@ -56,12 +57,8 @@ private:
 	SceneManager(const SceneManager&) = delete;
 	void operator=(const SceneManager&) = delete;
 
-	BaseScene* _scene;
-	float _viewing_angle;
-	Vector3 _camera_pos;
-	Vector3 _look_pos;
-	Viewport view;
-	ResultData* _result_data;
+    std::unique_ptr<BaseScene> _scene;
+	std::unique_ptr<ResultData> _result_data;
 };
 
 

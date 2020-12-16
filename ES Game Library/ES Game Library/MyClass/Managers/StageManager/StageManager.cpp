@@ -13,7 +13,10 @@ StageManager::StageManager()
 
 StageManager::~StageManager()
 {
-
+	for (int i = stages.size() - 1; i >= 0; --i)
+	{
+		delete stages[i];
+	}
 }
 
 bool StageManager::Initialize()

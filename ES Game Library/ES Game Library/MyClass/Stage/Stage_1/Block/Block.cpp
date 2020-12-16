@@ -3,30 +3,37 @@
 #include "../../../Data/IData.h"
 #include "../../../Data/WordsTable.h"
 #include "../../../Managers/SceneManager/SceneManager.h"
+#include "../../../ParticleSystem/Particle.h"
 
 Block::Block(std::string tag)
 {
-	_model = nullptr;
-	_hit_box.reset(new HitBox());
-	_hit_box->Init();
+	_model  = nullptr;
 	_tag = tag;
-	_hit_box->Settags(_tag);
-	_hit_box->SetHitBoxScale(1.0f);
 }
 
 Block::~Block()
 {
 	_hit_box.reset();
-	_effect->Stop(_handle);
+	_effect.reset();
 }
 
 bool Block::Initialize()
 {
+	_effect.reset(new ParticleSystem);
+	_hit_box.reset(new HitBox());
+	_hit_box->Init();
+	_hit_box->Settags(_tag);
+	_hit_box->SetHitBoxScale(1.0f);
+
 	//Xファイルの読み込み
 	_model  = ResouceManager::Instance().LoadModelFile(_T("MapSprite/capsule2.X"));
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
-	_effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/effekseer_break02/break_effect.efk"));
-	
+	auto effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/effekseer_break02/break_effect.efk"));
+
+	_effect->RegisterParticle(effect);
+	_effect->SetSpeed(1.0f);
+	_effect->SetScale(1.0f);
+
 	//スケールの設定
 	_scale = 0.85f;
 	_model->SetScale(_scale);
@@ -67,7 +74,6 @@ int Block::Update()
 				delete arm_data;
 				return 0;
 			}
-				
 
 			IMapData* map_data = new IMapData;
 			auto data = map_data->GetData();
@@ -86,7 +92,8 @@ int Block::Update()
 			player_data->SetRankingPoint(player_tag, player_data->GetRankingPoint(player_tag) + 10);
 			delete player_data;
 
-			_handle = _effect->Play(_position + Vector3(0, 0.5f, 0));
+			_effect->SetPosition(_position);
+			_effect->PlayOneShot();
 
 			return 1;
 		}
@@ -97,15 +104,14 @@ int Block::Update()
 
 void Block::Draw3D()
 {
-	_effect->SetSpeed(_handle, 0.5f);
-	_effect->SetScale(_handle, 1.0f);
-
 	if (_hit_box != nullptr)
 	{
 		_hit_box->SetModelPosition();
 		_hit_box->SetModelScale();
 		//_hit_box->Draw3D();
 	}
+
+	_effect->Draw();
 }
 
 void Block::DrawAlpha3D()

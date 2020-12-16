@@ -2,11 +2,12 @@
 
 ParticleSystem::ParticleSystem()
 {
+	_particle = nullptr;
 }
 
 ParticleSystem::~ParticleSystem()
 {
-	//delete _particle;
+
 }
 
 void ParticleSystem::RegisterParticle(EFFEKSEER& particle)
@@ -66,6 +67,7 @@ void ParticleSystem::SetScale(float scale)
 
 void ParticleSystem::SetSpeed(float speed)
 {
+	
 	_speed = speed;
 }
 

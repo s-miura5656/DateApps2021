@@ -21,7 +21,6 @@ bool TitleScene::Initialize()
 
 	_sprite = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/Chara.png"));
 
-	
 	sprite_alpha = 1.0f;
 	alpha_flag = true;
 	button_flag = false;
@@ -32,11 +31,6 @@ bool TitleScene::Initialize()
 	sprite_pos = Vector3(0.0f,0.0f,-100.0f);
 	sprite_scale = Vector2(0.9f, 0.9f);
 	
-
-	ControllerManager::Instance().CreateGamePad(PLAYER_TAG + std::to_string(1));
-	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
-
-
 	//for (int i = 0; i < MODEL_MAX; i++)
 	//{
 	//	model[i] = GraphicsDevice.CreateModelFromFile(_T("Player/robot.x"));
@@ -78,7 +72,7 @@ bool TitleScene::Initialize()
 	SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
 	SceneCamera::Instance().SetPerspectiveFieldOfView(60.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 
-	GraphicsDevice.SetCamera(camera);
+	SceneCamera::Instance().SetSceneCamera();
 
 	return true;
 }
@@ -92,12 +86,16 @@ int TitleScene::Update()
 	auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(1));
 	pad->GamePadRefresh();
 	
-	if (pad->GetButtonBuffer(GamePad_Button2))
+	if (title_pos.y >= 125.0f)
 	{
-		SceneManager::Instance().ChangeScene(SceneManager::MAIN);
-		button_flag;
-	}
+		title_pos.y = 125.0f;
 
+		if (pad->GetButtonBuffer(GamePad_Button2))
+		{
+			SceneManager::Instance().ChangeScene(SceneManager::MAIN);
+			button_flag;
+		}
+	}
 
 	if (!button_flag)
 	{
@@ -126,12 +124,6 @@ int TitleScene::Update()
 	}
 
 	title_pos.y += 2.0f;
-
-	if (title_pos.y > 125.0f)
-	{
-		title_pos.y = 125.0f;
-	}
-
 
 	//KeyboardBuffer key = Keyboard->GetBuffer();
 

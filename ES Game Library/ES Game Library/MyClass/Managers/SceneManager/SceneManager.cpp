@@ -6,6 +6,8 @@
 #include "../../Scenes/Title/TitleScene.h"
 #include"../../Scenes/Result/ResultScene.h"
 #include "../ControllerManager/ContorollerManager.h"
+#include "../TimeManager/Time.h"
+#include "../ResouceManager/ResouceManager.h"
 
 //! @brief コンストラクタ
 //! @detail SceneManager が作られたときに呼び出されるよ
@@ -18,97 +20,57 @@ SceneManager::SceneManager()
 //! @detail SceneManager が消えるときに呼び出されるよ
 SceneManager::~SceneManager()
 {
-	delete _result_data;
-	delete _scene;
+	_result_data.reset();
+	_scene.reset();
 }
 
 //! @brief シーンの切り替え関数
 //! @param (scene) 遷移したいシーン 
 void SceneManager::ChangeScene(SceneState scene)
 {
-	//! 
 	if (_scene != nullptr) {
-		delete _scene;
+		_scene.reset();
 	}
 	
 	switch (scene) {
 	case SceneState::TITLE:
-		_scene = new TitleScene;
+		_scene.reset(new TitleScene);
 		break;
 	case SceneState::MAIN:
-		_scene = new MainScene;
+		_scene.reset(new MainScene);
 		break;
 	case SceneState::RESULT:
-		_scene = new ResultScene;
+		_scene.reset(new ResultScene);
 		break;
 	}
+
+	TimeManager::Instance().Initialize();
 
 	_scene->Initialize();
 }
 
 bool SceneManager::Initialize()
 {
-	/**
-	* @brief ライトの初期設定
-	*/
-	Light light;
-	light.Type = Light_Directional;
-	light.Direction = Vector3(1, -1, 1);
-	light.Diffuse = Color(1.0f, 1.0f, 1.0f);
-	light.Ambient = Color(1.0f, 1.0f, 1.0f);
-	light.Specular = Color(1.0f, 1.0f, 1.0f);
-	
-	SceneLight::Instance().SetLightParametor(light);
-	SceneLight::Instance().SetSceneLight();
+	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
 
-	_result_data = new ResultData();
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
 
-	_viewing_angle = 60;
-	view = GraphicsDevice.GetViewport();
-	_camera_pos = Vector3(7, 11, -11.6);
-	_look_pos = Vector3(65.2, 0, 0);
-	//SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
-	SceneCamera::Instance().SetView(Vector3(7, 11, -11.6), Vector3(65.2, 0, 0));
-	SceneCamera::Instance().SetPerspectiveFieldOfView(57, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
+		ControllerManager::Instance().CreateGamePad(tag);
+	}
+
+	_result_data.reset(new ResultData());
+
 	return true;
 }
 
 int SceneManager::Update()
 {
+	TimeManager::Instance().Update();
+
 	_scene->Update();
-	/**
-* @brief カメラの初期設定
-*/
 
-	KeyboardState key = Keyboard->GetState();
-
-	//SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
-
-//パース調整用
-	if (key.IsKeyDown(Keys_A)) {
-		_viewing_angle += 0.5;
-	}
-	if (key.IsKeyDown(Keys_Z)) {
-		_viewing_angle -= 0.5;
-	}
-	if (key.IsKeyDown(Keys_S)) {
-		_camera_pos.y += 0.1;
-	}
-	if (key.IsKeyDown(Keys_X)) {
-		_camera_pos.y -= 0.1;
-	}
-	if (key.IsKeyDown(Keys_D)) {
-		_camera_pos.z += 0.1;
-	}
-	if (key.IsKeyDown(Keys_C)) {
-		_camera_pos.z -= 0.1;
-	}
-	if (key.IsKeyDown(Keys_F)) {
-		_look_pos.x += 0.1;
-	}
-	if (key.IsKeyDown(Keys_V)) {
-		_look_pos.x -= 0.1;
-	}
 	return 0;
 }
 

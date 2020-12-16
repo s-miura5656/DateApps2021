@@ -2,7 +2,6 @@
 #include "StdAfx.h"
 #include "GameMain.h"
 #include "MyClass/Managers/SceneManager/SceneManager.h"
-#include "MyClass/Managers/TimeManager/Time.h"
 
 /// <summary>
 /// Allows the game to perform any initialization it needs to before starting to run.
@@ -13,8 +12,7 @@ bool GameMain::Initialize()
 {
 	// TODO: Add your initialization logic here
 	WindowTitle(_T("Roke Pun Fighters"));
-	
-	TimeManager::Instance().Initialize();
+	Effekseer.Attach(GraphicsDevice);
 	SceneManager::Instance().Initialize();
 	SceneManager::Instance().ChangeScene(SceneManager::Instance().TITLE);
 
@@ -44,8 +42,8 @@ int GameMain::Update()
 {
 	// TODO: Add your update logic here
 	//_time_manager->Update();
-	TimeManager::Instance().Update();
 	SceneManager::Instance().Update();
+	Effekseer.Update();
 	return 0;
 }
 
@@ -75,6 +73,9 @@ void GameMain::Draw()
 	SceneManager::Instance().DrawAlpha3D();
 	GraphicsDevice.SetRenderState(CullMode_CullCounterClockwiseFace);
 	GraphicsDevice.EndAlphaBlend();
+
+	Effekseer.SetCamera(SceneCamera::Instance().GetCamera());
+	Effekseer.Draw();
 
 	//GraphicsDevice.RenderTargetToBackBuffer(hdr, _shader);
 	GraphicsDevice.EndScene();
