@@ -61,8 +61,8 @@ int PlayerBase::Update()
 		}
 
 		//! 移動中か待機中か判定
-		if (!_move_flag)
-		{
+		//if (!_move_flag)
+		//{
 			//! パンチ発射状態ならすぐさまリターン
 			if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
 			{
@@ -74,7 +74,7 @@ int PlayerBase::Update()
 			{
 				_shot_pending_count++;
 
-				if (_shot_pending_count > 60)
+				if (_shot_pending_count > 30)
 				{
 					_i_player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
 					_i_player_data->SetPosition(_tag, _transform.position);
@@ -107,12 +107,12 @@ int PlayerBase::Update()
 					_i_player_data->SetPosition(_tag, _transform.position);
 				}
 			}
-		}
+		//}
 
 		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::MOVE)
 		{
 			//! 移動
-			Move(pad);
+			IsMove(pad);
 		}
 	}
 
@@ -152,7 +152,7 @@ void PlayerBase::Draw3D()
 	else
 	{
 		_destroy_effect->Stop();
-
+		
 		ChangeAnimation();
 
 		DrawModel();
@@ -235,7 +235,25 @@ void PlayerBase::DrawWireModel()
 		_wire_models[i]->SetRotation(Vector3(0, arm_angles[i] + 180, 0));
 		Matrix world = _wire_models[i]->GetWorldMatrix();
 		_wire_shader->SetParameter("wvp", world * vp);
-		_wire_models[i]->Draw(_wire_shader);
+
+		if (arm_positions.size() > _i_arm_Data->GetLimitRange(_tag) - 3)
+		{
+			_wire_shader->SetParameter("limit_color", Vector3(1.0f, 0.0f, 0.0f));
+			_wire_shader->SetTechnique("FixLimitModel_S1");
+			_wire_models[i]->Draw(_wire_shader);
+		}
+		else if (arm_positions.size() > _i_arm_Data->GetLimitRange(_tag) - 10)
+		{
+			_wire_shader->SetParameter("limit_color", Vector3(1.0f, 1.0f, 0.0f));
+			_wire_shader->SetTechnique("FixLimitModel_S1");
+			_wire_models[i]->Draw(_wire_shader);
+		}
+		else
+		{
+			_wire_shader->SetParameter("limit_color", Vector3(0.0f, 1.0f, 0.0f));
+			_wire_shader->SetTechnique("FixLimitModel_S1");
+			_wire_models[i]->Draw(_wire_shader);
+		}
 	}
 }
 
@@ -260,7 +278,15 @@ void PlayerBase::ChangeAnimation()
 
 	//! アニメーショントラックのアニメーションを指定した位置から再生
 	_model->SetTrackEnable(_animation_index, TRUE);	
-	_model->SetTrackPosition(_animation_index, _animation_count);
+
+	if (_animation_index != PlayerEnum::Animation::SHOT)
+	{
+		_model->SetTrackPosition(_animation_index, _animation_count);
+	}
+	else
+	{
+		_model->SetTrackPosition(_animation_index, _animation_count * 2.0f);
+	}
 }
 
 //! @fn 移動処理
@@ -318,6 +344,54 @@ void PlayerBase::Move(Controller* pad)
 		}
 
 		_old_pos = _transform.position;
+	}
+}
+
+void PlayerBase::IsMove(Controller* pad)
+{
+	auto&& map_data = _i_map_data->GetData();
+	
+	float abs_x = fabsf(pad->GetPadStateX());
+	float abs_z = fabsf(pad->GetPadStateY());
+
+	int old_index_x = _index_num.x;
+	int old_index_z = _index_num.z;
+
+	if (abs_x > abs_z)
+	{
+		std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
+		_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
+	}
+	else if (abs_x < abs_z)
+	{
+		std::signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
+		_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
+	}
+
+	if (map_data[_index_num.z][_index_num.x] != 'i' &&
+		map_data[_index_num.z][_index_num.x] != 'w' &&
+		map_data[_index_num.z][_index_num.x] != 'b')
+	{
+		_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
+		_i_player_data->SetIndexNum(_tag, _index_num);
+	}
+	else
+	{
+		_index_num.x = old_index_x;
+		_index_num.z = old_index_z;
+	}
+
+	_old_pos = _transform.position;
+
+	_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
+	_lerp_count += _i_player_data->GetSpeed(_tag);
+
+	_lerp_count = Clamp(_lerp_count, 0, 1);
+
+	if (_lerp_count >= 1.f)
+	{
+		_lerp_count = 0;
+		_i_player_data->SetPosition(_tag, _transform.position);
 	}
 }
 

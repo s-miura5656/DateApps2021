@@ -27,6 +27,7 @@ protected:
 	void CreateArm();
 	void DestroyArm();
 	void Move(Controller* pad);
+	void IsMove(Controller* pad);
 	void SetCollisionPosition();
 	void DebugControll();
 
@@ -78,6 +79,9 @@ protected:
 	double _animation_count = 0;
 	int _shot_pending_count = 0;
 	int _respawn_time       = 0;
+
+	//! animation_limit
+	float _shot_frame = 60.0f;
 
 	//! material
 	Material _model_material;

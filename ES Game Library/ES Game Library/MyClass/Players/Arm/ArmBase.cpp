@@ -195,12 +195,15 @@ void ArmBase::MoveArm(Controller* pad)
 			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z + Vector3(0, 0.5f, 0);
 			_move_flag = true;
 		}
-		else if (map_data[_index_num.z][_index_num.x] == 'i')
+		else if (map_data[_index_num.z][_index_num.x] == 'i' ||
+				 map_data[_index_num.z][_index_num.x] == 'w')
 		{
 			_index_num.x = old_index_x;
 			_index_num.z = old_index_z;
 			_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 			_i_arm_Data->SetState(_tag, _arm_state);
+			_wall_hit_effect->SetPosition(_transform.position);
+			_wall_hit_effect->PlayOneShot();
 		}
 		else
 		{
@@ -328,15 +331,44 @@ void ArmBase::ChangeDirection(Controller* pad)
 	//! パッドを倒していたらアームの向き入力状態
 	if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
 	{
-		_transform.rotation.y = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
-		_transform.rotation.y = AngleClamp(_transform.rotation.y);
+		float angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+		angle = AngleClamp(angle);
 
-		//! 向きが変わっていたら向きを更新
-		if (_transform.rotation.y != _old_angle)
+		auto&& map_data = _i_map_data->GetData();
+
+		int old_index_x = _index_num.x;
+		int old_index_z = _index_num.z;
+
+		Vector3 dir = DirectionFromAngle(Vector3(0, angle, 0));
+
+		auto abs_x = fabs(dir.x);
+		auto abs_z = fabs(dir.z);
+
+		//! 方向の絶対値を判定してから、大きいほうの軸の符号から進む方向を決定
+		if (abs_x > abs_z)
 		{
-			_shot_effect->Stop();
-			_old_angle = _transform.rotation.y;
-			_turn_flag = true;
+			signbit(dir.x) ? old_index_x-- : old_index_x++;
+			old_index_x = Clamp(old_index_x, 0, map_data[old_index_z].size() - 1);
+		}
+		else if (abs_x < abs_z)
+		{
+			signbit(dir.z) ? old_index_z++ : old_index_z--;
+			old_index_z = Clamp(old_index_z, 0, map_data.size() - 1);
+		}
+
+		//! 壁の判定
+		if (map_data[old_index_z][old_index_x] != 'i' &&
+			map_data[old_index_z][old_index_x] != 'w')
+		{
+			//! 向きが変わっていたら向きを更新
+			if (angle != _old_angle)
+			{
+				_shot_effect->Stop();
+				_old_angle = angle;
+				_turn_flag = true;
+			}
+
+			_transform.rotation.y = angle;
 		}
 	}
 }

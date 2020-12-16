@@ -66,6 +66,7 @@ protected:
 	std::unique_ptr<IMapData> 		_i_map_data;
 	std::unique_ptr<HitBox>			_hit_box;
 	std::unique_ptr<ParticleSystem> _shot_effect;
+	std::unique_ptr<ParticleSystem> _wall_hit_effect;
 
 	//! index
 	IndexNum _index_num;

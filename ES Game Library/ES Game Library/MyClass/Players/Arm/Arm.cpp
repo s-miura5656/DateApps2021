@@ -17,6 +17,7 @@ Arm::Arm(std::string name)
 	_i_arm_Data.reset(new IArmData);
 	_i_map_data.reset(new IMapData);
 	_shot_effect.reset(new ParticleSystem);
+	_wall_hit_effect.reset(new ParticleSystem);
 }
 
 Arm::~Arm()
@@ -27,7 +28,9 @@ Arm::~Arm()
 	_i_arm_Data->SetAngles(_tag, _angles);
 
 	_shot_effect->Stop();
+	_wall_hit_effect->Stop();
 
+	_wall_hit_effect.reset();
 	_shot_effect.reset();
 	_i_map_data.reset();
 	_i_arm_Data.reset();
@@ -40,7 +43,6 @@ bool Arm::Initialize()
 	//! File
 	_font		  = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
 	_model		  = ResouceManager::Instance().LoadModelFile(_T("Player/R_arm.X"));
-	auto&& effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch_fixed.efk"));
 	_shader		  = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
 
 	//! Angle
@@ -63,10 +65,16 @@ bool Arm::Initialize()
 	_i_arm_Data->SetState(_tag, _arm_state);
 
 	//! effect
+	auto&& effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch_fixed.efk"));
 	_shot_effect->RegisterParticle(effect);
 	_shot_effect->SetSpeed(1.0f);
 	_shot_effect->SetScale(1.0f);
-	_shot_effect->Play();
+	_shot_effect->PlayOneShot();
+
+	effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/effekseer_hit/impossible_block.efk"));
+	_wall_hit_effect->RegisterParticle(effect);
+	_wall_hit_effect->SetSpeed(1.0f);
+	_wall_hit_effect->SetScale(1.0f);
 
 	//! Scale
 	_scale = 0;
