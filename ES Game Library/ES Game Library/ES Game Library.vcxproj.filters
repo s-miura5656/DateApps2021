@@ -205,9 +205,6 @@
     <Filter Include="Myclass\Item\ItemCounter">
       <UniqueIdentifier>{ad802b2a-6a26-4517-84d9-c15e91d9b1d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Stage\Stage_1\WallCorner">
-      <UniqueIdentifier>{6c8b088e-7888-4b3f-b85c-bb666abb77cc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Stage\Stage_1\Indestructible">
       <UniqueIdentifier>{f0008524-b885-4dd5-85eb-73d39396dea7}</UniqueIdentifier>
     </Filter>
@@ -222,6 +219,15 @@
     </Filter>
     <Filter Include="Myclass\ParticleSystem">
       <UniqueIdentifier>{84dd78f3-b4b7-445e-bc5c-40ce7f6c3e01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage\Stage_1\RotatingFloor\WallCorner">
+      <UniqueIdentifier>{6c8b088e-7888-4b3f-b85c-bb666abb77cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Stage\Stage_1\Warp">
+      <UniqueIdentifier>{9bd3434f-3e9f-4e15-966c-6e823f83cbcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Players\Player\Crown">
+      <UniqueIdentifier>{643cd3d4-3574-4056-930c-704e664ed175}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -452,7 +458,7 @@
       <Filter>Myclass\Ui</Filter>
     </ClCompile>
     <ClCompile Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.cpp">
-      <Filter>Myclass\Stage\Stage_1\WallCorner</Filter>
+      <Filter>Myclass\Stage\Stage_1\RotatingFloor\WallCorner</Filter>
     </ClCompile>
     <ClCompile Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.cpp">
       <Filter>Myclass\Stage\Stage_1\Indestructible</Filter>
@@ -469,11 +475,14 @@
     <ClCompile Include="MyClass\Stage\Stage_1\RotatingFloor\RotatingFloor.cpp">
       <Filter>Myclass\Stage\Stage_1\RotatingFloor</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\ParticleSystem\Particle.cpp">
       <Filter>Myclass\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Stage_1\Warp\Warp.cpp">
+      <Filter>Myclass\Stage\Stage_1\Warp</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp">
+      <Filter>Myclass\Players\Player\Crown</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -743,7 +752,7 @@
       <Filter>Myclass\Ui</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.h">
-      <Filter>Myclass\Stage\Stage_1\WallCorner</Filter>
+      <Filter>Myclass\Stage\Stage_1\RotatingFloor\WallCorner</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.h">
       <Filter>Myclass\Stage\Stage_1\Indestructible</Filter>
@@ -760,11 +769,14 @@
     <ClInclude Include="MyClass\Stage\Stage_1\RotatingFloor\RotatingFloor .h">
       <Filter>Myclass\Stage\Stage_1\RotatingFloor</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Players\Crown\CrownRotation.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\ParticleSystem\Particle.h">
       <Filter>Myclass\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Stage_1\Warp\Warp.h">
+      <Filter>Myclass\Stage\Stage_1\Warp</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\Crown\CrownRotation.h">
+      <Filter>Myclass\Players\Player\Crown</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

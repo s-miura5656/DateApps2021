@@ -17,7 +17,8 @@ public:
 	int Update() override { return 0; }
 	void Draw2D() override;
 	void PlayerBanner();
-
+	void PointAnimation();
+	
 
 	FONT player_date;//各プレイヤーのステータス表記
 
@@ -38,5 +39,17 @@ public:
 	SPRITE score_num;
 
 	FONT score_data[PLAYER_COUNT_MAX];
-	IPrayerData* i_player_data;
+	FONT time_limit_font;
+
+	std::unique_ptr<IPrayerData> _i_player_data;
+	std::unique_ptr<IArmData> _i_arm_data;
+
+	FONT kuro;
+	FONT siro;
+
+	//test
+	SPRITE test;
+	int flag;
+	Vector3 point_pos;
+
 };

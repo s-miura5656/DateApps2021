@@ -3,11 +3,16 @@ float4x3 WorldMatrixArray[MAX_MATRICES];
 int NumBones;
 
 float4x4 vp;
+float4 wvp;
 
-//sampler m_Texture : register(s0);
+sampler base_Texture : register(s0);
+
+float3 model_ambient;
+float3 light_dir;
+float3 eye_pos;
 
 texture m_Texture;
-sampler s0 = sampler_state
+sampler s1 = sampler_state
 {
     Texture = <m_Texture>;
     MipFilter = LINEAR;
@@ -32,9 +37,10 @@ struct VSOUTPUT
 	float4 Pos	  : POSITION;
     float3 Normal : NORMAL;
 	float2 Uv     : TEXCOORD0;
+    float3 EyePos : TEXCOORD1;
 };
 
-VSOUTPUT VS(VSINPUT vsin)
+VSOUTPUT A_VS(VSINPUT vsin)
 {
 	VSOUTPUT vsout = (VSOUTPUT)0;
     
@@ -68,38 +74,54 @@ VSOUTPUT VS(VSINPUT vsin)
     vsout.Pos = mul(vsout.Pos, vp);
 	
 	vsout.Uv  = vsin.Uv;
-
+    
+    vsout.EyePos = normalize(eye_pos - vsout.Pos.xyz);
+    
 	return vsout;
 }
 
 float4 PS(VSOUTPUT psin) : COLOR
 {
-    return tex2D(s0, psin.Uv);
+    float3 N = psin.Normal;
+    float3 L = -light_dir;
+    float3 H = normalize(L + psin.EyePos);
+	
+    float4 color = tex2D(s1, psin.Uv);
+	
+    color.rgb *= max(model_ambient, dot(psin.Normal, -light_dir)) + pow(max(0, dot(N, H)), 10);
+	
+    return color;
 }
 
 float4 DAMAGE_PS(VSOUTPUT psin) : COLOR
 {
-    float4 color = tex2D(s0, psin.Uv) + float4(1.0f, 0.0f, 0.0f, 1.0f);
-    
-    color.a = 0.5f;
+    float3 N = psin.Normal;
+    float3 L = -light_dir;
+    float3 H = normalize(L + psin.EyePos);
+	
+    float4 color = tex2D(s1, psin.Uv);
+	
+    color.rgb *= max(model_ambient, dot(psin.Normal, -light_dir)) + pow(max(0, dot(N, H)), 10);
+	
+    color += float4(1.0f, 0.0f, 0.0f, 1.0f);
     
     return color;
 }
 
-technique FixModel
+technique FixAnimationModel
 {
 	pass Pass0
 	{
-		VertexShader = compile vs_3_0 VS();
+		VertexShader = compile vs_3_0 A_VS();
 		PixelShader  = compile ps_3_0 PS();
 	}
 }
 
-technique DamageModel
+technique DamageAnimationModel
 {
     pass Pass0
     {
-        VertexShader = compile vs_3_0 VS();
+        VertexShader = compile vs_3_0 A_VS();
         PixelShader  = compile ps_3_0 DAMAGE_PS();
     }
 }

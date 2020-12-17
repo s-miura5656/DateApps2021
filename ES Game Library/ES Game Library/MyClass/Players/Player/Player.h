@@ -11,12 +11,9 @@ class Player : public PlayerBase
 {
 public:
 	Player (std::string name);
-	~Player ();
+	~Player () override;
 
 	bool Initialize() override;
-	int Update() override;
 
-	void PlayerStartPosition(Vector3& pos) { _model->SetPosition(pos); }
-	void DebugControll();
 private:
 };

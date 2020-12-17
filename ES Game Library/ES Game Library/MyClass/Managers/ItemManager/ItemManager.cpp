@@ -1,6 +1,7 @@
 #include "ItemManager.h"
 #include "../../Item/ItemFactory/ItemFactory.h"
 #include "../../Data/WordsTable.h"
+#include <algorithm>
 
 std::vector<ItemBase*> ItemManager::item_base;
 
@@ -45,6 +46,10 @@ void ItemManager::Draw2D()
 void ItemManager::Draw3D()
 {
 	std::for_each(item_base.begin(), item_base.end(), [](ItemBase* itembase) { itembase->Draw3D(); });
+}
+
+void ItemManager::DrawAlpha3D()
+{
 }
 
 void ItemManager::AddItemBase(std::string name, Vector3 position)

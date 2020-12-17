@@ -6,7 +6,6 @@
 
 #include "../BaseScene.h"
 #include "../../Managers/ManagerBase.h"
-#include"../../Players/Crown/CrownRotation.h"
 
 class MainScene : public BaseScene
 {
@@ -14,14 +13,12 @@ public:
 	MainScene();
 	~MainScene();
 
-	bool Initialize();
-	int Update();
-	void Draw2D();
-	void Draw3D();
-
+	bool Initialize() override;
+	int Update() override;
+	void Draw2D() override;
+	void Draw3D() override;
+	void DrawAlpha3D() override;
 private:
 
 	std::vector<ManagerBase*> _managers;
-
-	CrownRotation crownrotation;
 };

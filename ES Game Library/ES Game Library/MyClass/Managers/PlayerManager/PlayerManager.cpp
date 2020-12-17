@@ -1,7 +1,7 @@
 #include "PlayerManager.h"
 #include "../../Players/Player/Player.h"
 #include "../../Data/WordsTable.h"
-#include "../../Players/Crown/CrownRotation.h"
+#include "../TimeManager/Time.h"
 
 PlayerManager::PlayerManager()
 {
@@ -9,28 +9,30 @@ PlayerManager::PlayerManager()
 	{
 		std::string tag = PLAYER_TAG + std::to_string(i + 1);
 
-		_players.push_back(new Player(tag));
+		_players.push_back(std::make_unique<Player>(tag));
 
 		name[i] = PLAYER_TAG + std::to_string(i + 1);
 	}
-
-	_i_player_data = new IPrayerData;
-	_crown_rotation = new CrownRotation;
+	              
+	_i_player_data.reset(new IPrayerData);
+	_crown_rotation.reset(new CrownRotation);
 }
 
 PlayerManager::~PlayerManager()
 {
-	delete _crown_rotation;
-	delete _i_player_data;
+	_crown_rotation.reset();	
+	_i_player_data.reset();
 
 	for (int i = _players.size() - 1; i >= 0; --i)
 	{
-		delete _players[i];
+		_players[i].reset();
 	}
 }
 
 bool PlayerManager::Initialize()
 {
+	
+
 	for (int i = 0; i < _players.size(); ++i)
 	{
 		std::string tag = PLAYER_TAG + std::to_string(i + 1);
@@ -38,10 +40,9 @@ bool PlayerManager::Initialize()
 		_players[i]->Initialize();
 
 		PlayerParametor::Instance().CreateParametor(tag);
-
 		ArmParametor::Instance().CreateParametor(arm_tag);
 	}
-
+	
 	_crown_rotation->Initialize();
 	
     return true;
@@ -49,14 +50,17 @@ bool PlayerManager::Initialize()
 
 int PlayerManager::Update()
 {
-	RankingSort();
-
-	for (int i = 0; i < _players.size(); ++i)
+	if (TimeManager::Instance().StartFlag())
 	{
-		_players[i]->Update();
-	}
+		RankingSort();
 
-	_crown_rotation->Update();
+		for (int i = 0; i < _players.size(); ++i)
+		{
+			_players[i]->Update();
+		}
+
+		_crown_rotation->Update();
+	}
 
     return 0;
 }
@@ -75,8 +79,15 @@ void PlayerManager::Draw3D()
 	{
 		_players[i]->Draw3D();
 	}
-
 	_crown_rotation->Draw3D();
+}
+
+void PlayerManager::DrawAlpha3D()
+{
+	for (int i = 0; i < _players.size(); ++i)
+	{
+		_players[i]->DrawAlpha3D();
+	}
 }
 
 void PlayerManager::RankingSort()
@@ -89,13 +100,14 @@ void PlayerManager::RankingSort()
 		std::string tag = PLAYER_TAG + std::to_string(i + 1);
 		sorted_map.insert(std::make_pair(param_list[tag].ranking_point, tag));
 	}
-	int a = 0;
-	for (auto& i : sorted_map)
+
+	for (auto it = sorted_map.begin(); it != sorted_map.end(); ++it)
 	{
-		name[a] = i.second;
-		_i_player_data->SetRankNum(i.second, a);
-		a++;
+		auto num = distance(sorted_map.begin(), it);
+
+		_i_player_data->SetRankNum((*it).second, num);
 	}
+
 	return;
 }
 

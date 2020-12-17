@@ -21,17 +21,25 @@ public:
 
 	void Initialize();
 	void Update();
+	
 
 	inline float GetLimitTime() const { return limitTime; }
 	inline float GetTime()		const { return time; }
 	inline float GetTimeLeft()  const { return limitTime - time; }
 	int GetTimeMinutes();
 	int GetTimeSeconds();
+	int Countdown();
+	float GetstartTime();
+	bool StartFlag();
 
 private:
 	float limitTime;
 	float time;
 
+	float startTime;
+	int countTime;
+
+	bool startFlag;
 	
 	};
 

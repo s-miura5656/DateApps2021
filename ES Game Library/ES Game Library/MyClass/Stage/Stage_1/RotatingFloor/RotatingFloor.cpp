@@ -11,11 +11,12 @@ RotatingFloor::RotatingFloor(std::string tag)
 	_tag = tag;
 	_hit_box->Settags(_tag);
 	_hit_box->SetHitBoxScale(0.5f);
+    rotation = 0;
 }
 
 RotatingFloor::~RotatingFloor()
 {
-
+    _hit_box.reset();
 }
 
 bool RotatingFloor::Initialize()
@@ -30,6 +31,8 @@ bool RotatingFloor::Initialize()
 	_hit_box->SetHitBoxPosition(_position);
 
 	flag = false;
+
+    front = Vector3(0, 0, 0);
 	return _model != nullptr;
 }
 
@@ -43,12 +46,13 @@ int RotatingFloor::Update()
         rotation += 90;
         rotation = AngleClamp(rotation);
     }
-
+    
     if (isPlayerHit == false)
     {
         isHitEnter = false;
     }
-
+    front = _model->GetFrontVector();
+    orthodontics();
     return 0;
 }
 
@@ -75,4 +79,19 @@ void RotatingFloor::Draw3D()
 	_model->SetPosition(_position);
 	_model->SetRotation(0, rotation, 0);
 	//_model->Draw();
+}
+
+void RotatingFloor::orthodontics()
+{
+    if (front.x >= 0.9) {
+        front.x = 1.0;
+        front.z = 0;
+    }
+    if (front.x <= -0.9) {
+        front.x = -1.0;
+        front.z = 0;
+    }
+    if (front.z == -1) {
+        front.x = 0;
+    }
 }

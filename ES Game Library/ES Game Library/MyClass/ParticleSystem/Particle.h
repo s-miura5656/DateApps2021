@@ -23,7 +23,7 @@ public:
 
 private:
 	//! file
-	EFFEKSEER _particle = nullptr;
+	EFFEKSEER _particle;
 
 	//! position
 	Vector3 _position = Vector3_Zero;

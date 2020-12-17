@@ -2,7 +2,6 @@
 #include "StdAfx.h"
 #include "GameMain.h"
 #include "MyClass/Managers/SceneManager/SceneManager.h"
-#include "MyClass/Managers/TimeManager/Time.h"
 
 /// <summary>
 /// Allows the game to perform any initialization it needs to before starting to run.
@@ -12,11 +11,15 @@
 bool GameMain::Initialize()
 {
 	// TODO: Add your initialization logic here
-	WindowTitle(_T("ES Game Library"));
-	
-	TimeManager::Instance().Initialize();
+	WindowTitle(_T("ロケパンファイターズ"));
+
+	Effekseer.Attach(GraphicsDevice);
 	SceneManager::Instance().Initialize();
-	SceneManager::Instance().ChangeScene(SceneManager::Instance().MAIN);
+	SceneManager::Instance().ChangeScene(SceneManager::Instance().TITLE);
+
+	//hdr = GraphicsDevice.CreateHDRRenderTarget(1280, 720, DepthFormat_Unknown);
+	//_shader = GraphicsDevice.CreateEffectFromFile(_T("HLSL/Hdr.hlsl"));
+	//_shader->SetParameter("exposure", 0.5f);
 	return true;
 }
 
@@ -40,8 +43,8 @@ int GameMain::Update()
 {
 	// TODO: Add your update logic here
 	//_time_manager->Update();
-	TimeManager::Instance().Update();
 	SceneManager::Instance().Update();
+	Effekseer.Update();
 	return 0;
 }
 
@@ -55,7 +58,8 @@ void GameMain::Draw()
 
 	GraphicsDevice.BeginScene();
 
-	SceneManager::Instance().Draw3D();
+	//GraphicsDevice.SetRenderTarget(hdr);
+	//GraphicsDevice.Clear(Color_Black);
 
 	SpriteBatch.Begin();
 
@@ -63,5 +67,17 @@ void GameMain::Draw()
 
 	SpriteBatch.End();
 
+	SceneManager::Instance().Draw3D();
+
+	GraphicsDevice.BeginAlphaBlend();
+	GraphicsDevice.SetRenderState(CullMode_None);
+	SceneManager::Instance().DrawAlpha3D();
+	GraphicsDevice.SetRenderState(CullMode_CullCounterClockwiseFace);
+	GraphicsDevice.EndAlphaBlend();
+
+	Effekseer.SetCamera(SceneCamera::Instance().GetCamera());
+	Effekseer.Draw();
+
+	//GraphicsDevice.RenderTargetToBackBuffer(hdr, _shader);
 	GraphicsDevice.EndScene();
 }

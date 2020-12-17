@@ -15,5 +15,6 @@ public:
 	Indestructible();
 	~Indestructible();
 	bool Initialize() override;
+	void Draw3D() override;
 private:
 };

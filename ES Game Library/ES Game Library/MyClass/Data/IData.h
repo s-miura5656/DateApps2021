@@ -85,6 +85,9 @@ public:
 
 	void SetAngles(std::string& arm_tag, std::vector<float> angles)						  { ArmParametor::Instance()._arm_params[arm_tag].angles = angles; }
 	std::vector<float> GetAngles(std::string& arm_tag)								const { return ArmParametor::Instance()._arm_params[arm_tag].angles; }
+
+	void SetHitPosition(std::string& arm_tag, Vector3 pos) { ArmParametor::Instance()._arm_params[arm_tag].hit_position = pos; }
+	Vector3 GetHitPosition(std::string& arm_tag)									const { return ArmParametor::Instance()._arm_params[arm_tag].hit_position; }
 };
 
 class IMapData {
@@ -93,4 +96,7 @@ public:
 	~IMapData() {};
 	void SetData(std::vector<cstring> map_data) { MapParam::Instance()._map_data = map_data; }
 	std::vector<cstring> GetData() const { return MapParam::Instance()._map_data; }
+
+	void SetWarp(std::vector<int> warp_suffix) { MapParam::Instance()._warp_suffix = warp_suffix; }
+	std::vector<int> GetWarp() const { return MapParam::Instance()._warp_suffix; }
 };

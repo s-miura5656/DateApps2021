@@ -10,6 +10,9 @@
 #include"../../StageBase.h"
 #include"../../../Item/ItemCounter/ItemCounter.h"
 #include"../../../Data/WordsTable.h"
+
+class ParticleSystem;
+
 class Block :public StageBase
 {
 public:
@@ -18,8 +21,9 @@ public:
 	bool Initialize() override;
 	int Update() override;
 	void Draw3D() override;
+	void DrawAlpha3D() override;
 private:
 	ItemCounter* itemcounter;
-	EFFEKSEER _effect;
+	std::unique_ptr<ParticleSystem> _effect;
 	int _handle;
 };

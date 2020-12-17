@@ -5,6 +5,7 @@
 #include "../../Data/WordsTable.h"
 #include "../../Data/StructList.h"
 #include"../ResouceManager/ResouceManager.h"
+
 StageManager::StageManager()
 {
 	
@@ -12,7 +13,10 @@ StageManager::StageManager()
 
 StageManager::~StageManager()
 {
-
+	for (int i = stages.size() - 1; i >= 0; --i)
+	{
+		delete stages[i];
+	}
 }
 
 bool StageManager::Initialize()
@@ -49,6 +53,8 @@ bool StageManager::Initialize()
 
 	IMapData* imap_data = new IMapData;
 	imap_data->SetData(mapdate);
+
+	std::vector<int> warpdata;
 	for (int z = 0; z < mapdate.size(); z++)
 	{
 		for (int x = 0; x < mapdate[z].size(); x++)
@@ -74,9 +80,19 @@ bool StageManager::Initialize()
 				stages[_count]->Initialize();
 				_count++;
 				break;
+			case 'o':
+				tag = WARP_TAG + tag;
+				stages.push_back(new Warp(tag));
+				stages[_count]->SetPosition(Vector3(x, 0.1, -z));
+				stages[_count]->Initialize();
+				warpdata.push_back(_count);
+				_count++;
+				break;
 			}
 		}
 	}
+
+	imap_data->SetWarp(warpdata);
 
 	stages.push_back(new Indestructible);
 	stages[stages.size() - 1]->Initialize();
@@ -86,6 +102,7 @@ bool StageManager::Initialize()
 	delete iplayer_data;
 
 	int size = stages.size();
+
 	return true;
 }
 
@@ -106,14 +123,22 @@ int StageManager::Update()
 
 void StageManager::Draw2D()
 {
-	//SpriteBatch.Draw(*_bg_sprite, Vector3(0, 0, 10000), 1.0f);
+	SpriteBatch.Draw(*_bg_sprite, Vector3(0, 0, 10000), 1.0f);
 }
 
 void StageManager::Draw3D()
 {
-//読み込んだブロックの数だけ描画する
-	for (int i = 0; i < stages.size(); i++)
+	//読み込んだブロックの数だけ描画する
+	for (int i = 0; i < stages.size(); ++i)
 	{
 		stages[i]->Draw3D();
+	}
+}
+
+void StageManager::DrawAlpha3D()
+{
+	for (int i = 0; i < stages.size(); ++i)
+	{
+		stages[i]->DrawAlpha3D();
 	}
 }
