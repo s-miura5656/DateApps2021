@@ -13,7 +13,6 @@ Block::Block(std::string tag)
 
 Block::~Block()
 {
-	_effect->Stop();
 	_hit_box.reset();
 	_effect.reset();
 }

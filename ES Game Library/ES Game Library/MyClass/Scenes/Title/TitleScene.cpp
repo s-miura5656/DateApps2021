@@ -76,7 +76,7 @@ int TitleScene::Update()
 		{
 			if (pad->GetButtonBuffer(GamePad_Button2)) 
 			{
-				SceneManager::Instance().ChangeScene(SceneManager::MAIN);
+				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
 			}
 		}
 	}

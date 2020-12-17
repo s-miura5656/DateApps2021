@@ -33,7 +33,8 @@ public:
 	SceneManager();
 	~SceneManager();
 
-	void ChangeScene(SceneState scene);
+	void ChangeScene();
+	void SetSceneNumber(int scene_state);
 
 	bool Initialize() override;
 	int Update() override;
@@ -59,6 +60,8 @@ private:
 
     std::unique_ptr<BaseScene> _scene;
 	std::unique_ptr<ResultData> _result_data;
+	int _scene_state;
+	int _old_scene_state;
 };
 
 

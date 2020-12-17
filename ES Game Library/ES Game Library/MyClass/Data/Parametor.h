@@ -49,7 +49,9 @@ public:
 	};
 
 	void CreateParametor(std::string tag) { _arm_params.emplace_hint(_arm_params.end(), tag, _arm_param); }
-	void ResetParametor() { _arm_params.clear(); }
+	void ResetParametor() { 
+		_arm_params.clear(); 
+	}
 
 private:
 	ArmParametor(const ArmParametor&) = delete;

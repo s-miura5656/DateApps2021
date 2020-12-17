@@ -7,6 +7,7 @@
 #include "../../Managers/ControllerManager/ContorollerManager.h"
 #include "../../Managers/SceneManager/SceneManager.h"
 #include "../../Managers/TimeManager/Time.h"
+#include "../../Managers/ResouceManager/ResouceManager.h"
 #include "../../Data/IData.h"
 #include "../../Data/Parametor.h"
 
@@ -20,6 +21,8 @@ MainScene::MainScene()
 
 MainScene::~MainScene()
 {
+	ResouceManager::Instance().ResoucesEffekseerClear();
+
 	for (int i = _managers.size() - 1; i >= 0; --i)
 	{
 		delete _managers[i];
@@ -114,7 +117,7 @@ int MainScene::Update()
 			}
 		}
 		SceneManager::Instance().SetResultData(ranknum, points);	// ここで誰が一位だったかをPlayerタグで判定するため、引数1はstring,引数2はintのポインタ		
-		SceneManager::Instance().ChangeScene(SceneManager::Instance().RESULT);
+		SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::RESULT);
 
 		delete pPlayerData;
 	}

@@ -122,15 +122,33 @@ MEDIA ResouceManager::LordMediaFile(tstring media_file_name)
 
 EFFEKSEER ResouceManager::LordEffekseerFile(tstring effekseer_file_name)
 {
-	auto&& it = _resouces_effekseer.find(effekseer_file_name);
+	EFFEKSEER effekseer = Effekseer.CreateEffectFromFile(const_cast<LPTSTR>(effekseer_file_name.c_str()));
+	return effekseer;
+
+	/*auto&& it = _resouces_effekseer.find(effekseer_file_name);
 	if (it != _resouces_effekseer.end())
 	{
-		return it->second;
+		if (it->second != NULL)
+		{
+			return it->second;
+		}
+		else
+		{
+			it->second = Effekseer.CreateEffectFromFile(const_cast<LPTSTR>(effekseer_file_name.c_str()));
+		}
 	}
 	else
 	{
 		EFFEKSEER effekseer = Effekseer.CreateEffectFromFile(const_cast<LPTSTR>(effekseer_file_name.c_str()));
 		_resouces_effekseer.emplace_hint(_resouces_effekseer.end(), effekseer_file_name, effekseer);
 		return _resouces_effekseer[effekseer_file_name];
+	}*/
+}
+
+void ResouceManager::ResoucesEffekseerClear()
+{
+	if (!_resouces_effekseer.empty())
+	{
+		_resouces_effekseer.clear();
 	}
 }
