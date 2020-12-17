@@ -24,7 +24,7 @@ public:
 		Live2D.ReleaseAllModels();
 #endif
 #ifdef _INC_EFFEKSEER
-		Effekseer.ReleaseAllEffects();
+//		Effekseer.ReleaseAllEffects();
 #endif
 #ifdef _INC_DIRECT2D
 		Direct2D.ReleaseAllResources();

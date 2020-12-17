@@ -757,9 +757,6 @@
     <ClInclude Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.h">
       <Filter>Myclass\Stage\Stage_1\Indestructible</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Managers\ResouceManager\ResouceManager.h">
-      <Filter>Myclass\Managers\ResouceManager</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Data\ImpactSpeed.h">
       <Filter>Myclass\Data</Filter>
     </ClInclude>
@@ -777,6 +774,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Players\Crown\CrownRotation.h">
       <Filter>Myclass\Players\Player\Crown</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\ResouceManager\ResouceManager.h">
+      <Filter>Myclass\Managers\ResouceManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

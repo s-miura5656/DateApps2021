@@ -15,7 +15,8 @@ bool GameMain::Initialize()
 
 	Effekseer.Attach(GraphicsDevice);
 	SceneManager::Instance().Initialize();
-	SceneManager::Instance().ChangeScene(SceneManager::Instance().TITLE);
+	SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TITLE);
+	SceneManager::Instance().ChangeScene();
 
 	//hdr = GraphicsDevice.CreateHDRRenderTarget(1280, 720, DepthFormat_Unknown);
 	//_shader = GraphicsDevice.CreateEffectFromFile(_T("HLSL/Hdr.hlsl"));
@@ -43,6 +44,7 @@ int GameMain::Update()
 {
 	// TODO: Add your update logic here
 	//_time_manager->Update();
+	SceneManager::Instance().ChangeScene();
 	SceneManager::Instance().Update();
 	Effekseer.Update();
 	return 0;

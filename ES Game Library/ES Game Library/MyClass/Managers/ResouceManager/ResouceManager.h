@@ -27,6 +27,8 @@ public:
 	MUSIC		   LordMusicFile(tstring music_file_name);
 	MEDIA		   LordMediaFile(tstring media_file_name);
 	EFFEKSEER	   LordEffekseerFile(tstring effekseer_file_name);
+
+	void ResoucesEffekseerClear();
 private:
 	ResouceManager(const ResouceManager&) = delete;
 	void operator=(const ResouceManager&) = delete;

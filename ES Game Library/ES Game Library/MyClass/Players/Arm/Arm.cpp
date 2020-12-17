@@ -27,9 +27,6 @@ Arm::~Arm()
 	_angles.clear();
 	_i_arm_Data->SetAngles(_tag, _angles);
 
-	_shot_effect->Stop();
-	_wall_hit_effect->Stop();
-
 	_wall_hit_effect.reset();
 	_shot_effect.reset();
 	_i_map_data.reset();

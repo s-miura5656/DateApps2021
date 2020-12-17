@@ -20,6 +20,8 @@ Player::Player(std::string tag)
 
 Player::~Player()
 {
+	_destroy_effect->Stop();
+
 	_arm.reset();
 	_i_map_data.reset();
 	_i_arm_Data.reset();

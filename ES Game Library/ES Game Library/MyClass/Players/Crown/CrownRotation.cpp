@@ -12,7 +12,6 @@ CrownRotation::CrownRotation()
 
 CrownRotation::~CrownRotation()
 {
-	_effect->Stop();
 	_effect.reset();
 	delete _i_player_data;
 }

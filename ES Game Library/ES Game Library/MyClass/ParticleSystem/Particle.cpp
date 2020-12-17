@@ -7,7 +7,8 @@ ParticleSystem::ParticleSystem()
 
 ParticleSystem::~ParticleSystem()
 {
-
+	_particle->Stop(_handle);
+	Effekseer.ReleaseEffect(_particle);
 }
 
 void ParticleSystem::RegisterParticle(EFFEKSEER& particle)

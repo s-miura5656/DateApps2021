@@ -70,7 +70,7 @@ int ResultScene::Update()
 
 		if (pad->GetButtonBuffer(GamePad_Button2))
 		{
-			SceneManager::Instance().ChangeScene(SceneManager::TITLE);
+			SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TITLE);
 		}
 	}
 	return 0;

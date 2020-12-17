@@ -26,13 +26,16 @@ SceneManager::~SceneManager()
 
 //! @brief シーンの切り替え関数
 //! @param (scene) 遷移したいシーン 
-void SceneManager::ChangeScene(SceneState scene)
+void SceneManager::ChangeScene()
 {
+	if (_scene_state == _old_scene_state)
+		return;
+
 	if (_scene != nullptr) {
 		_scene.reset();
 	}
-	
-	switch (scene) {
+
+	switch (_scene_state) {
 	case SceneState::TITLE:
 		_scene.reset(new TitleScene);
 		break;
@@ -47,6 +50,13 @@ void SceneManager::ChangeScene(SceneState scene)
 	TimeManager::Instance().Initialize();
 
 	_scene->Initialize();
+
+	_old_scene_state = _scene_state;
+}
+
+void SceneManager::SetSceneNumber(int scene_state)
+{
+	_scene_state = scene_state;
 }
 
 bool SceneManager::Initialize()
@@ -61,6 +71,9 @@ bool SceneManager::Initialize()
 	}
 
 	_result_data.reset(new ResultData());
+
+	_scene_state	 = 0;
+	_old_scene_state = INT_MAX;
 
 	return true;
 }
