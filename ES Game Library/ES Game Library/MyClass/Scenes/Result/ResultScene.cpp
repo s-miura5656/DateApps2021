@@ -147,4 +147,5 @@ void ResultScene::Draw3D()
 		model->SetPosition(pos[i] + Vector3(0,0.1,0));
 		model->Draw(_shader);
 	}
+	//test
 }
