@@ -3,7 +3,11 @@
 #include "../BaseScene.h"
 #include"../../Managers/ControllerManager/ContorollerManager.h"
 #include"../../Data/IData.h"
+<<<<<<< HEAD
 
+=======
+#include"../../Managers/SceneManager/SceneManager.h"
+>>>>>>> cf893e710f413e5dde5084f45cb4a2ee7ff9259e
 class ResultScene : public BaseScene
 {
 public:
@@ -23,6 +27,7 @@ private:
 	SPRITE player_rank_num;
 	SPRITE background;
 	SPRITE totitle;
+<<<<<<< HEAD
 	FONT font;
 	int arrival_count;
 	std::vector<Vector3> player_position;
@@ -32,4 +37,15 @@ private:
 	IPrayerData* i_player_data;
 	EFFECT shader;
 	std::vector<SPRITE>texture;
+=======
+	FONT txt;
+	int num;
+	int arrival;
+	int fix;
+	std::vector<Vector3> pos;
+	ANIMATIONMODEL model;
+	IPrayerData* _i_player_data;
+	EFFECT _shader;
+	std::vector<SPRITE>_texture;
+>>>>>>> fd01da56e21be856ceeb0274213800e37c991da6
 };
