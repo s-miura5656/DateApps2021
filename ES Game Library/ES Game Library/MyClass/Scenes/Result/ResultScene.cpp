@@ -110,7 +110,7 @@ void ResultScene::ArrivalCount()
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		//i番目のポイントとその次の順位のポイントが同じだったら1位になる人のカウントを増やす。
-		if (GetPoints(i) == GetPoints(i) + 1) {
+		if (GetPoints(i) == GetPoints(i + 1)) {
 			arrival_count++;
 		}
 		else
