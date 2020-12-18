@@ -281,13 +281,14 @@ void PlayerBase::ChangeAnimation()
 	//! アニメーショントラックのアニメーションを指定した位置から再生
 	_model->SetTrackEnable(_animation_index, TRUE);	
 
-	if (_animation_index != PlayerEnum::Animation::SHOT)
+	if (_animation_index == PlayerEnum::Animation::SHOT ||
+		_animation_index == PlayerEnum::Animation::MOVE)
 	{
-		_model->SetTrackPosition(_animation_index, _animation_count);
+		_model->SetTrackPosition(_animation_index, _animation_count * 2.0f);
 	}
 	else
 	{
-		_model->SetTrackPosition(_animation_index, _animation_count * 2.0f);
+		_model->SetTrackPosition(_animation_index, _animation_count);
 	}
 }
 
