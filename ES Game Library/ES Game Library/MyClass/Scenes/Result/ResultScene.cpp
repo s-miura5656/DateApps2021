@@ -203,4 +203,5 @@ void ResultScene::Draw3D()
 	}
 >>>>>>> cf893e710f413e5dde5084f45cb4a2ee7ff9259e
 	//test
+	//ƒeƒXƒg
 }
