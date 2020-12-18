@@ -16,14 +16,20 @@ public:
 	void DrawAlpha3D() override {}
 
 private:
-	SPRITE player;
-	SPRITE ground;
+	void AllPosCalculation();
+	float PlayerScaleCalculation(int num);
+	Vector3 PlayerPositionCalculation(int num);
+	Vector2 TextSizeCalculation(int num);
+	SPRITE player_rank_num;
+	SPRITE background;
 	SPRITE totitle;
-	FONT txt;
-	int num;
-	ANIMATIONMODEL model;
-	IPrayerData* _i_player_data;
-
-	EFFECT _shader;
-	SPRITE _texture;
+	FONT font;
+	int arrival_count;
+	std::vector<Vector3> player_position;
+	std::vector<Vector3> player_rank_num_position;
+	std::vector<Vector2> point_text_position;
+	ANIMATIONMODEL player_model;
+	IPrayerData* i_player_data;
+	EFFECT shader;
+	std::vector<SPRITE>texture;
 };
