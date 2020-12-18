@@ -7,11 +7,11 @@
 
 ResultScene::ResultScene()
 {
-
+	i_player_data = new IPrayerData;
 }
 ResultScene::~ResultScene()
 {
-
+	delete i_player_data;
 }
 /*
 * @fn タイトルの初期化
@@ -20,7 +20,7 @@ ResultScene::~ResultScene()
 */
 bool ResultScene::Initialize()
 {
-	AllPosCalculation();
+	ArrivalCount();
 	Material material;
 	material.Diffuse = Color(1.0f, 1.0f, 1.0f); // 陰影のグラデーション 明るい部分
 	material.Ambient = Color(1.0f, 1.0f, 1.0f); // ベースの色　暗い部分
@@ -36,6 +36,14 @@ bool ResultScene::Initialize()
 	player_model->SetMaterial(material);
 	player_model->SetRotation(0, 0, 0);
 	player_model->RegisterBoneMatricesByName(shader, "WorldMatrixArray", "NumBones");
+
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		//プレイヤーごとにテクスチャを用意する。
+		auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(GetRankNum(i)), ".png");
+		SPRITE _texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
+		texture.push_back(_texture);
+	}
 
 	Viewport view = GraphicsDevice.GetViewport();
 	Vector3 _camera_pos = Vector3(0, 0, -10);
@@ -75,13 +83,12 @@ int ResultScene::Update()
 */
 void ResultScene::Draw2D()
 {
-	auto data = SceneManager::Instance().GetResultData();
 	SpriteBatch.Draw(*background, Vector3(0, 0, 10000));
 	SpriteBatch.Draw(*totitle, Vector3(900, 600, 0));
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		SpriteBatch.DrawString(font, Vector2(point_text_position[i]), Color(255, 0, 0), _T("%d"), data->points[i]);
-		SpriteBatch.Draw(*player_rank_num, Vector3(player_rank_num_position[i]) + Vector3(0,-50,0), RectWH((data->ranknum[i] - 1) * 128, 0, 128, 64), 1, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector2(TextSizeCalculation(i)));
+		SpriteBatch.DrawString(font, Vector2(PointTextPosition(i)), Color(255, 0, 0), _T("%d"), GetPoints(i));
+		SpriteBatch.Draw(*player_rank_num, Vector3(PlayerRankNumberPositionCalculation(i)) + Vector3(0,-50,0), RectWH((GetRankNum(i) - 1) * 128, 0, 128, 64), 1, Vector3(0, 0, 0), Vector3(0, 0, 0), Vector2(TextSizeCalculation(i)));
 	}
 }
 void ResultScene::Draw3D()
@@ -97,16 +104,13 @@ void ResultScene::Draw3D()
 		player_model->Draw(shader);
 	}
 }
-void ResultScene::AllPosCalculation()
+void ResultScene::ArrivalCount()
 {
-	i_player_data = new IPrayerData;
-	auto resultdata = SceneManager::Instance().GetResultData();
-
 	arrival_count = 1;
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		//i番目のポイントとその次の順位のポイントが同じだったら1位になる人のカウントを増やす。
-		if (resultdata->points[i] == resultdata->points[i + 1]) {
+		if (GetPoints(i) == GetPoints(i) + 1) {
 			arrival_count++;
 		}
 		else
@@ -114,65 +118,99 @@ void ResultScene::AllPosCalculation()
 			break;
 		}
 	}
-	int point_text_fix[PLAYER_COUNT_MAX] = {};
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		//プレイヤーごとにテクスチャを用意する。
-		auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(resultdata->ranknum[i]), ".png");
-		SPRITE _texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
-		texture.push_back(_texture);
-		//ポイントの桁数によって位置を修正する。
-		if (resultdata->points[0] >= 10 * (10 * i)) {
-			point_text_fix[i] = 30 - 30 * i;
-		}
-	}
-	int first_rank_ui_pos_x;
-	for (int i = 0; i < arrival_count; i++)
-	{
-		first_rank_ui_pos_x = 80 + 300 * i + point_text_fix[i];
-		point_text_position.push_back(Vector2(first_rank_ui_pos_x, 550));
-		player_rank_num_position.push_back(Vector3(first_rank_ui_pos_x, 450, 0));
-	}
-	int count = 0;
-	for (int i = arrival_count; i < PLAYER_COUNT_MAX; i++)
-	{
-		point_text_position.push_back(Vector2(first_rank_ui_pos_x + 330 + 330 * count, 500));
-		player_rank_num_position.push_back(Vector3(first_rank_ui_pos_x + 330 * i, 460, 0));
-		count++;
-	}
 }
-float ResultScene::PlayerScaleCalculation(int num)
+int ResultScene::GetRankNum(int player_num)
 {
-	float scale;
-	if (num < arrival_count) {
-		scale = 1.0;
-	}
-	else
-	{
-		scale = 0.5;
-	}
-	return scale;
+	auto resultdata = SceneManager::Instance().GetResultData();
+	return resultdata->ranknum[player_num];
 }
-Vector2 ResultScene::TextSizeCalculation(int num) {
-	Vector2 size;
-	if (num < arrival_count) {
-		size = Vector2(1.0,1.0);
-	}
-	else
-	{
-		size = Vector2(0.5, 0.5);
-	}
-	return size;
-}
-Vector3 ResultScene::PlayerPositionCalculation(int num) 
+int ResultScene::GetPoints(int player_num)
 {
-	Vector3 pos;
-	if (num < arrival_count) {
-		pos = Vector3(-1.5 + (0.8 * num), 0, -7.5);
+	auto resultdata = SceneManager::Instance().GetResultData();
+	return resultdata->points[player_num];
+}
+/**
+ * @brief　プレイヤーモデルのスケールを設定する
+ * @param (player_num) 順位が何番目のプレイヤーか
+ * @return プレイヤーのスケールにセットするfloat型の値で返す
+ */
+float ResultScene::PlayerScaleCalculation(int player_num)
+{
+	float pl_model_scale;
+	if (player_num < arrival_count) {
+		pl_model_scale = 1.0;
 	}
 	else
 	{
-		pos = Vector3(-1.8 + (1.2 * num), 0, -7.5);
+		pl_model_scale = 0.5;
 	}
-	return pos;
+	return pl_model_scale;
+}
+/**
+ * @brief　テキストのサイズを設定する
+ * @param (player_num) 順位が何番目のプレイヤーか
+ * @return テキストのサイズをVector2型の値で返す
+ */
+Vector2 ResultScene::TextSizeCalculation(int player_num) {
+	Vector2 text_size;
+	if (player_num < arrival_count) {
+		text_size = Vector2(1.0,1.0);
+	}
+	else
+	{
+		text_size = Vector2(0.5, 0.5);
+	}
+	return text_size;
+}
+/**
+ * @brief　プレイヤーの座標を設定する
+ * @param (player_num) 順位が何番目のプレイヤーか
+ * @return プレイヤーの座標をVector3型の値で返す
+ */
+Vector3 ResultScene::PlayerPositionCalculation(int player_num)
+{
+	Vector3 pl_pos;
+	if (player_num < arrival_count) {
+		pl_pos = Vector3(-1.5 + (0.8 * player_num), 0, -7.5);
+	}
+	else
+	{
+		pl_pos = Vector3(-1.8 + (1.2 * player_num), 0, -7.5);
+	}
+	return pl_pos;
+}
+/**
+ * @brief　プレイヤーの座標を設定する
+ * @param (player_num) 順位が何番目のプレイヤーか
+ * @return プレイヤーの座標をVector3型の値で返す
+ */
+Vector3 ResultScene::PlayerRankNumberPositionCalculation(int player_num)
+{
+	Vector3 pl_rank_pos = (Vector3_Zero);
+	if (player_num < arrival_count) {
+		pl_rank_pos.x = PointTextPosition(player_num).x - 15;
+		pl_rank_pos.y = PointTextPosition(player_num).y + -50;
+	}
+	else 
+	{
+		pl_rank_pos.x = PointTextPosition(player_num).x - 15;
+		pl_rank_pos.y = PointTextPosition(player_num).y + -50;
+	}
+	return pl_rank_pos;
+}
+/**
+ * @brief　ポイントの座標を設定する
+ * @param (player_num) 順位が何番目のプレイヤーか
+ * @return ポイントの座標をVector2型の値で返す
+ */
+Vector2 ResultScene::PointTextPosition(int player_num)
+{
+	Vector2 pointpos;
+	if (player_num < arrival_count) {
+		pointpos = Vector2(110 + 300 * player_num,550);
+	}
+	else {
+		pointpos = Vector2(150 + (330 * (player_num - arrival_count + 1)), 500);
+	}
+	return pointpos;
 }

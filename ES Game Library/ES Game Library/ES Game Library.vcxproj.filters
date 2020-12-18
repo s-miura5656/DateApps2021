@@ -406,9 +406,6 @@
     <ClCompile Include="MyClass\Players\Arm\Arm.cpp">
       <Filter>Myclass\Players\Player\Arm</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Managers\TimeManager\Time.cpp">
-      <Filter>Myclass\Managers\TimeManager</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Managers\UIManager\UI.cpp">
       <Filter>Myclass\Managers\UiManager</Filter>
     </ClCompile>
@@ -483,6 +480,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp">
       <Filter>Myclass\Players\Player\Crown</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\TimeManager\Time.cpp">
+      <Filter>Myclass\Managers\TimeManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
