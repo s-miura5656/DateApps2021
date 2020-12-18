@@ -76,6 +76,7 @@ int MainScene::Update()
 	float timeleft = TimeManager::Instance().GetTimeLeft();
 	if (timeleft <= 0.9f)
 	{
+<<<<<<< HEAD
 		// ここでプレイヤーマネージャーから各プレイヤーのポイントを取得
 		int points[PLAYER_COUNT_MAX] = {};
 		int ranknum[PLAYER_COUNT_MAX] = {};
@@ -120,6 +121,9 @@ int MainScene::Update()
 		SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::RESULT);
 
 		delete pPlayerData;
+=======
+		ChangeSceneResult();
+>>>>>>> cf893e710f413e5dde5084f45cb4a2ee7ff9259e
 	}
 
 	return 0;
@@ -153,4 +157,35 @@ void MainScene::DrawAlpha3D()
 	{
 		manager->DrawAlpha3D();
 	}
+}
+void MainScene::ChangeSceneResult()
+{
+	// ここでプレイヤーマネージャーから各プレイヤーのポイントを取得
+	int points[PLAYER_COUNT_MAX] = {};
+	int ranknum[PLAYER_COUNT_MAX] = {};
+	IPrayerData* pPlayerData = new IPrayerData;
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
+		points[i] = pPlayerData->GetRankingPoint(tag);
+		ranknum[i] = i + 1;
+	}
+	int temp;
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		for (int j = PLAYER_COUNT_MAX - 1; j > i; j--)
+		{
+			if (points[j - 1] < points[j])
+			{
+				temp = points[j - 1];
+				points[j - 1] = points[j];
+				points[j] = temp;
+				temp = ranknum[j - 1];
+				ranknum[j - 1] = ranknum[j];
+				ranknum[j] = temp;
+			}
+		}
+	}
+	SceneManager::Instance().SetResultData(ranknum, points);//プレイヤー名とポイント数を一位から昇順に並べ、代入する。
+	SceneManager::Instance().ChangeScene(SceneManager::Instance().RESULT);
 }
