@@ -107,4 +107,5 @@ void ResultScene::Draw3D()
 	_shader->SetParameter("vp", vp);
 	model->SetPosition(Vector3(-1.0f, -0.8f, -7.5f));
 	model->Draw(_shader);
+	//test
 }
