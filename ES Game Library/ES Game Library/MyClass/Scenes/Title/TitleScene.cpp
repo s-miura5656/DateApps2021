@@ -3,6 +3,7 @@
 #include"../../Data/ModelAnimation.h"
 #include"../../Managers/SceneManager/SceneManager.h"
 #include"../../Managers/ResouceManager/ResouceManager.h"
+#include "../../Managers/InputManager/InputManager.h"
 
 TitleScene::TitleScene()
 {
@@ -36,9 +37,6 @@ bool TitleScene::Initialize()
 	title_scale  = Vector2(1.0f, 1.0f);
 	button_scale = Vector2(0.9f, 0.9f);
 	
-	ControllerManager::Instance().CreateGamePad(PLAYER_TAG + std::to_string(1));
-	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
-
 	Viewport view = GraphicsDevice.GetViewport();
 	Vector3 _camera_pos = Vector3(0, 0, -10);
 	Vector3 _look_pos = Vector3(0, 0, 0);
@@ -55,8 +53,8 @@ bool TitleScene::Initialize()
 */
 int TitleScene::Update()
 {
-	auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(1));
-	pad->GamePadRefresh();
+	auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(1));
+	pad->Refresh();
 	
 	title_pos.y += 4.0f;
 
@@ -67,14 +65,14 @@ int TitleScene::Update()
 
 		if (!tutorial_flag)
 		{
-			if (pad->GetButtonBuffer(GamePad_Button2))
+			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 			{
 				tutorial_flag = true;
 			}
 		}
 		else
 		{
-			if (pad->GetButtonBuffer(GamePad_Button2)) 
+			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 			{
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
 			}

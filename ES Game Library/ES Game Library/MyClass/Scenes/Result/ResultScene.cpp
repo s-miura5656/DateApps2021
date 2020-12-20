@@ -2,6 +2,7 @@
 #include"../../Data/WordsTable.h"
 #include"../../Managers/SceneManager/SceneManager.h"
 #include"../../Managers/ResouceManager/ResouceManager.h"
+#include "../../Managers/InputManager/InputManager.h"
 #include "../../Data/MyAlgorithm.h"
 #include "../../Data/IData.h"
 
@@ -65,10 +66,10 @@ int ResultScene::Update()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(i + 1));
-		pad->GamePadRefresh();
+		auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
+		pad->Refresh();
 
-		if (pad->GetButtonBuffer(GamePad_Button2))
+		if (pad->Button(BUTTON_INFO::BUTTON_B))
 		{
 			SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TITLE);
 		}

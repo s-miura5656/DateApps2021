@@ -15,8 +15,9 @@ PlayerBase::~PlayerBase()
 
 int PlayerBase::Update()
 {
-	auto pad = ControllerManager::Instance().GetController(_tag);
-	pad->GamePadRefresh();
+	auto pad = InputManager::Instance().GetGamePad(_tag);
+
+	pad->Refresh();
 
 	DebugControll();
 
@@ -90,10 +91,12 @@ int PlayerBase::Update()
 			{
 				DestroyArm();
 
+				auto s = pad->Stick(STICK_INFO::LEFT_STICK);
+
 				//! プレイヤー移動
-				if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
+				if (pad->Stick(STICK_INFO::LEFT_STICK) != STICK_CENTER)
 				{
-					_transform.rotation.y = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+					_transform.rotation.y = AngleCalculating(pad->Stick(STICK_INFO::LEFT_STICK).x, pad->Stick(STICK_INFO::LEFT_STICK).y);
 					_transform.rotation.y = AngleClamp(_transform.rotation.y);
 					_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
 				}
@@ -103,7 +106,7 @@ int PlayerBase::Update()
 				}
 
 				//! ロケットパンチ発射切り替え
-				if (pad->GetButtonState(GamePad_Button2))
+				if (pad->Button(BUTTON_INFO::BUTTON_B))
 				{
 					_i_player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
 					_i_player_data->SetPosition(_tag, _transform.position);
@@ -215,21 +218,7 @@ void PlayerBase::DrawModel()
 //! @fn ワイヤーモデルの描画
 void PlayerBase::DrawWireModel()
 {
-	auto camera = SceneCamera::Instance().GetCamera();
-
-	_wire_shader->SetTexture("m_Texture", *_wire_texture);
-	_wire_shader->SetParameter("model_ambient", _model_material.Ambient);
-	_wire_shader->SetParameter("eye_pos", camera.GetPosition());
 	
-	Matrix vp = camera->GetViewProjectionMatrix();
-
-	for (auto&& model : _wire_models)
-	{
-		model->SetMaterial(_model_material);
-	}
-
-	auto arm_positions = _i_arm_Data->GetAnglePositions(_arm_tag);
-	auto arm_angles    = _i_arm_Data->GetAngles(_arm_tag);
 
 	for (int i = 0; i < arm_positions.size(); ++i)
 	{
@@ -293,7 +282,7 @@ void PlayerBase::ChangeAnimation()
 }
 
 //! @fn 移動処理
-void PlayerBase::Move(Controller* pad)
+void PlayerBase::Move(BaseInput* pad)
 {
 	auto&& map_data = _i_map_data->GetData();
 
@@ -314,27 +303,27 @@ void PlayerBase::Move(Controller* pad)
 	}
 	else
 	{
-		float abs_x = fabsf(pad->GetPadStateX());
-		float abs_z = fabsf(pad->GetPadStateY());
+		float abs_x = fabsf(pad->Stick(STICK_INFO::LEFT_STICK).x);
+		float abs_z = fabsf(pad->Stick(STICK_INFO::LEFT_STICK).y);
 		
 		int old_index_x = _index_num.x;
 		int old_index_z = _index_num.z;
 
 		if (abs_x > abs_z)
 		{
-			std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
+			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _index_num.x-- : _index_num.x++;
 			_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
 		}
 		else if (abs_x < abs_z)
 		{
-			std::signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
+			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z-- : _index_num.z++;
 
 			_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
 		}
 
 		if (map_data[_index_num.z][_index_num.x] != 'i' &&
 			map_data[_index_num.z][_index_num.x] != 'w' &&
-			map_data[_index_num.z][_index_num.x] != 'b')
+			map_data[_index_num.z][_index_num.x] != 'b' )
 		{
 			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
 			_i_player_data->SetIndexNum(_tag, _index_num);
@@ -350,7 +339,7 @@ void PlayerBase::Move(Controller* pad)
 	}
 }
 
-void PlayerBase::IsMove(Controller* pad)
+void PlayerBase::IsMove(BaseInput* pad)
 {
 	/*auto&& map_data = _i_map_data->GetData();
 	

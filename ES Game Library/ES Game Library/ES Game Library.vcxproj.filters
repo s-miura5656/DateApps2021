@@ -178,12 +178,6 @@
     <Filter Include="Myclass\Stage\Stage_1\Piller">
       <UniqueIdentifier>{d7edd38a-d77c-47ec-a91f-7a0a64734f54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Managers\ControllerManager">
-      <UniqueIdentifier>{cc293e60-72d0-4f57-8ce0-c22a34510d69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Controller">
-      <UniqueIdentifier>{9a6a0ddd-5308-48f6-8e6f-fbe6dbd184e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Ui">
       <UniqueIdentifier>{54aad0ac-4238-4349-b700-20af82a6ef51}</UniqueIdentifier>
     </Filter>
@@ -228,6 +222,9 @@
     </Filter>
     <Filter Include="Myclass\Players\Player\Crown">
       <UniqueIdentifier>{643cd3d4-3574-4056-930c-704e664ed175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Managers\InputManager">
+      <UniqueIdentifier>{5d3780d0-44af-42c2-b6df-2aa9271e5665}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -433,12 +430,6 @@
     <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp">
       <Filter>Myclass\Item\HitPointItem</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp">
-      <Filter>Myclass\Managers\ControllerManager</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Controller\ControllerConfig.cpp">
-      <Filter>Myclass\Controller</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Ui\ResultUi.cpp">
       <Filter>Myclass\Ui</Filter>
     </ClCompile>
@@ -483,6 +474,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp">
       <Filter>Myclass\Players\Player\Crown</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Managers\InputManager\InputManager.cpp">
+      <Filter>Myclass\Managers\InputManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -712,12 +706,6 @@
     <ClInclude Include="MyClass\Item\HitPointItem\HitPointItem.h">
       <Filter>Myclass\Item\HitPointItem</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h">
-      <Filter>Myclass\Managers\ControllerManager</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Controller\ControllerConfig.h">
-      <Filter>Myclass\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Ui\BaseUi.h">
       <Filter>Myclass\Ui</Filter>
     </ClInclude>
@@ -777,6 +765,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Managers\ResouceManager\ResouceManager.h">
       <Filter>Myclass\Managers\ResouceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Managers\InputManager\InputManager.h">
+      <Filter>Myclass\Managers\InputManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

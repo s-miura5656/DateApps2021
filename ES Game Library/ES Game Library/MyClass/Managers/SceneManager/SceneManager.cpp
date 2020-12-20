@@ -5,7 +5,7 @@
 #include "../../Scenes/Main/MainScene.h"
 #include "../../Scenes/Title/TitleScene.h"
 #include"../../Scenes/Result/ResultScene.h"
-#include "../ControllerManager/ContorollerManager.h"
+#include "../InputManager/InputManager.h"
 #include "../TimeManager/Time.h"
 #include "../ResouceManager/ResouceManager.h"
 
@@ -61,13 +61,9 @@ void SceneManager::SetSceneNumber(int scene_state)
 
 bool SceneManager::Initialize()
 {
-	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
-
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		std::string tag = PLAYER_TAG + std::to_string(i + 1);
-
-		ControllerManager::Instance().CreateGamePad(tag);
+		InputManager::Instance().CreateGamePad(PLAYER_TAG, i + 1);
 	}
 
 	_result_data.reset(new ResultData());

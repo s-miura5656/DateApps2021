@@ -3,7 +3,7 @@
 #include "../../Data/WordsTable.h"
 #include "../../Data/IData.h"
 #include "../../Data/StructList.h"
-#include "../../Managers/ControllerManager/ContorollerManager.h"
+#include "../../Managers/InputManager/InputManager.h"
 #include "../../Collision/HitBox.h"
 
 using namespace PlayerEnum;
@@ -22,12 +22,12 @@ public:
 	virtual void Draw3D();
 
 protected:
-	void MoveArm(Controller* pad);
-	bool TurnArm(Controller* pad);
+	void MoveArm(BaseInput* pad);
+	bool TurnArm(BaseInput* pad);
 	void ArmReturn();
 	void HitOtherObject();
 	void SetCollisionPosition();
-	void ChangeDirection(Controller* pad);
+	void ChangeDirection(BaseInput* pad);
 
 	//! file
 	FONT	  _font;

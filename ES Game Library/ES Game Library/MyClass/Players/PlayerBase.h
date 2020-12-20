@@ -2,7 +2,7 @@
 #include "Arm/Arm.h"
 #include "../Collision/HitBox.h"
 #include "../Data/IData.h"
-#include "../Managers/ControllerManager/ContorollerManager.h"
+#include "../Managers/InputManager/InputManager.h"
 #include "../Data/StructList.h"
 
 class ParticleSystem;
@@ -26,8 +26,8 @@ protected:
 	void ChangeAnimation();
 	void CreateArm();
 	void DestroyArm();
-	void Move(Controller* pad);
-	void IsMove(Controller* pad);
+	void Move(BaseInput* pad);
+	void IsMove(BaseInput* pad);
 	void SetCollisionPosition();
 	void DebugControll();
 
@@ -35,10 +35,8 @@ protected:
 	ANIMATIONMODEL		_model;
 	FONT				_font;
 	EFFECT				_shader;
-	EFFECT              _wire_shader;
 	SPRITE				_texture;
 	SPRITE				_wire_texture;
-	std::vector<MODEL>  _wire_models;
 
 	//! transform
 	Transform _transform;

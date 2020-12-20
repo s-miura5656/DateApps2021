@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../BaseScene.h"
-#include"../../Managers/ControllerManager/ContorollerManager.h"
 #include"../../Data/ImpactSpeed.h"
 
 class TitleScene : public BaseScene

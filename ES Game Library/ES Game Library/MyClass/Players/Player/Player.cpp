@@ -36,13 +36,11 @@ bool Player::Initialize()
 	_font         = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
 	_model        = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 	_shader		  = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
-	_wire_shader  = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
 	auto&& effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damage_effect02.efk"));
 
 	for (int i = 0; i < _i_arm_Data->GetLimitRange(_arm_tag); ++i)
 	{
-		_wire_models.push_back(ResouceManager::Instance().LoadModelFile(_T("Player/wire.X")));
-		_wire_models[i]->SetScale(1.0f);
+
 	}
 
 	//! Position
@@ -85,9 +83,6 @@ bool Player::Initialize()
 	auto path = ConvertFilePath("Player/", _tag, ".png");
 	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
-
-	path = ConvertFilePath("Player/", "wire", ".png");
-	_wire_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 
 	return true;
 }

@@ -1,5 +1,4 @@
 #include "ArmBase.h"
-#include "../../Managers/ControllerManager/ContorollerManager.h"
 #include "../../Data/MyAlgorithm.h"
 #include "../../Managers/SceneManager/SceneManager.h"
 #include "../../ParticleSystem/Particle.h"
@@ -16,7 +15,7 @@ ArmBase::~ArmBase()
 
 int ArmBase::Update()
 {
-	auto pad = ControllerManager::Instance().GetController(_player_tag);
+	auto pad = InputManager::Instance().GetGamePad(_player_tag);
 
 	_player_distance = Vector3_Distance(_i_player_data->GetPosition(_player_tag), _transform.position);
 
@@ -31,7 +30,7 @@ int ArmBase::Update()
 	}
 
 	//! アームの発射状態の判定
-	if (pad->GetButtonState(GamePad_Button2) && _arm_state == ArmEnum::PunchState::PUNCH)
+	if (pad->Button(BUTTON_INFO::BUTTON_B) && _arm_state == ArmEnum::PunchState::PUNCH)
 	{
 		_arm_state = ArmEnum::PunchState::PUNCH;
 		_i_arm_Data->SetState(_tag, _arm_state);
@@ -141,7 +140,7 @@ void ArmBase::Draw3D()
 //! @fn アームの移動(曲がる)
 //! @brief アームの移動を処理する
 //! @param コントローラー
-void ArmBase::MoveArm(Controller* pad)
+void ArmBase::MoveArm(BaseInput* pad)
 {
 	auto&& map_data = _i_map_data->GetData();
 
@@ -215,7 +214,7 @@ void ArmBase::MoveArm(Controller* pad)
 	}
 }
 
-bool ArmBase::TurnArm(Controller* pad)
+bool ArmBase::TurnArm(BaseInput* pad)
 {
 	//! フラグがたっていたらアームの向き入力
 	if (_turn_flag)
@@ -328,12 +327,12 @@ void ArmBase::SetCollisionPosition()
 
 //! @fn アームの向きを変更
 //! @brief パッドの向きからアームの向きを変更
-void ArmBase::ChangeDirection(Controller* pad)
+void ArmBase::ChangeDirection(BaseInput* pad)
 {
 	//! パッドを倒していたらアームの向き入力状態
-	if (pad->GetPadStateX() != Axis_Center || pad->GetPadStateY() != Axis_Center)
+	if (pad->Stick(STICK_INFO::LEFT_STICK) != STICK_CENTER)
 	{
-		float angle = AngleCalculating(pad->GetPadStateX(), pad->GetPadStateY());
+		float angle = AngleCalculating(pad->Stick(STICK_INFO::LEFT_STICK).x, pad->Stick(STICK_INFO::LEFT_STICK).y);
 		angle = AngleClamp(angle);
 
 		auto&& map_data = _i_map_data->GetData();

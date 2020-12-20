@@ -57,7 +57,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_WIN32_WINNT=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_WIN32_WINNT=0x0600;_X86_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -165,7 +165,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="MyClass\Collision\HitBox.cpp" />
-    <ClCompile Include="MyClass\Controller\ControllerConfig.cpp" />
     <ClCompile Include="MyClass\Data\ImpactSpeed.cpp" />
     <ClCompile Include="MyClass\Item\AttackPowerItem\AttackPowerItem.cpp" />
     <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp" />
@@ -173,7 +172,7 @@
     <ClCompile Include="MyClass\Item\ItemFactory\ItemFactory.cpp" />
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp" />
     <ClCompile Include="MyClass\Managers\AudioManager\AudioManager.cpp" />
-    <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp" />
+    <ClCompile Include="MyClass\Managers\InputManager\InputManager.cpp" />
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp" />
     <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp" />
     <ClCompile Include="MyClass\Managers\ResouceManager\ResouceManager.cpp" />
@@ -255,7 +254,6 @@
     <ClInclude Include="GameScene\SceneShared.hpp" />
     <ClInclude Include="GameScene\TemplateScene.hpp" />
     <ClInclude Include="MyClass\Collision\HitBox.h" />
-    <ClInclude Include="MyClass\Controller\ControllerConfig.h" />
     <ClInclude Include="MyClass\Data\IData.h" />
     <ClInclude Include="MyClass\Data\ImpactSpeed.h" />
     <ClInclude Include="MyClass\Data\MyAlgorithm.h" />
@@ -269,7 +267,7 @@
     <ClInclude Include="MyClass\Item\ItemFactory\ItemFactory.h" />
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h" />
     <ClInclude Include="MyClass\Managers\AudioManager\AudioManager.h" />
-    <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h" />
+    <ClInclude Include="MyClass\Managers\InputManager\InputManager.h" />
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h" />
     <ClInclude Include="MyClass\Managers\ManagerBase.h" />
     <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h" />
