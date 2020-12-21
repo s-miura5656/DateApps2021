@@ -169,8 +169,6 @@ void PlayerBase::Draw3D()
 		if (_arm != nullptr)
 		{
 			_arm->Draw3D();
-
-			DrawWireModel();
 		}
 	}
 }
@@ -184,7 +182,7 @@ void PlayerBase::DrawModel()
 {
 	//! モデルのパラメーターをセット
 	_model->SetPosition(_transform.position);
-	_model->SetRotation(Vector3(0, _transform.rotation.y - 180, 0));
+	_model->SetRotation(Vector3(0, _transform.rotation.y, 0));
 	_model->SetMaterial(_model_material);
 
 	//! シェーダー側に値をセット
@@ -213,39 +211,6 @@ void PlayerBase::DrawModel()
 
 	_i_player_data->SetAngle(_tag, _transform.rotation.y);
 	_i_player_data->SetPosition(_tag, _transform.position);
-}
-
-//! @fn ワイヤーモデルの描画
-void PlayerBase::DrawWireModel()
-{
-	
-
-	for (int i = 0; i < arm_positions.size(); ++i)
-	{
-		_wire_models[i]->SetPosition(arm_positions[i]);
-		_wire_models[i]->SetRotation(Vector3(0, arm_angles[i] + 180, 0));
-		Matrix world = _wire_models[i]->GetWorldMatrix();
-		_wire_shader->SetParameter("wvp", world * vp);
-
-		if (arm_positions.size() > _i_arm_Data->GetLimitRange(_tag) - 3)
-		{
-			_wire_shader->SetParameter("limit_color", Vector3(1.0f, 0.0f, 0.0f));
-			_wire_shader->SetTechnique("FixLimitModel_S1");
-			_wire_models[i]->Draw(_wire_shader);
-		}
-		else if (arm_positions.size() > _i_arm_Data->GetLimitRange(_tag) - 10)
-		{
-			_wire_shader->SetParameter("limit_color", Vector3(1.0f, 1.0f, 0.0f));
-			_wire_shader->SetTechnique("FixLimitModel_S1");
-			_wire_models[i]->Draw(_wire_shader);
-		}
-		else
-		{
-			_wire_shader->SetParameter("limit_color", Vector3(0.0f, 1.0f, 0.0f));
-			_wire_shader->SetTechnique("FixLimitModel_S1");
-			_wire_models[i]->Draw(_wire_shader);
-		}
-	}
 }
 
 void PlayerBase::ChangeAnimation()
@@ -303,8 +268,11 @@ void PlayerBase::Move(BaseInput* pad)
 	}
 	else
 	{
-		float abs_x = fabsf(pad->Stick(STICK_INFO::LEFT_STICK).x);
-		float abs_z = fabsf(pad->Stick(STICK_INFO::LEFT_STICK).y);
+		auto pad_x = pad->Stick(STICK_INFO::LEFT_STICK).x;
+		auto pad_y = pad->Stick(STICK_INFO::LEFT_STICK).y;
+
+		float abs_x = fabsf(pad_x);
+		float abs_z = fabsf(pad_y);
 		
 		int old_index_x = _index_num.x;
 		int old_index_z = _index_num.z;
@@ -316,14 +284,15 @@ void PlayerBase::Move(BaseInput* pad)
 		}
 		else if (abs_x < abs_z)
 		{
-			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z-- : _index_num.z++;
+			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z++ : _index_num.z--;
 
 			_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
 		}
 
 		if (map_data[_index_num.z][_index_num.x] != 'i' &&
 			map_data[_index_num.z][_index_num.x] != 'w' &&
-			map_data[_index_num.z][_index_num.x] != 'b' )
+			map_data[_index_num.z][_index_num.x] != 'b' &&
+			map_data[_index_num.z][_index_num.x] != 'd')
 		{
 			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
 			_i_player_data->SetIndexNum(_tag, _index_num);

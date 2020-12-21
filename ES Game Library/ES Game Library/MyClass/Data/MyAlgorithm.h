@@ -73,7 +73,7 @@ static float AngleCalculating(float pad_x, float pad_y)
 {
 	auto a = double(pad_x - Axis_Center) / double(Axis_Max);
 
-	auto b = -double(pad_y - Axis_Center) / double(Axis_Max);
+	auto b = double(pad_y - Axis_Center) / double(Axis_Max);
 
 	float angle = MathHelper_Atan2(a, b);
 
@@ -84,7 +84,7 @@ static Vector3 MoveDirection(float pad_x, float pad_y)
 {
 	auto x = Clamp(pad_x, -0.1f, 0.1f);
 
-	auto z = -Clamp(pad_y, -0.1f, 0.1f);
+	auto z = Clamp(pad_y, -0.1f, 0.1f);
 
 	auto pos = Vector3(x, 0, z);
 

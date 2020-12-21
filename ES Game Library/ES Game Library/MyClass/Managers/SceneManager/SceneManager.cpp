@@ -61,10 +61,7 @@ void SceneManager::SetSceneNumber(int scene_state)
 
 bool SceneManager::Initialize()
 {
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		InputManager::Instance().CreateGamePad(PLAYER_TAG, i + 1);
-	}
+	InputManager::Instance().CreateXInputGamePad(PLAYER_TAG);
 
 	_result_data.reset(new ResultData());
 

@@ -7,11 +7,11 @@
 class Wire
 {
 public:
-	Wire(std::string arm_tag);
+	Wire(Transform arm_transform);
 	~Wire();
 
 	bool Initialize();
-	int  Update();
+	int  Update() {};
 	void Draw2D() {};
 	void Draw3D();
 private:
@@ -25,10 +25,4 @@ private:
 
 	//! material
 	Material _material;
-
-	//! tag
-	std::string _arm_tag;
-
-	//! pointer
-	std::unique_ptr<IArmData> _i_arm_data;
 };

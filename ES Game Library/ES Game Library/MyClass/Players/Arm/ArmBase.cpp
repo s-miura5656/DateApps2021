@@ -22,7 +22,6 @@ int ArmBase::Update()
 	_arm_state = _i_arm_Data->GetState(_tag);
 
 	_i_arm_Data->SetAnglePositions(_tag, _angle_positions);
-	_i_arm_Data->SetAngles(_tag, _angles);
 
 	if (_scale < 2) 
 	{
@@ -95,12 +94,12 @@ int ArmBase::Update()
 
 void ArmBase::Draw2D()
 {
+	auto pad = InputManager::Instance().GetGamePad(_player_tag);
+
 	if (_tag == "Arm_1")
 	{
-//		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(0.f, 0.f, 0.f), _T("AnglePointSize:%d"), _angle_positions.size());
-//		SpriteBatch.DrawString(_font, Vector2(0, 320), Color(0.f, 0.f, 0.f), _T("CreateCount:%d"), ArmBase::_create_count);
-//		SpriteBatch.DrawString(_font, Vector2(0, 340), Color(0.f, 0.f, 0.f), _T("Pos_X:%f"), _position.x);
-//		SpriteBatch.DrawString(_font, Vector2(0, 360), Color(0.f, 0.f, 0.f), _T("Pos_Z:%f"), _position.z);
+		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 1.f, 1.f), _T("X:%f"), pad->Stick(STICK_INFO::LEFT_STICK).x);
+		SpriteBatch.DrawString(_font, Vector2(0, 320), Color(1.f, 1.f, 1.f), _T("Y:%f"), pad->Stick(STICK_INFO::LEFT_STICK).y);
 	}
 //	auto scale = _hit_box->GetModelTag()->GetScale();
 //	SpriteBatch.DrawString(_font, Vector2(0, 380), Color(255.f, 0.f, 0.f), _T("Scale:%0.1f, %0.1f, %0.1f"), scale.x, scale.y, scale.z);
@@ -135,6 +134,12 @@ void ArmBase::Draw3D()
 	//! エフェクトの座標指定と描画
 	_shot_effect->SetDrawRotationY(_transform.rotation.y, DirectionFromAngle(Vector3(0, _transform.rotation.y, 0)));
 	_shot_effect->Draw();
+
+	//! ワイヤーモデルの描画
+	for (auto& wire : _wires)
+	{
+		wire->Draw3D();
+	}
 }
 
 //! @fn アームの移動(曲がる)
@@ -158,11 +163,9 @@ void ArmBase::MoveArm(BaseInput* pad)
 		{
 			_move_flag  = false;
 			_lerp_count = 0;
-			_angle_positions.push_back(_transform.position);
-
+			CreateWire();
 			ChangeDirection(pad);
-
-			_angles.push_back(_transform.rotation.y);
+			_angle_positions.push_back(_transform.position);
 		}
 	}
 	else
@@ -258,6 +261,7 @@ void ArmBase::ArmReturn()
 	if (move_dir == Vector3_Zero && angle_point_size > 1)
 	{
 		_angle_positions.erase(_angle_positions.begin() + (angle_point_size - 1));
+		DeleteWire();
 	}
 }
 
@@ -332,7 +336,10 @@ void ArmBase::ChangeDirection(BaseInput* pad)
 	//! パッドを倒していたらアームの向き入力状態
 	if (pad->Stick(STICK_INFO::LEFT_STICK) != STICK_CENTER)
 	{
-		float angle = AngleCalculating(pad->Stick(STICK_INFO::LEFT_STICK).x, pad->Stick(STICK_INFO::LEFT_STICK).y);
+		float axis_x = pad->Stick(STICK_INFO::LEFT_STICK).x;
+		float axis_z = pad->Stick(STICK_INFO::LEFT_STICK).y;
+
+		float angle = AngleCalculating(axis_x, axis_z);
 		angle = AngleClamp(angle);
 
 		auto&& map_data = _i_map_data->GetData();
@@ -372,5 +379,17 @@ void ArmBase::ChangeDirection(BaseInput* pad)
 			_transform.rotation.y = angle;
 		}
 	}
+}
+
+void ArmBase::CreateWire()
+{
+	_wires.push_back(std::make_unique<Wire>(_transform));
+	_wires.rbegin()->get()->Initialize();
+}
+
+void ArmBase::DeleteWire()
+{
+	_wires.rbegin()->reset();
+	_wires.erase(_wires.end());
 }
 

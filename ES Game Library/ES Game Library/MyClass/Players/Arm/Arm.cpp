@@ -26,6 +26,7 @@ Arm::~Arm()
 	_i_arm_Data->SetAnglePositions(_tag, _angle_positions);
 	_angles.clear();
 	_i_arm_Data->SetAngles(_tag, _angles);
+	_wires.clear();
 
 	_wall_hit_effect.reset();
 	_shot_effect.reset();

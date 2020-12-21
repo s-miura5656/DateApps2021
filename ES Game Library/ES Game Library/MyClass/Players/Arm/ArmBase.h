@@ -5,6 +5,7 @@
 #include "../../Data/StructList.h"
 #include "../../Managers/InputManager/InputManager.h"
 #include "../../Collision/HitBox.h"
+#include "../Wire/Wire.h"
 
 using namespace PlayerEnum;
 
@@ -67,6 +68,7 @@ protected:
 	std::unique_ptr<HitBox>			_hit_box;
 	std::unique_ptr<ParticleSystem> _shot_effect;
 	std::unique_ptr<ParticleSystem> _wall_hit_effect;
+	std::vector<std::unique_ptr<Wire>> _wires;
 
 	//! index
 	IndexNum _index_num;
@@ -83,4 +85,8 @@ protected:
 
 	//! material
 	Material _model_material;
+private:
+	void CreateWire();
+	void DeleteWire();
+
 };

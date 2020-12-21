@@ -38,11 +38,6 @@ bool Player::Initialize()
 	_shader		  = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
 	auto&& effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damage_effect02.efk"));
 
-	for (int i = 0; i < _i_arm_Data->GetLimitRange(_arm_tag); ++i)
-	{
-
-	}
-
 	//! Position
 	_model->SetPosition(_i_player_data->GetPosition(_tag));
 	_transform.position = _model->GetPosition();

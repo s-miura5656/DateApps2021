@@ -226,6 +226,9 @@
     <Filter Include="Myclass\Managers\InputManager">
       <UniqueIdentifier>{5d3780d0-44af-42c2-b6df-2aa9271e5665}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Players\Player\Arm\Wire">
+      <UniqueIdentifier>{a9d1b5d7-c99b-4b77-8ee6-a1a21e729278}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -477,6 +480,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Managers\InputManager\InputManager.cpp">
       <Filter>Myclass\Managers\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Players\Wire\Wire.cpp">
+      <Filter>Myclass\Players\Player\Arm\Wire</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -768,6 +774,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Managers\InputManager\InputManager.h">
       <Filter>Myclass\Managers\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\Wire\Wire.h">
+      <Filter>Myclass\Players\Player\Arm\Wire</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

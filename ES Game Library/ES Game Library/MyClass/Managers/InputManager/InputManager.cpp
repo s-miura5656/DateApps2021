@@ -18,26 +18,28 @@ InputManager::~InputManager()
 	}
 }
 
-void InputManager::CreateGamePad(std::string tag)
+void InputManager::CreateXInputGamePad(std::string tag)
 {
-	for (int pad_num = 1; pad_num <= PAD_COUNT_MAX; ++pad_num)
+	for (int pad_num = 0; pad_num < PAD_COUNT_MAX; ++pad_num)
 	{
 		if (XInputActive(pad_num))
 		{
-			_xpad_count++;
-			_pad_num = _xpad_count;
-			tag = tag + std::to_string(_pad_num);
-			_game_pads.emplace(tag, std::make_unique<XInput>(_xpad_count));
+			auto name_tag = tag;
+			name_tag = name_tag + std::to_string(pad_num + 1);
+			_game_pads.emplace(name_tag, std::make_unique<XInput>(pad_num));
 		}
 	}
-	
-	while (_pad_num <= PAD_COUNT_MAX)
+}
+
+void InputManager::CreateDInputGamePad(std::string tag, int pad_count)
+{
+	InputDevice.CreateGamePad(pad_count);
+
+	for (int pad_num = 1; pad_num <= pad_count; ++pad_num)
 	{
-		_dpad_count++;
-		_pad_num += _dpad_count;
-		tag = tag + std::to_string(_pad_num);
-		_game_pads.emplace(tag, std::make_unique<DirectInput>(_dpad_count));
-		InputDevice.CreateGamePad(_dpad_count);
+		auto name_tag = tag;
+		name_tag = name_tag + std::to_string(pad_num);
+		_game_pads.emplace(name_tag, std::make_unique<DirectInput>(pad_num));
 	}
 }
 
@@ -45,14 +47,6 @@ BaseInput* InputManager::GetGamePad(std::string tag)
 {
 	return _game_pads[tag].get();
 }
-
-//void InputManager::PadRefresh()
-//{
-//	for(auto& pad : _game_pads)
-//	{
-//		pad.se->Refresh();
-//	}
-//}
 
 bool InputManager::XInputActive(int pad_num)
 {
@@ -102,11 +96,12 @@ XInput::XInput(int pad_number)
 		state = INPUT_STATE::NOT_PUSH;
 	}
 
-	XInputEnable(true);
+	XInputEnable(TRUE);
 }
 
 XInput::~XInput()
 {
+	XInputEnable(FALSE);
 }
 
 void XInput::Refresh()

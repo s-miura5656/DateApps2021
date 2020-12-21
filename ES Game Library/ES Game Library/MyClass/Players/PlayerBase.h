@@ -22,7 +22,6 @@ public:
 protected:
 	//! function
 	void DrawModel();
-	void DrawWireModel();
 	void ChangeAnimation();
 	void CreateArm();
 	void DestroyArm();
@@ -36,7 +35,6 @@ protected:
 	FONT				_font;
 	EFFECT				_shader;
 	SPRITE				_texture;
-	SPRITE				_wire_texture;
 
 	//! transform
 	Transform _transform;
