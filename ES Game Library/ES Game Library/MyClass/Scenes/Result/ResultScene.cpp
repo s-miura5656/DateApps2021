@@ -8,12 +8,12 @@
 
 ResultScene::ResultScene()
 {
-	i_player_data = new IPrayerData;
+
 }
 
 ResultScene::~ResultScene()
 {
-	delete i_player_data;
+
 }
 
 /*
@@ -24,22 +24,22 @@ bool ResultScene::Initialize()
 	ArrivalCount();
 
 	//! file
-	player_rank_num = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/number.png"));
-	background		= ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/ground.png"));
-	totitle			= ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/button.png"));
-	font			= ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 100);
-	shader			= ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
-	player_model	= ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
+	_player_rank_num = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/number.png"));
+	_background		 = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/ground.png"));
+	_totitle	     = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/button.png"));
+	_font			 = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 100);
+	_shader			 = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
+	_player_model	 = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 
-	player_model->SetRotation(0, 180, 0);
-	player_model->RegisterBoneMatricesByName(shader, "WorldMatrixArray", "NumBones");
+	_player_model->SetRotation(0, 180, 0);
+	_player_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		//プレイヤーごとにテクスチャを用意する。
 		auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(GetRankNum(i)), ".png");
-		SPRITE _texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
-		texture.push_back(_texture);
+		SPRITE texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
+		_texture.push_back(texture);
 	}
 
 	//! material
@@ -49,7 +49,7 @@ bool ResultScene::Initialize()
 	material.Specular = Color(1.0f, 1.0f, 1.0f); // テカリ
 	material.Power    = 10.0f;                   // テカリの効果の強さ
 
-	player_model->SetMaterial(material);
+	_player_model->SetMaterial(material);
 
 	//! camera
 	Viewport view       = GraphicsDevice.GetViewport();
@@ -118,14 +118,14 @@ int ResultScene::Update()
 */
 void ResultScene::Draw2D()
 {
-	SpriteBatch.Draw(*background,_background_position);
+	SpriteBatch.Draw(*_background,_background_position);
 
-	SpriteBatch.Draw(*totitle,_totitle_position);
+	SpriteBatch.Draw(*_totitle,_totitle_position);
 	
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		SpriteBatch.DrawString(font, PointTextPosition(i), Color(255, 0, 0), _T("%d"), GetPoints(i));
-		SpriteBatch.Draw(*player_rank_num, PlayerRankNumberPositionCalculation(i) + Vector3(0,-50,0), 
+		SpriteBatch.DrawString(_font, PointTextPosition(i), Color(255, 0, 0), _T("%d"), GetPoints(i));
+		SpriteBatch.Draw(*_player_rank_num, PlayerRankNumberPositionCalculation(i) + Vector3(0,-50,0), 
 			RectWH((GetRankNum(i) - 1) * 128, 0, 128, 64), 1,Vector3_Zero,Vector3_Zero, TextSizeCalculation(i));
 	}
 }
@@ -139,11 +139,11 @@ void ResultScene::Draw3D()
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		shader->SetTexture("m_Texture", *texture[i]);
-		shader->SetParameter("vp", vp);
-		player_model->SetScale(PlayerScaleCalculation(i));
-		player_model->SetPosition(PlayerPositionCalculation(i));
-		player_model->Draw(shader);
+		_shader->SetTexture("m_Texture", *_texture[i]);
+		_shader->SetParameter("vp", vp);
+		_player_model->SetScale(PlayerScaleCalculation(i));
+		_player_model->SetPosition(PlayerPositionCalculation(i));
+		_player_model->Draw(_shader);
 	}
 }
 /*
@@ -151,13 +151,13 @@ void ResultScene::Draw3D()
 */
 void ResultScene::ArrivalCount()
 {
-	arrival_count = 1;
+	_arrival_count = 1;
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		//i番目のポイントとその次の順位のポイントが同じだったら1位になる人のカウントを増やす。
 		if (GetPoints(i) == GetPoints(i + 1)) {
-			arrival_count++;
+			_arrival_count++;
 		}
 		else
 		{
@@ -195,7 +195,7 @@ float ResultScene::PlayerScaleCalculation(int player_num)
 {
 	float pl_model_scale;
 
-	if (player_num < arrival_count) {
+	if (player_num < _arrival_count) {
 		pl_model_scale = _player_model_big_scale;
 	}
 	else
@@ -215,7 +215,7 @@ Vector2 ResultScene::TextSizeCalculation(int player_num)
 {
 	Vector2 text_size;
 	
-	if (player_num < arrival_count) {
+	if (player_num < _arrival_count) {
 		text_size = Vector2(_text_big_size);
 	}
 	else
@@ -235,7 +235,7 @@ Vector3 ResultScene::PlayerPositionCalculation(int player_num)
 {
 	Vector3 pl_pos;
 
-	if (player_num < arrival_count) {
+	if (player_num < _arrival_count) {
 		pl_pos    = _player_big_position;
 		pl_pos.x += _player_big_position_x * player_num;
 	}
@@ -257,7 +257,7 @@ Vector3 ResultScene::PlayerRankNumberPositionCalculation(int player_num)
 {
 	Vector3 pl_rank_pos = (Vector3_Zero);
 
-	if (player_num < arrival_count) {
+	if (player_num < _arrival_count) {
 		pl_rank_pos.x = PointTextPosition(player_num).x + _player_rank_number_position_x;
 		pl_rank_pos.y = PointTextPosition(player_num).y + _player_rank_number_position_y;
 	}
@@ -279,13 +279,13 @@ Vector2 ResultScene::PointTextPosition(int player_num)
 {
 	Vector2 pointpos;
 
-	if (player_num < arrival_count) {
+	if (player_num < _arrival_count) {
 		pointpos    = _point_big_text_position;
 		pointpos.x += _point_big_text_position_x * player_num;
 	}
 	else {
 		pointpos    = _point_small_text_position;
-		pointpos.x += _point_small_text_position_x * (player_num - arrival_count + 1);
+		pointpos.x += _point_small_text_position_x * (player_num - _arrival_count + 1);
 	}
 
 	return pointpos;
