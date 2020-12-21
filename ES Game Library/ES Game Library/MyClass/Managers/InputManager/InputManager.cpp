@@ -282,7 +282,7 @@ Vector2 DirectInput::Stick(int key_info)
 
 	stick.x = _pad_state.X / move_value_constant;
 
-	stick.y = _pad_state.Y / move_value_constant;
+	stick.y = -_pad_state.Y / move_value_constant;
 
 	return stick;
 }
