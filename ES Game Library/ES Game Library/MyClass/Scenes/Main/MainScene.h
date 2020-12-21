@@ -19,6 +19,6 @@ public:
 	void Draw3D() override;
 	void DrawAlpha3D() override;
 private:
-
+	void ResultTransition();
 	std::vector<ManagerBase*> _managers;
 };
