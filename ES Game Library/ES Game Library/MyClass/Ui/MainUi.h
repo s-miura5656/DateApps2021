@@ -29,7 +29,7 @@ public:
 
 	Color color[PLAYER_COUNT_MAX];//各プレイヤーの色指定
 
-	SPRITE red_banner;
+	SPRITE red_banner;//各プレイヤーのバナー
 	SPRITE blue_banner;
 	SPRITE green_banner;
 	SPRITE yellow_banner;
@@ -44,12 +44,13 @@ public:
 	std::unique_ptr<IPrayerData> _i_player_data;
 	std::unique_ptr<IArmData> _i_arm_data;
 
-	FONT kuro;
-	FONT siro;
+	FONT back_count;
+	FONT front_count;
 
 	//test
 	SPRITE test;
 	int flag;
+	bool p_point;
 	Vector3 point_pos;
 
 };

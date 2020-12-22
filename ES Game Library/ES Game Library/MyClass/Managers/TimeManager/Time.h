@@ -29,13 +29,15 @@ public:
 	int GetTimeMinutes();
 	int GetTimeSeconds();
 	int Countdown();
-	float GetstartTime();
+	float GetStartTime();
 	bool StartFlag();
 
 private:
+	//! 制限時間
 	float limitTime;
 	float time;
 
+	//! カウントダウン
 	float startTime;
 	int countTime;
 

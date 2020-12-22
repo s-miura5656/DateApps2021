@@ -25,12 +25,14 @@ void TimeManager::Initialize()
 
 void TimeManager::Update()
 {
+
 	if (startFlag == true) {
 		if (time < limitTime - 0.9f)
 		{
 			time += (float)GameTimer.GetElapsedSecond();
 		}
 	}
+
 	startTime--;
 	if (startTime == 120) {
 		countTime = 2;
@@ -51,6 +53,8 @@ void TimeManager::Update()
 	}
 }
 
+//! @fn 制限時間（分）
+//! @return 制限時間を分で返す
 int TimeManager::GetTimeMinutes()
 {
 	int ret = 0;
@@ -60,6 +64,8 @@ int TimeManager::GetTimeMinutes()
 	return ret;
 }
 
+//! @fn 制限時間（秒）
+//! @return 制限時間を秒で返す
 int TimeManager::GetTimeSeconds()
 {
 	int ret = 0;
@@ -69,16 +75,23 @@ int TimeManager::GetTimeSeconds()
 	return ret;
 }
 
+//! @fn カウントダウン
+//! @return カウントダウンの秒を返す
 int  TimeManager::Countdown()
 {
 	return countTime;
 }
 
-float TimeManager::GetstartTime()
+//! @fn カウントダウン
+//! @return 制限時間をfloatで返す
+float TimeManager::GetStartTime()
 {
 	return startTime;
 }
 
+//! @fn ゲームが始まっているかどうか
+//! @return ゲームがスタートしていればtrue,スタートしていなければfalse
+//! @detail ゲームがスタートして制限時間を計測しているかどうか
 bool TimeManager::StartFlag()
 { 
 	return 	startFlag;
