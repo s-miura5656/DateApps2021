@@ -55,8 +55,9 @@ public:
 	InputManager();
 	~InputManager();
 
+    void CreateGamePad(std::string tag);
 	void CreateXInputGamePad(std::string tag);
-    void CreateDInputGamePad(std::string tag, int pad_count);
+    void CreateDInputGamePad(std::string tag);
     BaseInput* GetGamePad(std::string tag);
     
     static InputManager& Instance() {

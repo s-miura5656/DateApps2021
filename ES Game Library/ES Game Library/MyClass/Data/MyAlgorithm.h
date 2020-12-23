@@ -154,3 +154,27 @@ static std::wstring ConvertFilePath(string path, string name, string extension)
 
 	return file_path = file_path + file_name + file_extension;
 }
+
+static Vector3 ConstantMove(Vector3 current_point, Vector3 end_point, Vector3 move_value)
+{
+	Vector3 move_point;
+
+	move_point = current_point + move_value;
+
+	if (move_point.x > end_point.x || move_point.x < end_point.x)
+	{
+		move_point.x = end_point.x;
+	}
+
+	if (move_point.y > end_point.y || move_point.y < end_point.y)
+	{
+		move_point.y = end_point.y;
+	}
+
+	if (move_point.z > end_point.z || move_point.z < end_point.z)
+	{
+		move_point.x = end_point.z;
+	}
+
+	return move_point;
+}

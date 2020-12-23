@@ -374,9 +374,9 @@ void ArmBase::ChangeDirection(BaseInput* pad)
 				_shot_effect->Stop();
 				_old_angle = angle;
 				_turn_flag = true;
+				_transform.rotation.y = angle;
 			}
 
-			_transform.rotation.y = angle;
 		}
 	}
 }

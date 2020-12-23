@@ -83,6 +83,14 @@ private:
 	// ゲームパッド軸設定
 	BOOL SetAxesProp(const LPDIDEVICEOBJECTINSTANCE pDevObjInst, LPVOID pRef);
 
+	BOOL IsXInputDevice(GUID* pGuidProductFromDirectInput);
+
+	BOOL CALLBACK EnumJoysticksCallback(DIDEVICEINSTANCE* pdidInstance, VOID* pContext);
+
+	void HrToStrByAMGet(HRESULT hr);
+
+#define SAFE_RELEASE(p) if(p){ p->Release(); p=NULL; }
+
 	// メンバ変数
 	IDirectInput8*               m_pDInput;			// DirectInput8インタフェース
 	HWND                         m_hWnd;			// メインウィンドウハンドル

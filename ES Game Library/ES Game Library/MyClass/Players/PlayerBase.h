@@ -25,8 +25,10 @@ protected:
 	void ChangeAnimation();
 	void CreateArm();
 	void DestroyArm();
-	void Move(BaseInput* pad);
-	void IsMove(BaseInput* pad);
+	void InputMove(BaseInput* pad);
+	void TestMove(BaseInput* pad);
+	void InputMoveDir(BaseInput* pad);
+	void InputAngle(BaseInput* pad);
 	void SetCollisionPosition();
 	void DebugControll();
 
@@ -40,6 +42,7 @@ protected:
 	Transform _transform;
 
 	float _angle			 = 0.f;
+	float _old_angle		 = 0.f;
 	float _speed			 = 0.f;
 	float _move_speed		 = 0.f;
 	float _distance			 = FLT_MAX;
@@ -66,8 +69,8 @@ protected:
 
 	//! flag 
 	bool _move_flag  = false;
-	bool _flag       = false;
 	bool _death_flag = false;
+	bool _turn_flag  = false;
 
 	//! count
 	float _lerp_count       = 0.f;
@@ -81,4 +84,7 @@ protected:
 
 	//! material
 	Material _model_material;
+
+	//! completion_value
+	const float _moving_completion_end_value = 1.0f;
 };

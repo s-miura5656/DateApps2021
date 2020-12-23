@@ -25,13 +25,19 @@
 //------------------------------------------------------------------------------
 #include "DInput8.hpp"
 #include "../Common/ComLibrary.hpp"
+#include <wbemidl.h>
+#include <oleauto.h>
+#include <errors.h>
+#include <tchar.h>
+#include <string>
 
 //------------------------------------------------------------------------------
 //	スタティックリンクライブラリ
 //------------------------------------------------------------------------------
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
-
+#pragma comment(lib, "Quartz.lib")
+#pragma comment(lib, "wbemuuid.lib")
 //------------------------------------------------------------------------------
 //	デフォルトコンストラクタ
 //------------------------------------------------------------------------------
@@ -300,6 +306,17 @@ BOOL CDInput8::InitGamePad(const LPDIDEVICEINSTANCE pDevInst, LPVOID pRef)
 	}
 #endif
 
+	if (IsXInputDevice(&pDevInst->guidInstance)) {
+		for (unsigned int i = 0; i < m_GamePad.size(); i++) {
+			if (m_GamePad[i] == NULL) {
+				m_GamePad[i] = new CNullGamePad();
+				break;
+			}
+		}
+		return DIENUM_CONTINUE;
+	}
+
+
 	// ゲームパッドオブジェクト作成
 	IDirectInputDevice8*   pDIDevice;
 	if(m_pDInput->CreateDevice(pDevInst->guidInstance, &pDIDevice, NULL) != DI_OK) {
@@ -410,6 +427,168 @@ BOOL CDInput8::SetAxesProp(const LPDIDEVICEOBJECTINSTANCE pDevObjInst, LPVOID pR
 	return DIENUM_CONTINUE;
 }
 
+BOOL CDInput8::IsXInputDevice(GUID* pGuidProductFromDirectInput)
+{
+	IWbemLocator* pIWbemLocator				= NULL;
+	IEnumWbemClassObject* pEnumDevices		= NULL;
+	IWbemClassObject* pDevices[20]			= { 0 };
+	IWbemServices* pIWbemServices			= NULL;
+	BSTR                    bstrNamespace	= NULL;
+	BSTR                    bstrDeviceID	= NULL;
+	BSTR                    bstrClassName	= NULL;
+	DWORD                   uReturned		= 0;
+	bool                    bIsXinputDevice = false;
+	UINT                    iDevice = 0;
+	VARIANT                 var;
+	HRESULT                 hr;
+	
+	auto l_cleanup = [&]() {
+		VariantClear(&var);
+		if (bstrNamespace)
+			SysFreeString(bstrNamespace);
+		if (bstrDeviceID)
+			SysFreeString(bstrDeviceID);
+		if (bstrClassName)
+			SysFreeString(bstrClassName);
+		for (iDevice = 0; iDevice < 20; iDevice++)
+			SAFE_RELEASE(pDevices[iDevice]);
+		SAFE_RELEASE(pEnumDevices);
+		SAFE_RELEASE(pIWbemLocator);
+		SAFE_RELEASE(pIWbemServices);
+	};
+
+	// So we can call VariantClear() later, even if we never had a successful IWbemClassObject::Get().
+	VariantInit(&var);
+
+	// Create WMI
+	hr = CoCreateInstance(CLSID_WbemLocator,
+		NULL,
+		CLSCTX_INPROC_SERVER,
+		IID_IWbemLocator,
+		(LPVOID*)&pIWbemLocator);
+
+	if (FAILED(hr) || pIWbemLocator == NULL)
+		l_cleanup();
+
+	HrToStrByAMGet(hr);
+	static int a;
+	a++;
+	std::wstring b = std::to_wstring(a);
+	OutputDebugString(b.c_str());
+
+	bstrNamespace = SysAllocString(L"\\\\.\\root\\cimv2"); if (bstrNamespace == NULL) l_cleanup();
+	bstrClassName = SysAllocString(L"Win32_PnPEntity");   if (bstrClassName == NULL) l_cleanup();
+	bstrDeviceID  = SysAllocString(L"DeviceID");          if (bstrDeviceID == NULL)  l_cleanup();
+
+	HrToStrByAMGet(hr);
+	a++;
+	b = std::to_wstring(a);
+	OutputDebugString(b.c_str());
+
+	// Connect to WMI ↓ここがおかしい
+	//hr = pIWbemLocator->ConnectServer(bstrNamespace, NULL, NULL, 0L,
+	//	0L, NULL, NULL, &pIWbemServices);
+
+	hr = pIWbemLocator->ConnectServer(BSTR(L"root\\CIMV2"), NULL, NULL, 0L,
+		0L, NULL, NULL, &pIWbemServices);
+	HrToStrByAMGet(hr);
+	a++;
+	b = std::to_wstring(a);
+	OutputDebugString(b.c_str());
+
+	if (FAILED(hr) || pIWbemServices == NULL)
+		l_cleanup();
+
+	// Switch security level to IMPERSONATE. 
+	hr =CoSetProxyBlanket(pIWbemServices, RPC_C_AUTHN_WINNT, RPC_C_AUTHZ_NONE, NULL,
+		RPC_C_AUTHN_LEVEL_CALL, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE);
+
+	HrToStrByAMGet(hr);
+	a++;
+	b = std::to_wstring(a);
+	OutputDebugString(b.c_str());
+
+	hr = pIWbemServices->CreateInstanceEnum(bstrClassName, 0, NULL, &pEnumDevices);
+
+	if (FAILED(hr) || pEnumDevices == NULL)
+	{
+		HrToStrByAMGet(hr);
+		a++;
+		std::wstring b = std::to_wstring(a);
+		OutputDebugString(b.c_str());
+		l_cleanup();
+	}
+
+	// Loop over all devices
+	for (;; )
+	{
+		// Get 20 at a time
+		hr = pEnumDevices->Next(10000, 20, pDevices, &uReturned);
+		if (FAILED(hr))
+			l_cleanup();
+		if (uReturned == 0)
+			break;
+
+		for (iDevice = 0; iDevice < uReturned; iDevice++)
+		{
+			// For each device, get its device ID
+			hr = pDevices[iDevice]->Get(bstrDeviceID, 0L, &var, NULL, NULL);
+			if (SUCCEEDED(hr) && var.vt == VT_BSTR && var.bstrVal != NULL)
+			{
+				// Check if the device ID contains "IG_".  If it does, then it's an XInput device
+					// This information can not be found from DirectInput 
+				if (wcsstr(var.bstrVal, L"IG_"))
+				{
+					// If it does, then get the VID/PID from var.bstrVal
+					DWORD dwPid = 0, dwVid = 0;
+					WCHAR* strVid = wcsstr(var.bstrVal, L"VID_");
+					if (strVid && swscanf(strVid, L"VID_%4X", &dwVid) != 1)
+						dwVid = 0;
+					WCHAR* strPid = wcsstr(var.bstrVal, L"PID_");
+					if (strPid && swscanf(strPid, L"PID_%4X", &dwPid) != 1)
+						dwPid = 0;
+
+					// Compare the VID/PID to the DInput device
+					DWORD dwVidPid = MAKELONG(dwVid, dwPid);
+					if (dwVidPid == pGuidProductFromDirectInput->Data1)
+					{
+						bIsXinputDevice = true;
+						l_cleanup();
+					}
+				}
+			}
+			VariantClear(&var);
+			SAFE_RELEASE(pDevices[iDevice]);
+		}
+	}
+
+//LCleanup:
+//	VariantClear(&var);
+//	if (bstrNamespace)
+//		SysFreeString(bstrNamespace);
+//	if (bstrDeviceID)
+//		SysFreeString(bstrDeviceID);
+//	if (bstrClassName)
+//		SysFreeString(bstrClassName);
+//	for (iDevice = 0; iDevice < 20; iDevice++)
+//		SAFE_RELEASE(pDevices[iDevice]);
+//	SAFE_RELEASE(pEnumDevices);
+//	SAFE_RELEASE(pIWbemLocator);
+//	SAFE_RELEASE(pIWbemServices);
+
+	return bIsXinputDevice;
+}
+
+BOOL CDInput8::EnumJoysticksCallback(DIDEVICEINSTANCE* pdidInstance, VOID* pContext)
+{
+	if (IsXInputDevice(&pdidInstance->guidProduct))
+		return DIENUM_CONTINUE;
+
+	// Device is verified not XInput, so add it to the list of DInput devices
+
+	return DIENUM_CONTINUE;
+}
+
 //------------------------------------------------------------------------------
 //	デバイスアクセス権取得
 //------------------------------------------------------------------------------
@@ -442,4 +621,17 @@ void CDInput8::Unacquire()
 
 	for(unsigned int i = 0; i < m_GamePad.size(); i++)
 		m_GamePad[i]->Unacquire();
+}
+
+void CDInput8::HrToStrByAMGet(HRESULT hr) {
+	TCHAR szErr[MAX_ERROR_TEXT_LEN];
+	TCHAR szMsg[MAX_ERROR_TEXT_LEN + MAX_PATH + 256];
+	// MAX_ERROR_TEXT_LEN は errors.h で定義済み
+	AMGetErrorText(hr, szErr, MAX_ERROR_TEXT_LEN);
+	_snwprintf_s(szMsg, _countof(szMsg), _TRUNCATE,
+		_T("HRESULT=%08X (%s) %s")
+		, hr
+		, (FAILED(hr)) ? TEXT("FAILED") : TEXT("SUCCEEDED")
+		, szErr);
+	OutputDebugString(szMsg);
 }

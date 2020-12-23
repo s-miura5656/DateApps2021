@@ -49,6 +49,10 @@ bool Player::Initialize()
 	//! Scale
 	_model->SetScale(_transform.scale);
 
+	//! rotation
+	_transform.rotation.y = _i_player_data->GetAngle(_tag);
+	_old_angle = _transform.rotation.y;
+
 	//! hit_box
 	SetCollisionPosition();
 
@@ -81,6 +85,7 @@ bool Player::Initialize()
 
 	return true;
 }
+
 
 
 

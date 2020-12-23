@@ -3,6 +3,7 @@
 #include "../Managers/SceneManager/SceneManager.h"
 #include "../ParticleSystem/Particle.h"
 
+#pragma region 基本機能
 PlayerBase::PlayerBase()
 {
 
@@ -16,6 +17,7 @@ PlayerBase::~PlayerBase()
 int PlayerBase::Update()
 {
 	auto pad = InputManager::Instance().GetGamePad(_tag);
+	auto&& player_data = _i_player_data;
 
 	pad->Refresh();
 
@@ -28,8 +30,8 @@ int PlayerBase::Update()
 
 		if (_respawn_time > 120)
 		{
-			_i_player_data->SetHitPoint(_tag, 1000);
-			_i_player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
+			player_data->SetHitPoint(_tag, 1000);
+			player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 			_respawn_time = 0;
 			_death_flag = false;
 			_move_flag = false;
@@ -38,7 +40,7 @@ int PlayerBase::Update()
 	}
 	else
 	{
-		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::DEATH)
+		if (player_data->GetState(_tag) == PlayerEnum::Animation::DEATH)
 		{
 			_death_flag = true;
 			DestroyArm();
@@ -46,13 +48,13 @@ int PlayerBase::Update()
 		}
 
 		//! ダメージ状態の判定
-		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
+		if (player_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
 		{
 			_damage_hit_count++;
 
 			if (_damage_hit_count > 30)
 			{
-				_i_player_data->SetState(_tag, PlayerEnum::Animation::DEATH);
+				player_data->SetState(_tag, PlayerEnum::Animation::DEATH);
 				_damage_hit_count = 0;
 			}
 
@@ -60,64 +62,59 @@ int PlayerBase::Update()
 
 			return 0;
 		}
-
-		//! 移動中か待機中か判定
-		if (!_move_flag)
+		
+		//! パンチ発射状態ならすぐさまリターン
+		if (player_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
 		{
-			//! パンチ発射状態ならすぐさまリターン
-			if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
-			{
-				_i_player_data->SetIndexNum(_tag, _index_num);
-				
-				_arm->Update();
+			player_data->SetIndexNum(_tag, _index_num);
+			
+			_arm->Update();
 
-				return 0;
+			return 0;
+		}
+		else if (player_data->GetState(_tag) == PlayerEnum::Animation::SHOT)
+		{
+			_shot_pending_count++;
+
+			if (_shot_pending_count > 30)
+			{
+				player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
+				player_data->SetPosition(_tag, _transform.position);
+				_shot_pending_count = 0;
+				CreateArm();
 			}
-			else if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::SHOT)
+
+			return 0;
+		}
+		else
+		{
+			DestroyArm();
+
+			//! プレイヤー移動
+			if (pad->Stick(STICK_INFO::LEFT_STICK) != STICK_CENTER)
 			{
-				_shot_pending_count++;
-
-				if (_shot_pending_count > 30)
-				{
-					_i_player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
-					_i_player_data->SetPosition(_tag, _transform.position);
-					_shot_pending_count = 0;
-					CreateArm();
-				}
-
-				return 0;
+				InputAngle(pad);
+				player_data->SetAngle(_tag, _transform.rotation.y);
+				player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
 			}
 			else
 			{
-				DestroyArm();
+				player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
+			}
 
-				auto s = pad->Stick(STICK_INFO::LEFT_STICK);
-
-				//! プレイヤー移動
-				if (pad->Stick(STICK_INFO::LEFT_STICK) != STICK_CENTER)
-				{
-					_transform.rotation.y = AngleCalculating(pad->Stick(STICK_INFO::LEFT_STICK).x, pad->Stick(STICK_INFO::LEFT_STICK).y);
-					_transform.rotation.y = AngleClamp(_transform.rotation.y);
-					_i_player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
-				}
-				else
-				{
-					_i_player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
-				}
-
-				//! ロケットパンチ発射切り替え
-				if (pad->Button(BUTTON_INFO::BUTTON_B))
-				{
-					_i_player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
-					_i_player_data->SetPosition(_tag, _transform.position);
-				}
+			//! ロケットパンチ発射切り替え
+			if (pad->Button(BUTTON_INFO::BUTTON_B))
+			{
+				player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
+				player_data->SetPosition(_tag, _transform.position);
 			}
 		}
 
-		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::MOVE)
+		if (player_data->GetState(_tag) == PlayerEnum::Animation::MOVE)
 		{
 			//! 移動
-			Move(pad);
+			TestMove(pad);
+			//InputMove(pad);
 		}
 	}
 
@@ -176,7 +173,9 @@ void PlayerBase::Draw3D()
 void PlayerBase::DrawAlpha3D()
 {
 }
+#pragma endregion
 
+#pragma region 描画関係
 //! @fn プレイヤーモデルの描画
 void PlayerBase::DrawModel()
 {
@@ -213,6 +212,7 @@ void PlayerBase::DrawModel()
 	_i_player_data->SetPosition(_tag, _transform.position);
 }
 
+//! @fn プレイヤーモデルのアニメーション切り替え
 void PlayerBase::ChangeAnimation()
 {
 	auto index = _i_player_data->GetState(_tag);
@@ -245,25 +245,28 @@ void PlayerBase::ChangeAnimation()
 		_model->SetTrackPosition(_animation_index, _animation_count);
 	}
 }
+#pragma endregion
 
+#pragma region 動作関係
 //! @fn 移動処理
-void PlayerBase::Move(BaseInput* pad)
+void PlayerBase::InputMove(BaseInput* pad)
 {
 	auto&& map_data = _i_map_data->GetData();
-
+	auto&& player_data = _i_player_data;
 	//! 移動中か入力受付状態か判定
 	if (_move_flag)
 	{
 		_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
-		_lerp_count += _i_player_data->GetSpeed(_tag);
+
+		_lerp_count += player_data->GetSpeed(_tag);
 
 		_lerp_count = Clamp(_lerp_count, 0, 1);
 
-		if (_lerp_count >= 1.f) 
+		if (_lerp_count >= _moving_completion_end_value)
 		{
 			_move_flag  = false;
 			_lerp_count = 0;
-			_i_player_data->SetPosition(_tag, _transform.position);
+			player_data->SetPosition(_tag, _transform.position);
 		}
 	}
 	else
@@ -295,7 +298,7 @@ void PlayerBase::Move(BaseInput* pad)
 			map_data[_index_num.z][_index_num.x] != 'd')
 		{
 			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
-			_i_player_data->SetIndexNum(_tag, _index_num);
+			player_data->SetIndexNum(_tag, _index_num);
 			_move_flag = true;
 		}
 		else
@@ -308,64 +311,96 @@ void PlayerBase::Move(BaseInput* pad)
 	}
 }
 
-void PlayerBase::IsMove(BaseInput* pad)
+void PlayerBase::TestMove(BaseInput* pad)
 {
-	/*auto&& map_data = _i_map_data->GetData();
-	
-	float abs_x = fabsf(pad->GetPadStateX());
-	float abs_z = fabsf(pad->GetPadStateY());
-
-	int old_index_x = _index_num.x;
-	int old_index_z = _index_num.z;
-
-	if (abs_x > abs_z)
+	auto&& map_data = _i_map_data->GetData();
+	auto&& player_data = _i_player_data;
+	//! 移動中か入力受付状態か判定
+	if (_move_flag)
 	{
-		std::signbit(pad->GetPadStateX()) ? _index_num.x-- : _index_num.x++;
-		_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
-		abs_z = 0;
-	}
-	else if (abs_x < abs_z)
-	{
-		std::signbit(pad->GetPadStateY()) ? _index_num.z-- : _index_num.z++;
-		_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
-		abs_x = 0;
-	}
+		_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
 
-	if (map_data[_index_num.z][_index_num.x] != 'i' &&
-		map_data[_index_num.z][_index_num.x] != 'w' &&
-		map_data[_index_num.z][_index_num.x] != 'b')
-	{
-		_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
-		_i_player_data->SetIndexNum(_tag, _index_num);
+		_lerp_count += player_data->GetSpeed(_tag);
+
+		if (_lerp_count >= _moving_completion_end_value)
+		{
+			_move_flag  = false;
+			_lerp_count -= 1.0f;
+			player_data->SetPosition(_tag, _transform.position);
+		}
 	}
 	else
 	{
-		_index_num.x = old_index_x;
-		_index_num.z = old_index_z;
+		auto pad_x = pad->Stick(STICK_INFO::LEFT_STICK).x;
+		auto pad_y = pad->Stick(STICK_INFO::LEFT_STICK).y;
+
+		float abs_x = fabsf(pad_x);
+		float abs_z = fabsf(pad_y);
+
+		int old_index_x = _index_num.x;
+		int old_index_z = _index_num.z;
+
+		if (abs_x > abs_z)
+		{
+			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _index_num.x-- : _index_num.x++;
+			_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
+		}
+		else if (abs_x < abs_z)
+		{
+			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z++ : _index_num.z--;
+
+			_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
+		}
+
+		if (map_data[_index_num.z][_index_num.x] != 'i' &&
+			map_data[_index_num.z][_index_num.x] != 'w' &&
+			map_data[_index_num.z][_index_num.x] != 'b' &&
+			map_data[_index_num.z][_index_num.x] != 'd')
+		{
+			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
+			player_data->SetIndexNum(_tag, _index_num);
+			_move_flag = true;
+		}
+		else
+		{
+			_index_num.x = old_index_x;
+			_index_num.z = old_index_z;
+		}
+
+		_old_pos = _transform.position;
 	}
-
-	_old_pos = _transform.position;
-
-	_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
-	_lerp_count += (abs_x + abs_z) * _i_player_data->GetSpeed(_tag);
-
-	_lerp_count = Clamp(_lerp_count, 0, 1);
-
-	if (_lerp_count >= 1.f)
-	{
-		_lerp_count = 0;
-		_i_player_data->SetPosition(_tag, _transform.position);
-	}*/
 }
 
-//! 当たり判定の座標設定
+void PlayerBase::InputMoveDir(BaseInput* pad)
+{
+
+}
+
+//! @fn 方向の入力
+void PlayerBase::InputAngle(BaseInput* pad)
+{
+	_transform.rotation.y = AngleCalculating(pad->Stick(STICK_INFO::LEFT_STICK).x, pad->Stick(STICK_INFO::LEFT_STICK).y);
+	_transform.rotation.y = AngleClamp(_transform.rotation.y);
+
+	if (_transform.rotation.y != _old_angle)
+	{
+		_turn_flag = true;
+		_old_angle = _transform.rotation.y;
+	}
+}
+#pragma endregion
+
+#pragma region 当たり判定
+//! @fn 当たり判定の座標設定
 void PlayerBase::SetCollisionPosition()
 {
 	auto collision_pos = _transform.position;
 	collision_pos.y += _model->GetScale().y / 2;
 	_hit_box->SetHitBoxPosition(collision_pos);
 }
+#pragma endregion
 
+#pragma region Arm関連
 //! fn アームの生成
 void PlayerBase::CreateArm()
 {
@@ -382,7 +417,9 @@ void PlayerBase::DestroyArm()
 	_arm.reset();
 	_arm = nullptr;
 }
+#pragma endregion
 
+#pragma region デバッグ関係
 //! @fn デバッグ用パラメーター調整
 void PlayerBase::DebugControll()
 {
@@ -442,3 +479,4 @@ void PlayerBase::DebugControll()
 
 	_i_arm_Data->SetLimitRange(_arm_tag, range);
 }
+#pragma endregion

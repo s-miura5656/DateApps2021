@@ -62,7 +62,10 @@ void SceneManager::SetSceneNumber(int scene_state)
 bool SceneManager::Initialize()
 {
 //	InputManager::Instance().CreateXInputGamePad(PLAYER_TAG);
-	InputManager::Instance().CreateDInputGamePad(PLAYER_TAG, 4);
+
+	InputManager::Instance().CreateDInputGamePad(PLAYER_TAG);
+
+//	InputManager::Instance().CreateGamePad(PLAYER_TAG);
 
 	_result_data.reset(new ResultData());
 
