@@ -65,6 +65,7 @@ int Block::Update()
 	{
 		Fall();
 	}
+
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string arm_tag    = ARM_TAG + std::to_string(i + 1);
@@ -134,6 +135,7 @@ void Block::DrawAlpha3D()
 	_model->SetMaterial(mat);
 	_model->SetPosition(_position);
 	_model->SetRotation(0, 0, 0);
+
 	Matrix world = _model->GetWorldMatrix();
 	_shader->SetParameter("model_ambient", _model->GetMaterial().Ambient);
 	_shader->SetParameter("wvp", world * SceneCamera::Instance().GetCamera().GetViewProjectionMatrix());
@@ -141,10 +143,17 @@ void Block::DrawAlpha3D()
 	_shader->SetTechnique("FixModel_S0");
 	_model->Draw(_shader);
 }
+/**
+ * @fn 降ってくるときのブロックの処理
+ * @detail  ブロックを下に動かす
+ *          ブロックのY座標が0になった時mapdataに自分の座標を保存する
+ *          プレイヤーとの接触時にプレイヤーを倒す
+ */
 void Block::Fall()
 {
-	//TODO:マジックナンバーなので後で修正
+	//TODO:降ってくる速さは調整する
 	_position.y -= 0.05;
+
 	//!Y座標が0になったときに自分の座標をマップデータをセットする
 	if (_position.y <= 0)
 	{
@@ -159,16 +168,21 @@ void Block::Fall()
 		delete map_data;
 		delete _blinking;
 	}
+
 	_hit_box->SetHitBoxPosition(_position + Vector3(0, 1, 0));
+
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
+
+		//!プレイヤーとの接触時にプレイヤーを倒す
 		if (_hit_box->IsHitObjectsSquare(player_tag))
 		{
 			IPrayerData* iplayerdata = new IPrayerData;
 			iplayerdata->SetState(player_tag, PlayerEnum::Animation::DEATH);
 			delete iplayerdata;
 		}
+
 	}
 	_blinking->Update();
 }

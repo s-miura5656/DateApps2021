@@ -15,9 +15,8 @@ public:
 	bool Initialize(Vector3 pos);
 	int Update();
 	void Draw3D();
-	void DrawAlpha3D();
 private:
 	Vector3 _position;
-	MODEL _model;
-	float _scale;
+	MODEL   _model;
+	float   _scale;
 };

@@ -108,13 +108,21 @@ bool StageManager::Initialize()
 int StageManager::Update()
 {
 	IMapData* imap_data = new IMapData;
-	time++;
+
+	//TODO:ブロックの数が80個以下の場合ランダムな座標を決めるタイマーを起動:エラーで落ちないために103個以下で止める
+	if(stages.size() - 1  <= 80)
+	{
+		_random_fall_time++;
+	}
+
 	int rand_block_count = 0;
-	//TODO:マジックナンバーなので後で修正
-	if (time >= 220) 
+
+	//TODO:降ってくる頻度は調整する
+	if (_random_fall_time >= 220)
 	{
 		mapdate = imap_data->GetData();
-		//TODO:ランダムで増えるブロックの個数
+
+		//TODO:ランダムで増えるブロックの個数は調整する
 		while (rand_block_count < 10)
 		{
 			//!ランダムな座標を設定し、すでにその座標にブロックがあった場合
@@ -122,11 +130,15 @@ int StageManager::Update()
 			{
 				continue;
 			}
+
 			rand_block_count++;
 		}
-		time = 0;
+
+		_random_fall_time = 0;
 	}
+
 	delete imap_data;
+
 	for (int i = 0; i < stages.size(); i++)
 	{
 		if (stages[i]->Update() == 1)
@@ -168,14 +180,24 @@ void StageManager::DrawAlpha3D()
 bool StageManager::RandomBlockSet()
 {
 	//TODO:マジックナンバーなので後で修正
-	Vector3 pos = Vector3(MathHelper_Random(1, 13), 0, MathHelper_Random(-11, -1));
-	//何もないところ以外だったらWhile文の最初に戻る
+	Vector3 pos = Vector3(MathHelper_Random(1, 13), MathHelper_Random(5, 10), MathHelper_Random(-11, -1));
+
+	//!何もないところ以外だったらWhile文の最初に戻る
 	if (mapdate[-pos.z][pos.x] != ' ')
 	{
 		return false;
 	}
-	//TODO:マジックナンバーなので後で修正
-	pos.y = MathHelper_Random(5, 10);
+
+	for (auto&& stagepos : stages)
+	{
+		//!同じところにブロックが落ちないようにWhile文の最初に戻す
+		if (stagepos->GetPosition().x == pos.x && stagepos->GetPosition().z == pos.z)
+		{
+			return false;
+		}
+	}
+
+	//!ブロックの配置
 	std::string block_tag = DESTRUCTION_BLOCK_TAG + std::to_string(pos.x) + std::to_string(-pos.z);
 	stages.push_back(new Block(block_tag));
 	stages[stages.size() - 1]->SetPosition(pos);

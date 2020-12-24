@@ -24,8 +24,8 @@ public:
 	void DrawAlpha3D() override;
 	void Fall();
 private:
-	Blinking* _blinking;
-	ItemCounter* itemcounter;
+	Blinking*                       _blinking;
+	ItemCounter*                    _itemcounter;
 	std::unique_ptr<ParticleSystem> _effect;
-	int _handle;
+	int                             _handle;
 };
