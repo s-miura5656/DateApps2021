@@ -8,7 +8,7 @@
 
 StageManager::StageManager()
 {
-	
+
 }
 
 StageManager::~StageManager()
@@ -23,12 +23,12 @@ bool StageManager::Initialize()
 {
 	_bg_sprite = ResouceManager::Instance().LordSpriteFile(_T("MapSprite/BG.png"));
 
-	FILE* fp = fopen("MapSprite/map.csv","r");
+	FILE* fp = fopen("MapSprite/map.csv", "r");
 
 	//マップデータを読み込む
 	char lordchar[CHAR_MAX + 1];
 
-	while (fgets(lordchar,sizeof lordchar -1 ,fp) !=  NULL)
+	while (fgets(lordchar, sizeof lordchar - 1, fp) != NULL)
 	{
 		if (lordchar[strlen(lordchar) - 1] == '\n')
 			lordchar[strlen(lordchar) - 1] = '\0';
@@ -97,7 +97,7 @@ bool StageManager::Initialize()
 
 	stages.push_back(new Indestructible);
 	stages[stages.size() - 1]->Initialize();
-	stages[stages.size() - 1]->SetPosition(Vector3(7,0,-6));
+	stages[stages.size() - 1]->SetPosition(Vector3(7, 0, -6));
 
 	delete imap_data;
 	delete iplayer_data;
@@ -106,8 +106,8 @@ bool StageManager::Initialize()
 
 	//!変数初期化
 	_fall_block_count = 10;
-	_block_count      = 80;
-	_fall_interval    = 220;
+	_block_count = 80;
+	_fall_interval = 220;
 	_random_fall_time = 0;
 	return true;
 }
@@ -117,7 +117,7 @@ int StageManager::Update()
 	IMapData* imap_data = new IMapData;
 
 	//TODO:ブロックの数が80個以下の場合ランダムな座標を決めるタイマーを起動:エラーで落ちないために103個以下で止める
-	if(stages.size() - 1  <= _block_count)
+	if (stages.size() - 1 <= _block_count)
 	{
 		_random_fall_time++;
 	}
@@ -128,19 +128,7 @@ int StageManager::Update()
 	if (_random_fall_time >= _fall_interval)
 	{
 		mapdate = imap_data->GetData();
-
-		//TODO:ランダムで増えるブロックの個数は調整する
-		while (rand_block_count < _fall_block_count)
-		{
-			//!ランダムな座標を設定し、すでにその座標にブロックがあった場合
-			if (!RandomBlockSet())
-			{
-				continue;
-			}
-
-			rand_block_count++;
-		}
-
+		RandomBlockSet();
 		_random_fall_time = 0;
 	}
 
@@ -184,30 +172,48 @@ void StageManager::DrawAlpha3D()
  * @fn ブロックをランダムな座標に置く
  * @return trueだったらブロックが置かれる
  */
-bool StageManager::RandomBlockSet()
+void StageManager::RandomBlockSet()
 {
-	Vector3 pos = Vector3(MathHelper_Random(0, mapdate[0].size() - 1), 
-		MathHelper_Random(5, 10), MathHelper_Random(-(mapdate.size() - 1),0));
-
-	//!何もないところ以外だったらWhile文の最初に戻る
-	if (mapdate[-pos.z][pos.x] != ' ')
+	std::vector<Vector3> random_block_pos;
+	for (int z = 0; z < mapdate.size(); z++)
 	{
-		return false;
-	}
-
-	for (auto&& stagepos : stages)
-	{
-		//!同じところにブロックが落ちないようにWhile文の最初に戻す
-		if (stagepos->GetPosition().x == pos.x && stagepos->GetPosition().z == pos.z)
+		for (int x = 0; x < mapdate[z].size(); x++)
 		{
-			return false;
+			if (mapdate[z][x] != 'w' && mapdate[z][x] != 'i')
+			{
+				random_block_pos.push_back(Vector3(x, 0, -z));
+			}
 		}
 	}
-
-	//!ブロックの配置
-	std::string block_tag = DESTRUCTION_BLOCK_TAG + std::to_string(pos.x) + std::to_string(-pos.z);
-	stages.push_back(new Block(block_tag));
-	stages[stages.size() - 1]->SetPosition(pos);
-	stages[stages.size() - 1]->Initialize();
-	return true;
+	for (auto&& stagepos : stages)
+	{
+		for (int i = 0; i < random_block_pos.size(); i++)
+		{
+			if (stagepos->GetPosition().x == random_block_pos[i].x && stagepos->GetPosition().z == random_block_pos[i].z)
+			{
+				random_block_pos.erase(random_block_pos.begin() + i);
+			}
+		}
+	}
+	int num[108] = {};
+	for (int i = 0; i < random_block_pos.size(); i++)
+	{
+		num[i] = i;
+	}
+	for (int i = 0; i < random_block_pos.size(); i++)
+	{
+		int random = MathHelper_Random(0, random_block_pos.size());
+		int work = num[i];
+		num[i] = num[random];
+		num[random] = work;
+	}
+	//TODO:ランダムで増えるブロックの個数は調整する
+	for (int i = 0; i < _fall_block_count; i++)
+	{
+		std::string blocktag = DESTRUCTION_BLOCK_TAG + std::to_string(random_block_pos[num[i]].x) + std::to_string(random_block_pos[num[i]].z);
+		stages.push_back(new Block(blocktag));
+		random_block_pos[num[i]].y = MathHelper_Random(5, 10);
+		stages[stages.size() - 1]->SetPosition(random_block_pos[num[i]]);
+		stages[stages.size() - 1]->Initialize();
+	}
 }

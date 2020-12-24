@@ -26,7 +26,7 @@ public:
 	void DrawAlpha3D() override;
 
 private:
-	bool RandomBlockSet();
+	void RandomBlockSet();
 	std::vector<StageBase*>		 stages;
 	std::vector<cstring>		 mapdate; //! マップデータの読み込み
 	SPRITE                      _bg_sprite;
