@@ -461,10 +461,17 @@ BOOL CDInput8::IsXInputDevice(GUID* pGuidProductFromDirectInput)
 	VariantInit(&var);
 
 	// Create WMI
-	hr = CoCreateInstance(CLSID_WbemLocator,
+	//hr = CoCreateInstance(CLSID_WbemLocator,
+	//	NULL,
+	//	CLSCTX_INPROC_SERVER,
+	//	IID_IWbemLocator,
+	//	(LPVOID*)&pIWbemLocator);
+
+	// Create WMI
+	hr = CoCreateInstance(__uuidof(WbemLocator),
 		NULL,
 		CLSCTX_INPROC_SERVER,
-		IID_IWbemLocator,
+		__uuidof(IWbemLocator),
 		(LPVOID*)&pIWbemLocator);
 
 	if (FAILED(hr) || pIWbemLocator == NULL)
@@ -477,7 +484,7 @@ BOOL CDInput8::IsXInputDevice(GUID* pGuidProductFromDirectInput)
 	OutputDebugString(b.c_str());
 
 	bstrNamespace = SysAllocString(L"\\\\.\\root\\cimv2"); if (bstrNamespace == NULL) l_cleanup();
-	bstrClassName = SysAllocString(L"Win32_PnPEntity");   if (bstrClassName == NULL) l_cleanup();
+	bstrClassName = SysAllocString(L"Win32_PNPEntity");   if (bstrClassName == NULL) l_cleanup();
 	bstrDeviceID  = SysAllocString(L"DeviceID");          if (bstrDeviceID == NULL)  l_cleanup();
 
 	HrToStrByAMGet(hr);
@@ -489,7 +496,7 @@ BOOL CDInput8::IsXInputDevice(GUID* pGuidProductFromDirectInput)
 	//hr = pIWbemLocator->ConnectServer(bstrNamespace, NULL, NULL, 0L,
 	//	0L, NULL, NULL, &pIWbemServices);
 
-	hr = pIWbemLocator->ConnectServer(BSTR(L"root\\CIMV2"), NULL, NULL, 0L,
+	hr = pIWbemLocator->ConnectServer(BSTR(L"\\\\.\\root\\cimv2"), NULL, NULL, 0L,
 		0L, NULL, NULL, &pIWbemServices);
 	HrToStrByAMGet(hr);
 	a++;
@@ -500,16 +507,18 @@ BOOL CDInput8::IsXInputDevice(GUID* pGuidProductFromDirectInput)
 		l_cleanup();
 
 	// Switch security level to IMPERSONATE. 
-	hr =CoSetProxyBlanket(pIWbemServices, RPC_C_AUTHN_WINNT, RPC_C_AUTHZ_NONE, NULL,
-		RPC_C_AUTHN_LEVEL_CALL, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE);
+	hr = CoSetProxyBlanket(pIWbemServices, RPC_C_AUTHN_WINNT, RPC_C_AUTHZ_NONE, NULL,
+						   RPC_C_AUTHN_LEVEL_CALL, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE);
+
+	hr = pIWbemServices->CreateInstanceEnum(bstrClassName, 0, NULL, &pEnumDevices);
 
 	HrToStrByAMGet(hr);
 	a++;
 	b = std::to_wstring(a);
 	OutputDebugString(b.c_str());
 
-	hr = pIWbemServices->CreateInstanceEnum(bstrClassName, 0, NULL, &pEnumDevices);
-
+//	hr = pIWbemServices->CreateInstanceEnum(bstrClassName, 0, NULL, &pEnumDevices);
+	hr = pIWbemServices->CreateInstanceEnum(BSTR(L"Win32_PNPEntity"), 0, NULL, &pEnumDevices);
 	if (FAILED(hr) || pEnumDevices == NULL)
 	{
 		HrToStrByAMGet(hr);

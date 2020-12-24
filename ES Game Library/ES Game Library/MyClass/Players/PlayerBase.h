@@ -26,8 +26,9 @@ protected:
 	void CreateArm();
 	void DestroyArm();
 	void InputMove(BaseInput* pad);
-	void TestMove(BaseInput* pad);
+	void IsMove();
 	void InputMoveDir(BaseInput* pad);
+	void TestMoveDir(BaseInput* pad);
 	void InputAngle(BaseInput* pad);
 	void SetCollisionPosition();
 	void DebugControll();

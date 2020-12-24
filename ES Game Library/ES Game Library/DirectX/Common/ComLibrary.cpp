@@ -37,8 +37,8 @@ bool CComLibrary::Initialize()
 {
 	m_Ref++;
 	if(m_Ref == 1) {
-		if(::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)
-		   != S_OK) {
+//		if(::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)
+		if (::CoInitialize(NULL) != S_OK) {
 			::OutputDebugString(TEXT("*** Error - COMèâä˙âªé∏îs(CComLibrary_Initialize)\n"));
 			m_Ref = 0;
 			return false;

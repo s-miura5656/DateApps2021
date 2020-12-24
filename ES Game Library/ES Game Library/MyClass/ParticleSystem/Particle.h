@@ -19,7 +19,7 @@ public:
 	void SetScale(Vector3 scale);
 	void SetScale(float scale);
 	void SetSpeed(float speed);
-	void SetDrawRotationY(float angle_y, Vector3 front_dir);
+	
 
 private:
 	//! file

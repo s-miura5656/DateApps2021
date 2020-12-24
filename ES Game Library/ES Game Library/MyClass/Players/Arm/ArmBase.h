@@ -24,7 +24,6 @@ public:
 
 protected:
 	void MoveArm(BaseInput* pad);
-	bool TurnArm(BaseInput* pad);
 	void ArmReturn();
 	void HitOtherObject();
 	void SetCollisionPosition();
@@ -48,6 +47,7 @@ protected:
 	
 	//! rotation
 	int   _old_angle = INT_MAX;
+	int   _new_angle = INT_MAX;
 	std::vector<float> _angles;
 
 	//! distnace
@@ -74,9 +74,10 @@ protected:
 	IndexNum _index_num;
 
 	//! count
-	float _lerp_count = 0.f;
-	int   _wait_count = 0;
+	float _lerp_count  = 0.f;
+	int   _wait_count  = 0;
 	float _scale_count = 0.f;
+	float _turn_count  = 0.f;
 	int effect_num;
 
 	//! flag
@@ -86,7 +87,7 @@ protected:
 	//! material
 	Material _model_material;
 private:
+	bool TurnArm();
 	void CreateWire();
 	void DeleteWire();
-
 };

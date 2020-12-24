@@ -31,18 +31,30 @@ PlayerManager::~PlayerManager()
 
 bool PlayerManager::Initialize()
 {
-	
+	float angle = 180.0f;
+
+	for (int i = 0; i < PLAYER_COUNT_MAX; i += 2)
+	{
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
+		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
+		PlayerParametor::Instance().CreateParametor(tag);
+		ArmParametor::Instance().CreateParametor(arm_tag);
+		_i_player_data->SetAngle(tag, angle);
+
+		tag = PLAYER_TAG + std::to_string(i + 2);
+		arm_tag = ARM_TAG + std::to_string(i + 2);
+		PlayerParametor::Instance().CreateParametor(tag);
+		ArmParametor::Instance().CreateParametor(arm_tag);
+		_i_player_data->SetAngle(tag, angle);
+		angle = 0;
+	}
 
 	for (int i = 0; i < _players.size(); ++i)
 	{
 		std::string tag = PLAYER_TAG + std::to_string(i + 1);
-		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
 		_players[i]->Initialize();
-
-		PlayerParametor::Instance().CreateParametor(tag);
-		ArmParametor::Instance().CreateParametor(arm_tag);
 	}
-	
+
 	_crown_rotation->Initialize();
 	
     return true;

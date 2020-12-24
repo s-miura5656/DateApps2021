@@ -90,31 +90,33 @@ int PlayerBase::Update()
 		{
 			DestroyArm();
 
-			//! プレイヤー移動
-			if (pad->Stick(STICK_INFO::LEFT_STICK) != STICK_CENTER)
+			if (!_move_flag)
 			{
-				InputAngle(pad);
-				player_data->SetAngle(_tag, _transform.rotation.y);
-				player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
-			}
-			else
-			{
-				player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
-			}
+				//! プレイヤー移動
+				if (pad->Stick(STICK_INFO::LEFT_STICK) != STICK_CENTER)
+				{
+					InputAngle(pad);
+					player_data->SetAngle(_tag, _transform.rotation.y);
+					player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
+				}
+				else
+				{
+					player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
+				}
 
-			//! ロケットパンチ発射切り替え
-			if (pad->Button(BUTTON_INFO::BUTTON_B))
-			{
-				player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
-				player_data->SetPosition(_tag, _transform.position);
+				//! ロケットパンチ発射切り替え
+				if (pad->Button(BUTTON_INFO::BUTTON_B))
+				{
+					player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
+					player_data->SetPosition(_tag, _transform.position);
+				}
 			}
+			
 		}
 
 		if (player_data->GetState(_tag) == PlayerEnum::Animation::MOVE)
 		{
-			//! 移動
-			TestMove(pad);
-			//InputMove(pad);
+			InputMove(pad);
 		}
 	}
 
@@ -251,129 +253,119 @@ void PlayerBase::ChangeAnimation()
 //! @fn 移動処理
 void PlayerBase::InputMove(BaseInput* pad)
 {
-	auto&& map_data = _i_map_data->GetData();
-	auto&& player_data = _i_player_data;
 	//! 移動中か入力受付状態か判定
-	if (_move_flag)
+	if (_move_flag) 
 	{
-		_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
-
-		_lerp_count += player_data->GetSpeed(_tag);
-
-		_lerp_count = Clamp(_lerp_count, 0, 1);
-
-		if (_lerp_count >= _moving_completion_end_value)
-		{
-			_move_flag  = false;
-			_lerp_count = 0;
-			player_data->SetPosition(_tag, _transform.position);
-		}
+		IsMove();
 	}
-	else
+	else 
 	{
-		auto pad_x = pad->Stick(STICK_INFO::LEFT_STICK).x;
-		auto pad_y = pad->Stick(STICK_INFO::LEFT_STICK).y;
-
-		float abs_x = fabsf(pad_x);
-		float abs_z = fabsf(pad_y);
-		
-		int old_index_x = _index_num.x;
-		int old_index_z = _index_num.z;
-
-		if (abs_x > abs_z)
-		{
-			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _index_num.x-- : _index_num.x++;
-			_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
-		}
-		else if (abs_x < abs_z)
-		{
-			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z++ : _index_num.z--;
-
-			_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
-		}
-
-		if (map_data[_index_num.z][_index_num.x] != 'i' &&
-			map_data[_index_num.z][_index_num.x] != 'w' &&
-			map_data[_index_num.z][_index_num.x] != 'b' &&
-			map_data[_index_num.z][_index_num.x] != 'd')
-		{
-			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
-			player_data->SetIndexNum(_tag, _index_num);
-			_move_flag = true;
-		}
-		else
-		{
-			_index_num.x = old_index_x;
-			_index_num.z = old_index_z;
-		}
-
-		_old_pos = _transform.position;
+		TestMoveDir(pad);
 	}
 }
 
-void PlayerBase::TestMove(BaseInput* pad)
+void PlayerBase::IsMove()
 {
-	auto&& map_data = _i_map_data->GetData();
 	auto&& player_data = _i_player_data;
-	//! 移動中か入力受付状態か判定
-	if (_move_flag)
+
+	_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
+	_lerp_count += player_data->GetSpeed(_tag);
+	_lerp_count = Clamp(_lerp_count, 0, 1);
+
+	if (_lerp_count >= _moving_completion_end_value)
 	{
-		_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
-
-		_lerp_count += player_data->GetSpeed(_tag);
-
-		if (_lerp_count >= _moving_completion_end_value)
-		{
-			_move_flag  = false;
-			_lerp_count -= 1.0f;
-			player_data->SetPosition(_tag, _transform.position);
-		}
-	}
-	else
-	{
-		auto pad_x = pad->Stick(STICK_INFO::LEFT_STICK).x;
-		auto pad_y = pad->Stick(STICK_INFO::LEFT_STICK).y;
-
-		float abs_x = fabsf(pad_x);
-		float abs_z = fabsf(pad_y);
-
-		int old_index_x = _index_num.x;
-		int old_index_z = _index_num.z;
-
-		if (abs_x > abs_z)
-		{
-			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _index_num.x-- : _index_num.x++;
-			_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
-		}
-		else if (abs_x < abs_z)
-		{
-			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z++ : _index_num.z--;
-
-			_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
-		}
-
-		if (map_data[_index_num.z][_index_num.x] != 'i' &&
-			map_data[_index_num.z][_index_num.x] != 'w' &&
-			map_data[_index_num.z][_index_num.x] != 'b' &&
-			map_data[_index_num.z][_index_num.x] != 'd')
-		{
-			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
-			player_data->SetIndexNum(_tag, _index_num);
-			_move_flag = true;
-		}
-		else
-		{
-			_index_num.x = old_index_x;
-			_index_num.z = old_index_z;
-		}
-
-		_old_pos = _transform.position;
+		_move_flag = false;
+		_lerp_count = 0;
+		player_data->SetPosition(_tag, _transform.position);
 	}
 }
 
 void PlayerBase::InputMoveDir(BaseInput* pad)
 {
+	auto&& map_data = _i_map_data->GetData();
+	auto&& player_data = _i_player_data;
 
+	auto pad_x = pad->Stick(STICK_INFO::LEFT_STICK).x;
+	auto pad_y = pad->Stick(STICK_INFO::LEFT_STICK).y;
+
+	float abs_x = fabsf(pad_x);
+	float abs_z = fabsf(pad_y);
+
+	int old_index_x = _index_num.x;
+	int old_index_z = _index_num.z;
+
+	if (abs_x > abs_z)
+	{
+		std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _index_num.x-- : _index_num.x++;
+		_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
+	}
+	else if (abs_x < abs_z)
+	{
+		std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z++ : _index_num.z--;
+
+		_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
+	}
+
+	if (map_data[_index_num.z][_index_num.x] != 'i' &&
+		map_data[_index_num.z][_index_num.x] != 'w' &&
+		map_data[_index_num.z][_index_num.x] != 'b' &&
+		map_data[_index_num.z][_index_num.x] != 'd')
+	{
+		_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
+		player_data->SetIndexNum(_tag, _index_num);
+		_move_flag = true;
+	}
+	else
+	{
+		_index_num.x = old_index_x;
+		_index_num.z = old_index_z;
+	}
+
+	_old_pos = _transform.position;
+}
+
+void PlayerBase::TestMoveDir(BaseInput* pad)
+{
+	auto&& map_data = _i_map_data->GetData();
+	auto&& player_data = _i_player_data;
+
+	auto pad_x = pad->Stick(STICK_INFO::LEFT_STICK).x;
+	auto pad_y = pad->Stick(STICK_INFO::LEFT_STICK).y;
+
+	float abs_x = fabsf(pad_x);
+	float abs_z = fabsf(pad_y);
+
+	int old_index_x = _index_num.x;
+	int old_index_z = _index_num.z;
+
+	if (abs_x > abs_z)
+	{
+		std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _index_num.x-- : _index_num.x++;
+		_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
+	}
+	else if (abs_x < abs_z)
+	{
+		std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z++ : _index_num.z--;
+
+		_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
+	}
+
+	if (map_data[_index_num.z][_index_num.x] != 'i' &&
+		map_data[_index_num.z][_index_num.x] != 'w' &&
+		map_data[_index_num.z][_index_num.x] != 'b' &&
+		map_data[_index_num.z][_index_num.x] != 'd')
+	{
+		_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
+		player_data->SetIndexNum(_tag, _index_num);
+		_move_flag = true;
+	}
+	else
+	{
+		_index_num.x = old_index_x;
+		_index_num.z = old_index_z;
+	}
+
+	_old_pos = _transform.position;
 }
 
 //! @fn 方向の入力
@@ -384,7 +376,6 @@ void PlayerBase::InputAngle(BaseInput* pad)
 
 	if (_transform.rotation.y != _old_angle)
 	{
-		_turn_flag = true;
 		_old_angle = _transform.rotation.y;
 	}
 }

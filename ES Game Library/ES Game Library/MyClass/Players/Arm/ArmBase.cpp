@@ -132,7 +132,9 @@ void ArmBase::Draw3D()
 	_hit_box->Draw3D();
 
 	//! エフェクトの座標指定と描画
-	_shot_effect->SetDrawRotationY(_transform.rotation.y, DirectionFromAngle(Vector3(0, _transform.rotation.y, 0)));
+	Vector3 rotation = _transform.rotation;
+	rotation.y += 180;
+	_shot_effect->SetRotation(rotation);
 	_shot_effect->Draw();
 
 	//! ワイヤーモデルの描画
@@ -149,7 +151,7 @@ void ArmBase::MoveArm(BaseInput* pad)
 {
 	auto&& map_data = _i_map_data->GetData();
 
-	if (TurnArm(pad))
+	if (TurnArm())
 		return;
 
 	//! 移動中かそうでないか判定
@@ -163,8 +165,8 @@ void ArmBase::MoveArm(BaseInput* pad)
 		{
 			_move_flag  = false;
 			_lerp_count = 0;
-			CreateWire();
 			ChangeDirection(pad);
+			CreateWire();
 			_angle_positions.push_back(_transform.position);
 		}
 	}
@@ -217,16 +219,21 @@ void ArmBase::MoveArm(BaseInput* pad)
 	}
 }
 
-bool ArmBase::TurnArm(BaseInput* pad)
+bool ArmBase::TurnArm()
 {
 	//! フラグがたっていたらアームの向き入力
 	if (_turn_flag)
 	{
 		_wait_count++;
+		_turn_count += 0.1f;
+		_turn_count = Clamp(_turn_count, 0, 1);
+		_transform.rotation.y = MathHelper_Lerp(_old_angle, _new_angle, _turn_count);
 
 		if (_wait_count > 15)
 		{
+			_old_angle = _transform.rotation.y;
 			_wait_count = 0;
+			_turn_count = 0;
 			_turn_flag = false;
 		}
 	}
@@ -248,6 +255,7 @@ void ArmBase::ArmReturn()
 	if (dist < 0.3f && angle_point_size > 1)
 	{
 		_angle_positions.erase(_angle_positions.begin() + (angle_point_size - 1));
+		DeleteWire();
 		return;
 	}
 
@@ -261,7 +269,6 @@ void ArmBase::ArmReturn()
 	if (move_dir == Vector3_Zero && angle_point_size > 1)
 	{
 		_angle_positions.erase(_angle_positions.begin() + (angle_point_size - 1));
-		DeleteWire();
 	}
 }
 
@@ -372,24 +379,23 @@ void ArmBase::ChangeDirection(BaseInput* pad)
 			if (angle != _old_angle)
 			{
 				_shot_effect->Stop();
-				_old_angle = angle;
+				_new_angle = angle;
 				_turn_flag = true;
-				_transform.rotation.y = angle;
 			}
-
 		}
 	}
 }
 
 void ArmBase::CreateWire()
 {
-	_wires.push_back(std::make_unique<Wire>(_transform));
+	Transform transform = _transform;
+	transform.rotation.y = _new_angle;
+	_wires.push_back(std::make_unique<Wire>(transform));
 	_wires.rbegin()->get()->Initialize();
 }
 
 void ArmBase::DeleteWire()
 {
 	_wires.rbegin()->reset();
-	_wires.erase(_wires.end());
+	_wires.erase(_wires.begin() + (_wires.size() - 1));
 }
-

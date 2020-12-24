@@ -10,6 +10,7 @@ Wire::Wire(Transform arm_transform)
 
 Wire::~Wire()
 {
+	_effect.reset();
 	auto i_map_data = new IMapData;
 	
 	auto data = i_map_data->GetData();
@@ -24,16 +25,11 @@ Wire::~Wire()
 
 	i_map_data->SetData(data);
 	delete i_map_data;
-
 }
 
 bool Wire::Initialize()
 {
-	_model  = ResouceManager::Instance().LoadModelFile(_T("Player/wire.X"));
-	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
-
-	auto path = ConvertFilePath("Player/", "wire", ".png");
-	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
+	_effect = std::make_unique<ParticleSystem>();
 
 	_material.Diffuse  = Color(1.0f, 1.0f, 1.0f);
 	_material.Ambient  = Color(1.0f, 1.0f, 1.0f);
@@ -54,27 +50,19 @@ bool Wire::Initialize()
 	i_map_data->SetData(data);
 	delete i_map_data;
 
+	auto&& effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/wire/wire.efk"));
+	_effect->RegisterParticle(effect);
+	_effect->SetSpeed(1.0f);
+	_effect->SetScale(1.0f);
+	_effect->SetRotation(_transform.rotation);
+	_effect->SetPosition(_transform.position);
+	_effect->PlayOneShot();
+
 	return true;
 }
 
 void Wire::Draw3D()
 {
-	auto camera = SceneCamera::Instance().GetCamera();
-
-	_model->SetMaterial(_material);
-	_model->SetPosition(_transform.position);
-	_model->SetRotation(_transform.rotation);
-
-	_shader->SetTexture("m_Texture", *_texture);
-	_shader->SetParameter("model_ambient", _material.Ambient);
-	_shader->SetParameter("eye_pos", camera.GetPosition());
-
-	Matrix vp = camera->GetViewProjectionMatrix();
-	Matrix world = _model->GetWorldMatrix();
-	_shader->SetParameter("wvp", world * vp);
-
-	_shader->SetParameter("limit_color", Vector3(0.0f, 1.0f, 0.0f));
-	_shader->SetTechnique("FixLimitModel_S1");
-	_model->Draw(_shader);
+	_effect->Draw();
 }
 

@@ -53,7 +53,9 @@ void ParticleSystem::SetPosition(Vector3 position)
 
 void ParticleSystem::SetRotation(Vector3 rotation)
 {
-	_rotation = rotation;
+	_rotation.x = MathHelper_ToRadians(rotation.x);
+	_rotation.y = MathHelper_ToRadians(rotation.y);
+	_rotation.z = MathHelper_ToRadians(rotation.z);
 }
 
 void ParticleSystem::SetScale(Vector3 scale)
@@ -69,20 +71,4 @@ void ParticleSystem::SetScale(float scale)
 void ParticleSystem::SetSpeed(float speed)
 {
 	_speed = speed;
-}
-
-void ParticleSystem::SetDrawRotationY(float angle_y, Vector3 front_dir)
-{
-	if (front_dir.z != 0)
-	{
-		_rotation = Vector3(MathHelper_ToDegrees(angle_y + 180), 0.0f, 0.0f);
-	}
-	else if (front_dir.x > 0)
-	{
-		_rotation = Vector3(0.0, 0.0f, MathHelper_ToDegrees(angle_y + 180));
-	}
-	else if (front_dir.x < 0)
-	{
-		_rotation = Vector3(0.0, 0.0f, MathHelper_ToDegrees(angle_y + 90));
-	}
 }

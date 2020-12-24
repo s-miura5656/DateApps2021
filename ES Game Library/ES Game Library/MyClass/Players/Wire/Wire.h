@@ -3,6 +3,7 @@
 #include "../../../ESGLib.h"
 #include "../../Data/StructList.h"
 #include "../../Data/IData.h"
+#include "../../ParticleSystem/Particle.h"
 
 class Wire
 {
@@ -15,10 +16,8 @@ public:
 	void Draw2D() {};
 	void Draw3D();
 private:
-	//! file
-	MODEL  _model;
-	EFFECT _shader;
-	SPRITE _texture;
+	//! pointer
+	std::unique_ptr<ParticleSystem> _effect;
 
 	//! transform
 	Transform _transform;

@@ -13,7 +13,7 @@ bool GameMain::Initialize()
 	// TODO: Add your initialization logic here
 	WindowTitle(_T("ロケパンファイターズ"));
 
-	Effekseer.Attach(GraphicsDevice);
+	Effekseer.Attach(GraphicsDevice, 8192);
 	SceneManager::Instance().Initialize();
 	SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TITLE);
 	SceneManager::Instance().ChangeScene();
