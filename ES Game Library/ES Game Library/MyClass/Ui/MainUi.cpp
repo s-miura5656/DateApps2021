@@ -21,8 +21,8 @@ MainUi::~MainUi()
 bool MainUi::Initialize()
 {
 	time_limit_font = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 50);
-	kuro			= ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 95);
-	siro			= ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 90);
+	back_count      = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 95);
+	front_count     = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 90);
 
 	red_banner      = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/red_banner.png"));
 	blue_banner     = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/blue_banner.png"));
@@ -32,7 +32,7 @@ bool MainUi::Initialize()
 	score_num       = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber.png"));
 	
 
-	//test = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/ゲージベース2.png"));
+	test = GraphicsDevice.CreateSpriteFromFile(_T("HpSprite/ゲージベース2.png"));
 	
 	flag = 0;
 
@@ -67,24 +67,25 @@ void MainUi::Draw2D()
 	int minutes   = TimeManager::Instance().GetTimeMinutes();
 	int seconds   = TimeManager::Instance().GetTimeSeconds();
 	int Countdown = TimeManager::Instance().Countdown();
-	float Start   = TimeManager::Instance().GetstartTime();
+	float Start   = TimeManager::Instance().GetStartTime();
 	
 	SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("%02d:%02d"), minutes, seconds);
 
 	SpriteBatch.Draw(*time_banner, Vector3(640 - 125, 5, 1));
 	PlayerBanner();
 	PointAnimation();
+
 	if (Start > 0) {
-		SpriteBatch.DrawString(kuro, Vector2(600, 340), Color(0.f, 0.f, 0.f), _T("%d"), Countdown);
+		SpriteBatch.DrawString(back_count , Vector2(600, 340), Color(0.f, 0.f, 0.f), _T("%d"), Countdown);
 	}
 	if (Start > 0) {
-		SpriteBatch.DrawString(siro, Vector2(605, 345), Color(1.f, 1.f, 1.f), _T("%d"), Countdown);
+		SpriteBatch.DrawString(front_count, Vector2(605, 345), Color(1.f, 1.f, 1.f), _T("%d"), Countdown);
 	}
 	if (Countdown == 0) {
-		SpriteBatch.DrawString(kuro, Vector2(487, 340), Color(0.f, 0.f, 0.f), _T("S T A R T !!"));
+		SpriteBatch.DrawString(back_count , Vector2(487, 340), Color(0.f, 0.f, 0.f), _T("S T A R T !!"));
 	}
 	if (Countdown == 0) {
-		SpriteBatch.DrawString(siro, Vector2(500, 340), Color(1.f, 1.f, 1.f), _T("S T A R T !!"));
+		SpriteBatch.DrawString(front_count, Vector2(500, 340), Color(1.f, 1.f, 1.f), _T("S T A R T !!"));
 	}
 }
 
@@ -116,8 +117,10 @@ void MainUi::PointAnimation()
 	{
 		std::string& arm_tag = ARM_TAG + std::to_string(i + 1);
 		auto pos = _i_arm_data->GetHitPosition(arm_tag);
+
+		//!　アームのポジションが初期状態でないとき（アームがプレイヤーにヒットした時に更新される）
 		if (pos != Vector3_Zero) {
-//			SpriteBatch.Draw(*test, pos);
+		SpriteBatch.Draw(*test, pos);
 		}
 	}
 
