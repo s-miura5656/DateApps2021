@@ -107,43 +107,43 @@ bool StageManager::Initialize()
 
 int StageManager::Update()
 {
-	IMapData* imap_data = new IMapData;
+	//IMapData* imap_data = new IMapData;
 
-	//TODO:ブロックの数が80個以下の場合ランダムな座標を決めるタイマーを起動:エラーで落ちないために103個以下で止める
-	if(stages.size() - 1  <= 80)
-	{
-		_random_fall_time++;
-	}
+	////TODO:ブロックの数が80個以下の場合ランダムな座標を決めるタイマーを起動:エラーで落ちないために103個以下で止める
+	//if(stages.size() - 1  <= 80)
+	//{
+	//	_random_fall_time++;
+	//}
 
-	int rand_block_count = 0;
+	//int rand_block_count = 0;
 
-	//TODO:降ってくる頻度は調整する
-	if (_random_fall_time >= 220)
-	{
-		mapdate = imap_data->GetData();
+	////TODO:降ってくる頻度は調整する
+	//if (_random_fall_time >= 220)
+	//{
+	//	mapdate = imap_data->GetData();
 
-		//TODO:ランダムで増えるブロックの個数は調整する
-		while (rand_block_count < 10)
-		{
-			//!ランダムな座標を設定し、すでにその座標にブロックがあった場合
-			if (!RandomBlockSet())
-			{
-				continue;
-			}
+	//	//TODO:ランダムで増えるブロックの個数は調整する
+	//	while (rand_block_count < 10)
+	//	{
+	//		//!ランダムな座標を設定し、すでにその座標にブロックがあった場合
+	//		if (!RandomBlockSet())
+	//		{
+	//			continue;
+	//		}
 
-			rand_block_count++;
-		}
+	//		rand_block_count++;
+	//	}
 
-		_random_fall_time = 0;
-	}
+	//	_random_fall_time = 0;
+	//}
 
-	delete imap_data;
+	//delete imap_data;
 
 	for (int i = 0; i < stages.size(); i++)
 	{
 		if (stages[i]->Update() == 1)
 		{
-			const string random_item[3] = { POWOR_ITEM_TAG ,SPEED_ITEM_TAG ,HITPOINT_ITEM_TAG };
+			//const string random_item[3] = { POWOR_ITEM_TAG ,SPEED_ITEM_TAG ,HITPOINT_ITEM_TAG };
 			/*ItemCounter* itemcounter = new ItemCounter;
 			itemcounter->SetItem(random_item[MathHelper_Random(0,2)],stages[i]->GetPosition());*/
 			stages.erase(stages.begin() + i);

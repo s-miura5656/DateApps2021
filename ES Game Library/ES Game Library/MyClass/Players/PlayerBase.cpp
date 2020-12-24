@@ -274,7 +274,7 @@ void PlayerBase::IsMove()
 
 	if (_lerp_count >= _moving_completion_end_value)
 	{
-		_move_flag = false;
+		_move_flag  = false;
 		_lerp_count = 0;
 		player_data->SetPosition(_tag, _transform.position);
 	}
