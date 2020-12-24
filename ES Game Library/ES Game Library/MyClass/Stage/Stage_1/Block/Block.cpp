@@ -48,6 +48,8 @@ bool Block::Initialize()
 	{
 		_blinking = new Blinking;
 		_blinking->Initialize(_position);
+		//!降ってくるスピードの設定
+		_speed = -0.05;
 	}
 
 	//! shader
@@ -152,7 +154,7 @@ void Block::DrawAlpha3D()
 void Block::Fall()
 {
 	//TODO:降ってくる速さは調整する
-	_position.y -= 0.05;
+	_position.y += _speed;
 
 	//!Y座標が0になったときに自分の座標をマップデータをセットする
 	if (_position.y <= 0)

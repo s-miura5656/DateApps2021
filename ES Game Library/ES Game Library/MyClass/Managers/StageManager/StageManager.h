@@ -30,6 +30,9 @@ private:
 	std::vector<StageBase*>		 stages;
 	std::vector<cstring>		 mapdate; //! マップデータの読み込み
 	SPRITE                      _bg_sprite;
-	int                         _count = 0;
-	int                         _random_fall_time = 0;
+	int                         _count;
+	int                         _random_fall_time;
+	int                         _fall_block_count;
+	int                         _block_count;
+	float                       _fall_interval;
 };

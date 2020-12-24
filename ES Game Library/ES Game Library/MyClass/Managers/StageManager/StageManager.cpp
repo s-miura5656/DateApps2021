@@ -30,9 +30,10 @@ bool StageManager::Initialize()
 
 	while (fgets(lordchar,sizeof lordchar -1 ,fp) !=  NULL)
 	{
+		if (lordchar[strlen(lordchar) - 1] == '\n')
+			lordchar[strlen(lordchar) - 1] = '\0';
 		mapdate.push_back(lordchar);
 	}
-
 	//カンマを探索してカンマを消す
 	for (int z = 0; z < mapdate.size(); z++)
 	{
@@ -54,6 +55,7 @@ bool StageManager::Initialize()
 	imap_data->SetData(mapdate);
 
 	std::vector<int> warpdata;
+	_count = 0;
 	for (int z = 0; z < mapdate.size(); z++)
 	{
 		for (int x = 0; x < mapdate[z].size(); x++)
@@ -102,6 +104,11 @@ bool StageManager::Initialize()
 
 	int size = stages.size();
 
+	//!変数初期化
+	_fall_block_count = 10;
+	_block_count      = 80;
+	_fall_interval    = 220;
+	_random_fall_time = 0;
 	return true;
 }
 
@@ -110,7 +117,7 @@ int StageManager::Update()
 	IMapData* imap_data = new IMapData;
 
 	//TODO:ブロックの数が80個以下の場合ランダムな座標を決めるタイマーを起動:エラーで落ちないために103個以下で止める
-	if(stages.size() - 1  <= 80)
+	if(stages.size() - 1  <= _block_count)
 	{
 		_random_fall_time++;
 	}
@@ -118,12 +125,12 @@ int StageManager::Update()
 	int rand_block_count = 0;
 
 	//TODO:降ってくる頻度は調整する
-	if (_random_fall_time >= 220)
+	if (_random_fall_time >= _fall_interval)
 	{
 		mapdate = imap_data->GetData();
 
 		//TODO:ランダムで増えるブロックの個数は調整する
-		while (rand_block_count < 10)
+		while (rand_block_count < _fall_block_count)
 		{
 			//!ランダムな座標を設定し、すでにその座標にブロックがあった場合
 			if (!RandomBlockSet())
@@ -179,8 +186,8 @@ void StageManager::DrawAlpha3D()
  */
 bool StageManager::RandomBlockSet()
 {
-	//TODO:マジックナンバーなので後で修正
-	Vector3 pos = Vector3(MathHelper_Random(1, 13), MathHelper_Random(5, 10), MathHelper_Random(-11, -1));
+	Vector3 pos = Vector3(MathHelper_Random(0, mapdate[0].size() - 1), 
+		MathHelper_Random(5, 10), MathHelper_Random(-(mapdate.size() - 1),0));
 
 	//!何もないところ以外だったらWhile文の最初に戻る
 	if (mapdate[-pos.z][pos.x] != ' ')

@@ -28,4 +28,5 @@ private:
 	ItemCounter*                    _itemcounter;
 	std::unique_ptr<ParticleSystem> _effect;
 	int                             _handle;
+	float                           _speed;
 };
