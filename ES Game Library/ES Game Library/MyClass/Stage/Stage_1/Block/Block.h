@@ -10,7 +10,7 @@
 #include"../../StageBase.h"
 #include"../../../Item/ItemCounter/ItemCounter.h"
 #include"../../../Data/WordsTable.h"
-
+#include"../Blinking/Blinking.h"
 class ParticleSystem;
 
 class Block :public StageBase
@@ -22,8 +22,10 @@ public:
 	int Update() override;
 	void Draw3D() override;
 	void DrawAlpha3D() override;
+	void Fall();
 private:
-	ItemCounter* itemcounter;
+	Blinking*                       _blinking;
+	ItemCounter*                    _itemcounter;
 	std::unique_ptr<ParticleSystem> _effect;
-	int _handle;
+	int                             _handle;
 };

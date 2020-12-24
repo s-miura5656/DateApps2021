@@ -229,6 +229,9 @@
     <Filter Include="Myclass\Players\Player\Arm\Wire">
       <UniqueIdentifier>{a9d1b5d7-c99b-4b77-8ee6-a1a21e729278}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Stage\Stage_1\Blinking">
+      <UniqueIdentifier>{b7b2b0e1-dd66-42b2-a881-4559f6b80576}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -483,6 +486,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Players\Wire\Wire.cpp">
       <Filter>Myclass\Players\Player\Arm\Wire</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Stage\Stage_1\Blinking\Blinking.cpp">
+      <Filter>Myclass\Stage\Stage_1\Blinking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -777,6 +783,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Players\Wire\Wire.h">
       <Filter>Myclass\Players\Player\Arm\Wire</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Stage\Stage_1\Blinking\Blinking.h">
+      <Filter>Myclass\Stage\Stage_1\Blinking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
