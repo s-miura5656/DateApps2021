@@ -44,7 +44,6 @@ bool StageManager::Initialize()
 			}
 		}
 	}
-
 	//ファイルを閉じる
 	fclose(fp);
 
@@ -88,6 +87,8 @@ bool StageManager::Initialize()
 				warpdata.push_back(_count);
 				_count++;
 				break;
+			case 'i':
+				_metal_position.push_back(Vector3(x, 0, -z));
 			}
 		}
 	}
@@ -108,6 +109,26 @@ bool StageManager::Initialize()
 
 int StageManager::Update()
 {
+	time++;
+	int rand_block_count = 0;
+	//TODO:マジックナンバーなので後で修正
+	if (time >= 220) 
+	{
+		IMapData* imap_data = new IMapData;
+		mapdate = imap_data->GetData();
+		//TODO:ランダムで増えるブロックの個数
+		while (rand_block_count < 10)
+		{
+			if (!RandomBlockSet())
+			{
+				continue;
+			}
+			rand_block_count++;
+		}
+		imap_data->SetData(mapdate);
+		delete imap_data;
+		time = 0;
+	}
 	for (int i = 0; i < stages.size(); i++)
 	{
 		if (stages[i]->Update() == 1)
@@ -141,4 +162,35 @@ void StageManager::DrawAlpha3D()
 	{
 		stages[i]->DrawAlpha3D();
 	}
+}
+/**
+ * @fn ブロックをランダムな座標に置く
+ * @return trueだったらブロックが置かれる
+ */
+bool StageManager::RandomBlockSet()
+{
+	//TODO:マジックナンバーなので後で修正
+	Vector3 pos = Vector3(MathHelper_Random(1, 13), 0, MathHelper_Random(-11, -1));
+	for (auto&& stagepos : stages)
+	{
+		//今存在する破壊可能ブロックと同じ座標だったらWhile文の最初に戻る
+		if (stagepos->GetPosition() == pos)
+		{
+			return false;
+		}
+	}
+	for (int i = 0; i < _metal_position.size(); i++)
+	{
+		//今存在する破壊不可ブロックと同じ座標だったらWhile文の最初に戻る
+		if (_metal_position[i] == pos)
+		{
+			return false;
+		}
+	}
+	mapdate[-pos.z][pos.x] = 'b';
+	std::string block_tag = DESTRUCTION_BLOCK_TAG + std::to_string(pos.x) + std::to_string(-pos.z);
+	stages.push_back(new Block(block_tag));
+	stages[stages.size() - 1]->SetPosition(pos);
+	stages[stages.size() - 1]->Initialize();
+	return true;
 }
