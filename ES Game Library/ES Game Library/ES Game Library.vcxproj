@@ -191,6 +191,7 @@
     <ClCompile Include="MyClass\Scenes\Result\ResultScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Title\TitleScene.cpp" />
     <ClCompile Include="MyClass\Stage\StageBase.cpp" />
+    <ClCompile Include="MyClass\Stage\Stage_1\Blinking\Blinking.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Block\Block.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Metal\Metal.cpp" />
@@ -289,6 +290,7 @@
     <ClInclude Include="MyClass\Scenes\Result\ResultScene.h" />
     <ClInclude Include="MyClass\Scenes\Title\TitleScene.h" />
     <ClInclude Include="MyClass\Stage\StageBase.h" />
+    <ClInclude Include="MyClass\Stage\Stage_1\Blinking\Blinking.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Block\Block.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Metal\Metal.h" />

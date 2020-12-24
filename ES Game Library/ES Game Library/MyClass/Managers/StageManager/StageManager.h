@@ -35,5 +35,4 @@ private:
 	int _map_depth_count = 0;
 	int time = 0;
 	Vector3 _map_start_positoin;
-	std::vector<Vector3> _metal_position;
 };
