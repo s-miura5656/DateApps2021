@@ -23,10 +23,12 @@ bool MainUi::Initialize()
 {
 
 	//!file
-	time_limit_font = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 50);
-	back_count      = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 95);
-	front_count     = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 90);
-	time_banner     = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/time_2.png"));
+	time_limit_font   = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 50);
+	back_count        = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 95);
+	front_count       = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 90);
+
+	time_banner       = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/time_2.png"));
+	number_sprite     = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/number_3.png"));
 
 	score_pos[0] = Vector2( 100,   40);
 	score_pos[1] = Vector2( 320,   40);
@@ -42,8 +44,12 @@ bool MainUi::Initialize()
 	color[1] = Color(  0,   0, 255);
 	color[2] = Color(255, 255,   0);
 	color[3] = Color(  0, 255,   0);
-	
 
+	for (int i = 0; i < 10; i++)
+	{
+		number[i] = RectWH(i * 64, 0, 64, 64);
+	}
+	
 	// Player1
 	player_ui.push_back(PlayerUi(0));
 	player_ui[0].Initialize(_T("BannerFrameSprite/red_banner.png"), Vector3(80, 30, 1));
@@ -79,9 +85,14 @@ void MainUi::Draw2D()
 
 	int minutes   = TimeManager::Instance().GetTimeMinutes();
 	int seconds   = TimeManager::Instance().GetTimeSeconds();
+	int ones      = TimeManager::Instance().GetTimeOnesPlace();
+	int tens      = TimeManager::Instance().GetTimeTensPlace();
 	int Countdown = TimeManager::Instance().Countdown();
 	float Start   = TimeManager::Instance().GetStartTime();
 	
+	/*SpriteBatch.Draw(*number_sprite, Vector3(540, 20, 0), number[minutes]);*/
+	/*SpriteBatch.Draw(*number_sprite, Vector3(540, 20, 0), number[ones]);
+	SpriteBatch.Draw(*number_sprite, Vector3(540, 20, 0), number[tens]);*/
 	SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("%02d:%02d"), minutes, seconds);
 
 	SpriteBatch.Draw(*time_banner, Vector3(640 - 125, 5, 1));

@@ -30,6 +30,8 @@ public:
 	Color color[PLAYER_COUNT_MAX];//各プレイヤーの色指定
 
 	SPRITE time_banner;
+	SPRITE number_sprite;
+	RectWH number[9];
 
 	FONT time_limit_font;
 
