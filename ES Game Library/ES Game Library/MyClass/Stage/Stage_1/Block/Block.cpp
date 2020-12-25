@@ -44,15 +44,6 @@ bool Block::Initialize()
 
 	_handle = INT_MAX;
 
-	//!上から降ってくるとき
-	if (_position.y > 0)
-	{
-		_blinking = new Blinking;
-		_blinking->Initialize(_position);
-		//!降ってくるスピードの設定
-		_speed = -0.05;
-	}
-
 	//! shader
 	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
 	return _model != nullptr;
@@ -64,12 +55,6 @@ bool Block::Initialize()
  */
 int Block::Update()
 {
-	//!上から降ってくるとき
-	if (_position.y > 0)
-	{
-		Fall();
-		return 0;
-	}
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
@@ -119,11 +104,7 @@ void Block::Draw3D()
 		_hit_box->SetModelScale();
 		//_hit_box->Draw3D();
 	}
-	//!上から降ってくるとき
-	if (_position.y > 0)
-	{
-		_blinking->Draw3D();
-	}
+
 	_effect->Draw();
 }
 
@@ -145,50 +126,4 @@ void Block::DrawAlpha3D()
 	_shader->SetTechnique("FixModel_S0");
 
 	_model->Draw(_shader);
-}
-/**
- * @fn 降ってくるときのブロックの処理
- * @detail  ブロックを下に動かす
- *          ブロックのY座標が0になった時mapdataに自分の座標を保存する
- *          プレイヤーとの接触時にプレイヤーを倒す
- */
-void Block::Fall()
-{
-	//TODO:降ってくる速さは調整する
-	_position.y += _speed;
-
-	//!Y座標が0になったときに自分の座標をマップデータをセットする
-	if (_position.y <= 0)
-	{
-		IMapData* map_data = new IMapData;
-		auto data = map_data->GetData();
-
-		int x = fabsf(_position.x);
-		int z = fabsf(_position.z);
-
-		data[z][x] = 'b';
-		map_data->SetData(data);
-
-		delete map_data;
-		delete _blinking;
-	}
-
-	_hit_box->SetHitBoxPosition(_position + Vector3(0, 1, 0));
-
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
-
-		//!プレイヤーとの接触時にプレイヤーを倒す
-		if (_hit_box->IsHitObjectsSquare(player_tag))
-		{
-			IPrayerData* iplayerdata = new IPrayerData;
-
-			iplayerdata->SetState(player_tag, PlayerEnum::Animation::DEATH);
-
-			delete iplayerdata;
-		}
-
-	}
-	_blinking->Update();
 }

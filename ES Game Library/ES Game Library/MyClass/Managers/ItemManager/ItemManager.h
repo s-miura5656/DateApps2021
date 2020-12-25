@@ -24,5 +24,4 @@ public:
 private:
 	static std::vector<ItemBase*> item_base;
 	static void AddItemBase(std::string name, Vector3 position);
-
 };

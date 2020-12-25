@@ -22,11 +22,9 @@ public:
 	int Update() override;
 	void Draw3D() override;
 	void DrawAlpha3D() override;
-	void Fall();
 private:
 	Blinking*                       _blinking;
 	ItemCounter*                    _itemcounter;
 	std::unique_ptr<ParticleSystem> _effect;
 	int                             _handle;
-	float                           _speed;
 };

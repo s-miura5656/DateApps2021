@@ -26,13 +26,11 @@ public:
 	void DrawAlpha3D() override;
 
 private:
-	void RandomBlockSet();
+	ItemCounter*                _itemcounter;
 	std::vector<StageBase*>	    _stages;
 	std::vector<cstring>		_mapdate; //! マップデータの読み込み
 	SPRITE                      _bg_sprite;
+	string                      _random_item[3];
 	int                         _count;
-	int                         _random_fall_time;
-	int                         _fall_block_count;
-	int                         _block_count;
-	float                       _fall_interval;
+	int                         _probability;	
 };

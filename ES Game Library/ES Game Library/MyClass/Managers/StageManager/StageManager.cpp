@@ -5,10 +5,8 @@
 #include "../../Data/WordsTable.h"
 #include "../../Data/StructList.h"
 #include"../ResouceManager/ResouceManager.h"
-
 StageManager::StageManager()
 {
-
 }
 
 StageManager::~StageManager()
@@ -105,42 +103,29 @@ bool StageManager::Initialize()
 	int size = _stages.size();
 
 	//!変数初期化
-	_fall_block_count = 10;
-	_block_count = 80;
-	_fall_interval = 500;
-	_random_fall_time = 0;
+	_probability    = 50;
+	_random_item[0] = HITPOINT_ITEM_TAG;
+	_random_item[1] = SPEED_ITEM_TAG;
+	_random_item[2] = POWOR_ITEM_TAG;
 	return true;
 }
 
 int StageManager::Update()
 {
-	//TODO:ブロックの数が80個以下の場合ランダムな座標を決めるタイマーを起動:エラーで落ちないために103個以下で止める
-	if (_stages.size() - 1 <= _block_count)
-	{
-		_random_fall_time++;
-	}
-
-	int rand_block_count = 0;
-
-	//TODO:降ってくる頻度は調整する
-	if (_random_fall_time >= _fall_interval)
-	{
-		IMapData* imap_data = new IMapData;
-		_mapdate = imap_data->GetData();
-
-		RandomBlockSet();
-		_random_fall_time = 0;
-
-		delete imap_data;
-	}
-
 	for (int i = 0; i < _stages.size(); i++)
 	{
+		//!ブロックが破壊されたとき
 		if (_stages[i]->Update() == 1)
 		{
-			const string random_item[3] = { POWOR_ITEM_TAG ,SPEED_ITEM_TAG ,HITPOINT_ITEM_TAG };
-			/*ItemCounter* itemcounter = new ItemCounter;
-			itemcounter->SetItem(random_item[MathHelper_Random(0,2)],_stages[i]->GetPosition());*/
+			int num = MathHelper_Random(100);
+
+			//!50%の確率でアイテムが生成されない
+			if (num >= _probability)
+			{
+				_stages.erase(_stages.begin() + i);
+				continue;
+			}
+			ItemCounter::SetItem(_random_item[MathHelper_Random(_countof(_random_item) - 1)],_stages[i]->GetPosition());
 			_stages.erase(_stages.begin() + i);
 		}
 	}
@@ -166,42 +151,5 @@ void StageManager::DrawAlpha3D()
 	for (int i = 0; i < _stages.size(); ++i)
 	{
 		_stages[i]->DrawAlpha3D();
-	}
-}
-/**
- * @fn ブロックをランダムな座標に置く
- */
-void StageManager::RandomBlockSet()
-{
-	//!外壁、破壊不可ブロック、破壊可能ブロック以外の座標を保存する
-	std::vector<Vector3> random_block_pos;
-	for (int z = 0; z < _mapdate.size(); z++)
-	{
-		for (int x = 0; x < _mapdate[z].size(); x++)
-		{
-			if (_mapdate[z][x] != 'w' && _mapdate[z][x] != 'i' && _mapdate[z][x] != 'b')
-			{
-				random_block_pos.push_back(Vector3(x, 0, -z));
-			}
-		}
-	}
-
-	//!保存した座標をシャッフルする
-	for (int i = 0; i < random_block_pos.size(); ++i)
-	{
-		const auto random_index = MathHelper_Random(random_block_pos.size() - 1);
-		const auto work = random_block_pos.at(random_index);
-		random_block_pos.at(random_index) = random_block_pos.at(i);
-		random_block_pos.at(i) = work;
-	}
-
-	//TODO:ランダムで増えるブロックの個数は調整する(_fall_block_count)
-	for (int i = 0; i < _fall_block_count; i++)
-	{
-		std::string blocktag = DESTRUCTION_BLOCK_TAG + std::to_string(random_block_pos[i].x) + std::to_string(random_block_pos[i].z);
-		_stages.push_back(new Block(blocktag));
-		random_block_pos[i].y = MathHelper_Random(5, 10);
-		_stages[_stages.size() - 1]->SetPosition(random_block_pos[i]);
-		_stages[_stages.size() - 1]->Initialize();
 	}
 }
