@@ -26,14 +26,14 @@ public:
 	void SetSpeed(std::string& player_tag, float speed)						{ PlayerParametor::Instance()._player_params[player_tag].speed = speed; }
 	float GetSpeed(std::string& player_tag)							  const { return PlayerParametor::Instance()._player_params[player_tag].speed; }
 
-	void SetRankingPoint(std::string& player_tag, int ranking_point)		{ PlayerParametor::Instance()._player_params[player_tag].ranking_point = ranking_point; }
-	int GetRankingPoint(std::string& player_tag)					  const { return PlayerParametor::Instance()._player_params[player_tag].ranking_point; }
+	static void SetRankingPoint(std::string& player_tag, int ranking_point)	{ PlayerParametor::Instance()._player_params[player_tag].ranking_point = ranking_point; }
+	static int GetRankingPoint(std::string& player_tag)						{ return PlayerParametor::Instance()._player_params[player_tag].ranking_point; }
 
 	void SetAngle(std::string& player_tag, float angle)						{ PlayerParametor::Instance()._player_params[player_tag].angle = angle; }
 	float GetAngle(std::string& player_tag)							  const { return PlayerParametor::Instance()._player_params[player_tag].angle; }
 
-	void SetPosition(std::string& player_tag, Vector3 pos)					{ PlayerParametor::Instance()._player_params[player_tag].position = pos; }
-	Vector3 GetPosition(std::string& player_tag)					  const { return PlayerParametor::Instance()._player_params[player_tag].position; }
+	static void SetPosition(std::string& player_tag, Vector3 pos)	{ PlayerParametor::Instance()._player_params[player_tag].position = pos; }
+	static Vector3 GetPosition(std::string& player_tag)				{ return PlayerParametor::Instance()._player_params[player_tag].position; }
 
 	void SetState(std::string& player_tag, int state)						{ PlayerParametor::Instance()._player_params[player_tag].state = state; }
 	int GetState(std::string& player_tag)							  const { return PlayerParametor::Instance()._player_params[player_tag].state; }
@@ -86,8 +86,8 @@ public:
 	void SetAngles(std::string& arm_tag, std::vector<float> angles)						  { ArmParametor::Instance()._arm_params[arm_tag].angles = angles; }
 	std::vector<float> GetAngles(std::string& arm_tag)								const { return ArmParametor::Instance()._arm_params[arm_tag].angles; }
 
-	void SetHitPosition(std::string& arm_tag, Vector3 pos) { ArmParametor::Instance()._arm_params[arm_tag].hit_position = pos; }
-	Vector3 GetHitPosition(std::string& arm_tag)									const { return ArmParametor::Instance()._arm_params[arm_tag].hit_position; }
+	static void SetHitPosition(std::string& arm_tag, Vector3 pos) { ArmParametor::Instance()._arm_params[arm_tag].hit_position = pos; }
+	static Vector3 GetHitPosition(std::string& arm_tag)									  { return ArmParametor::Instance()._arm_params[arm_tag].hit_position; }
 };
 
 class IMapData {

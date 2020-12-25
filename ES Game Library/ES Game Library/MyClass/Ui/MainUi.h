@@ -3,6 +3,7 @@
 #include"../Ui/BaseUi.h"
 #include "../Data/WordsTable.h"
 #include"../Data/IData.h"
+#include"../Ui/PlayerUi.h"
 
 class MainUi : public BaseUi
 {
@@ -12,45 +13,28 @@ public:
 	MainUi();
 	~MainUi();
 
-	
 	bool Initialize() override;
-	int Update() override { return 0; }
+	int Update() override;
 	void Draw2D() override;
-	void PlayerBanner();
-	void PointAnimation();
 	
+	std::vector<PlayerUi> player_ui;
+	std::unique_ptr<IPrayerData> _i_player_data;
+	std::unique_ptr<IArmData> _i_arm_data;
 
 	FONT player_date;//各プレイヤーのステータス表記
 
-	Vector3 banner_pos[PLAYER_COUNT_MAX];//各プレイヤーのバナー
 	Vector2 score_pos[PLAYER_COUNT_MAX];//各プレイヤーのスコア
 
 	Vector2 speed_ui_pos[PLAYER_COUNT_MAX];//各プレイヤーのスピード
 
 	Color color[PLAYER_COUNT_MAX];//各プレイヤーの色指定
 
-	SPRITE red_banner;//各プレイヤーのバナー
-	SPRITE blue_banner;
-	SPRITE green_banner;
-	SPRITE yellow_banner;
-
 	SPRITE time_banner;
 
-	SPRITE score_num;
-
-	FONT score_data[PLAYER_COUNT_MAX];
 	FONT time_limit_font;
-
-	std::unique_ptr<IPrayerData> _i_player_data;
-	std::unique_ptr<IArmData> _i_arm_data;
 
 	FONT back_count;
 	FONT front_count;
 
-	//test
-	SPRITE test;
-	int flag;
-	bool p_point;
-	Vector3 point_pos;
-
+	int move_flag;
 };
