@@ -44,6 +44,7 @@ bool Block::Initialize()
 
 	_handle = INT_MAX;
 
+	//!ã‚©‚ç~‚Á‚Ä‚­‚é‚Æ‚«
 	if (_position.y > 0)
 	{
 		_blinking = new Blinking;
@@ -63,13 +64,13 @@ bool Block::Initialize()
  */
 int Block::Update()
 {
+	//!ã‚©‚ç~‚Á‚Ä‚­‚é‚Æ‚«
 	if (_position.y > 0)
 	{
 		Fall();
 		return 0;
 	}
 
-	std::unique_ptr<IMapData> map_data = std::make_unique<IMapData>();
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string arm_tag    = ARM_TAG + std::to_string(i + 1);
@@ -78,14 +79,15 @@ int Block::Update()
 
 		if (_hit_box->IsHitObjectsSquare(arm_tag)) 
 		{
-			IArmData* arm_data = new IArmData;
+			std::unique_ptr<IArmData> arm_data = std::make_unique<IArmData>();
 			int state = arm_data->GetState(arm_tag);
+
 			if (state == ArmEnum::PunchState::RETURN_PUNCH)
 			{
-				delete arm_data;
 				return 0;
 			}
 
+			std::unique_ptr<IMapData> map_data = std::make_unique<IMapData>();
 			auto data = map_data->GetData();
 
 			int x = fabsf(_position.x);
@@ -95,12 +97,10 @@ int Block::Update()
 			map_data->SetData(data);
 
 			arm_data->SetState(arm_tag, ArmEnum::PunchState::RETURN_PUNCH);
-			delete arm_data;
 
-			IPrayerData* player_data = new IPrayerData;
+			std::unique_ptr<IPrayerData> player_data = std::make_unique<IPrayerData>();
 			std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
 			player_data->SetRankingPoint(player_tag, player_data->GetRankingPoint(player_tag) + 10);
-			delete player_data;
 
 			_effect->SetPosition(_position + Vector3_Up * 0.5f);
 			_effect->PlayOneShot();
@@ -119,6 +119,7 @@ void Block::Draw3D()
 		_hit_box->SetModelScale();
 		//_hit_box->Draw3D();
 	}
+	//!ã‚©‚ç~‚Á‚Ä‚­‚é‚Æ‚«
 	if (_position.y > 0)
 	{
 		_blinking->Draw3D();

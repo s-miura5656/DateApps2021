@@ -34,13 +34,12 @@ private:
 	float                 _player_model_small_scale;
 	float                 _player_big_position_x;
 	float                 _player_small_position_x;
-	float                 _player_rank_number_position_x;
-	float                 _player_rank_number_position_y;
 	float                 _point_big_text_position_x;
 	float                 _point_small_text_position_x;
 	Vector2               _text_big_size;
 	Vector2               _text_small_size;
 	Vector2               _point_big_text_position;
+	Vector2               _player_rank_number_position;
 	Vector2               _point_small_text_position;
 	Vector3               _player_big_position;
 	Vector3               _player_small_position;

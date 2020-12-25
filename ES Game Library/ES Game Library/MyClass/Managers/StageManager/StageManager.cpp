@@ -107,7 +107,7 @@ bool StageManager::Initialize()
 	//!変数初期化
 	_fall_block_count = 10;
 	_block_count = 80;
-	_fall_interval = 220;
+	_fall_interval = 500;
 	_random_fall_time = 0;
 	return true;
 }
@@ -170,10 +170,10 @@ void StageManager::DrawAlpha3D()
 }
 /**
  * @fn ブロックをランダムな座標に置く
- * @return trueだったらブロックが置かれる
  */
 void StageManager::RandomBlockSet()
 {
+	//!外壁、破壊不可ブロック、破壊可能ブロック以外の座標を保存する
 	std::vector<Vector3> random_block_pos;
 	for (int z = 0; z < _mapdate.size(); z++)
 	{
@@ -186,6 +186,7 @@ void StageManager::RandomBlockSet()
 		}
 	}
 
+	//!保存した座標をシャッフルする
 	for (int i = 0; i < random_block_pos.size(); ++i)
 	{
 		const auto random_index = MathHelper_Random(random_block_pos.size() - 1);
@@ -194,7 +195,7 @@ void StageManager::RandomBlockSet()
 		random_block_pos.at(i) = work;
 	}
 
-	//TODO:ランダムで増えるブロックの個数は調整する
+	//TODO:ランダムで増えるブロックの個数は調整する(_fall_block_count)
 	for (int i = 0; i < _fall_block_count; i++)
 	{
 		std::string blocktag = DESTRUCTION_BLOCK_TAG + std::to_string(random_block_pos[i].x) + std::to_string(random_block_pos[i].z);
