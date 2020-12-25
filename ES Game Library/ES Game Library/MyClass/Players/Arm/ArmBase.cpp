@@ -58,14 +58,16 @@ int ArmBase::Update()
 		else
 		{
 			MoveArm(pad);
+			SetCollisionPosition(0.5f);
 		}
+
 
 		//! 当たり判定
 		HitOtherObject();
 
-		SetCollisionPosition();
+		Vector3 back_position = DirectionFromAngle(_transform.rotation) * -0.2f;
 
-		_shot_effect->SetPosition(_transform.position);
+		_shot_effect->SetPosition(_transform.position + back_position);
 
 		return 0;
 	}
@@ -110,7 +112,12 @@ void ArmBase::Draw3D()
 	//! モデルの座標を
 	_model->SetPosition(_transform.position);
 	_model->SetScale(_scale);
-	_model->SetRotation(0, _transform.rotation.y - 180, 0);
+
+	if (_arm_state == ArmEnum::PunchState::RETURN_PUNCH)
+		_model->SetRotation(0, _transform.rotation.y + 180, 0);
+	else
+		_model->SetRotation(0, _transform.rotation.y, 0);
+
 	_model->SetMaterial(_model_material);
 
 	//! シェーダーにパラメーターを送る
@@ -149,74 +156,84 @@ void ArmBase::Draw3D()
 //! @param コントローラー
 void ArmBase::MoveArm(BaseInput* pad)
 {
-	auto&& map_data = _i_map_data->GetData();
-
 	if (TurnArm())
 		return;
 
-	//! 移動中かそうでないか判定
-	if (_move_flag)
-	{
-		_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
-		_lerp_count += _i_arm_Data->GetGoSpeed(_tag);
-		_shot_effect->PlayOneShot();
+	InputMoveDirection(pad);
+	Move(pad);
+}
 
-		if (_lerp_count >= 1.f)
-		{
-			_move_flag  = false;
-			_lerp_count = 0;
-			ChangeDirection(pad);
-			CreateWire();
-			_angle_positions.push_back(_transform.position);
-		}
+void ArmBase::Move(BaseInput* pad)
+{
+	if (!_move_flag)
+		return;
+
+	_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
+	_lerp_count += _i_arm_Data->GetGoSpeed(_tag);
+	_shot_effect->PlayOneShot();
+
+	if (_lerp_count >= 1.f)
+	{
+		_move_flag = false;
+		_lerp_count = 0;
+		ChangeDirection(pad);
+		CreateWire();
+		_angle_positions.push_back(_transform.position);
+	}
+}
+
+void ArmBase::InputMoveDirection(BaseInput* pad)
+{
+	if (_move_flag)
+		return;
+
+	auto&& map_data = _i_map_data->GetData();
+
+	int old_index_x = _index_num.x;
+	int old_index_z = _index_num.z;
+
+	Vector3 dir = DirectionFromAngle(Vector3(0, _transform.rotation.y, 0));
+
+	auto abs_x = fabs(dir.x);
+	auto abs_z = fabs(dir.z);
+
+	//! 方向の絶対値を判定してから、大きいほうの軸の符号から進む方向を決定
+	if (abs_x > abs_z)
+	{
+		signbit(dir.x) ? _index_num.x-- : _index_num.x++;
+		_index_num.x = Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
+	}
+	else if (abs_x < abs_z)
+	{
+		signbit(dir.z) ? _index_num.z++ : _index_num.z--;
+		_index_num.z = Clamp(_index_num.z, 0, map_data.size() - 1);
+	}
+
+	//! 壁の判定
+	if (map_data[_index_num.z][_index_num.x] != 'i' &&
+		map_data[_index_num.z][_index_num.x] != 'w')
+	{
+		_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z + Vector3_Up * offset_y;
+		_move_flag = true;
+	}
+	else if (map_data[_index_num.z][_index_num.x] == 'i' ||
+			 map_data[_index_num.z][_index_num.x] == 'w')
+	{
+		_index_num.x = old_index_x;
+		_index_num.z = old_index_z;
+		_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
+		_i_arm_Data->SetState(_tag, _arm_state);
+		Vector3 front_position = DirectionFromAngle(_transform.rotation) * 0.7f;
+		_wall_hit_effect->SetPosition(_transform.position + front_position);
+		_wall_hit_effect->PlayOneShot();
 	}
 	else
 	{
-		int old_index_x = _index_num.x;
-		int old_index_z = _index_num.z;
-		
-		Vector3 dir = DirectionFromAngle(Vector3(0, _transform.rotation.y, 0));
-
-		auto abs_x = fabs(dir.x);
-		auto abs_z = fabs(dir.z);
-		
-		//! 方向の絶対値を判定してから、大きいほうの軸の符号から進む方向を決定
-		if (abs_x > abs_z)
-		{
-			signbit(dir.x) ? _index_num.x-- : _index_num.x++;
-			_index_num.x = Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
-		}
-		else if (abs_x < abs_z)
-		{
-			signbit(dir.z) ? _index_num.z++ : _index_num.z--;
-			_index_num.z = Clamp(_index_num.z, 0, map_data.size() - 1);
-		}
-		
-		//! 壁の判定
-		if (map_data[_index_num.z][_index_num.x] != 'i' &&
-			map_data[_index_num.z][_index_num.x] != 'w')
-		{
-			_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z + Vector3(0, 0.5f, 0);
-			_move_flag = true;
-		}
-		else if (map_data[_index_num.z][_index_num.x] == 'i' ||
-				 map_data[_index_num.z][_index_num.x] == 'w')
-		{
-			_index_num.x = old_index_x;
-			_index_num.z = old_index_z;
-			_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
-			_i_arm_Data->SetState(_tag, _arm_state);
-			_wall_hit_effect->SetPosition(_transform.position);
-			_wall_hit_effect->PlayOneShot();
-		}
-		else
-		{
-			_index_num.x = old_index_x;
-			_index_num.z = old_index_z;
-		}
-
-		_old_pos = _transform.position;
+		_index_num.x = old_index_x;
+		_index_num.z = old_index_z;
 	}
+
+	_old_pos = _transform.position;
 }
 
 bool ArmBase::TurnArm()
@@ -228,6 +245,7 @@ bool ArmBase::TurnArm()
 		_turn_count += 0.1f;
 		_turn_count = Clamp(_turn_count, 0, 1);
 		_transform.rotation.y = MathHelper_Lerp(_old_angle, _new_angle, _turn_count);
+		SetCollisionPosition(0.0f);
 
 		if (_wait_count > 15)
 		{
@@ -261,7 +279,7 @@ void ArmBase::ArmReturn()
 
 	move_dir *= _i_arm_Data->GetReturnSpeed(_tag);
 
-	_transform.rotation.y = -AngleCalculating(move_dir.x, move_dir.z);
+	_transform.rotation.y = AngleCalculating(move_dir.x, move_dir.z);
 
 	_transform.position += move_dir;
 
@@ -278,48 +296,48 @@ void ArmBase::HitOtherObject()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
 	{
-		std::string name = PLAYER_TAG + std::to_string(i + 1);
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
 
 		//! 自分のタグだったら次へ
-		if (name == _player_tag)
+		if (tag == _player_tag)
 			continue;
 
 		//! プレイヤーに当たったら
-		if (_hit_box->IsHitObjectsSquare(name))
+		if (_hit_box->IsHitObjectsSquare(tag))
 		{
 			auto&& i_player_data = _i_player_data.get();
 			auto&& i_arm_data    = _i_arm_Data.get();
 			
 			int damege = i_player_data->GetAttackPowor(_player_tag);
-			int hitpoint = i_player_data->GetHitPoint(name);
+			int hitpoint = i_player_data->GetHitPoint(tag);
 			
 			hitpoint -= damege;
 
 			//! ダメージ硬直ではないときにHPを減らす
-			if (i_player_data->GetState(name) != PlayerEnum::Animation::DAMAGE)
+			if (i_player_data->GetState(tag) != PlayerEnum::Animation::DAMAGE)
 			{
-				i_player_data->SetHitPoint(name, hitpoint);
+				i_player_data->SetHitPoint(tag, hitpoint);
 				auto screen_pos = GraphicsDevice.WorldToScreen(_transform.position);
 				screen_pos.z = SpriteBatch_TopMost;
 				i_arm_data->SetHitPosition(_tag, screen_pos);
 			}
 
-			if (i_player_data->GetState(name) == PlayerEnum::Animation::DEATH)
+			if (i_player_data->GetState(tag) == PlayerEnum::Animation::DEATH)
 				break;
 
-			if (i_player_data->GetHitPoint(name) <= 0)
+			if (i_player_data->GetHitPoint(tag) <= 0)
 			{
 				i_player_data->SetKillCount(_player_tag, i_player_data->GetKillCount(_player_tag) + 1);
 				i_player_data->SetRankingPoint(_player_tag, i_player_data->GetRankingPoint(_player_tag) + 100);
 				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 				i_arm_data->SetState(_tag, _arm_state);
-				i_player_data->SetState(name, PlayerEnum::Animation::DAMAGE);
+				i_player_data->SetState(tag, PlayerEnum::Animation::DAMAGE);
 			}
 			else
 			{
 				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 				i_arm_data->SetState(_tag, _arm_state);
-				i_player_data->SetState(name, PlayerEnum::Animation::DAMAGE);
+				i_player_data->SetState(tag, PlayerEnum::Animation::DAMAGE);
 			}
 			
 			break;
@@ -329,11 +347,11 @@ void ArmBase::HitOtherObject()
 
 //! @fn 当たり判定の座標設定
 //! @brief 当たり判定の座標を設定する
-void ArmBase::SetCollisionPosition()
+void ArmBase::SetCollisionPosition(float front_position)
 {
 	auto box_pos = _transform.position;
 	auto dir = DirectionFromAngle(Vector3(0, _transform.rotation.y, 0));
-	_hit_box->SetHitBoxPosition(box_pos + dir * 0.4f);
+	_hit_box->SetHitBoxPosition(box_pos + dir * front_position);
 }
 
 //! @fn アームの向きを変更

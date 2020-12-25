@@ -111,7 +111,6 @@ int PlayerBase::Update()
 					player_data->SetPosition(_tag, _transform.position);
 				}
 			}
-			
 		}
 
 		if (player_data->GetState(_tag) == PlayerEnum::Animation::MOVE)
@@ -183,7 +182,7 @@ void PlayerBase::DrawModel()
 {
 	//! モデルのパラメーターをセット
 	_model->SetPosition(_transform.position);
-	_model->SetRotation(Vector3(0, _transform.rotation.y, 0));
+	_model->SetRotation(Vector3(-15, _transform.rotation.y, 0));
 	_model->SetMaterial(_model_material);
 
 	//! シェーダー側に値をセット
@@ -240,7 +239,7 @@ void PlayerBase::ChangeAnimation()
 	if (_animation_index == PlayerEnum::Animation::SHOT ||
 		_animation_index == PlayerEnum::Animation::MOVE)
 	{
-		_model->SetTrackPosition(_animation_index, _animation_count * 2.0f);
+		_model->SetTrackPosition(_animation_index, _animation_count * 1.6f);
 	}
 	else
 	{
@@ -253,19 +252,15 @@ void PlayerBase::ChangeAnimation()
 //! @fn 移動処理
 void PlayerBase::InputMove(BaseInput* pad)
 {
-	//! 移動中か入力受付状態か判定
-	if (_move_flag) 
-	{
-		IsMove();
-	}
-	else 
-	{
-		TestMoveDir(pad);
-	}
+	InputMoveDirection(pad);
+	Move();
 }
 
-void PlayerBase::IsMove()
+void PlayerBase::Move()
 {
+	if (!_move_flag)
+		return;
+
 	auto&& player_data = _i_player_data;
 
 	_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
@@ -280,52 +275,11 @@ void PlayerBase::IsMove()
 	}
 }
 
-void PlayerBase::InputMoveDir(BaseInput* pad)
+void PlayerBase::InputMoveDirection(BaseInput* pad)
 {
-	auto&& map_data = _i_map_data->GetData();
-	auto&& player_data = _i_player_data;
+	if (_move_flag)
+		return;
 
-	auto pad_x = pad->Stick(STICK_INFO::LEFT_STICK).x;
-	auto pad_y = pad->Stick(STICK_INFO::LEFT_STICK).y;
-
-	float abs_x = fabsf(pad_x);
-	float abs_z = fabsf(pad_y);
-
-	int old_index_x = _index_num.x;
-	int old_index_z = _index_num.z;
-
-	if (abs_x > abs_z)
-	{
-		std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _index_num.x-- : _index_num.x++;
-		_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
-	}
-	else if (abs_x < abs_z)
-	{
-		std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z++ : _index_num.z--;
-
-		_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
-	}
-
-	if (map_data[_index_num.z][_index_num.x] != 'i' &&
-		map_data[_index_num.z][_index_num.x] != 'w' &&
-		map_data[_index_num.z][_index_num.x] != 'b' &&
-		map_data[_index_num.z][_index_num.x] != 'd')
-	{
-		_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
-		player_data->SetIndexNum(_tag, _index_num);
-		_move_flag = true;
-	}
-	else
-	{
-		_index_num.x = old_index_x;
-		_index_num.z = old_index_z;
-	}
-
-	_old_pos = _transform.position;
-}
-
-void PlayerBase::TestMoveDir(BaseInput* pad)
-{
 	auto&& map_data = _i_map_data->GetData();
 	auto&& player_data = _i_player_data;
 

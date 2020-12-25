@@ -120,7 +120,7 @@ void MainUi::PointAnimation()
 
 		//!　アームのポジションが初期状態でないとき（アームがプレイヤーにヒットした時に更新される）
 		if (pos != Vector3_Zero) {
-		SpriteBatch.Draw(*test, pos);
+		//SpriteBatch.Draw(*test, pos);
 		}
 	}
 

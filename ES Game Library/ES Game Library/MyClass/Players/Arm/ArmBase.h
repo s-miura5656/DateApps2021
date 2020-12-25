@@ -26,7 +26,7 @@ protected:
 	void MoveArm(BaseInput* pad);
 	void ArmReturn();
 	void HitOtherObject();
-	void SetCollisionPosition();
+	void SetCollisionPosition(float front_position);
 	void ChangeDirection(BaseInput* pad);
 
 	//! file
@@ -86,7 +86,11 @@ protected:
 
 	//! material
 	Material _model_material;
+
+	const float offset_y = 0.5f;
 private:
+	void Move(BaseInput* pad);
+	void InputMoveDirection(BaseInput* pad);
 	bool TurnArm();
 	void CreateWire();
 	void DeleteWire();

@@ -3,6 +3,7 @@
 #include"../../Managers/ResouceManager/ResouceManager.h"
 #include "../../ParticleSystem/Particle.h"
 #include "../../Managers/SceneManager/SceneManager.h"
+#include "../../Data/MyAlgorithm.h"
 
 CrownRotation::CrownRotation()
 {
@@ -18,8 +19,8 @@ CrownRotation::~CrownRotation()
 
 bool CrownRotation::Initialize()
 {
-	_model = ResouceManager::Instance().LoadModelFile(_T("Crown/crown.X"));
-	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
+	_model      = ResouceManager::Instance().LoadModelFile(_T("Crown/crown.X"));
+	_shader     = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
 	auto effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/crown_effect/star_05.efk"));
 
 	_effect->RegisterParticle(effect);
@@ -37,6 +38,7 @@ bool CrownRotation::Initialize()
 
 	rankingpoint_max = 0;
 	rankingpoint_min = 0;
+	_transform.rotation.x = -15;
 
 	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
 
@@ -46,29 +48,34 @@ bool CrownRotation::Initialize()
 int CrownRotation::Update()
 {
 	auto param_list = _i_player_data->GetAllParametor();
-		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-		{
-			std::string tag = PLAYER_TAG + std::to_string(i + 1);
-			if (rankingpoint_max < param_list[tag].ranking_point) 
-			{
-				crown_flag = true;
-			}
-			
-			if (_i_player_data->GetRankNum(tag) == 0)
-			{
-				_position = _i_player_data->GetPosition(tag) + Vector3(0, 1.1f, 0);
-			}
-		}
+	
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
 
-		ModelRotation(Vector3(0.0f, 3.0f, 0.0f), _model);
-		_effect->SetPosition(_position + Vector3_Up * 0.1f);
+		if (rankingpoint_max < param_list[tag].ranking_point) 
+		{
+			crown_flag = true;
+		}
+		
+		if (_i_player_data->GetRankNum(tag) == 0)
+		{
+			_transform.position = _i_player_data->GetPosition(tag) + Vector3(0, 1.1f, 0);
+			_transform.position += DirectionFromAngle(Vector3(0, _i_player_data->GetAngle(tag), 0)) * -0.3f;
+		}
+	}
+
+	_transform.rotation = ModelRotation(_transform.rotation, Vector3(0, 1, 0));
+
+	_effect->SetPosition(_transform.position + Vector3_Up * 0.1f);
 
 	return 0;
 }
 
 void CrownRotation::Draw3D()
 {
-	_model->SetPosition(_position);
+	_model->SetPosition(_transform.position);
+	_model->SetRotation(_transform.rotation);
 	_model->SetMaterial(_model_material);
 
 	if (crown_flag)

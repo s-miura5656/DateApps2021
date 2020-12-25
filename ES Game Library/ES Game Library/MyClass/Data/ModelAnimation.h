@@ -3,11 +3,15 @@
 #include "../../ESGLib.h"
 #include <sstream>
 
-static void ModelRotation(Vector3 rotation, MODEL model)
+static Vector3 ModelRotation(Vector3 transform_rotation, Vector3 rotation_speed)
 {
+	Vector3 rotation = transform_rotation;
 
-	model->Rotation(rotation.x, rotation.y, rotation.z);
+	rotation.x += rotation_speed.x;
+	rotation.y += rotation_speed.y;
+	rotation.z += rotation_speed.z;
 
+	return rotation;
 }
 
 static float ModelFlashing(float alpha_max, float alpha_min, float set_alpha, float speed, MODEL model)

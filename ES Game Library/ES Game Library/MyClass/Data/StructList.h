@@ -20,9 +20,9 @@ struct ArmParam {
 	Vector3 position				 = Vector3_Zero;
 	float   angle					 = 0.f;
 	int     attack_powor			 = 200;
-	float   go_speed				 = 0.06f;
+	float   go_speed				 = 0.1f;
 	float   return_speed			 = 0.3f;
-	int     limit_range				 = 20;
+	int     limit_range				 = 10;
 	Vector3 hit_position = Vector3_Zero;
 	std::vector<Vector3> angle_position;
 	std::vector<float> angles;

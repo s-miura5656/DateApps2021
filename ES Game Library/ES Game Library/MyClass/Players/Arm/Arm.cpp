@@ -50,14 +50,14 @@ bool Arm::Initialize()
 	_angles.push_back(_transform.rotation.y);
 
 	//! Position
-	_transform.position = _i_player_data->GetPosition(_player_tag) + Vector3(0, 0.5f, 0);
+	_transform.position = _i_player_data->GetPosition(_player_tag) + Vector3_Up * offset_y;
 	_angle_positions.push_back(_transform.position);
 	_old_pos = _transform.position;
 	_new_pos = _transform.position;
 	_index_num = _i_player_data->GetIndexNum(_player_tag);
 
 	//! hit_box
-	SetCollisionPosition();
+	SetCollisionPosition(0.0f);
 
 	//! State
 	_arm_state = ArmEnum::PunchState::PUNCH;

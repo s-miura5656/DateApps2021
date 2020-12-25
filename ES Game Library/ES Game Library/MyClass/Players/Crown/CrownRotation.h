@@ -1,5 +1,6 @@
 #include"../../../ESGLib.h"
 #include"../../Data/IData.h"
+#include"../../Data/StructList.h"
 
 class ParticleSystem;
 
@@ -22,7 +23,8 @@ private:
 	std::unique_ptr<ParticleSystem> _effect;
 	IPrayerData* _i_player_data;
 
-	Vector3 _position;
+	Transform _transform;
+
 	float rankingpoint_max;
 	float rankingpoint_min;
 
