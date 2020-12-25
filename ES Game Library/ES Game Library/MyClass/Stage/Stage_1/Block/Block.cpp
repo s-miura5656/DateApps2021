@@ -66,13 +66,13 @@ int Block::Update()
 	if (_position.y > 0)
 	{
 		Fall();
+		return 0;
 	}
 
+	std::unique_ptr<IMapData> map_data = std::make_unique<IMapData>();
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string arm_tag    = ARM_TAG + std::to_string(i + 1);
-		std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
-
 		if (!_hit_box->Tag_Sarch(arm_tag))
 			continue;
 
@@ -86,7 +86,6 @@ int Block::Update()
 				return 0;
 			}
 
-			IMapData* map_data = new IMapData;
 			auto data = map_data->GetData();
 
 			int x = fabsf(_position.x);
@@ -94,12 +93,12 @@ int Block::Update()
 
 			data[z][x] = ' ';
 			map_data->SetData(data);
-			delete map_data;
 
 			arm_data->SetState(arm_tag, ArmEnum::PunchState::RETURN_PUNCH);
 			delete arm_data;
 
 			IPrayerData* player_data = new IPrayerData;
+			std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
 			player_data->SetRankingPoint(player_tag, player_data->GetRankingPoint(player_tag) + 10);
 			delete player_data;
 
@@ -143,6 +142,7 @@ void Block::DrawAlpha3D()
 	_shader->SetParameter("wvp", world * SceneCamera::Instance().GetCamera().GetViewProjectionMatrix());
 	_shader->SetParameter("eye_pos", SceneCamera::Instance().GetCamera().GetPosition());
 	_shader->SetTechnique("FixModel_S0");
+
 	_model->Draw(_shader);
 }
 /**
@@ -167,6 +167,7 @@ void Block::Fall()
 
 		data[z][x] = 'b';
 		map_data->SetData(data);
+
 		delete map_data;
 		delete _blinking;
 	}
@@ -181,7 +182,9 @@ void Block::Fall()
 		if (_hit_box->IsHitObjectsSquare(player_tag))
 		{
 			IPrayerData* iplayerdata = new IPrayerData;
+
 			iplayerdata->SetState(player_tag, PlayerEnum::Animation::DEATH);
+
 			delete iplayerdata;
 		}
 

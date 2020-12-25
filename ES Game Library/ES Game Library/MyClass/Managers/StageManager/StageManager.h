@@ -27,8 +27,8 @@ public:
 
 private:
 	void RandomBlockSet();
-	std::vector<StageBase*>		 stages;
-	std::vector<cstring>		 mapdate; //! マップデータの読み込み
+	std::vector<StageBase*>	    _stages;
+	std::vector<cstring>		_mapdate; //! マップデータの読み込み
 	SPRITE                      _bg_sprite;
 	int                         _count;
 	int                         _random_fall_time;
