@@ -29,11 +29,23 @@ public:
 
 	Color color[PLAYER_COUNT_MAX];//各プレイヤーの色指定
 
-	SPRITE time_banner;
-	SPRITE number_sprite;
-	RectWH number[9];
+	SPRITE time_banner;//タイムバナー
+	Vector3 time_banner_pos;
+	Vector3 minutes_pos;
+	Vector3 tens_place_pos;
+	Vector3 ones_place_pos;
+	
+
+	SPRITE number_sprite;//数字
+	RectWH number[10];
+
+
+
+	Color black;//黒
+	Color White;//白
 
 	FONT time_limit_font;
+	Vector3 Countdown_pos;
 
 	FONT back_count;
 	FONT front_count;

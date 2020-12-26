@@ -30,6 +30,13 @@ bool MainUi::Initialize()
 	time_banner       = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/time_2.png"));
 	number_sprite     = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/number_3.png"));
 
+	time_banner_pos = Vector3(640 - 125, 5, 1);
+	minutes_pos     = Vector3(540, 20, 0);
+	tens_place_pos  = Vector3(630, 20, 0);
+	ones_place_pos  = Vector3(680, 20, 0);
+
+	Countdown_pos   = Vector3(605, 345, 0);
+
 	score_pos[0] = Vector2( 100,   40);
 	score_pos[1] = Vector2( 320,   40);
 	score_pos[2] = Vector2( 800,   40);
@@ -45,7 +52,10 @@ bool MainUi::Initialize()
 	color[2] = Color(255, 255,   0);
 	color[3] = Color(  0, 255,   0);
 
-	for (int i = 0; i < 10; i++)
+	black    = Color(0.f, 0.f, 0.f);
+	White    = Color(1.f, 1.f, 1.f);
+
+	for (int i = 0; i < _countof(number); i++)
 	{
 		number[i] = RectWH(i * 64, 0, 64, 64);
 	}
@@ -65,7 +75,6 @@ bool MainUi::Initialize()
 	// Player4
 	player_ui.push_back(PlayerUi(3));
 	player_ui[3].Initialize(_T("BannerFrameSprite/yellow_banner.png"), Vector3(1000, 30, 1));
-
 	
 	return true;
 }
@@ -90,35 +99,31 @@ void MainUi::Draw2D()
 	int Countdown = TimeManager::Instance().Countdown();
 	float Start   = TimeManager::Instance().GetStartTime();
 	
-	/*SpriteBatch.Draw(*number_sprite, Vector3(540, 20, 0), number[minutes]);*/
-	/*SpriteBatch.Draw(*number_sprite, Vector3(540, 20, 0), number[ones]);
-	SpriteBatch.Draw(*number_sprite, Vector3(540, 20, 0), number[tens]);*/
-	SpriteBatch.DrawString(time_limit_font, Vector2(540, 20), Color(1.f, 1.f, 1.f), _T("%02d:%02d"), minutes, seconds);
+	SpriteBatch.Draw(*number_sprite, minutes_pos, number[minutes], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.8f);
+	SpriteBatch.Draw(*number_sprite, tens_place_pos, number[ones], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.8f);
+	SpriteBatch.Draw(*number_sprite, ones_place_pos, number[tens], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.8f);
 
-	SpriteBatch.Draw(*time_banner, Vector3(640 - 125, 5, 1));
+	SpriteBatch.DrawString(back_count, Vector2(595, 20), black, _T(":"));
+	SpriteBatch.DrawString(time_limit_font, Vector2(595, 20), White, _T(":"));
 
-	//! カウントダウン描写（影）
+	SpriteBatch.Draw(*time_banner, time_banner_pos);
+
+	//! カウントダウン描写
 	if (Start > 0)
 	{
-		SpriteBatch.DrawString(back_count , Vector2(600, 340), Color(0.f, 0.f, 0.f), _T("%d"), Countdown);
-	}
-
-	//! カウントダウン描写（手前の文字）
-	if (Start > 0)
-	{
-		SpriteBatch.DrawString(front_count, Vector2(605, 345), Color(1.f, 1.f, 1.f), _T("%d"), Countdown);
+		SpriteBatch.Draw(*number_sprite, Countdown_pos, number[Countdown]);
 	}
 
 	//! スタート描写（影）
 	if (Countdown == 0) 
 	{
-		SpriteBatch.DrawString(back_count , Vector2(487, 340), Color(0.f, 0.f, 0.f), _T("S T A R T !!"));
+		SpriteBatch.DrawString(back_count , Vector2(487, 340), black, _T("S T A R T !!"));
 	}
 
 	//! スタート描写（手前の文字）
 	if (Countdown == 0) 
 	{
-		SpriteBatch.DrawString(front_count, Vector2(500, 340), Color(1.f, 1.f, 1.f), _T("S T A R T !!"));
+		SpriteBatch.DrawString(front_count, Vector2(500, 340), White, _T("S T A R T !!"));
 	}
 }
 
