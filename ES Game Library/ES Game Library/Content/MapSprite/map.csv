@@ -1,13 +1,13 @@
 w,w,w,w,w,w,w,w,w,w,w,w,w,w,w
-w,p, ,b, ,b, ,b, ,b, ,b, ,p,w
-w,b,i,b,i, ,i, ,i,b,i,b,i, ,w
-w, ,b, ,b, , ,b,b, , ,b,b,b,w
-w,b,i,b,i, ,i, ,i, ,i, ,i, ,w
-w,b, ,b, ,b, ,b, ,b, ,b, ,b,w
-w, ,i, ,i, ,i,b,i,b,i, ,i, ,w
-w, , ,b, ,b,b, ,b,b, ,b, , ,w
-w,b,i, ,i, ,i, ,i, ,i, ,i,b,w
-w, ,b,b, ,b,b,b, ,b, ,b, , ,w
-w, ,i,b,i, ,i, ,i, ,i,b,i,b,w
-w,p, ,b, , ,b,b,b, , ,b, ,p,w
+w,p,b,s,b,s,b,s,b,s,b,s, ,p,w
+w,s,i,s,i, ,i, ,i,s,i,s,i, ,w
+w,b,s,b,s,b, ,s,s,b,b,s,s,s,w
+w,s,i,s,i, ,i, ,i, ,i, ,i, ,w
+w,s, ,s, ,s, ,s, ,s, ,s, ,s,w
+w, ,i, ,i, ,i,s,i,s,i, ,i, ,w
+w, ,b,s, ,s,s, ,s,s, ,s, , ,w
+w,s,i,b,i, ,i,b,i,b,i, ,i,s,w
+w, ,s,s,b,s,s,s, ,s, ,s, , ,w
+w, ,i,s,i, ,i, ,i, ,i,s,i,s,w
+w,p, ,s,b,b,s,s,s,b,b,s,b,p,w
 w,w,w,w,w,w,w,w,w,w,w,w,w,w,w

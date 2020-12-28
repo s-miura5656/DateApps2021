@@ -50,9 +50,8 @@ bool StageManager::Initialize()
 	int player_num = 1;
 
 	IMapData* imap_data = new IMapData;
-	imap_data->SetData(_mapdate);
-
 	std::vector<int> warpdata;
+
 	_count = 0;
 	for (int z = 0; z < _mapdate.size(); z++)
 	{
@@ -62,10 +61,18 @@ bool StageManager::Initialize()
 			switch (_mapdate[z][x]) {
 			case 'b':
 				tag = DESTRUCTION_BLOCK_TAG + tag;
-				_stages.push_back(new Block(tag));
+				_stages.push_back(new Block(tag, NULL_ITEM));
 				_stages[_count]->SetPosition(Vector3(x, 0, -z));
 				_stages[_count]->Initialize();
 				_count++;
+				break;
+			case 's':
+				tag = DESTRUCTION_BLOCK_TAG + tag;
+				_stages.push_back(new Block(tag, POWOR_ITEM_TAG));
+				_stages[_count]->SetPosition(Vector3(x, 0, -z));
+				_stages[_count]->Initialize();
+				_count++;
+				_mapdate[z][x] = 'b';
 				break;
 			case 'p':
 				tag = PLAYER_TAG + std::to_string(player_num);
@@ -91,6 +98,7 @@ bool StageManager::Initialize()
 		}
 	}
 
+	imap_data->SetData(_mapdate);
 	imap_data->SetWarp(warpdata);
 
 	_stages.push_back(new Indestructible);
@@ -101,12 +109,6 @@ bool StageManager::Initialize()
 	delete iplayer_data;
 
 	int size = _stages.size();
-
-	//!変数初期化
-	_probability    = 50;
-	_random_item[0] = HITPOINT_ITEM_TAG;
-	_random_item[1] = SPEED_ITEM_TAG;
-	_random_item[2] = POWOR_ITEM_TAG;
 	return true;
 }
 
@@ -117,15 +119,6 @@ int StageManager::Update()
 		//!ブロックが破壊されたとき
 		if (_stages[i]->Update() == 1)
 		{
-			int num = MathHelper_Random(100);
-
-			//!50%の確率でアイテムが生成されない
-			if (num >= _probability)
-			{
-				_stages.erase(_stages.begin() + i);
-				continue;
-			}
-			ItemCounter::SetItem(_random_item[MathHelper_Random(_countof(_random_item) - 1)],_stages[i]->GetPosition());
 			_stages.erase(_stages.begin() + i);
 		}
 	}

@@ -5,8 +5,9 @@
 #include "../../../Managers/SceneManager/SceneManager.h"
 #include "../../../ParticleSystem/Particle.h"
 
-Block::Block(std::string tag)
+Block::Block(std::string tag, std::string item)
 {
+	_item_name = item;
 	_model  = nullptr;
 	_tag = tag;
 }
@@ -89,6 +90,12 @@ int Block::Update()
 
 			_effect->SetPosition(_position + Vector3_Up * 0.5f);
 			_effect->PlayOneShot();
+
+			//!アイテムが入ってないブロックの時はアイテムを生成しない
+			if (_item_name != NULL_ITEM)
+			{
+				ItemCounter::SetItem(_item_name, _position);
+			}
 
 			return 1;
 		}

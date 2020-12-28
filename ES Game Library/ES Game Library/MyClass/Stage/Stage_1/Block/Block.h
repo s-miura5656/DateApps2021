@@ -16,7 +16,7 @@ class ParticleSystem;
 class Block :public StageBase
 {
 public:
-	Block(std::string tag);
+	Block(std::string tag,std::string item);
 	~Block();
 	bool Initialize() override;
 	int Update() override;
@@ -26,5 +26,6 @@ private:
 	Blinking*                       _blinking;
 	ItemCounter*                    _itemcounter;
 	std::unique_ptr<ParticleSystem> _effect;
+	std::string                     _item_name;
 	int                             _handle;
 };
