@@ -100,8 +100,8 @@ void MainUi::Draw2D()
 	float Start   = TimeManager::Instance().GetStartTime();
 	
 	SpriteBatch.Draw(*number_sprite, minutes_pos, number[minutes], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.8f);
-	SpriteBatch.Draw(*number_sprite, tens_place_pos, number[ones], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.8f);
-	SpriteBatch.Draw(*number_sprite, ones_place_pos, number[tens], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.8f);
+	SpriteBatch.Draw(*number_sprite, tens_place_pos, number[tens], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.8f);
+	SpriteBatch.Draw(*number_sprite, ones_place_pos, number[ones], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.8f);
 
 	SpriteBatch.DrawString(back_count, Vector2(595, 20), black, _T(":"));
 	SpriteBatch.DrawString(time_limit_font, Vector2(595, 20), White, _T(":"));
@@ -125,6 +125,13 @@ void MainUi::Draw2D()
 	{
 		SpriteBatch.DrawString(front_count, Vector2(500, 340), White, _T("S T A R T !!"));
 	}
+
+	//! タイムリミット（三秒前）
+	if ((minutes == 0 && tens == 0) && ones <= 3)
+	{
+		SpriteBatch.Draw(*number_sprite, Countdown_pos, number[ones]);
+	}
+
 }
 
 

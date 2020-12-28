@@ -76,16 +76,16 @@ int TimeManager::GetTimeSeconds()
 	return ret;
 }
 
-int TimeManager::GetTimeOnesPlace()
+int TimeManager::GetTimeTensPlace()
 {
 	int ret = 0;
 
-	ret = (int)( GetTimeLeft() ) % 60 / 10;
+	ret = (int)(GetTimeLeft()) % 60 / 10;
 
 	return ret;
 }
 
-int TimeManager::GetTimeTensPlace()
+int TimeManager::GetTimeOnesPlace()
 {
 	int ret = 0;
 

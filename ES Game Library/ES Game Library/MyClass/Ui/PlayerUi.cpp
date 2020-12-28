@@ -74,7 +74,7 @@ void PlayerUi::Draw2D()
 
 	for (int i = 0; i < (move_pos.size() > 0) ? 1 : 0; i++)
 	{
-		SpriteBatch.Draw(*test, move_pos[i]);
+		//SpriteBatch.Draw(*test, move_pos[i]);
 	}
 
 	//スコアアニメーション
