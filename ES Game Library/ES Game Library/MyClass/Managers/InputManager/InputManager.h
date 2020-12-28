@@ -66,7 +66,7 @@ public:
     };
 
 private:
-    InputManager(const InputManager&) = delete;
+    InputManager(const InputManager&)   = delete;
     void operator=(const InputManager&) = delete;
 
 	bool XInputActive(int pad_num);
@@ -90,9 +90,10 @@ public:
 	virtual bool ButtonUp(int key_info)   = 0;
     virtual float Trigger(int key_info)   = 0;
     virtual Vector2 Stick(int key_info)   = 0;
-
+    virtual int StickAxisMax()            = 0;
 protected:
 	int _pad_number = 0;
+    int _stick_axis_max;
 };
 
 class XInput : public BaseInput
@@ -107,6 +108,7 @@ public:
 	bool ButtonUp(int key_info)   override;
     float Trigger(int key_info)   override;
     Vector2 Stick(int key_info)   override;
+    int StickAxisMax()            override;
 
 private:
     //! button
@@ -133,12 +135,12 @@ public:
     bool ButtonUp(int key_info)   override;
     float Trigger(int key_info)   override;
     Vector2 Stick(int key_info)   override;
+    int StickAxisMax()            override;
+
 private:
     //! button
     int _button_info[BUTTON_INFO::MAX_BUTTON_INFO];
     int _trigger_info[TRIGGER_INFO::MAX_TRIGGER_INFO];
-
-    int const move_value_constant = 1000;
 
     GamePadBuffer _pad_buffer;
     GamePadState  _pad_state;

@@ -20,5 +20,10 @@ public:
 	void DrawAlpha3D() override;
 private:
 	void ResultTransition();
+	void SetResoucesParticle();
 	std::vector<ManagerBase*> _managers;
+
+	Vector3 camera_pos = Vector3(7, 16, -12.0f);
+	Vector3 camera_angle = Vector3(60, 0, 0);
+	float parse = 40;
 };

@@ -9,6 +9,7 @@
 #include "../../Managers/ResouceManager/ResouceManager.h"
 #include "../../Data/IData.h"
 #include "../../Data/Parametor.h"
+#include "../../Managers/InputManager/InputManager.h"
 
 MainScene::MainScene()
 {
@@ -20,8 +21,6 @@ MainScene::MainScene()
 
 MainScene::~MainScene()
 {
-	ResouceManager::Instance().ResoucesEffekseerClear();
-
 	for (int i = _managers.size() - 1; i >= 0; --i)
 	{
 		delete _managers[i];
@@ -44,11 +43,10 @@ bool MainScene::Initialize()
 	SceneLight::Instance().SetSceneLight();
 
 	auto view = GraphicsDevice.GetViewport();
-	Vector3 camera_pos   = Vector3(7, 16, -12.0f);
-	Vector3 camera_angle = Vector3(60, 0, 0);
-	//SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
+	camera_pos   = Vector3(7, 26.7f, -20.6f);
+	camera_angle = Vector3(60.7, 0, 0);
 	SceneCamera::Instance().SetView(camera_pos, camera_angle);
-	SceneCamera::Instance().SetPerspectiveFieldOfView(40, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
+	SceneCamera::Instance().SetPerspectiveFieldOfView(25.3, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 
 	PlayerParametor::Instance().ResetParametor();
 	ArmParametor::Instance().ResetParametor();
@@ -59,6 +57,8 @@ bool MainScene::Initialize()
 	{
 		manager->Initialize();
 	}
+
+	InputDevice.CreateKeyboard();
 
 	return true;
 }
@@ -72,7 +72,55 @@ int MainScene::Update()
 		manager->Update();
 	}
 
+	/*auto pad = InputManager::Instance().GetGamePad("Player_1");
+
+	if (pad->Button(BUTTON_INFO::BUTTON_BACK))
+	{
+		camera_angle.x += 0.1f;
+	}
+
+	if (pad->Button(BUTTON_INFO::BUTTON_START))
+	{
+		camera_angle.x -=0.1f;
+	}
+
+	if (pad->Button(BUTTON_INFO::BUTTON_LEFT_SHOULDER))
+	{
+		camera_pos.z -= 0.1f;
+	}
+
+	if (pad->Button(BUTTON_INFO::BUTTON_RIGHT_SHOULDER))
+	{
+		camera_pos.z += 0.1f;
+	}
+
+	if (pad->Button(BUTTON_INFO::BUTTON_X))
+	{
+		camera_pos.y -= 0.1f;
+	}
+
+	if (pad->Button(BUTTON_INFO::BUTTON_Y))
+	{
+		camera_pos.y += 0.1f;
+	}
+
+	if (pad->Button(BUTTON_INFO::BUTTON_LEFT_THUMB))
+	{
+		parse -= 0.1f;
+	}
+
+	if (pad->Button(BUTTON_INFO::BUTTON_RIGHT_THUMB))
+	{
+		parse += 0.1f;
+	}
+
+	auto view = GraphicsDevice.GetViewport();*/
+
+//	SceneCamera::Instance().SetView(camera_pos, camera_angle);
+//	SceneCamera::Instance().SetPerspectiveFieldOfView(parse, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
+
 	float timeleft = TimeManager::Instance().GetTimeLeft();
+
 	if (timeleft <= 0.9f)
 	{
 		ResultTransition();
@@ -142,4 +190,13 @@ void MainScene::ResultTransition()
 	SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::RESULT);
 
 	delete pPlayerData;
+}
+
+void MainScene::SetResoucesParticle()
+{
+	auto resouce = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch_fixed.efk"));
+
+	resouce = ResouceManager::Instance().LordEffekseerFile(_T("Effect/effekseer_hit/impossible_block.efk"));
+
+	resouce = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damage_effect02.efk"));
 }

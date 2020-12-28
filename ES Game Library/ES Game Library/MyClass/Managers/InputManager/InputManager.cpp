@@ -213,6 +213,11 @@ Vector2 XInput::Stick(int key_info)
 	return stick;
 }
 
+int XInput::StickAxisMax()
+{
+	return _stick_axis_max = Axis_Max;
+}
+
 INPUT_STATE XInput::InputButtonState(int key_info)
 {
 	return 	_button_state[key_info] = _x_state.Gamepad.wButtons & _button_info[key_info] ? INPUT_STATE::PUSH : INPUT_STATE::NOT_PUSH;
@@ -289,10 +294,14 @@ Vector2 DirectInput::Stick(int key_info)
 {
 	Vector2 stick = Vector2_Zero;
 
-	stick.x = _pad_state.X / move_value_constant;
+	stick.x = _pad_state.X;
 
-	stick.y = -_pad_state.Y / move_value_constant;
+	stick.y = -_pad_state.Y;
 
 	return stick;
+}
+int DirectInput::StickAxisMax()
+{
+	return _stick_axis_max = Axis_Max;
 }
 #pragma endregion

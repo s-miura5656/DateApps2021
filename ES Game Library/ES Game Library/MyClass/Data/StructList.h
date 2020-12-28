@@ -9,7 +9,7 @@ struct PlayerParam {
 	float angle		  = 0.f;
 	int hit_point	  = 1000;
 	int attack_powor  = 1000;
-	float speed		  = 0.05f;
+	float speed		  = 0.05f * 1.5f;
 	int ranking_point = 0;
 	int kill_count    = 0;
 	int rank_num      = 0;

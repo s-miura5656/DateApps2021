@@ -44,8 +44,8 @@ public:
 	void SetKillCount(std::string& player_tag, int kill_count)				{ PlayerParametor::Instance()._player_params[player_tag].kill_count = kill_count; }
 	int GetKillCount(std::string& player_tag)						  const { return PlayerParametor::Instance()._player_params[player_tag].kill_count; }
 
-	void SetRankNum(std::string& player_tag, int rank_num) { PlayerParametor::Instance()._player_params[player_tag].rank_num = rank_num; }
-	int GetRankNum(std::string& player_tag)						  const { return PlayerParametor::Instance()._player_params[player_tag].rank_num; }
+	void SetRankNum(std::string& player_tag, int rank_num)					{ PlayerParametor::Instance()._player_params[player_tag].rank_num = rank_num; }
+	int GetRankNum(std::string& player_tag)							  const { return PlayerParametor::Instance()._player_params[player_tag].rank_num; }
 
 	std::map<std::string, PlayerParam> GetAllParametor()			  const { return PlayerParametor::Instance()._player_params; }
 };
@@ -86,7 +86,7 @@ public:
 	void SetAngles(std::string& arm_tag, std::vector<float> angles)						  { ArmParametor::Instance()._arm_params[arm_tag].angles = angles; }
 	std::vector<float> GetAngles(std::string& arm_tag)								const { return ArmParametor::Instance()._arm_params[arm_tag].angles; }
 
-	void SetHitPosition(std::string& arm_tag, Vector3 pos) { ArmParametor::Instance()._arm_params[arm_tag].hit_position = pos; }
+	void SetHitPosition(std::string& arm_tag, Vector3 pos)								  { ArmParametor::Instance()._arm_params[arm_tag].hit_position = pos; }
 	Vector3 GetHitPosition(std::string& arm_tag)									const { return ArmParametor::Instance()._arm_params[arm_tag].hit_position; }
 };
 

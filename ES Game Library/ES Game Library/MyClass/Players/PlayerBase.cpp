@@ -292,22 +292,22 @@ void PlayerBase::InputMoveDirection(BaseInput* pad)
 	int old_index_x = _index_num.x;
 	int old_index_z = _index_num.z;
 
-	if (abs_x > abs_z)
+	if (abs_x > abs_z) 
 	{
 		std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _index_num.x-- : _index_num.x++;
 		_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
 	}
-	else if (abs_x < abs_z)
+	else if (abs_x < abs_z) 
 	{
 		std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z++ : _index_num.z--;
-
 		_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
 	}
 
 	if (map_data[_index_num.z][_index_num.x] != 'i' &&
 		map_data[_index_num.z][_index_num.x] != 'w' &&
 		map_data[_index_num.z][_index_num.x] != 'b' &&
-		map_data[_index_num.z][_index_num.x] != 'd')
+		map_data[_index_num.z][_index_num.x] != 'd' &&
+		map_data[_index_num.z][_index_num.x] != 's')
 	{
 		_new_pos = Vector3_Right * _index_num.x + Vector3_Forward * -_index_num.z;
 		player_data->SetIndexNum(_tag, _index_num);

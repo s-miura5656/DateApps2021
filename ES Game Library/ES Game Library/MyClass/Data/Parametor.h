@@ -29,7 +29,7 @@ public:
 
 private:
 	PlayerParametor(const PlayerParametor&) = delete;
-	void operator=(const PlayerParametor&) = delete;
+	void operator=(const PlayerParametor&)  = delete;
 
 	std::map<std::string, IndexNum>  _index_nums;
 	PlayerParam _player_param;
@@ -54,7 +54,7 @@ public:
 	}
 
 private:
-	ArmParametor(const ArmParametor&) = delete;
+	ArmParametor(const ArmParametor&)   = delete;
 	void operator=(const ArmParametor&) = delete;
 
 	std::map<std::string, ArmParam> _arm_params;
@@ -73,7 +73,7 @@ public:
 		return instance;
 	};
 private:
-	MapParam(const MapParam&) = delete;
+	MapParam(const MapParam&)		= delete;
 	void operator=(const MapParam&) = delete;
 
 	std::vector<cstring> _map_data;

@@ -61,12 +61,9 @@ int ArmBase::Update()
 			SetCollisionPosition(0.5f);
 		}
 
-
 		//! “–‚½‚è”»’è
 		HitOtherObject();
-
 		Vector3 back_position = DirectionFromAngle(_transform.rotation) * -0.2f;
-
 		_shot_effect->SetPosition(_transform.position + back_position);
 
 		return 0;
@@ -242,9 +239,10 @@ bool ArmBase::TurnArm()
 	if (_turn_flag)
 	{
 		_wait_count++;
-		_turn_count += 0.1f;
-		_turn_count = Clamp(_turn_count, 0, 1);
-		_transform.rotation.y = MathHelper_Lerp(_old_angle, _new_angle, _turn_count);
+//		_turn_count += 0.1f;
+//		_turn_count = Clamp(_turn_count, 0, 1);
+//		_transform.rotation.y = MathHelper_Lerp(_old_angle, _new_angle, _turn_count);
+		_transform.rotation.y = _new_angle;
 		SetCollisionPosition(0.0f);
 
 		if (_wait_count > 15)
@@ -287,6 +285,7 @@ void ArmBase::ArmReturn()
 	if (move_dir == Vector3_Zero && angle_point_size > 1)
 	{
 		_angle_positions.erase(_angle_positions.begin() + (angle_point_size - 1));
+		_i_arm_Data->SetAnglePositions(_tag, _angle_positions);
 	}
 }
 
@@ -406,14 +405,20 @@ void ArmBase::ChangeDirection(BaseInput* pad)
 
 void ArmBase::CreateWire()
 {
-	Transform transform = _transform;
-	transform.rotation.y = _new_angle;
-	_wires.push_back(std::make_unique<Wire>(transform));
-	_wires.rbegin()->get()->Initialize();
+	if (_angle_positions.size() < _i_arm_Data->GetLimitRange(_tag) - 1)
+	{
+		Transform transform = _transform;
+		transform.rotation.y = _new_angle;
+		_wires.push_back(std::make_unique<Wire>(transform));
+		_wires.rbegin()->get()->Initialize();
+	}
 }
 
 void ArmBase::DeleteWire()
 {
-	_wires.rbegin()->reset();
-	_wires.erase(_wires.begin() + (_wires.size() - 1));
+	if (!_wires.empty())
+	{
+		_wires.rbegin()->reset();
+		_wires.erase(_wires.begin() + (_wires.size() - 1));
+	}
 }

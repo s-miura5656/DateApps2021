@@ -22,12 +22,6 @@ Arm::Arm(std::string name)
 
 Arm::~Arm()
 {
-	_angle_positions.clear();
-	_i_arm_Data->SetAnglePositions(_tag, _angle_positions);
-	_angles.clear();
-	_i_arm_Data->SetAngles(_tag, _angles);
-	_wires.clear();
-
 	_wall_hit_effect.reset();
 	_shot_effect.reset();
 	_i_map_data.reset();
