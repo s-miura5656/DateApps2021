@@ -40,7 +40,7 @@ int HitPointItem::Update()
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
 
-		if (_hit_box->IsHitObjects(name))
+		if (_hit_box->IsHitObjectsSquare(name))
 		{
 			ItemEffect(name);
 			Removeflag = true;

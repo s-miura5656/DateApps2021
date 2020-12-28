@@ -5,8 +5,9 @@
 #include "../../../Managers/SceneManager/SceneManager.h"
 #include "../../../ParticleSystem/Particle.h"
 
-Block::Block(std::string tag)
+Block::Block(std::string tag, std::string item)
 {
+	_item_name = item;
 	_model  = nullptr;
 	_tag = tag;
 }
@@ -44,12 +45,6 @@ bool Block::Initialize()
 
 	_handle = INT_MAX;
 
-	if (_position.y > 0)
-	{
-		_blinking = new Blinking;
-		_blinking->Initialize(_position);
-	}
-
 	//! shader
 	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
 	return _model != nullptr;
@@ -61,30 +56,24 @@ bool Block::Initialize()
  */
 int Block::Update()
 {
-	if (_position.y > 0)
-	{
-		Fall();
-	}
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string arm_tag    = ARM_TAG + std::to_string(i + 1);
-		std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
-
 		if (!_hit_box->Tag_Sarch(arm_tag))
 			continue;
 
 		if (_hit_box->IsHitObjectsSquare(arm_tag)) 
 		{
-			IArmData* arm_data = new IArmData;
+			std::unique_ptr<IArmData> arm_data = std::make_unique<IArmData>();
 			int state = arm_data->GetState(arm_tag);
+
 			if (state == ArmEnum::PunchState::RETURN_PUNCH)
 			{
-				delete arm_data;
 				return 0;
 			}
 
-			IMapData* map_data = new IMapData;
+			std::unique_ptr<IMapData> map_data = std::make_unique<IMapData>();
 			auto data = map_data->GetData();
 
 			int x = fabsf(_position.x);
@@ -92,17 +81,21 @@ int Block::Update()
 
 			data[z][x] = ' ';
 			map_data->SetData(data);
-			delete map_data;
 
 			arm_data->SetState(arm_tag, ArmEnum::PunchState::RETURN_PUNCH);
-			delete arm_data;
 
-			IPrayerData* player_data = new IPrayerData;
+			std::unique_ptr<IPrayerData> player_data = std::make_unique<IPrayerData>();
+			std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
 			player_data->SetRankingPoint(player_tag, player_data->GetRankingPoint(player_tag) + 10);
-			delete player_data;
 
 			_effect->SetPosition(_position + Vector3_Up * 0.5f);
 			_effect->PlayOneShot();
+
+			//!アイテムが入ってないブロックの時はアイテムを生成しない
+			if (_item_name != NULL_ITEM)
+			{
+				ItemCounter::SetItem(_item_name, _position);
+			}
 
 			return 1;
 		}
@@ -118,10 +111,7 @@ void Block::Draw3D()
 		_hit_box->SetModelScale();
 		//_hit_box->Draw3D();
 	}
-	if (_position.y > 0)
-	{
-		_blinking->Draw3D();
-	}
+
 	_effect->Draw();
 }
 
@@ -141,48 +131,6 @@ void Block::DrawAlpha3D()
 	_shader->SetParameter("wvp", world * SceneCamera::Instance().GetCamera().GetViewProjectionMatrix());
 	_shader->SetParameter("eye_pos", SceneCamera::Instance().GetCamera().GetPosition());
 	_shader->SetTechnique("FixModel_S0");
+
 	_model->Draw(_shader);
-}
-/**
- * @fn 降ってくるときのブロックの処理
- * @detail  ブロックを下に動かす
- *          ブロックのY座標が0になった時mapdataに自分の座標を保存する
- *          プレイヤーとの接触時にプレイヤーを倒す
- */
-void Block::Fall()
-{
-	//TODO:降ってくる速さは調整する
-	_position.y -= 0.05;
-
-	//!Y座標が0になったときに自分の座標をマップデータをセットする
-	if (_position.y <= 0)
-	{
-		IMapData* map_data = new IMapData;
-		auto data = map_data->GetData();
-
-		int x = fabsf(_position.x);
-		int z = fabsf(_position.z);
-
-		data[z][x] = 'b';
-		map_data->SetData(data);
-		delete map_data;
-		delete _blinking;
-	}
-
-	_hit_box->SetHitBoxPosition(_position + Vector3(0, 1, 0));
-
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
-
-		//!プレイヤーとの接触時にプレイヤーを倒す
-		if (_hit_box->IsHitObjectsSquare(player_tag))
-		{
-			IPrayerData* iplayerdata = new IPrayerData;
-			iplayerdata->SetState(player_tag, PlayerEnum::Animation::DEATH);
-			delete iplayerdata;
-		}
-
-	}
-	_blinking->Update();
 }

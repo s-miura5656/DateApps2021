@@ -11,6 +11,8 @@ static const std::string ARM_TAG	= "Arm_";
 static const std::string ITEM_TAG	= "Item_";
 
 //! アイテムの種類判別用
+static const std::string NULL_ITEM = "NullItem";
+static const std::string POINT_ITEM = "PointItem_";
 static const std::string POWOR_ITEM_TAG    = "AttackItem_";
 static const std::string SPEED_ITEM_TAG	   = "SpeedItem_";
 static const std::string HITPOINT_ITEM_TAG = "HitPointItem_";

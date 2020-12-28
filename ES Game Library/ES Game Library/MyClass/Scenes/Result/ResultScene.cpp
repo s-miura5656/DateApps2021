@@ -53,39 +53,39 @@ bool ResultScene::Initialize()
 
 	//! camera
 	Viewport view       = GraphicsDevice.GetViewport();
-	Vector3 _camera_pos = Vector3(0, 0, -10);
-	Vector3 _look_pos   = Vector3_Zero;
+	Vector3  camera_pos = Vector3(0, 0, -10);
+	Vector3  look_pos   = Vector3_Zero;
 
-	SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
+	SceneCamera::Instance().SetLookAt(camera_pos, look_pos, 0);
 	SceneCamera::Instance().SetPerspectiveFieldOfView(60.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 
 	//!プレイヤーモデルのスケールの設定
 	_player_model_big_scale   = 1.0;
 	_player_model_small_scale = 0.5;
 
-	//!プレイヤーのY座標の位置ずれ修正
+	//!プレイヤーのX座標の位置ずれ修正
 	_player_big_position_x   = 0.8;
-	_player_small_position_x = 1.2;
-
-	//!プレイヤーの順位の座標の設定
-	_player_rank_number_position_x = -15;
-	_player_rank_number_position_y = -50;
+	_player_small_position_x = 1.5;
 
 	//!ポイントの順位のX座標の位置ずれ修正
-	_point_small_text_position_x = 300;
-	_point_big_text_position_x   = 330;
+	_point_small_text_position_correction = Vector2 (420,25);
+	_point_big_text_position_correction = Vector2(420, 25);
 
 	//!ポイントのテキストのスケールの設定
-	_text_small_size = Vector2(1.0, 1.0);
-	_text_big_size   = Vector2(0.5, 0.5);
+	_text_big_size   = Vector2(1.0, 1.0);
+	_text_small_size = Vector2(0.5, 0.5);
+
+	//!プレイヤーの順位の座標の設定
+	_player_big_rank_number_position = Vector2(0,-50);
+	_player_small_rank_number_position = Vector2(0, -30);
 
 	//!ポイントの順位の座標の設定
-	_point_big_text_position       = Vector2(110, 550);
-	_point_small_text_position     = Vector2(150, 500);
+	_point_big_text_position       = Vector2(430, 430);
+	_point_small_text_position     = Vector2(220, 400);
 
 	//!プレイヤーの座標の設定
-	_player_big_position   = Vector3(-1.5, 0, -7.5);
-	_player_small_position = Vector3(-1.8, 0, -7.5);
+	_player_big_position   = Vector3(-0.6, 0, -7.5);
+	_player_small_position = Vector3(-3.0, 0.2, -7.5);
 
 	//背景の座標
 	_background_position = Vector3(0, 0, 10000);
@@ -124,9 +124,9 @@ void ResultScene::Draw2D()
 	
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		SpriteBatch.DrawString(_font, PointTextPosition(i), Color(255, 0, 0), _T("%d"), GetPoints(i));
-		SpriteBatch.Draw(*_player_rank_num, PlayerRankNumberPositionCalculation(i) + Vector3(0,-50,0), 
-			RectWH((GetRankNum(i) - 1) * 128, 0, 128, 64), 1,Vector3_Zero,Vector3_Zero, TextSizeCalculation(i));
+		SpriteBatch.DrawString(_font, SetPointTextPosition(i), Color(255, 0, 0), _T("%d"), GetPoints(i));
+		SpriteBatch.Draw(*_player_rank_num, SetPlayerRankNumberPosition(i),
+			RectWH((GetRankNum(i) - 1) * 128, 0, 128, 64), 1,Vector3_Zero,Vector3_Zero, SetTextSize(i));
 	}
 }
 /*
@@ -141,8 +141,8 @@ void ResultScene::Draw3D()
 	{
 		_shader->SetTexture("m_Texture", *_texture[i]);
 		_shader->SetParameter("vp", vp);
-		_player_model->SetScale(PlayerScaleCalculation(i));
-		_player_model->SetPosition(PlayerPositionCalculation(i));
+		_player_model->SetScale(SetPlayerScale(i));
+		_player_model->SetPosition(SetPlayerPosition(i));
 		_player_model->Draw(_shader);
 	}
 }
@@ -180,7 +180,7 @@ int ResultScene::GetRankNum(int player_num)
  * @param (player_num) 順位が何番目のプレイヤーか
  * @return リザルトデータから昇順にプレイヤーのポイントを返す
  */
-int ResultScene::GetPoints(int player_num)
+int ResultScene::GetPoints	(int player_num)
 {
 	auto resultdata = SceneManager::Instance().GetResultData();
 	return resultdata->points[player_num];
@@ -191,7 +191,7 @@ int ResultScene::GetPoints(int player_num)
  * @param (player_num) 順位が何番目のプレイヤーか
  * @return プレイヤーのスケールにセットするfloat型の値で返す
  */
-float ResultScene::PlayerScaleCalculation(int player_num)
+float ResultScene::SetPlayerScale(int player_num)
 {
 	float pl_model_scale;
 
@@ -211,7 +211,7 @@ float ResultScene::PlayerScaleCalculation(int player_num)
  * @param (player_num) 順位が何番目のプレイヤーか
  * @return テキストのサイズをVector2型の値で返す
  */
-Vector2 ResultScene::TextSizeCalculation(int player_num) 
+Vector2 ResultScene::SetTextSize(int player_num)
 {
 	Vector2 text_size;
 	
@@ -231,7 +231,7 @@ Vector2 ResultScene::TextSizeCalculation(int player_num)
  * @param (player_num) 順位が何番目のプレイヤーか
  * @return プレイヤーの座標をVector3型の値で返す
  */
-Vector3 ResultScene::PlayerPositionCalculation(int player_num)
+Vector3 ResultScene::SetPlayerPosition(int player_num)
 {
 	Vector3 pl_pos;
 
@@ -243,6 +243,7 @@ Vector3 ResultScene::PlayerPositionCalculation(int player_num)
 	{
 		pl_pos    = _player_small_position;
 		pl_pos.x += _player_small_position_x * player_num;
+		pl_pos.y += -0.2 * player_num;
 	}
 
 	return pl_pos;
@@ -251,20 +252,21 @@ Vector3 ResultScene::PlayerPositionCalculation(int player_num)
 /**
  * @brief　プレイヤーの座標を設定する
  * @param (player_num) 順位が何番目のプレイヤーか
- * @return プレイヤーの座標をVector3型の値で返す
+ * @return プレイヤーの順位の座標をVector3型の値で返す
  */
-Vector3 ResultScene::PlayerRankNumberPositionCalculation(int player_num)
+Vector3 ResultScene::SetPlayerRankNumberPosition(int player_num)
 {
 	Vector3 pl_rank_pos = (Vector3_Zero);
 
-	if (player_num < _arrival_count) {
-		pl_rank_pos.x = PointTextPosition(player_num).x + _player_rank_number_position_x;
-		pl_rank_pos.y = PointTextPosition(player_num).y + _player_rank_number_position_y;
-	}
-	else 
+	if (player_num < _arrival_count) 
 	{
-		pl_rank_pos.x = PointTextPosition(player_num).x + _player_rank_number_position_x;
-		pl_rank_pos.y = PointTextPosition(player_num).y + _player_rank_number_position_y;
+		pl_rank_pos.x = SetPointTextPosition(player_num).x;
+		pl_rank_pos.y = SetPointTextPosition(player_num).y + _player_big_rank_number_position.y;
+	}
+	else
+	{
+		pl_rank_pos.x = SetPointTextPosition(player_num).x;
+		pl_rank_pos.y = SetPointTextPosition(player_num).y + _player_small_rank_number_position.y;
 	}
 
 	return pl_rank_pos;
@@ -275,17 +277,17 @@ Vector3 ResultScene::PlayerRankNumberPositionCalculation(int player_num)
  * @param (player_num) 順位が何番目のプレイヤーか
  * @return ポイントの座標をVector2型の値で返す
  */
-Vector2 ResultScene::PointTextPosition(int player_num)
+Vector2 ResultScene::SetPointTextPosition(int player_num)
 {
 	Vector2 pointpos;
 
 	if (player_num < _arrival_count) {
 		pointpos    = _point_big_text_position;
-		pointpos.x += _point_big_text_position_x * player_num;
 	}
 	else {
 		pointpos    = _point_small_text_position;
-		pointpos.x += _point_small_text_position_x * (player_num - _arrival_count + 1);
+		pointpos += Vector2(_point_small_text_position_correction.x * (player_num - _arrival_count), 
+			                _point_small_text_position_correction.y * (player_num - _arrival_count + 1));
 	}
 
 	return pointpos;

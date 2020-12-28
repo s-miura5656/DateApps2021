@@ -15,7 +15,7 @@ MainScene::MainScene()
 {
 	_managers.push_back(new StageManager);
 	_managers.push_back(new PlayerManager);
-	//_managers.push_back(new ItemManager);
+	_managers.push_back(new ItemManager);
 	_managers.push_back(new MainUiManager);
 }
 
