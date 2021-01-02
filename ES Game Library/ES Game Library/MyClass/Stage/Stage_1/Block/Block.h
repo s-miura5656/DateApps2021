@@ -11,6 +11,8 @@
 #include"../../../Item/ItemCounter/ItemCounter.h"
 #include"../../../Data/WordsTable.h"
 #include"../Blinking/Blinking.h"
+#include "../../../Data/IData.h"
+
 class ParticleSystem;
 
 class Block :public StageBase
@@ -27,5 +29,6 @@ private:
 	ItemCounter*                    _itemcounter;
 	std::unique_ptr<ParticleSystem> _effect;
 	std::string                     _item_name;
-	int                             _handle;
+	std::unique_ptr<IArmData>		_i_arm_data;
+	const int						_arm_distance = 2.5f;
 };

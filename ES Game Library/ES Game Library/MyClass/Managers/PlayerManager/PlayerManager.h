@@ -17,17 +17,19 @@ class PlayerManager : public ManagerBase
 {
 public:
 	PlayerManager();
-	~PlayerManager() override;
+	~PlayerManager()   override;
 
-	bool Initialize() override;
-	int Update() override;
-	void Draw2D() override;
-	void Draw3D() override;
+	bool Initialize()  override;
+	int Update()	   override;
+	void Draw2D()	   override;
+	void Draw3D()	   override;
 	void DrawAlpha3D() override;
 
 	void RankingSort();
 
 private:
+	void InitializeCharactorParametor(std::string player_tag, std::string arm_tag, int type);
+
 	//ƒvƒŒƒCƒ„[
 	std::vector<std::unique_ptr<Player>>     _players;
 	std::unique_ptr<IPrayerData>		     _i_player_data;

@@ -232,6 +232,9 @@
     <Filter Include="Myclass\Stage\Stage_1\Blinking">
       <UniqueIdentifier>{b7b2b0e1-dd66-42b2-a881-4559f6b80576}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Players\Player\Type">
+      <UniqueIdentifier>{19e43a76-c2c4-416f-9433-e6520aa5cffc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -489,6 +492,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Stage\Stage_1\Blinking\Blinking.cpp">
       <Filter>Myclass\Stage\Stage_1\Blinking</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Players\TypeSetting\TypeSetting.cpp">
+      <Filter>Myclass\Players\Player\Type</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -786,6 +792,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Stage\Stage_1\Blinking\Blinking.h">
       <Filter>Myclass\Stage\Stage_1\Blinking</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Players\TypeSetting\TypeSetting.h">
+      <Filter>Myclass\Players\Player\Type</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

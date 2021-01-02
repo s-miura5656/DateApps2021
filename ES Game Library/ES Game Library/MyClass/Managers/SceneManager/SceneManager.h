@@ -30,7 +30,6 @@ public:
 	};
 
 
-	SceneManager();
 	~SceneManager();
 
 	void ChangeScene();
@@ -53,7 +52,7 @@ public:
 	void SetResultData(int[PLAYER_COUNT_MAX], int[PLAYER_COUNT_MAX]);
 
 private:
-
+	SceneManager();
 	//! シングルトンオブジェクトを他で作らせないための記述
 	SceneManager(const SceneManager&) = delete;
 	void operator=(const SceneManager&) = delete;

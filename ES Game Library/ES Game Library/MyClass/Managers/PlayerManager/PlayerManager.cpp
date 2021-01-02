@@ -2,6 +2,7 @@
 #include "../../Players/Player/Player.h"
 #include "../../Data/WordsTable.h"
 #include "../TimeManager/Time.h"
+#include "../../Players/TypeSetting/TypeSetting.h"
 
 PlayerManager::PlayerManager()
 {
@@ -31,22 +32,17 @@ PlayerManager::~PlayerManager()
 
 bool PlayerManager::Initialize()
 {
-	float angle = 180.0f;
+	TypeSetting::Instance().Initialize();
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i += 2)
 	{
 		std::string tag = PLAYER_TAG + std::to_string(i + 1);
 		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
-		PlayerParametor::Instance().CreateParametor(tag);
-		ArmParametor::Instance().CreateParametor(arm_tag);
-		_i_player_data->SetAngle(tag, angle);
+		InitializeCharactorParametor(tag, arm_tag, i + 1);
 
 		tag = PLAYER_TAG + std::to_string(i + 2);
 		arm_tag = ARM_TAG + std::to_string(i + 2);
-		PlayerParametor::Instance().CreateParametor(tag);
-		ArmParametor::Instance().CreateParametor(arm_tag);
-		_i_player_data->SetAngle(tag, angle);
-		angle = 0;
+		InitializeCharactorParametor(tag, arm_tag, i + 2);
 	}
 
 	for (int i = 0; i < _players.size(); ++i)
@@ -121,5 +117,21 @@ void PlayerManager::RankingSort()
 	}
 
 	return;
+}
+
+void PlayerManager::InitializeCharactorParametor(std::string player_tag, std::string arm_tag, int type)
+{
+	PlayerParametor::Instance().CreateParametor(player_tag);
+	ArmParametor::Instance().CreateParametor(arm_tag);
+
+	//! これはキャラクター選択に追加する
+	TypeSetting::Instance().SetPlayerType(player_tag, type);
+	
+	auto charactor_param = TypeSetting::Instance().GetCharactorParam(TypeSetting::Instance().GetPlayerType(player_tag));
+
+	charactor_param.player_param.position = _i_player_data->GetPosition(player_tag);
+
+	_i_player_data->SetParametor(player_tag, charactor_param.player_param);
+	_i_arm_data->SetArmParam(arm_tag, charactor_param.arm_param);
 }
 

@@ -43,8 +43,6 @@ bool Block::Initialize()
 	//当たり判定を破壊可能ブロックと同じポジションにする
 	_hit_box->SetHitBoxPosition(_position + Vector3(0, 1, 0));
 
-	_handle = INT_MAX;
-
 	//! shader
 	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
 	return _model != nullptr;
@@ -56,10 +54,15 @@ bool Block::Initialize()
  */
 int Block::Update()
 {
-
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string arm_tag    = ARM_TAG + std::to_string(i + 1);
+
+		float distance = Vector3_Distance(_i_arm_data->GetPosition(arm_tag), _position);
+
+		if (distance > _arm_distance)
+			continue;
+
 		if (!_hit_box->Tag_Sarch(arm_tag))
 			continue;
 
@@ -86,7 +89,7 @@ int Block::Update()
 
 			std::unique_ptr<IPrayerData> player_data = std::make_unique<IPrayerData>();
 			std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
-			player_data->SetRankingPoint(player_tag, player_data->GetRankingPoint(player_tag) + 10);
+			player_data->SetRankingPoint(player_tag, player_data->GetRankingPoint(player_tag) + BLOCK_POINT);
 
 			_effect->SetPosition(_position + Vector3_Up * 0.5f);
 			_effect->PlayOneShot();

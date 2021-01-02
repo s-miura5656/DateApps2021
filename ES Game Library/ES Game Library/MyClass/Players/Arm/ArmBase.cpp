@@ -176,6 +176,7 @@ void ArmBase::Move(BaseInput* pad)
 		ChangeDirection(pad);
 		CreateWire();
 		_angle_positions.push_back(_transform.position);
+		_i_arm_Data->SetPosition(_tag, _transform.position);
 	}
 }
 
@@ -327,7 +328,7 @@ void ArmBase::HitOtherObject()
 			if (i_player_data->GetHitPoint(tag) <= 0)
 			{
 				i_player_data->SetKillCount(_player_tag, i_player_data->GetKillCount(_player_tag) + 1);
-				i_player_data->SetRankingPoint(_player_tag, i_player_data->GetRankingPoint(_player_tag) + 100);
+				i_player_data->SetRankingPoint(_player_tag, i_player_data->GetRankingPoint(_player_tag) + PLAYER_POINT);
 				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 				i_arm_data->SetState(_tag, _arm_state);
 				i_player_data->SetState(tag, PlayerEnum::Animation::DAMAGE);

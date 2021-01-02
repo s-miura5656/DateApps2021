@@ -4,7 +4,8 @@
 #include "../../Data/IData.h"
 #include "../../Data/WordsTable.h"
 #include "../../Data/StructList.h"
-#include"../ResouceManager/ResouceManager.h"
+#include "../ResouceManager/ResouceManager.h"
+
 StageManager::StageManager()
 {
 }

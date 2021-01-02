@@ -43,6 +43,7 @@ int PlayerBase::Update()
 		if (player_data->GetState(_tag) == PlayerEnum::Animation::DEATH)
 		{
 			_death_flag = true;
+			player_data->SetRankingPoint(_tag, player_data->GetRankingPoint(_tag) - LOST_PLAYER_POINT);
 			DestroyArm();
 			return 0;
 		}

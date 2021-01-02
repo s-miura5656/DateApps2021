@@ -13,7 +13,6 @@ class PlayerParametor
 public:
 	friend class IPrayerData;
 
-	PlayerParametor() {}
 	~PlayerParametor() {};
 
 	static PlayerParametor& Instance() {
@@ -28,6 +27,7 @@ public:
 	std::map<std::string, PlayerParam> _player_params;
 
 private:
+	PlayerParametor() {}
 	PlayerParametor(const PlayerParametor&) = delete;
 	void operator=(const PlayerParametor&)  = delete;
 
@@ -40,7 +40,6 @@ class ArmParametor
 public:
 	friend class IArmData;
 
-	ArmParametor() {}
 	~ArmParametor() {};
 
 	static ArmParametor& Instance() {
@@ -54,6 +53,7 @@ public:
 	}
 
 private:
+	ArmParametor() {}
 	ArmParametor(const ArmParametor&)   = delete;
 	void operator=(const ArmParametor&) = delete;
 
@@ -65,7 +65,6 @@ private:
 class MapParam {
 public:
 	friend class IMapData;
-	MapParam() {}
 	~MapParam() {}
 
 	static MapParam& Instance() {
@@ -73,6 +72,7 @@ public:
 		return instance;
 	};
 private:
+	MapParam() {}
 	MapParam(const MapParam&)		= delete;
 	void operator=(const MapParam&) = delete;
 
