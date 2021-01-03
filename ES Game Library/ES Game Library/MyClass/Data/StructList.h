@@ -14,6 +14,7 @@ struct PlayerParam {
 	int kill_count		 = 0;
 	int rank_num		 = 0;
 	int shot_rigor_frame = 30;
+	int lost_point		 = 0;
 };
 
 struct ArmParam {
@@ -25,7 +26,7 @@ struct ArmParam {
 	float   return_speed			 = 0.3f;
 	int     limit_range				 = 10;
 	int     turn_frame				 = 30;
-	Vector3 hit_position = Vector3_Zero;
+	Vector3 hit_position			 = Vector3_Zero;
 	std::vector<Vector3> angle_position;
 	std::vector<float> angles;
 };

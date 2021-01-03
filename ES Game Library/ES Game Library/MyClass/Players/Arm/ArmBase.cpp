@@ -328,7 +328,7 @@ void ArmBase::HitOtherObject()
 			if (i_player_data->GetHitPoint(tag) <= 0)
 			{
 				i_player_data->SetKillCount(_player_tag, i_player_data->GetKillCount(_player_tag) + 1);
-				i_player_data->SetRankingPoint(_player_tag, i_player_data->GetRankingPoint(_player_tag) + PLAYER_POINT);
+				i_player_data->SetLostPoint(_player_tag, PointCalculation(tag));
 				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 				i_arm_data->SetState(_tag, _arm_state);
 				i_player_data->SetState(tag, PlayerEnum::Animation::DAMAGE);
@@ -422,4 +422,24 @@ void ArmBase::DeleteWire()
 		_wires.rbegin()->reset();
 		_wires.erase(_wires.begin() + (_wires.size() - 1));
 	}
+}
+
+int ArmBase::PointCalculation(std::string other_player_tag)
+{
+	int point;
+
+	auto player_data = _i_player_data.get();
+
+	if (player_data->GetRankingPoint(other_player_tag) < LOST_PLAYER_POINT)
+	{
+		point = player_data->GetRankingPoint(other_player_tag);
+		player_data->SetRankingPoint(other_player_tag, 0);
+	}
+	else
+	{
+		point = LOST_PLAYER_POINT;
+		player_data->SetRankingPoint(other_player_tag, player_data->GetRankingPoint(other_player_tag) - LOST_PLAYER_POINT);
+	}
+
+	return player_data->GetRankingPoint(_player_tag) + point;
 }

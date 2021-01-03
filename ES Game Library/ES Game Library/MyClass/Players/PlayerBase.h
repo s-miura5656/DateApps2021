@@ -31,6 +31,8 @@ protected:
 	void InputAngle(BaseInput* pad);
 	void SetCollisionPosition();
 	void DebugControll();
+	void ShieldOn();
+	void ShieldOff();
 
 	//! file
 	ANIMATIONMODEL		_model;

@@ -94,4 +94,5 @@ private:
 	bool TurnArm();
 	void CreateWire();
 	void DeleteWire();
+	int PointCalculation(std::string other_player_tag);
 };

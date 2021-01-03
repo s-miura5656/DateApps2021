@@ -47,6 +47,12 @@ public:
 	void SetRankNum(std::string& player_tag, int rank_num)					{ PlayerParametor::Instance()._player_params[player_tag].rank_num = rank_num; }
 	int GetRankNum(std::string& player_tag)							  const { return PlayerParametor::Instance()._player_params[player_tag].rank_num; }
 
+	void SetShotRigorFrame(std::string& player_tag, int shot_rigor_frame)	{ PlayerParametor::Instance()._player_params[player_tag].shot_rigor_frame = shot_rigor_frame; }
+	int GetShotRigorFrame(std::string& player_tag)					  const { return PlayerParametor::Instance()._player_params[player_tag].shot_rigor_frame; }
+
+	void SetLostPoint(std::string& player_tag, int lost_point)				{ PlayerParametor::Instance()._player_params[player_tag].lost_point = lost_point; }
+	int GetLostPoint(std::string& player_tag)						  const { PlayerParametor::Instance()._player_params[player_tag].lost_point; }
+
 	std::map<std::string, PlayerParam> GetAllParametor()			  const { return PlayerParametor::Instance()._player_params; }
 };
 

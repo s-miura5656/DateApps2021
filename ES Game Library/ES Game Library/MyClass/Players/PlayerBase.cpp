@@ -28,13 +28,13 @@ int PlayerBase::Update()
 	{
 		_respawn_time++;
 
-		if (_respawn_time > 120)
+		if (_respawn_time > RESPAWN_TIME)
 		{
-			player_data->SetHitPoint(_tag, 1000);
+			player_data->SetHitPoint(_tag, RESPAWN_HITPOINT);
 			player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 			_respawn_time = 0;
 			_death_flag = false;
-			_move_flag = false;
+			_move_flag  = false;
 			_transform.position = _new_pos;
 		}
 	}
@@ -43,7 +43,6 @@ int PlayerBase::Update()
 		if (player_data->GetState(_tag) == PlayerEnum::Animation::DEATH)
 		{
 			_death_flag = true;
-			player_data->SetRankingPoint(_tag, player_data->GetRankingPoint(_tag) - LOST_PLAYER_POINT);
 			DestroyArm();
 			return 0;
 		}
@@ -53,7 +52,7 @@ int PlayerBase::Update()
 		{
 			_damage_hit_count++;
 
-			if (_damage_hit_count > 30)
+			if (_damage_hit_count > DEATH_RIGOR)
 			{
 				player_data->SetState(_tag, PlayerEnum::Animation::DEATH);
 				_damage_hit_count = 0;
@@ -77,7 +76,7 @@ int PlayerBase::Update()
 		{
 			_shot_pending_count++;
 
-			if (_shot_pending_count > 30)
+			if (_shot_pending_count > player_data->GetShotRigorFrame(_tag))
 			{
 				player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
 				player_data->SetPosition(_tag, _transform.position);
@@ -129,7 +128,7 @@ void PlayerBase::Draw2D()
 {
 	if (_tag == "Player_1")
 	{
-//		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤーの所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤーの所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
 //		SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("プレイヤーのHP:%d"), _i_player_data->GetHitPoint(_tag));
 //		SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("プレイヤーの移動速度:%f"), _i_player_data->GetSpeed(_tag));
 	}
@@ -237,10 +236,14 @@ void PlayerBase::ChangeAnimation()
 	//! アニメーショントラックのアニメーションを指定した位置から再生
 	_model->SetTrackEnable(_animation_index, TRUE);	
 
-	if (_animation_index == PlayerEnum::Animation::SHOT ||
-		_animation_index == PlayerEnum::Animation::MOVE)
+	if (_animation_index == PlayerEnum::Animation::SHOT)
 	{
-		_model->SetTrackPosition(_animation_index, _animation_count * 1.6f);
+		float shot_frame = 60.f / (float)_i_player_data->GetShotRigorFrame(_tag);
+		_model->SetTrackPosition(_animation_index, _animation_count * shot_frame);
+	}
+	else if (_animation_index == PlayerEnum::Animation::MOVE)
+	{
+		_model->SetTrackPosition(_animation_index, _animation_count);
 	}
 	else
 	{

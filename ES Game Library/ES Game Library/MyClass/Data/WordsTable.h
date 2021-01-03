@@ -29,6 +29,15 @@ static const int BLOCK_POINT	   = 100;
 static const int PLAYER_POINT	   = 300;
 static const int LOST_PLAYER_POINT = 300;
 
+//! リスポーン時間
+static const int RESPAWN_TIME	   = 180;
+
+//! 死ぬ前の硬直時間
+static const int DEATH_RIGOR	   = 30;
+
+//! リスポーン時のHPの定数
+static const int RESPAWN_HITPOINT = 1000;
+
 namespace PlayerEnum {
 	enum Personality { NORMAL, ARM_RANGE, ARM_SPEED, PLAYER_MOVE_SPEED, PLAYER_DEFENCE, PERSONALITY_MAX};
 
