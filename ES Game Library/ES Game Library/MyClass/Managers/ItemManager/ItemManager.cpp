@@ -52,11 +52,11 @@ void ItemManager::DrawAlpha3D()
 {
 }
 
-void ItemManager::AddItemBase(std::string name, Vector3 position)
+void ItemManager::AddItemBase(std::string name, Vector3 position,int point)
 {
 	ItemFactory* itemfactory = new ItemStationeryFactory;
 
-	item_base.push_back(itemfactory->Create(name, position));
+	item_base.push_back(itemfactory->Create(name, position,point));
 
 	delete itemfactory;
 }

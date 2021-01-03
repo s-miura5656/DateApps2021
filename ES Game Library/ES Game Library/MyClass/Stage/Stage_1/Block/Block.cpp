@@ -95,9 +95,9 @@ int Block::Update()
 			_effect->PlayOneShot();
 
 			//!アイテムが入ってないブロックの時はアイテムを生成しない
-			if (_item_name != NULL_ITEM)
+			if (_item_name != NULL_ITEM_TAG)
 			{
-				ItemCounter::SetItem(_item_name, _position);
+				ItemCounter::SetItem(_item_name, _position,BLOCK_POINT);
 			}
 
 			return 1;
