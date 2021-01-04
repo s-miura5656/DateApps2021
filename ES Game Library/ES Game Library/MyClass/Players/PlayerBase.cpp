@@ -131,16 +131,17 @@ int PlayerBase::Update()
 
 void PlayerBase::Draw2D()
 {
-
 	if (_tag == "Player_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤーの所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤー1の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
 		//SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("プレイヤーのHP:%d"), _i_player_data->GetHitPoint(_tag));
 		//SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("プレイヤーの移動速度:%f"), _i_player_data->GetSpeed(_tag));
 		//SpriteBatch.DrawString(_font, Vector2(0, 260), Color(1.f, 1.f, 1.f), _T("プレイヤーの発射硬直:%d"), _i_player_data->GetShotRigorFrame(_tag));
 
 	}
-
+	if (_tag == "Player_2")SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("プレイヤー2の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
+	if (_tag == "Player_3")SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("プレイヤー3の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
+	if (_tag == "Player_4")SpriteBatch.DrawString(_font, Vector2(0, 240), Color(1.f, 1.f, 1.f), _T("プレイヤー4の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
 	if (_arm_tag == "Arm_1")
 	{
 		//SpriteBatch.DrawString(_font, Vector2(0, 320), Color(1.f, 1.f, 1.f), _T("アームの進む速度:%f"), _i_arm_Data->GetGoSpeed(_arm_tag));
@@ -171,10 +172,10 @@ void PlayerBase::Draw3D()
 		
 		_hit_box->SetModelPosition();
 		_hit_box->SetModelScale();
+		_invincible_time++;
 		if (_invincible_time <= 120)
 		{
 			_hit_box->SetHitBoxPosition(_hit_box->GetHitBoxPosition() + Vector3(0, 9999, 0));
-			_invincible_time++;
 		}
 //		_hit_box->Draw3D();
 		
