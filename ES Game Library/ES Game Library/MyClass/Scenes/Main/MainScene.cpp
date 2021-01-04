@@ -71,54 +71,58 @@ int MainScene::Update()
 	{
 		manager->Update();
 	}
+	/*
+	std::string pl_tag = "Player_1";
+	std::string arm_tag = "Arm_1";
 
-	/*auto pad = InputManager::Instance().GetGamePad("Player_1");
+	IPrayerData* pPlayerData = new IPrayerData;
+	IArmData* pArmData = new IArmData;
 
-	if (pad->Button(BUTTON_INFO::BUTTON_BACK))
+	KeyboardState key = InputDevice.GetKeyboard()->GetState();
+	
+	if (key.IsKeyDown(Keys_A) && pPlayerData->GetSpeed(pl_tag) <= 0.9)
 	{
-		camera_angle.x += 0.1f;
+		pPlayerData->SetSpeed(PLAYER_TAG + std::to_string(1), pPlayerData->GetSpeed(pl_tag) + 0.01f);
 	}
-
-	if (pad->Button(BUTTON_INFO::BUTTON_START))
+	if (key.IsKeyDown(Keys_Z) && pPlayerData->GetSpeed(pl_tag) >= 0)
 	{
-		camera_angle.x -=0.1f;
+		pPlayerData->SetSpeed(PLAYER_TAG + std::to_string(1), pPlayerData->GetSpeed(pl_tag) - 0.01f);
 	}
-
-	if (pad->Button(BUTTON_INFO::BUTTON_LEFT_SHOULDER))
+	if (key.IsKeyDown(Keys_S) && pPlayerData->GetShotRigorFrame(pl_tag) <= 75)
 	{
-		camera_pos.z -= 0.1f;
+		pPlayerData->SetShotRigorFrame(PLAYER_TAG + std::to_string(1), pPlayerData->GetShotRigorFrame(pl_tag) + 1);
 	}
-
-	if (pad->Button(BUTTON_INFO::BUTTON_RIGHT_SHOULDER))
+	if (key.IsKeyDown(Keys_X) && pPlayerData->GetShotRigorFrame(pl_tag) >= 0)
 	{
-		camera_pos.z += 0.1f;
+		pPlayerData->SetShotRigorFrame(PLAYER_TAG + std::to_string(1), pPlayerData->GetShotRigorFrame(pl_tag) - 1);
 	}
-
-	if (pad->Button(BUTTON_INFO::BUTTON_X))
+	if (key.IsKeyDown(Keys_D) && pArmData->GetGoSpeed(arm_tag) <= 0.9)
 	{
-		camera_pos.y -= 0.1f;
+		pArmData->SetGoSpeed(arm_tag, pArmData->GetGoSpeed(arm_tag) + 0.01f);
 	}
-
-	if (pad->Button(BUTTON_INFO::BUTTON_Y))
+	if (key.IsKeyDown(Keys_C) && pArmData->GetGoSpeed(arm_tag) >= 0)
 	{
-		camera_pos.y += 0.1f;
+		pArmData->SetGoSpeed(arm_tag, pArmData->GetGoSpeed(arm_tag) - 0.01f);
 	}
-
-	if (pad->Button(BUTTON_INFO::BUTTON_LEFT_THUMB))
+	if (key.IsKeyDown(Keys_F))
 	{
-		parse -= 0.1f;
+		pArmData->SetLimitRange(arm_tag, pArmData->GetLimitRange(arm_tag) + 1);
 	}
-
-	if (pad->Button(BUTTON_INFO::BUTTON_RIGHT_THUMB))
+	if (key.IsKeyDown(Keys_V) &&  pArmData->GetLimitRange(arm_tag) >= 0)
 	{
-		parse += 0.1f;
+		pArmData->SetLimitRange(arm_tag, pArmData->GetLimitRange(arm_tag) - 1);
 	}
-
-	auto view = GraphicsDevice.GetViewport();*/
-
-//	SceneCamera::Instance().SetView(camera_pos, camera_angle);
-//	SceneCamera::Instance().SetPerspectiveFieldOfView(parse, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
-
+	if (key.IsKeyDown(Keys_G) && pArmData->GetTurnFrame(arm_tag) <= 50)
+	{
+		pArmData->SetTurnFrame(arm_tag, pArmData->GetTurnFrame(arm_tag) + 1);
+	}
+	if (key.IsKeyDown(Keys_B) && pArmData->GetTurnFrame(arm_tag) >= 0)
+	{
+		pArmData->SetTurnFrame(arm_tag, pArmData->GetTurnFrame(arm_tag) - 1);
+	}
+	delete pArmData;
+	delete pPlayerData;
+	*/
 	float timeleft = TimeManager::Instance().GetTimeLeft();
 
 	if (timeleft <= 0.9f)

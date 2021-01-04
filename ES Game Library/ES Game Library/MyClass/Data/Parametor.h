@@ -78,4 +78,5 @@ private:
 
 	std::vector<cstring> _map_data;
 	std::vector<int> _warp_suffix;
+	Vector3 _respawn_position;
 };

@@ -2,7 +2,7 @@
 #include "../Data/MyAlgorithm.h"
 #include "../Managers/SceneManager/SceneManager.h"
 #include "../ParticleSystem/Particle.h"
-
+#include "../Item/ItemCounter/ItemCounter.h"
 #pragma region 基本機能
 PlayerBase::PlayerBase()
 {
@@ -35,7 +35,7 @@ int PlayerBase::Update()
 			_respawn_time = 0;
 			_death_flag = false;
 			_move_flag  = false;
-			_transform.position = _new_pos;
+			_transform.position = IMapData::GetRespawnPosition();
 		}
 	}
 	else
@@ -43,6 +43,8 @@ int PlayerBase::Update()
 		if (player_data->GetState(_tag) == PlayerEnum::Animation::DEATH)
 		{
 			_death_flag = true;
+			ItemCounter::SetItem(POINT_ITEM_TAG,_transform.position, PLAYER_POINT);
+			player_data->SetLostPoint(_tag,PLAYER_POINT);
 			DestroyArm();
 			return 0;
 		}
@@ -126,18 +128,21 @@ int PlayerBase::Update()
 
 void PlayerBase::Draw2D()
 {
+
 	if (_tag == "Player_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤーの所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
-//		SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("プレイヤーのHP:%d"), _i_player_data->GetHitPoint(_tag));
-//		SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("プレイヤーの移動速度:%f"), _i_player_data->GetSpeed(_tag));
+		//SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤーの所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
+		//SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("プレイヤーのHP:%d"), _i_player_data->GetHitPoint(_tag));
+		//SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("プレイヤーの移動速度:%f"), _i_player_data->GetSpeed(_tag));
+		//SpriteBatch.DrawString(_font, Vector2(0, 260), Color(1.f, 1.f, 1.f), _T("プレイヤーの発射硬直:%d"), _i_player_data->GetShotRigorFrame(_tag));
+
 	}
 
 	if (_arm_tag == "Arm_1")
 	{
-//		SpriteBatch.DrawString(_font, Vector2(0, 240), Color(1.f, 1.f, 1.f), _T("アームの飛ぶ速度:%f"), _i_arm_Data->GetGoSpeed(_arm_tag));
-//		SpriteBatch.DrawString(_font, Vector2(0, 260), Color(1.f, 1.f, 1.f), _T("アームの戻る速度:%f"), _i_arm_Data->GetReturnSpeed(_arm_tag));
-//		SpriteBatch.DrawString(_font, Vector2(0, 280), Color(1.f, 1.f, 1.f), _T("アームの最大距離:%d"), _i_arm_Data->GetLimitRange(_arm_tag));
+		//SpriteBatch.DrawString(_font, Vector2(0, 320), Color(1.f, 1.f, 1.f), _T("アームの進む速度:%f"), _i_arm_Data->GetGoSpeed(_arm_tag));
+		//SpriteBatch.DrawString(_font, Vector2(0, 380), Color(1.f, 1.f, 1.f), _T("アームの最大距離:%d"), _i_arm_Data->GetLimitRange(_arm_tag));
+		//SpriteBatch.DrawString(_font, Vector2(0, 440), Color(1.f, 1.f, 1.f), _T("アームの回転硬直:%d"), _i_arm_Data->GetTurnFrame(_arm_tag));
 	}
 
 	if (_arm != nullptr)
@@ -154,6 +159,7 @@ void PlayerBase::Draw3D()
 	}
 	else
 	{
+
 		_destroy_effect->Stop();
 		
 		ChangeAnimation();
@@ -162,6 +168,7 @@ void PlayerBase::Draw3D()
 		
 		_hit_box->SetModelPosition();
 		_hit_box->SetModelScale();
+
 //		_hit_box->Draw3D();
 		
 		if (_arm != nullptr)

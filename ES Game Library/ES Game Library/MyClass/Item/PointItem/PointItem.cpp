@@ -41,6 +41,10 @@ int PointItem::Update()
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
 
+		if (_i_player_data->GetState(name) != PlayerEnum::Animation::WAIT && _i_player_data->GetState(name) != PlayerEnum::Animation::MOVE)
+		{
+			continue;
+		}
 		if (_hit_box->IsHitObjectsSquare(name))
 		{
 			_i_player_data->SetRankingPoint(name, _i_player_data->GetRankingPoint(name) + _point);

@@ -81,11 +81,7 @@ bool StageManager::Initialize()
 				player_num++;
 				break;
 			case 'r':
-				tag = ROTATION_FLOOR_TAG + tag;
-				_stages.push_back(new RotatingFloor(tag));
-				_stages[_count]->SetPosition(Vector3(x, 0.1, -z));
-				_stages[_count]->Initialize();
-				_count++;
+				imap_data->SetRespawnPosition(Vector3(x,0,-z));
 				break;
 			case 'o':
 				tag = WARP_TAG + tag;
