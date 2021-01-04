@@ -241,14 +241,14 @@ bool ArmBase::TurnArm()
 	{
 		_wait_count++;
 		_transform.rotation.y = _new_angle;
-//		SetCollisionPosition(0.0f);
+		SetCollisionPosition(0.0f);
 
 		if (_wait_count > _i_arm_Data->GetTurnFrame(_tag))
 		{
 			_old_angle = _transform.rotation.y;
 			_wait_count = 0;
 			_turn_count = 0;
-			_turn_flag = false;
+			_turn_flag  = false;
 		}
 	}
 
