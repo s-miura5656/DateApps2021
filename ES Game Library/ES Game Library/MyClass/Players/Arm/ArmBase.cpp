@@ -48,7 +48,7 @@ int ArmBase::Update()
 		{
 			_wait_count++;
 
-			if (_wait_count >= 30)
+			if (_wait_count >= ARM_MAX_DISTANCE_RIGOR)
 			{
 				_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 				_i_arm_Data->SetState(_tag, _arm_state);
@@ -240,13 +240,10 @@ bool ArmBase::TurnArm()
 	if (_turn_flag)
 	{
 		_wait_count++;
-//		_turn_count += 0.1f;
-//		_turn_count = Clamp(_turn_count, 0, 1);
-//		_transform.rotation.y = MathHelper_Lerp(_old_angle, _new_angle, _turn_count);
 		_transform.rotation.y = _new_angle;
-		SetCollisionPosition(0.0f);
+//		SetCollisionPosition(0.0f);
 
-		if (_wait_count > 15)
+		if (_wait_count > _i_arm_Data->GetTurnFrame(_tag))
 		{
 			_old_angle = _transform.rotation.y;
 			_wait_count = 0;

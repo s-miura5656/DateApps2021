@@ -38,6 +38,9 @@ static const int DEATH_RIGOR	   = 30;
 //! リスポーン時のHPの定数
 static const int RESPAWN_HITPOINT = 1000;
 
+//! アームの最大距離到達時の硬直
+static const int ARM_MAX_DISTANCE_RIGOR = 30;
+
 namespace PlayerEnum {
 	enum Personality { NORMAL, ARM_RANGE, ARM_SPEED, PLAYER_MOVE_SPEED, PLAYER_DEFENCE, PERSONALITY_MAX};
 
