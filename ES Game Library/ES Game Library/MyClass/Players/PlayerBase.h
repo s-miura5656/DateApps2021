@@ -80,7 +80,7 @@ protected:
 	double _animation_count = 0;
 	int _shot_pending_count = 0;
 	int _respawn_time       = 0;
-
+	int _invincible_time    = 9999;
 	//! animation_limit
 	float _shot_frame = 60.0f;
 

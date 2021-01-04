@@ -40,6 +40,7 @@ int PlayerBase::Update()
 			_index_num.z = 6;
 			player_data->SetIndexNum(_tag, _index_num);
 			player_data->SetPosition(_tag, _transform.position);
+			_invincible_time = 0;
 		}
 	}
 	else
@@ -170,7 +171,11 @@ void PlayerBase::Draw3D()
 		
 		_hit_box->SetModelPosition();
 		_hit_box->SetModelScale();
-
+		if (_invincible_time <= 120)
+		{
+			_hit_box->SetHitBoxPosition(_hit_box->GetHitBoxPosition() + Vector3(0, 9999, 0));
+			_invincible_time++;
+		}
 //		_hit_box->Draw3D();
 		
 		if (_arm != nullptr)
