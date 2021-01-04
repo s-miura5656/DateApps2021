@@ -13,6 +13,8 @@ private:
 
 	static SPRITE  score_font;//各プレイヤーのスコア
 	int score;
+	int prev_rank_point;
+	int get_point;
 
 	Vector2 player_position;//各プレイヤーの位置
 	static FONT player_font;

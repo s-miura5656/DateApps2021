@@ -30,7 +30,8 @@ bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 	test = ResouceManager::Instance().LordSpriteFile(_T("HpSprite/ゲージベース2.png"));
 
 	score = 0;
-
+	prev_rank_point = 0;
+	get_point = 0;
 	return true;
 }
 
@@ -51,19 +52,26 @@ int PlayerUi::Update()
 	std::string& arm_tag = ARM_TAG + std::to_string(player_index + 1);
 	Vector3 _hit = IArmData::GetHitPosition(arm_tag);
 
-	//!　アームのポジションが初期状態でないとき（アームがプレイヤーにヒットした時に更新される）
-	if (_hit != Vector3_Zero)
+	if(rank_point > prev_rank_point)
 	{
-		move_pos.push_back(_hit);
-		IPrayerData::SetPosition(tag, Vector3_Zero);
+		get_point = rank_point - prev_rank_point;
+		move_pos.push_back(player_num);
 	}
 
+	//! 入手ポイントの移動（ベジェにしろ）
 	for (int i = 0; i < move_pos.size(); ++i)
 	{
-		move_pos[i].y -= 1.0f;
-		if (move_pos[i].y <= 0.0f)
+		if (move_pos[i].y != banner_position.y) {
+			move_pos[i].y -= 6.0f;
+		}
+		if (move_pos[i].x >= banner_position.x) {
+			move_pos[i].x -= 3.0f;
+		}
+		if (move_pos[i] == banner_position)
 			move_pos.erase(move_pos.begin() + i);
 	}
+
+	prev_rank_point = rank_point;
 
     return 0;
 }
@@ -71,15 +79,29 @@ int PlayerUi::Update()
 void PlayerUi::Draw2D()
 {
 	SpriteBatch.Draw(*banner_sprite, banner_position);
-
-	for (int i = 0; i < (move_pos.size() > 0) ? 1 : 0; i++)
+	
+	for (int i = 0; i < move_pos.size(); i++)
 	{
-		//SpriteBatch.Draw(*test, move_pos[i]);
+		if (get_point <= 10) {
+			SpriteBatch.Draw(*score_font, move_pos[i] + Vector3((10 * 0.25), -25, 0), RectWH((int)((get_point % 1000) % 100 / 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.25f);
+			SpriteBatch.Draw(*score_font, move_pos[i] + Vector3((74 * 0.25), -25, 0), RectWH((int)((get_point % 1000) % 100 % 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.25f);
+		}
+		else if (get_point <= 100) {
+			SpriteBatch.Draw(*score_font, move_pos[i] + Vector3(( 10 * 0.25), -25, 0), RectWH((int)((get_point % 1000) / 100)      * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.25f);
+			SpriteBatch.Draw(*score_font, move_pos[i] + Vector3(( 74 * 0.25), -25, 0), RectWH((int)((get_point % 1000) % 100 / 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.25f);
+			SpriteBatch.Draw(*score_font, move_pos[i] + Vector3((138 * 0.25), -25, 0), RectWH((int)((get_point % 1000) % 100 % 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.25f);
+		}
+		else if (get_point <= 1000) {
+			SpriteBatch.Draw(*score_font, move_pos[i] + Vector3(( 10 * 0.25), -25, 0), RectWH((int)(get_point / 1000)              * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.25f);
+			SpriteBatch.Draw(*score_font, move_pos[i] + Vector3(( 74 * 0.25), -25, 0), RectWH((int)((get_point % 1000) / 100)      * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.25f);
+			SpriteBatch.Draw(*score_font, move_pos[i] + Vector3((138 * 0.25), -25, 0), RectWH((int)((get_point % 1000) % 100 / 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.25f);
+			SpriteBatch.Draw(*score_font, move_pos[i] + Vector3((204 * 0.25), -25, 0), RectWH((int)((get_point % 1000) % 100 % 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.25f);
+		}
 	}
 
-	//スコアアニメーション
-	SpriteBatch.Draw(*score_font, banner_position + Vector3((10 * 0.3) + 90, 10, -1), RectWH((int)(score / 1000) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
-	SpriteBatch.Draw(*score_font, banner_position + Vector3((74 * 0.3) + 90, 10, -1), RectWH((int)((score % 1000) / 100) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
+	//バナースコアアニメーション
+	SpriteBatch.Draw(*score_font, banner_position + Vector3((10 * 0.3) + 90, 10, -1), RectWH((int)(score / 1000)               * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
+	SpriteBatch.Draw(*score_font, banner_position + Vector3((74 * 0.3) + 90, 10, -1), RectWH((int)((score % 1000) / 100)       * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
 	SpriteBatch.Draw(*score_font, banner_position + Vector3((138 * 0.3) + 90, 10, -1), RectWH((int)((score % 1000) % 100 / 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
 	SpriteBatch.Draw(*score_font, banner_position + Vector3((204 * 0.3) + 90, 10, -1), RectWH((int)((score % 1000) % 100 % 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
 
