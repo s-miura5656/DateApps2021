@@ -62,14 +62,14 @@ bool StageManager::Initialize()
 			switch (_mapdate[z][x]) {
 			case 'b':
 				tag = DESTRUCTION_BLOCK_TAG + tag;
-				_stages.push_back(new Block(tag, NULL_ITEM));
+				_stages.push_back(new Block(tag, NULL_ITEM_TAG));
 				_stages[_count]->SetPosition(Vector3(x, 0, -z));
 				_stages[_count]->Initialize();
 				_count++;
 				break;
 			case 's':
 				tag = DESTRUCTION_BLOCK_TAG + tag;
-				_stages.push_back(new Block(tag, POWOR_ITEM_TAG));
+				_stages.push_back(new Block(tag, POINT_ITEM_TAG));
 				_stages[_count]->SetPosition(Vector3(x, 0, -z));
 				_stages[_count]->Initialize();
 				_count++;

@@ -8,9 +8,9 @@ public:
 	ItemCounter() {};
 	~ItemCounter() {};
 
-	static void SetItem(std::string tag, Vector3 pos)
+	static void SetItem(std::string tag, Vector3 pos,int point)
 	{
-		ItemManager::AddItemBase(tag, pos);
+		ItemManager::AddItemBase(tag, pos,point);
 	}
 private:
 };

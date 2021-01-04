@@ -170,6 +170,7 @@
     <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp" />
     <ClCompile Include="MyClass\Item\ItemBase.cpp" />
     <ClCompile Include="MyClass\Item\ItemFactory\ItemFactory.cpp" />
+    <ClCompile Include="MyClass\Item\PointItem\PointItem.cpp" />
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp" />
     <ClCompile Include="MyClass\Managers\AudioManager\AudioManager.cpp" />
     <ClCompile Include="MyClass\Managers\InputManager\InputManager.cpp" />
@@ -268,6 +269,7 @@
     <ClInclude Include="MyClass\Item\Itembase.hpp" />
     <ClInclude Include="MyClass\Item\ItemCounter\ItemCounter.h" />
     <ClInclude Include="MyClass\Item\ItemFactory\ItemFactory.h" />
+    <ClInclude Include="MyClass\Item\PointItem\PointItem.h" />
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h" />
     <ClInclude Include="MyClass\Managers\AudioManager\AudioManager.h" />
     <ClInclude Include="MyClass\Managers\InputManager\InputManager.h" />

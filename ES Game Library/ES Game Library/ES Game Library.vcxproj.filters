@@ -235,6 +235,9 @@
     <Filter Include="Myclass\Players\Player\Type">
       <UniqueIdentifier>{19e43a76-c2c4-416f-9433-e6520aa5cffc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Item\PointItem">
+      <UniqueIdentifier>{1f2bcd4a-7f29-4a3a-b5d3-1aae45dd7ba4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -495,6 +498,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Players\TypeSetting\TypeSetting.cpp">
       <Filter>Myclass\Players\Player\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Item\PointItem\PointItem.cpp">
+      <Filter>Myclass\Item\PointItem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -795,6 +801,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Players\TypeSetting\TypeSetting.h">
       <Filter>Myclass\Players\Player\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Item\PointItem\PointItem.h">
+      <Filter>Myclass\Item\PointItem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
