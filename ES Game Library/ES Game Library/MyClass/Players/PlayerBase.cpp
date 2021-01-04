@@ -36,6 +36,10 @@ int PlayerBase::Update()
 			_death_flag = false;
 			_move_flag  = false;
 			_transform.position = IMapData::GetRespawnPosition();
+			_index_num.x = 7;
+			_index_num.z = 6;
+			player_data->SetIndexNum(_tag, _index_num);
+			player_data->SetPosition(_tag, _transform.position);
 		}
 	}
 	else
