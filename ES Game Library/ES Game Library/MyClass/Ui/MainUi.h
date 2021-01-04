@@ -1,9 +1,8 @@
 ﻿#pragma once
 #include "../../ESGLib.h"
-#include"../Ui/BaseUi.h"
+#include "../Ui/BaseUi.h"
 #include "../Data/WordsTable.h"
-#include"../Data/IData.h"
-#include"../Ui/PlayerUi.h"
+#include "../Ui/PlayerUI/PlayerUi.h"
 
 class MainUi : public BaseUi
 {
@@ -14,12 +13,10 @@ public:
 	~MainUi();
 
 	bool Initialize() override;
-	int Update() override;
-	void Draw2D() override;
+	int Update()	  override;
+	void Draw2D()	  override;
 	
-	std::vector<PlayerUi> player_ui;
-	std::unique_ptr<IPrayerData> _i_player_data;
-	std::unique_ptr<IArmData> _i_arm_data;
+	std::vector <std::unique_ptr<PlayerUi>> player_ui;
 
 	FONT player_date;//各プレイヤーのステータス表記
 

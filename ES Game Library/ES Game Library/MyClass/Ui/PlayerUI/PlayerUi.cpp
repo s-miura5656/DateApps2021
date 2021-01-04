@@ -1,6 +1,5 @@
 #include "PlayerUi.h"
-#include "../Managers/ResouceManager/ResouceManager.h"
-#include "../Data/IData.h"
+#include "../../Managers/ResouceManager/ResouceManager.h"
 
 SPRITE PlayerUi::score_font = nullptr;
 FONT  PlayerUi::player_font = nullptr;
@@ -8,26 +7,33 @@ SPRITE PlayerUi::test       = nullptr;
 
 PlayerUi::PlayerUi(const int player_no) : player_index(player_no)
 {
-	tag = PLAYER_TAG + std::to_string(player_index + 1);
+	tag		 = PLAYER_TAG + std::to_string(player_index + 1);
+	_arm_tag = ARM_TAG + std::to_string(player_index + 1);
+
+	_i_player_data = std::make_unique<IPrayerData>();
+	_i_arm_data	   = std::make_unique<IArmData>();
 }
 
 PlayerUi::~PlayerUi()
 {
+	_i_player_data.reset();
+	_i_arm_data.reset();
 }
 
 bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 {
-	banner_sprite   = ResouceManager::Instance().LordSpriteFile(banner_name);
+	banner_sprite = ResouceManager::Instance().LordSpriteFile(banner_name);
+	
 	banner_position = banner_pos;
 
 	if (score_font == nullptr)
 		score_font = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber.png"));
 
 	if(player_font == nullptr)
-		player_font = GraphicsDevice.CreateSpriteFont(_T("チェックアンドU-Foフォント"), 30);
+		player_font = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 30);
 
 	if (test == nullptr)
-	test = ResouceManager::Instance().LordSpriteFile(_T("HpSprite/ゲージベース2.png"));
+		test = ResouceManager::Instance().LordSpriteFile(_T("HpSprite/ゲージベース2.png"));
 
 	score = 0;
 
@@ -36,31 +42,30 @@ bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 
 int PlayerUi::Update()
 {
-	auto rank_point = IPrayerData::GetRankingPoint(tag);
-	if (score < rank_point)
-	{
+	auto rank_point = _i_player_data->GetRankingPoint(tag);
+	
+	if (score < rank_point) {
 		score++;
 	}
 
-	auto player_num = GraphicsDevice.WorldToScreen(IPrayerData::GetPosition(tag));
+	auto player_num = GraphicsDevice.WorldToScreen(_i_player_data->GetPosition(tag));
 	player_num.z = SpriteBatch_TopMost;
 	player_position.x = player_num.x;
 	player_position.y = player_num.y;
 
-
-	std::string& arm_tag = ARM_TAG + std::to_string(player_index + 1);
-	Vector3 _hit = IArmData::GetHitPosition(arm_tag);
+	Vector3 _hit = _i_arm_data->GetHitPosition(_arm_tag);
 
 	//!　アームのポジションが初期状態でないとき（アームがプレイヤーにヒットした時に更新される）
 	if (_hit != Vector3_Zero)
 	{
 		move_pos.push_back(_hit);
-		IPrayerData::SetPosition(tag, Vector3_Zero);
+//		_i_player_data->SetPosition(tag, Vector3_Zero);
 	}
 
 	for (int i = 0; i < move_pos.size(); ++i)
 	{
 		move_pos[i].y -= 1.0f;
+
 		if (move_pos[i].y <= 0.0f)
 			move_pos.erase(move_pos.begin() + i);
 	}
