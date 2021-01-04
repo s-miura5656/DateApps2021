@@ -28,6 +28,8 @@ public:
 	inline float GetTimeLeft()  const { return limitTime - time; }
 	int GetTimeMinutes();
 	int GetTimeSeconds();
+	int GetTimeOnesPlace();
+	int GetTimeTensPlace();
 	int Countdown();
 	float GetStartTime();
 	bool StartFlag();

@@ -20,6 +20,7 @@ void TimeManager::Initialize()
 	countTime  = 3;
 
 	startFlag = false;
+
 }
  
 
@@ -71,6 +72,24 @@ int TimeManager::GetTimeSeconds()
 	int ret = 0;
 
 	ret = (int)( GetTimeLeft() ) % 60;
+
+	return ret;
+}
+
+int TimeManager::GetTimeTensPlace()
+{
+	int ret = 0;
+
+	ret = (int)(GetTimeLeft()) % 60 / 10;
+
+	return ret;
+}
+
+int TimeManager::GetTimeOnesPlace()
+{
+	int ret = 0;
+
+	ret = (int)(GetTimeLeft()) % 60 % 10;
 
 	return ret;
 }

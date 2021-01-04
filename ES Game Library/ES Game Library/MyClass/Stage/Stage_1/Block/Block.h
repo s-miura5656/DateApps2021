@@ -30,5 +30,5 @@ private:
 	std::unique_ptr<ParticleSystem> _effect;
 	std::string                     _item_name;
 	std::unique_ptr<IArmData>		_i_arm_data;
-	const int						_arm_distance = 2.5f;
+	const int						_arm_distance = 2.f;
 };

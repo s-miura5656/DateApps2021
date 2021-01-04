@@ -202,6 +202,7 @@
     <ClCompile Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Warp\Warp.cpp" />
     <ClCompile Include="MyClass\Ui\MainUi.cpp" />
+    <ClCompile Include="MyClass\Ui\PlayerUi.cpp" />
     <ClCompile Include="MyClass\Ui\ResultUi.cpp" />
     <ClCompile Include="MyClass\Ui\TitleUi.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -304,6 +305,7 @@
     <ClInclude Include="MyClass\Stage\Stage_1\Warp\Warp.h" />
     <ClInclude Include="MyClass\Ui\BaseUi.h" />
     <ClInclude Include="MyClass\Ui\MainUi.h" />
+    <ClInclude Include="MyClass\Ui\PlayerUi.h" />
     <ClInclude Include="MyClass\Ui\ResultUi.h" />
     <ClInclude Include="MyClass\Ui\TitleUi.h" />
     <ClInclude Include="StdAfx.h" />
