@@ -2,6 +2,7 @@
 #include "../../Data/MyAlgorithm.h"
 #include "../../Managers/SceneManager/SceneManager.h"
 #include "../../ParticleSystem/Particle.h"
+#include "../../Item/ItemCounter/ItemCounter.h"
 
 ArmBase::ArmBase()
 {
@@ -434,9 +435,12 @@ int ArmBase::PointCalculation(std::string other_player_tag)
 	}
 	else
 	{
-		point = LOST_PLAYER_POINT;
-		player_data->SetRankingPoint(other_player_tag, player_data->GetRankingPoint(other_player_tag) - LOST_PLAYER_POINT);
+		point = LOST_PLAYER_POINT - 100 * player_data->GetRankNum(other_player_tag);
+		player_data->SetRankingPoint(other_player_tag, player_data->GetRankingPoint(other_player_tag) - point);
 	}
-
+	if (player_data->GetRankNum(other_player_tag) + 1 != PLAYER_COUNT_MAX && point > 0)
+	{
+		ItemCounter::SetItem(POINT_ITEM_TAG, player_data->GetPosition(other_player_tag), point);
+	}
 	return player_data->GetRankingPoint(_player_tag) + point;
 }

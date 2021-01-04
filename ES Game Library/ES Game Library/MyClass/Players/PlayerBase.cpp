@@ -2,7 +2,7 @@
 #include "../Data/MyAlgorithm.h"
 #include "../Managers/SceneManager/SceneManager.h"
 #include "../ParticleSystem/Particle.h"
-#include "../Item/ItemCounter/ItemCounter.h"
+
 #pragma region 基本機能
 PlayerBase::PlayerBase()
 {
@@ -42,10 +42,8 @@ int PlayerBase::Update()
 	{
 		if (player_data->GetState(_tag) == PlayerEnum::Animation::DEATH)
 		{
-			_death_flag = true;
-			ItemCounter::SetItem(POINT_ITEM_TAG,_transform.position, PLAYER_POINT);
-			player_data->SetLostPoint(_tag,PLAYER_POINT);
 			DestroyArm();
+			_death_flag = true;
 			return 0;
 		}
 
@@ -131,7 +129,7 @@ void PlayerBase::Draw2D()
 
 	if (_tag == "Player_1")
 	{
-		//SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤーの所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤーの所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
 		//SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("プレイヤーのHP:%d"), _i_player_data->GetHitPoint(_tag));
 		//SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("プレイヤーの移動速度:%f"), _i_player_data->GetSpeed(_tag));
 		//SpriteBatch.DrawString(_font, Vector2(0, 260), Color(1.f, 1.f, 1.f), _T("プレイヤーの発射硬直:%d"), _i_player_data->GetShotRigorFrame(_tag));
