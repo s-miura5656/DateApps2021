@@ -15,6 +15,7 @@ struct PlayerParam {
 	int rank_num		 = 0;
 	int shot_rigor_frame = 30;
 	int lost_point		 = 0;
+	bool invincible_mode = false;
 };
 
 struct ArmParam {

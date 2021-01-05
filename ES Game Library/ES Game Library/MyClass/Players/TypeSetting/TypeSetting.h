@@ -29,6 +29,7 @@ private:
 	CharactorParam ArmSpeedType();
 	CharactorParam PlayerMoveSpeedType();
 	CharactorParam PlayerDefenceType();
+	CharactorParam ParametorMaxType();
 
 	std::map<std::string, int> _player_type;
 	CharactorParam _charactor_params[PlayerEnum::Personality::PERSONALITY_MAX];

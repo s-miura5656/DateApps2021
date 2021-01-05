@@ -19,6 +19,8 @@ int PlayerBase::Update()
 	auto pad = InputManager::Instance().GetGamePad(_tag);
 	auto&& player_data = _i_player_data;
 
+	ParameterLevel();
+
 	pad->Refresh();
 
 	DebugControll();
@@ -39,8 +41,7 @@ int PlayerBase::Update()
 			_index_num.x = 7;
 			_index_num.z = 6;
 			player_data->SetIndexNum(_tag, _index_num);
-			player_data->SetPosition(_tag, _transform.position);
-			_invincible_time = 0;
+			player_data->SetPosition(_tag, _transform.position); 
 		}
 	}
 	else
@@ -48,9 +49,15 @@ int PlayerBase::Update()
 		if (player_data->GetState(_tag) == PlayerEnum::Animation::DEATH)
 		{
 			DestroyArm();
-			_death_flag = true;
+			_death_flag      = true;
+			player_data->SetInvincibleMode(_tag, true);
 			return 0;
 		}
+		else
+		{
+			InvincibleMode();
+		}
+		
 
 		//! ダメージ状態の判定
 		if (player_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
@@ -127,7 +134,6 @@ int PlayerBase::Update()
 	}
 
 	SetCollisionPosition();
-
 	return 0;
 }
 
@@ -135,15 +141,25 @@ void PlayerBase::Draw2D()
 {
 	if (_tag == "Player_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("プレイヤー1の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("PL1の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
+		SpriteBatch.DrawString(_font, Vector2(0, 280), Color(1.f, 1.f, 1.f), _T("PL1のレベル:%d"), _level_up_count);
 		//SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("プレイヤーのHP:%d"), _i_player_data->GetHitPoint(_tag));
 		//SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("プレイヤーの移動速度:%f"), _i_player_data->GetSpeed(_tag));
 		//SpriteBatch.DrawString(_font, Vector2(0, 260), Color(1.f, 1.f, 1.f), _T("プレイヤーの発射硬直:%d"), _i_player_data->GetShotRigorFrame(_tag));
 
 	}
-	if (_tag == "Player_2")SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("プレイヤー2の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
-	if (_tag == "Player_3")SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("プレイヤー3の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
-	if (_tag == "Player_4")SpriteBatch.DrawString(_font, Vector2(0, 240), Color(1.f, 1.f, 1.f), _T("プレイヤー4の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
+	if (_tag == "Player_2") {
+		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 1.f, 1.f), _T("PL2のレベル:%d"), _level_up_count);
+		SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("PL2の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
+	}
+
+	if (_tag == "Player_3") {
+		SpriteBatch.DrawString(_font, Vector2(0, 320), Color(1.f, 1.f, 1.f), _T("PL3のレベル:%d"), _level_up_count);
+		SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("PL3の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
+	}
+if (_tag == "Player_4") { 
+	SpriteBatch.DrawString(_font, Vector2(0, 340), Color(1.f, 1.f, 1.f), _T("PL4のレベル:%d"), _level_up_count);
+	SpriteBatch.DrawString(_font, Vector2(0, 240), Color(1.f, 1.f, 1.f), _T("PL4の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag)); }
 	if (_arm_tag == "Arm_1")
 	{
 		//SpriteBatch.DrawString(_font, Vector2(0, 320), Color(1.f, 1.f, 1.f), _T("アームの進む速度:%f"), _i_arm_Data->GetGoSpeed(_arm_tag));
@@ -174,11 +190,7 @@ void PlayerBase::Draw3D()
 		
 		_hit_box->SetModelPosition();
 		_hit_box->SetModelScale();
-		_invincible_time++;
-		if (_invincible_time <= 120)
-		{
-			_hit_box->SetHitBoxPosition(_hit_box->GetHitBoxPosition() + Vector3(0, 9999, 0));
-		}
+		
 //		_hit_box->Draw3D();
 		
 		if (_arm != nullptr)
@@ -445,4 +457,74 @@ void PlayerBase::DebugControll()
 
 	_i_arm_Data->SetLimitRange(_arm_tag, range);
 }
-#pragma endregion
+void PlayerBase::ParameterLevel()
+{
+	int old_count = _level_up_count;
+	_new_point = _i_player_data->GetRankingPoint(_tag);
+	if (_new_point != _old_point)
+	{
+		if (_new_point < 500)
+		{
+			_level_up_count = 1;
+		}
+		else if (_new_point >= 500 && _new_point < 1000)
+		{
+			_level_up_count = 2;
+		}
+		else if (_new_point >= 1000 && _new_point < 1500)
+		{
+			_level_up_count = 3;
+		}
+		else if (_new_point >= 1500)
+		{
+			_level_up_count = 4;
+		}
+		_old_point = _new_point;
+	}
+
+	if (old_count == _new_point)
+		return;
+
+	switch (_level_up_count)
+	{
+	case 1:
+		_i_player_data->SetShotRigorFrame(_tag, 30);
+		_i_player_data->SetSpeed(_tag, 0.05f);
+		_i_arm_Data->SetLimitRange(_arm_tag, 10);
+		_i_arm_Data->SetGoSpeed(_arm_tag, 0.1f);
+		break;
+	case 2:
+		_i_player_data->SetShotRigorFrame(_tag, 25);
+		_i_player_data->SetSpeed(_tag, 0.06f);
+		_i_arm_Data->SetLimitRange(_arm_tag, 12);
+		_i_arm_Data->SetGoSpeed(_arm_tag, 0.13f);
+		break;
+	case 3:
+		_i_player_data->SetShotRigorFrame(_tag, 20);
+		_i_player_data->SetSpeed(_tag, 0.07f);
+		_i_arm_Data->SetLimitRange(_arm_tag, 14);
+		_i_arm_Data->SetGoSpeed(_arm_tag, 0.16f);
+		break;
+	case 4:
+		_i_player_data->SetShotRigorFrame(_tag, 15);
+		_i_player_data->SetSpeed(_tag, 0.08f);
+		_i_arm_Data->SetLimitRange(_arm_tag, 16);
+		_i_arm_Data->SetGoSpeed(_arm_tag, 0.2f);
+		break;
+	}
+}
+
+void PlayerBase::InvincibleMode()
+{
+	if (!_i_player_data->GetInvincibleMode(_tag))
+		return;
+
+	_invincible_count++;
+
+	if (_invincible_count >= INVINCIBLE_FRAME)
+	{
+		_invincible_count = 0;
+		_i_player_data->SetInvincibleMode(_tag, false);
+	}
+	
+}

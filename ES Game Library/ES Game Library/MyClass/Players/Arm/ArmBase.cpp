@@ -98,8 +98,8 @@ void ArmBase::Draw2D()
 
 	if (_tag == "Arm_1")
 	{
-		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 1.f, 1.f), _T("X:%f"), pad->Stick(STICK_INFO::LEFT_STICK).x);
-		SpriteBatch.DrawString(_font, Vector2(0, 320), Color(1.f, 1.f, 1.f), _T("Y:%f"), pad->Stick(STICK_INFO::LEFT_STICK).y);
+		//SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 1.f, 1.f), _T("X:%f"), pad->Stick(STICK_INFO::LEFT_STICK).x);
+		//SpriteBatch.DrawString(_font, Vector2(0, 320), Color(1.f, 1.f, 1.f), _T("Y:%f"), pad->Stick(STICK_INFO::LEFT_STICK).y);
 	}
 //	auto scale = _hit_box->GetModelTag()->GetScale();
 //	SpriteBatch.DrawString(_font, Vector2(0, 380), Color(255.f, 0.f, 0.f), _T("Scale:%0.1f, %0.1f, %0.1f"), scale.x, scale.y, scale.z);
@@ -306,6 +306,9 @@ void ArmBase::HitOtherObject()
 			auto&& i_player_data = _i_player_data.get();
 			auto&& i_arm_data    = _i_arm_Data.get();
 			
+			if (i_player_data->GetInvincibleMode(tag))
+				return;
+
 			int damege = i_player_data->GetAttackPowor(_player_tag);
 			int hitpoint = i_player_data->GetHitPoint(tag);
 			
@@ -428,14 +431,29 @@ int ArmBase::PointCalculation(std::string other_player_tag)
 
 	auto player_data = _i_player_data.get();
 
-	if (player_data->GetRankingPoint(other_player_tag) < LOST_PLAYER_POINT)
+	switch (player_data->GetRankNum(other_player_tag))
+	{
+	case 0:
+		point = 600;
+		break;
+	case 1:
+		point = 400;
+		break;
+	case 2:
+		point = 100;
+		break;
+	case 3:
+		point = 0;
+		break;
+	}
+	if (player_data->GetRankingPoint(other_player_tag) < point)
 	{
 		point = player_data->GetRankingPoint(other_player_tag);
 		player_data->SetRankingPoint(other_player_tag, 0);
 	}
 	else
 	{
-		point = LOST_PLAYER_POINT - 100 * player_data->GetRankNum(other_player_tag);
+		//point = LOST_PLAYER_POINT - 100 * player_data->GetRankNum(other_player_tag);
 		player_data->SetRankingPoint(other_player_tag, player_data->GetRankingPoint(other_player_tag) - point);
 	}
 	if (player_data->GetRankNum(other_player_tag) + 1 != PLAYER_COUNT_MAX && point > 0)

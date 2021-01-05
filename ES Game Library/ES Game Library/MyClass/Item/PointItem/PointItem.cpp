@@ -27,7 +27,7 @@ bool PointItem::Initialize()
 	material.Ambient = Color(0.0f, 0.0f, 0.75f);
 	if (_point >= 300)
 	{
-		material.Ambient = Color(0.0f, 0.0f, 0.0f);
+		material.Ambient = Color(1.0f, 1.0f, 1.0f);
 	}
 
 	BoxShape();

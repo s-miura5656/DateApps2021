@@ -33,7 +33,7 @@ Player::~Player()
 bool Player::Initialize()
 {
 	//! file
-	_font         = ResouceManager::Instance().LordFontFile(_T("SketchFlow Print"), 20);
+	_font         = ResouceManager::Instance().LordFontFile(_T("UD ÉfÉWÉ^Éã ã≥â»èëëÃ NK-B"), 30);
 	_model        = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 	_shader		  = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
 	auto&& effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damage_effect02.efk"));

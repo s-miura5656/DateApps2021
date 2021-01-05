@@ -19,6 +19,7 @@ void TypeSetting::Initialize()
 	_charactor_params[PlayerEnum::Personality::ARM_SPEED]		  = ArmSpeedType();
 	_charactor_params[PlayerEnum::Personality::PLAYER_MOVE_SPEED] = PlayerMoveSpeedType();
 	_charactor_params[PlayerEnum::Personality::PLAYER_DEFENCE]	  = PlayerDefenceType();
+	_charactor_params[PlayerEnum::Personality::PLAYER_KING]		  = ParametorMaxType();
 }
 
 CharactorParam TypeSetting::ArmRangeType()
@@ -72,3 +73,24 @@ CharactorParam TypeSetting::PlayerDefenceType()
 
 	return type_param;
 }
+
+CharactorParam TypeSetting::ParametorMaxType()
+{
+	CharactorParam type_param;
+
+	type_param.personality = PlayerEnum::Personality::PLAYER_KING;
+
+	type_param.arm_param.limit_range = 15;
+
+	type_param.arm_param.turn_frame = 15;
+
+	type_param.arm_param.go_speed = 0.2f;
+
+	type_param.player_param.speed = 0.08f;
+
+	type_param.player_param.shot_rigor_frame = 15;
+
+	return type_param;
+}
+
+

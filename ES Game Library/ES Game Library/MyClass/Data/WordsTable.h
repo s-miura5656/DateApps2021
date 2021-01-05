@@ -26,8 +26,8 @@ static const std::string WARP_TAG				  = "Warp_";
 
 //! ポイントテーブル
 static const int BLOCK_POINT	   = 100;
-static const int PLAYER_POINT	   = 300;
-static const int LOST_PLAYER_POINT = 300;
+static const int PLAYER_POINT	   = 600;
+static const int LOST_PLAYER_POINT = 600;
 
 //! リスポーン時間
 static const int RESPAWN_TIME	   = 180;
@@ -41,8 +41,11 @@ static const int RESPAWN_HITPOINT = 1000;
 //! アームの最大距離到達時の硬直
 static const int ARM_MAX_DISTANCE_RIGOR = 30;
 
+//!無敵時間の秒数
+static const int INVINCIBLE_FRAME = 120;
+
 namespace PlayerEnum {
-	enum Personality { NORMAL, ARM_RANGE, ARM_SPEED, PLAYER_MOVE_SPEED, PLAYER_DEFENCE, PERSONALITY_MAX};
+	enum Personality { NORMAL, ARM_RANGE, ARM_SPEED, PLAYER_MOVE_SPEED, PLAYER_DEFENCE, PLAYER_KING,PERSONALITY_MAX};
 
 	//プレイヤーのアニメーション
 	enum Animation { WAIT, MOVE, SHOT, ATTACK, DAMAGE, DEATH, ANIMATION_ALL_TYPE };

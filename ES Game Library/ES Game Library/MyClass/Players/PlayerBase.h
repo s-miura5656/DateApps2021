@@ -31,9 +31,8 @@ protected:
 	void InputAngle(BaseInput* pad);
 	void SetCollisionPosition();
 	void DebugControll();
-	void ShieldOn();
-	void ShieldOff();
-
+	void ParameterLevel();
+	void InvincibleMode();
 	//! file
 	ANIMATIONMODEL		_model;
 	FONT				_font;
@@ -70,17 +69,20 @@ protected:
 	int _animation_index;
 
 	//! flag 
-	bool _move_flag  = false;
-	bool _death_flag = false;
-	bool _turn_flag  = false;
-
+	bool _move_flag       = false;
+	bool _death_flag      = false;
+	bool _turn_flag       = false;
 	//! count
 	float _lerp_count       = 0.f;
 	int _damage_hit_count   = 0;
 	double _animation_count = 0;
 	int _shot_pending_count = 0;
 	int _respawn_time       = 0;
-	int _invincible_time    = 9999;
+	int _invincible_count   = 0;
+
+	int _new_point          = 0;
+	int _old_point          = 0;
+	int _level_up_count     = 1;
 	//! animation_limit
 	float _shot_frame = 60.0f;
 

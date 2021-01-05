@@ -64,7 +64,12 @@ public:
 
 	//! “|‚³‚ê‚½‚Æ‚«‚É¸‚¤ƒ|ƒCƒ“ƒg
 	void SetLostPoint(std::string& player_tag, int lost_point)				{ PlayerParametor::Instance()._player_params[player_tag].lost_point = lost_point; }
-	int GetLostPoint(std::string& player_tag)						  const { PlayerParametor::Instance()._player_params[player_tag].lost_point; }
+	int GetLostPoint(std::string& player_tag)						  const { return PlayerParametor::Instance()._player_params[player_tag].lost_point; }
+
+
+	//! –³“Gó‘Ô‚© 
+	void SetInvincibleMode(std::string& player_tag, bool invinciblemode)    { PlayerParametor::Instance()._player_params[player_tag].invincible_mode = invinciblemode; }
+	bool GetInvincibleMode(std::string& player_tag)				      const { return PlayerParametor::Instance()._player_params[player_tag].invincible_mode; }
 
 	std::map<std::string, PlayerParam> GetAllParametor()			  const { return PlayerParametor::Instance()._player_params; }
 };

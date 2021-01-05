@@ -89,7 +89,7 @@ int Block::Update()
 
 			std::unique_ptr<IPrayerData> player_data = std::make_unique<IPrayerData>();
 			std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
-			player_data->SetRankingPoint(player_tag, player_data->GetRankingPoint(player_tag) + BLOCK_POINT);
+			//player_data->SetRankingPoint(player_tag, player_data->GetRankingPoint(player_tag) + BLOCK_POINT);
 
 			_effect->SetPosition(_position + Vector3_Up * 0.5f);
 			_effect->PlayOneShot();
