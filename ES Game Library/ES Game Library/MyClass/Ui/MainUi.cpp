@@ -81,7 +81,7 @@ bool MainUi::Initialize()
 
 int MainUi::Update()
 {
-	for (auto& pui : player_ui)
+	for (auto&& pui : player_ui)
 		pui.Update();
 
 	return 0;
