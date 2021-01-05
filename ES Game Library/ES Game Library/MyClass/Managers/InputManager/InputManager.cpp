@@ -45,11 +45,10 @@ void InputManager::CreateDInputGamePad(std::string tag)
 		_dpad_count++;
 		auto name_tag = tag;
 		name_tag = name_tag + std::to_string(_dpad_count + _xpad_count);
-		_game_pads.emplace(name_tag, std::make_unique<DirectInput>(_dpad_count));
+		_game_pads.emplace(name_tag, std::make_unique<DirectInput>(_dpad_count, XInputActive(pad_num)));
 	}
 
 	InputDevice.CreateGamePad(_dpad_count);
-
 }
 
 BaseInput* InputManager::GetGamePad(std::string tag)
@@ -236,27 +235,56 @@ XINPUT_STATE XInput::GetXState()
 #pragma endregion
 
 #pragma region DirectInput
-DirectInput::DirectInput(int pad_number)
+DirectInput::DirectInput(int pad_number, bool x_input)
 {
 	_pad_number = pad_number - 1;
 
-	_button_info[0]  = GamePad_Button2;
-	_button_info[1]  = GamePad_Button3;
-	_button_info[2]  = GamePad_Button4;
-	_button_info[3]  = GamePad_Button1;
-	_button_info[4]  = GamePad_Button10;
-	_button_info[5]  = GamePad_Button9;
-	_button_info[6]  = GamePad_Button5;
-	_button_info[7]  = GamePad_Button6;
-	_button_info[8]  = GamePad_Button11;
-	_button_info[9]  = GamePad_Button12;
-	_button_info[10] = GamePad_POV1;
-	_button_info[11] = GamePad_POV2;
-	_button_info[12] = GamePad_POV3;
-	_button_info[13] = GamePad_POV4;
+	if (x_input)
+	{
+		_x_input = x_input;
 
-	_trigger_info[0] = GamePad_Button7;
-	_trigger_info[1] = GamePad_Button8;
+		_button_info[0]  = GamePad_Button1;
+		_button_info[1]  = GamePad_Button2;
+		_button_info[2]  = GamePad_Button3;
+		_button_info[3]  = GamePad_Button4;
+		_button_info[4]  = GamePad_Button8;
+		_button_info[5]  = GamePad_Button7;
+		_button_info[6]  = GamePad_Button5;
+		_button_info[7]  = GamePad_Button6;
+		_button_info[8]  = GamePad_Button9;
+		_button_info[9]  = GamePad_Button10;
+		_button_info[10] = GamePad_POV1;
+		_button_info[11] = GamePad_POV2;
+		_button_info[12] = GamePad_POV3;
+		_button_info[13] = GamePad_POV4;
+
+		_trigger_info[0] = GamePad_Button7;
+		_trigger_info[1] = GamePad_Button8;
+	}
+	else
+	{
+		_x_input = x_input;
+
+		_button_info[0]  = GamePad_Button2;
+		_button_info[1]  = GamePad_Button3;
+		_button_info[2]  = GamePad_Button4;
+		_button_info[3]  = GamePad_Button1;
+		_button_info[4]  = GamePad_Button10;
+		_button_info[5]  = GamePad_Button9;
+		_button_info[6]  = GamePad_Button5;
+		_button_info[7]  = GamePad_Button6;
+		_button_info[8]  = GamePad_Button11;
+		_button_info[9]  = GamePad_Button12;
+		_button_info[10] = GamePad_POV1;
+		_button_info[11] = GamePad_POV2;
+		_button_info[12] = GamePad_POV3;
+		_button_info[13] = GamePad_POV4;
+
+		_trigger_info[0] = GamePad_Button7;
+		_trigger_info[1] = GamePad_Button8;
+	}
+
+	
 }
 
 DirectInput::~DirectInput()
@@ -287,7 +315,21 @@ bool DirectInput::ButtonUp(int key_info)
 
 float DirectInput::Trigger(int key_info)
 {
-	return _pad_state.Buttons[_trigger_info[key_info] - GamePad_Button1];
+	if (_x_input)
+	{
+		if (key_info == TRIGGER_INFO::LEFT_TRIGGER)
+		{
+			return (float)_pad_state.Y2;
+		}
+		else if (key_info == TRIGGER_INFO::RIGHT_TRIGGER)
+		{
+			return (float)_pad_state.X2;
+		}
+	}
+	else
+	{
+		return _pad_state.Buttons[_trigger_info[key_info] - GamePad_Button1];
+	}
 }
 
 Vector2 DirectInput::Stick(int key_info)

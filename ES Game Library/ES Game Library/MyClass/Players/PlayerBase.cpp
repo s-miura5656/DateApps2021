@@ -104,6 +104,8 @@ int PlayerBase::Update()
 					player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 				}
 
+				auto a = pad->Trigger(TRIGGER_INFO::LEFT_TRIGGER);
+
 				//! ロケットパンチ発射切り替え
 				if (pad->Button(BUTTON_INFO::BUTTON_B))
 				{

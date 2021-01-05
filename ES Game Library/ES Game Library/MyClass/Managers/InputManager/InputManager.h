@@ -126,7 +126,7 @@ private:
 class DirectInput : public BaseInput
 {
 public:
-    DirectInput(int pad_number);
+    DirectInput(int pad_number, bool x_input);
     ~DirectInput();
 
     void Refresh()                override;
@@ -141,6 +141,8 @@ private:
     //! button
     int _button_info[BUTTON_INFO::MAX_BUTTON_INFO];
     int _trigger_info[TRIGGER_INFO::MAX_TRIGGER_INFO];
+
+    bool _x_input;
 
     GamePadBuffer _pad_buffer;
     GamePadState  _pad_state;

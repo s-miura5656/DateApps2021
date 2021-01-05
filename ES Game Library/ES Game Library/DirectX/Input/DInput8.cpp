@@ -478,20 +478,17 @@ BOOL CDInput8::IsXInputDevice(GUID* pGuidProductFromDirectInput)
 		l_cleanup();
 
 	HrToStrByAMGet(hr);
-	static int a;
+	/*static int a;
 	a++;
 	std::wstring b = std::to_wstring(a);
-	OutputDebugString(b.c_str());
+	OutputDebugString(b.c_str());*/
 
 	bstrNamespace = SysAllocString(L"\\\\.\\root\\cimv2"); if (bstrNamespace == NULL) l_cleanup();
 	bstrClassName = SysAllocString(L"Win32_PNPEntity");   if (bstrClassName == NULL) l_cleanup();
 	bstrDeviceID  = SysAllocString(L"DeviceID");          if (bstrDeviceID == NULL)  l_cleanup();
 
 	HrToStrByAMGet(hr);
-	a++;
-	b = std::to_wstring(a);
-	OutputDebugString(b.c_str());
-
+	
 	// Connect to WMI «‚±‚±‚ª‚¨‚©‚µ‚¢
 	//hr = pIWbemLocator->ConnectServer(bstrNamespace, NULL, NULL, 0L,
 	//	0L, NULL, NULL, &pIWbemServices);
@@ -499,9 +496,7 @@ BOOL CDInput8::IsXInputDevice(GUID* pGuidProductFromDirectInput)
 	hr = pIWbemLocator->ConnectServer(BSTR(L"\\\\.\\root\\cimv2"), NULL, NULL, 0L,
 		0L, NULL, NULL, &pIWbemServices);
 	HrToStrByAMGet(hr);
-	a++;
-	b = std::to_wstring(a);
-	OutputDebugString(b.c_str());
+	
 
 	if (FAILED(hr) || pIWbemServices == NULL)
 		l_cleanup();
@@ -513,18 +508,12 @@ BOOL CDInput8::IsXInputDevice(GUID* pGuidProductFromDirectInput)
 	hr = pIWbemServices->CreateInstanceEnum(bstrClassName, 0, NULL, &pEnumDevices);
 
 	HrToStrByAMGet(hr);
-	a++;
-	b = std::to_wstring(a);
-	OutputDebugString(b.c_str());
 
 //	hr = pIWbemServices->CreateInstanceEnum(bstrClassName, 0, NULL, &pEnumDevices);
 	hr = pIWbemServices->CreateInstanceEnum(BSTR(L"Win32_PNPEntity"), 0, NULL, &pEnumDevices);
 	if (FAILED(hr) || pEnumDevices == NULL)
 	{
 		HrToStrByAMGet(hr);
-		a++;
-		std::wstring b = std::to_wstring(a);
-		OutputDebugString(b.c_str());
 		l_cleanup();
 	}
 
