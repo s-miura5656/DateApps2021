@@ -38,55 +38,23 @@ bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 
 int PlayerUi::Update()
 {
-	auto rank_point = IPrayerData::GetRankingPoint(tag);
+
 	if (score < add_point)
 	{
 		score++;
 	}
+
+	std::string& arm_tag = ARM_TAG + std::to_string(player_index + 1);
+	Vector3 _hit = IArmData::GetHitPosition(arm_tag);
 
 	auto player_num = GraphicsDevice.WorldToScreen(IPrayerData::GetPosition(tag));
 	player_num.z = SpriteBatch_TopMost;
 	player_position.x = player_num.x;
 	player_position.y = player_num.y;
 
-	std::string& arm_tag = ARM_TAG + std::to_string(player_index + 1);
-	Vector3 _hit = IArmData::GetHitPosition(arm_tag);
-
-	//! ポイントを入手した時
-	if(rank_point > prev_rank_point)
-	{
-		auto pointAnim = PointAnimation();
-		pointAnim.point = rank_point - prev_rank_point;
-		pointAnim.position = player_num;
-		pointAnim.theta = 0.0f;
-		pointAnim.alpha = 1.0f;
-		pointAnimation.push_back(pointAnim);
-	}
-
-	//! 入手ポイントの移動
-	for (int i = 0; i < pointAnimation.size(); ++i)
-	{
-		Vector3 bezier  = Vector3_Bezier(player_num, corner[0], corner[1], banner_position + Vector3(150,0,0), pointAnimation[i].theta);
-		Vector3 bezier2 = Vector3_Bezier(player_num, corner[2], corner[3], banner_position + Vector3(150, 0, 0), pointAnimation[i].theta);
-		pointAnimation[i].theta += 0.008;
-		if (player_index == 0 || player_index == 1) {
-			pointAnimation[i].position.y = bezier.y;
-			pointAnimation[i].position.x = bezier.x;
-		}
-		if (player_index == 2 || player_index == 3) {
-			pointAnimation[i].position.y = bezier2.y;
-			pointAnimation[i].position.x = bezier2.x;
-		}
-		pointAnimation[i].alpha -= 0.003;
-
-		if (pointAnimation[i].position.y <= banner_position.y + 40) {
-			add_point += pointAnimation[i].point;
-			pointAnimation.erase(pointAnimation.begin() + i);
-		}
-	}
-
-	prev_rank_point = rank_point;
-
+	RegisterPointAnimation(player_num);
+	MovePointAnimation(player_num);
+	
     return 0;
 }
 
@@ -120,5 +88,48 @@ void PlayerUi::Draw2D()
 	SpriteBatch.Draw(*score_font, banner_position + Vector3((204 * 0.3) + 90, 10, -1), RectWH((int)((score % 1000) % 100 % 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
 
 	SpriteBatch.DrawString(player_font, player_position, Color(0.f, 0.f, 0.f), _T("%dP"), player_index + 1);
+}
+
+void PlayerUi::RegisterPointAnimation(Vector3 player_num)
+{
+	auto rank_point = IPrayerData::GetRankingPoint(tag);
+
+	//! ポイントを入手した時
+	if (rank_point > prev_rank_point)
+	{
+		auto pointAnim = PointAnimation();
+		pointAnim.point = rank_point - prev_rank_point;
+		pointAnim.position = player_num;
+		pointAnim.theta = 0.0f;
+		pointAnim.alpha = 1.0f;
+		pointAnimation.push_back(pointAnim);
+	}
+	prev_rank_point = rank_point;
+}
+
+void PlayerUi::MovePointAnimation(Vector3 player_num)
+{
+
+	//! 入手ポイントの移動
+	for (int i = 0; i < pointAnimation.size(); ++i)
+	{
+		Vector3 bezier = Vector3_Bezier(player_num, corner[0], corner[1], banner_position + Vector3(150, 0, 0), pointAnimation[i].theta);
+		Vector3 bezier2 = Vector3_Bezier(player_num, corner[2], corner[3], banner_position + Vector3(150, 0, 0), pointAnimation[i].theta);
+		pointAnimation[i].theta += 0.008;
+		if (player_index == 0 || player_index == 1) {
+			pointAnimation[i].position.y = bezier.y;
+			pointAnimation[i].position.x = bezier.x;
+		}
+		if (player_index == 2 || player_index == 3) {
+			pointAnimation[i].position.y = bezier2.y;
+			pointAnimation[i].position.x = bezier2.x;
+		}
+		pointAnimation[i].alpha -= 0.003;
+
+		if (pointAnimation[i].position.y <= banner_position.y + 40) {
+			add_point += pointAnimation[i].point;
+			pointAnimation.erase(pointAnimation.begin() + i);
+		}
+	}
 }
 

@@ -44,5 +44,6 @@ public:
 	bool Initialize(LPCTSTR banner_name, const Vector3& banner_pos);
 	int  Update();
 	void Draw2D();
-
+	void RegisterPointAnimation(Vector3 player_num);
+	void MovePointAnimation(Vector3 player_num);
 };
