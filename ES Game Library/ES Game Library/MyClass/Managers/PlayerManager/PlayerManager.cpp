@@ -38,11 +38,11 @@ bool PlayerManager::Initialize()
 	{
 		std::string tag = PLAYER_TAG + std::to_string(i + 1);
 		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
-		InitializeCharactorParametor(tag, arm_tag, i + 1);
+		InitializeCharactorParametor(tag, arm_tag, 0);
 
 		tag = PLAYER_TAG + std::to_string(i + 2);
 		arm_tag = ARM_TAG + std::to_string(i + 2);
-		InitializeCharactorParametor(tag, arm_tag, i + 2);
+		InitializeCharactorParametor(tag, arm_tag, 0);
 	}
 
 	for (int i = 0; i < _players.size(); ++i)

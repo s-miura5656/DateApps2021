@@ -12,6 +12,9 @@ TypeSetting::~TypeSetting()
 
 void TypeSetting::Initialize()
 {
+	CharactorParam charactor_param_normal;
+
+	_charactor_params[PlayerEnum::Personality::NORMAL]			  = charactor_param_normal;
 	_charactor_params[PlayerEnum::Personality::ARM_RANGE]		  = ArmRangeType();
 	_charactor_params[PlayerEnum::Personality::ARM_SPEED]		  = ArmSpeedType();
 	_charactor_params[PlayerEnum::Personality::PLAYER_MOVE_SPEED] = PlayerMoveSpeedType();
