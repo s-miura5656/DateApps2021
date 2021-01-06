@@ -30,7 +30,7 @@ void ItemBase::BoxShape(int scale)
 	if (scale >= 5) {
 		scale = 5;
 	}
-	SimpleShape shape_box;
+	SimpleShape shape_box{};
 
 	shape_box.Type = Shape_Box;
 

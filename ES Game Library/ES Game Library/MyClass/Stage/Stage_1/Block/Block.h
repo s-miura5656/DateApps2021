@@ -33,5 +33,5 @@ private:
 	std::unique_ptr<IArmData>		_i_arm_data;
 	const int						_arm_distance = 2.5f;
 	int                             _speed;
-	int                             _player_point = 0;
+	int                             _player_point;
 };

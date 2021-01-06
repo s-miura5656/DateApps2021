@@ -27,6 +27,8 @@ bool Block::Initialize()
 		_blinking->Initialize(_position);
 	}
 
+	_player_point = 0;
+
 	_effect.reset(new ParticleSystem);
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
@@ -190,6 +192,10 @@ void Block::Fall()
 		//!プレイヤーとの接触時にプレイヤーを倒す
 		if (_hit_box->IsHitObjectsSquare(player_tag))
 		{
+			if (_player_point >= 100)
+			{
+				break;
+			}
 			IPrayerData* iplayerdata = new IPrayerData;
 
 			iplayerdata->SetState(player_tag, PlayerEnum::Animation::DEATH);
@@ -210,8 +216,17 @@ void Block::Fall()
 				point = 0;
 				break;
 			}
-			iplayerdata->SetRankingPoint(player_tag, iplayerdata->GetRankingPoint(player_tag) - point);
-			ItemCounter::SetItem(_item_name, _position, point);
+			if (iplayerdata->GetRankingPoint(player_tag) < point)
+			{
+				point = iplayerdata->GetRankingPoint(player_tag);
+				iplayerdata->SetRankingPoint(player_tag, 0);
+				_player_point = point;
+			}
+			else
+			{
+				iplayerdata->SetRankingPoint(player_tag, iplayerdata->GetRankingPoint(player_tag) - point);
+			}
+			_player_point = point;
 			delete iplayerdata;
 		}
 
