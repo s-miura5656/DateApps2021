@@ -111,6 +111,25 @@ bool StageManager::Initialize()
 
 int StageManager::Update()
 {
+	if (_time >= 5400) {
+		_random_fall_time++;
+	}
+	else
+	{
+		_time++;
+	}
+	//TODO:降ってくる頻度は調整する
+	if (_random_fall_time >= FALL_BLOCK_INTERVAL)
+	{
+		IMapData* imap_data = new IMapData;
+		_mapdate = imap_data->GetData();
+
+		RandomBlockSet();
+		_random_fall_time = 0;
+
+		delete imap_data;
+	}
+
 	for (int i = 0; i < _stages.size(); i++)
 	{
 		//!ブロックが破壊されたとき
@@ -141,5 +160,41 @@ void StageManager::DrawAlpha3D()
 	for (int i = 0; i < _stages.size(); ++i)
 	{
 		_stages[i]->DrawAlpha3D();
+	}
+}
+/**
+ * @fn ブロックをランダムな座標に置く
+ */
+void StageManager::RandomBlockSet()
+{
+	//!外壁、破壊不可ブロック、破壊可能ブロック以外の座標を保存する
+	std::vector<Vector3> random_block_pos;
+	for (int z = 0; z < _mapdate.size(); z++)
+	{
+		for (int x = 0; x < _mapdate[z].size(); x++)
+		{
+			if (_mapdate[z][x] != 'w' && _mapdate[z][x] != 'i' && _mapdate[z][x] != 'b')
+			{
+				random_block_pos.push_back(Vector3(x, 0, -z));
+			}
+		}
+	}
+
+	//!保存した座標をシャッフルする
+	for (int i = 0; i < random_block_pos.size(); ++i)
+	{
+		const auto random_index = MathHelper_Random(random_block_pos.size() - 1);
+		const auto work = random_block_pos.at(random_index);
+		random_block_pos.at(random_index) = random_block_pos.at(i);
+		random_block_pos.at(i) = work;
+	}
+
+	for (int i = 0; i < FALL_BLOCK_COUNT; i++)
+	{
+		std::string blocktag = DESTRUCTION_BLOCK_TAG + std::to_string(random_block_pos[i].x) + std::to_string(random_block_pos[i].z);
+		_stages.push_back(new Block(blocktag, POINT_ITEM_TAG));
+		random_block_pos[i].y = MathHelper_Random(5, 10);
+		_stages[_stages.size() - 1]->SetPosition(random_block_pos[i]);
+		_stages[_stages.size() - 1]->Initialize();
 	}
 }

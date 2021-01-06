@@ -20,6 +20,13 @@ Block::~Block()
 
 bool Block::Initialize()
 {
+	//!上から降ってくるとき
+	if (_position.y > 0)
+	{
+		_blinking = new Blinking;
+		_blinking->Initialize(_position);
+	}
+
 	_effect.reset(new ParticleSystem);
 	_hit_box.reset(new HitBox());
 	_hit_box->Init();
@@ -54,6 +61,14 @@ bool Block::Initialize()
  */
 int Block::Update()
 {
+	//!上から降ってくるとき
+	if (_position.y > 0)
+	{
+		_position.y += -0.05;
+		Fall();
+		return 0;
+	}
+
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string arm_tag    = ARM_TAG + std::to_string(i + 1);
@@ -97,7 +112,7 @@ int Block::Update()
 			//!アイテムが入ってないブロックの時はアイテムを生成しない
 			if (_item_name != NULL_ITEM_TAG)
 			{
-				ItemCounter::SetItem(_item_name, _position,BLOCK_POINT);
+				ItemCounter::SetItem(_item_name, _position,BLOCK_POINT + _player_point);
 			}
 
 			return 1;
@@ -113,6 +128,11 @@ void Block::Draw3D()
 		_hit_box->SetModelPosition();
 		_hit_box->SetModelScale();
 		//_hit_box->Draw3D();
+	}
+	//!上から降ってくるとき
+	if (_position.y > 0)
+	{
+		_blinking->Draw3D();
 	}
 
 	_effect->Draw();
@@ -136,4 +156,65 @@ void Block::DrawAlpha3D()
 	_shader->SetTechnique("FixModel_S0");
 
 	_model->Draw(_shader);
+}
+
+/**
+ * @fn 降ってくるときのブロックの処理
+ * @detail  ブロックを下に動かす
+ *          ブロックのY座標が0になった時mapdataに自分の座標を保存する
+ *          プレイヤーとの接触時にプレイヤーを倒す
+ */
+void Block::Fall()
+{
+	//!Y座標が0になったときに自分の座標をマップデータをセットする
+	if (_position.y <= 0)
+	{
+		IMapData* map_data = new IMapData;
+		auto data = map_data->GetData();
+
+		int x = fabsf(_position.x);
+		int z = fabsf(_position.z);
+
+		data[z][x] = 'b';
+		map_data->SetData(data);
+
+		delete map_data;
+	}
+
+	_hit_box->SetHitBoxPosition(_position + Vector3(0, 1, 0));
+
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
+
+		//!プレイヤーとの接触時にプレイヤーを倒す
+		if (_hit_box->IsHitObjectsSquare(player_tag))
+		{
+			IPrayerData* iplayerdata = new IPrayerData;
+
+			iplayerdata->SetState(player_tag, PlayerEnum::Animation::DEATH);
+
+			int point = 0;
+			switch (iplayerdata->GetRankNum(player_tag))
+			{
+			case 0:
+				point = 600;
+				break;
+			case 1:
+				point = 400;
+				break;
+			case 2:
+				point = 100;
+				break;
+			case 3:
+				point = 0;
+				break;
+			}
+			iplayerdata->SetRankingPoint(player_tag, iplayerdata->GetRankingPoint(player_tag) - point);
+			ItemCounter::SetItem(_item_name, _position, point);
+			delete iplayerdata;
+		}
+
+	}
+	_blinking->Update();
 }

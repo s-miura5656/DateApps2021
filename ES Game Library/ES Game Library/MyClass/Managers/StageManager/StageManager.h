@@ -26,6 +26,7 @@ public:
 	void DrawAlpha3D() override;
 
 private:
+	void RandomBlockSet();
 	ItemCounter*                _itemcounter;
 	std::vector<StageBase*>	    _stages;
 	std::vector<cstring>		_mapdate; //! マップデータの読み込み
@@ -33,4 +34,6 @@ private:
 	string                      _random_item[3];
 	int                         _count;
 	int                         _probability;	
+	int                         _random_fall_time = 0;
+	int                         _time = 0;
 };

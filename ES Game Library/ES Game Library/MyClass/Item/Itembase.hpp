@@ -14,7 +14,7 @@ public:
 	virtual void Draw2D();
 	virtual void Draw3D();
 	virtual void ItemEffect(std::string name) { name; }
-	void BoxShape();
+	void BoxShape(int scale);
 	void RotationItem();
 	bool IsFlag() const { return Removeflag; };
 

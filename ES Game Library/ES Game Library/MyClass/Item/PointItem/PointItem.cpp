@@ -30,7 +30,7 @@ bool PointItem::Initialize()
 		material.Ambient = Color(1.0f, 1.0f, 1.0f);
 	}
 
-	BoxShape();
+	BoxShape(_point / 100);
 
 	_box->SetMaterial(material);
 

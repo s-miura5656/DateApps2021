@@ -25,10 +25,13 @@ public:
 	void Draw3D() override;
 	void DrawAlpha3D() override;
 private:
+	void Fall();
 	Blinking*                       _blinking;
 	ItemCounter*                    _itemcounter;
 	std::unique_ptr<ParticleSystem> _effect;
 	std::string                     _item_name;
 	std::unique_ptr<IArmData>		_i_arm_data;
 	const int						_arm_distance = 2.5f;
+	int                             _speed;
+	int                             _player_point = 0;
 };

@@ -44,6 +44,12 @@ static const int ARM_MAX_DISTANCE_RIGOR = 30;
 //!無敵時間の秒数
 static const int INVINCIBLE_FRAME = 120;
 
+//!ランダムで降ってくるブロックの個数
+static const int FALL_BLOCK_COUNT = 10;
+
+//!ランダムで降ってくるブロックの頻度
+static const int FALL_BLOCK_INTERVAL = 600;
+
 namespace PlayerEnum {
 	enum Personality { NORMAL, ARM_RANGE, ARM_SPEED, PLAYER_MOVE_SPEED, PLAYER_DEFENCE, PLAYER_KING,PERSONALITY_MAX};
 
