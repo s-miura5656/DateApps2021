@@ -63,6 +63,7 @@ int PlayerUi::Update()
 	if (score > rank_point)
 	{
 		score = rank_point;
+		add_point = rank_point;
 	}
 		auto player_num = GraphicsDevice.WorldToScreen(_i_player_data->GetPosition(tag));
 		player_num.z = SpriteBatch_TopMost;
