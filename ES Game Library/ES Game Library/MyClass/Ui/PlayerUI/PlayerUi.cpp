@@ -31,12 +31,9 @@ bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 	if(player_font == nullptr)
 		player_font = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 30);
 
-<<<<<<< HEAD:ES Game Library/ES Game Library/MyClass/Ui/PlayerUI/PlayerUi.cpp
-	if (test == nullptr)
-		test = ResouceManager::Instance().LordSpriteFile(_T("HpSprite/ゲージベース2.png"));
+	//if (test == nullptr)
+	//	test = ResouceManager::Instance().LordSpriteFile(_T("HpSprite/ゲージベース2.png"));
 
-=======
->>>>>>> origin/ryuki:ES Game Library/ES Game Library/MyClass/Ui/PlayerUi.cpp
 	score = 0;
 	prev_rank_point = 0;
 	corner[0] = Vector3( 640,   0, 0);
@@ -50,63 +47,59 @@ bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 
 int PlayerUi::Update()
 {
-<<<<<<< HEAD:ES Game Library/ES Game Library/MyClass/Ui/PlayerUI/PlayerUi.cpp
 	auto rank_point = _i_player_data->GetRankingPoint(tag);
 	
 	if (score < rank_point) {
-=======
-	auto rank_point = IPrayerData::GetRankingPoint(tag);
+		auto rank_point = _i_player_data->GetRankingPoint(tag);
+	}
+
 	//! 配列のerase時と今のスコア比較
 	if (score < add_point)
 	{
->>>>>>> origin/ryuki:ES Game Library/ES Game Library/MyClass/Ui/PlayerUi.cpp
 		score++;
 		score += delta_point;
 		if (score > add_point)
 			score = add_point;
 
-<<<<<<< HEAD:ES Game Library/ES Game Library/MyClass/Ui/PlayerUI/PlayerUi.cpp
+		auto player_num = GraphicsDevice.WorldToScreen(_i_player_data->GetPosition(tag));
+		player_num.z = SpriteBatch_TopMost;
+		player_position.x = player_num.x;
+		player_position.y = player_num.y;
+
+		Vector3 _hit = _i_arm_data->GetHitPosition(_arm_tag);
+
+		//!　アームのポジションが初期状態でないとき（アームがプレイヤーにヒットした時に更新される）
+		if (_hit != Vector3_Zero)
+		{
+			move_pos.push_back(_hit);
+			//		_i_player_data->SetPosition(tag, Vector3_Zero);
+		}
+
+		for (int i = 0; i < move_pos.size(); ++i)
+		{
+			move_pos[i].y -= 1.0f;
+
+			if (move_pos[i].y <= 0.0f)
+				move_pos.erase(move_pos.begin() + i);
+
+			//! 増えるスコアが大きいときは倍の速度でスコアを増やす
+			//if ((add_point - score) >=  50) { score += 2; }
+			//if ((add_point - score) >= 100) { score += 3; }
+		}
+
+		//! 配列のerase時と今のスコア比較
+		if (score > rank_point)
+		{
+			score--;
+		}
+	}
+	std::string& arm_tag = ARM_TAG + std::to_string(player_index + 1);
+	Vector3 _hit = _i_arm_data->GetHitPosition(arm_tag);
+
 	auto player_num = GraphicsDevice.WorldToScreen(_i_player_data->GetPosition(tag));
 	player_num.z = SpriteBatch_TopMost;
 	player_position.x = player_num.x;
 	player_position.y = player_num.y;
-
-	Vector3 _hit = _i_arm_data->GetHitPosition(_arm_tag);
-
-	//!　アームのポジションが初期状態でないとき（アームがプレイヤーにヒットした時に更新される）
-	if (_hit != Vector3_Zero)
-	{
-		move_pos.push_back(_hit);
-//		_i_player_data->SetPosition(tag, Vector3_Zero);
-	}
-
-	for (int i = 0; i < move_pos.size(); ++i)
-	{
-		move_pos[i].y -= 1.0f;
-
-		if (move_pos[i].y <= 0.0f)
-			move_pos.erase(move_pos.begin() + i);
-	}
-=======
-		//! 増えるスコアが大きいときは倍の速度でスコアを増やす
-		//if ((add_point - score) >=  50) { score += 2; }
-		//if ((add_point - score) >= 100) { score += 3; }
-	}
-
-	//! 配列のerase時と今のスコア比較
-	if (score > rank_point)
-	{
-		score--;
-	}
-
-	std::string& arm_tag = ARM_TAG + std::to_string(player_index + 1);
-	Vector3 _hit = IArmData::GetHitPosition(arm_tag);
-
-	auto player_num = GraphicsDevice.WorldToScreen(IPrayerData::GetPosition(tag));
-	player_num.z = SpriteBatch_TopMost;
-	player_position.x = player_num.x;
-	player_position.y = player_num.y;
->>>>>>> origin/ryuki:ES Game Library/ES Game Library/MyClass/Ui/PlayerUi.cpp
 
 	RegisterPointAnimation(player_num);
 	MovePointAnimation(player_num);
@@ -152,7 +145,7 @@ void PlayerUi::Draw2D()
 
 void PlayerUi::RegisterPointAnimation(Vector3 player_num)
 {
-	auto rank_point = IPrayerData::GetRankingPoint(tag);
+	auto rank_point = _i_player_data->GetRankingPoint(tag);
 
 	//! ポイントを入手した時
 	if (rank_point > prev_rank_point)

@@ -39,15 +39,12 @@ private:
 	Vector2 player_position;//各プレイヤーの位置
 	static FONT player_font;
 
-<<<<<<< HEAD:ES Game Library/ES Game Library/MyClass/Ui/PlayerUI/PlayerUi.h
 	static SPRITE test;
 
 	std::vector<Vector3> move_pos;
 
 	std::unique_ptr<IPrayerData> _i_player_data;
 	std::unique_ptr<IArmData>    _i_arm_data;
-=======
->>>>>>> origin/ryuki:ES Game Library/ES Game Library/MyClass/Ui/PlayerUi.h
 public:
 	PlayerUi() {}
 	PlayerUi(const int player_no);
@@ -56,9 +53,6 @@ public:
 	bool Initialize(LPCTSTR banner_name, const Vector3& banner_pos);
 	int  Update();
 	void Draw2D();
-<<<<<<< HEAD:ES Game Library/ES Game Library/MyClass/Ui/PlayerUI/PlayerUi.h
-=======
 	void RegisterPointAnimation(Vector3 player_num);
 	void MovePointAnimation(Vector3 player_num);
->>>>>>> origin/ryuki:ES Game Library/ES Game Library/MyClass/Ui/PlayerUi.h
 };

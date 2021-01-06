@@ -4,6 +4,9 @@
 #include "../Data/WordsTable.h"
 #include "../Ui/PlayerUI/PlayerUi.h"
 
+class IPrayerData;
+class IArmData;
+
 class MainUi : public BaseUi
 {
 private:
@@ -16,7 +19,11 @@ public:
 	int Update()	  override;
 	void Draw2D()	  override;
 	
-	std::vector <std::unique_ptr<PlayerUi>> player_ui;
+	IPrayerData* _i_player_data;
+
+	IArmData* _i_arm_data;
+
+	std::vector<PlayerUi*> player_ui;
 
 	FONT player_date;//各プレイヤーのステータス表記
 
