@@ -88,6 +88,8 @@ int Block::Update()
 			std::unique_ptr<IArmData> arm_data = std::make_unique<IArmData>();
 			int state = arm_data->GetState(arm_tag);
 
+			auto i = arm_data->GetState(arm_tag);
+
 			if (state == ArmEnum::PunchState::RETURN_PUNCH)
 			{
 				return 0;
@@ -103,6 +105,8 @@ int Block::Update()
 			map_data->SetData(data);
 
 			arm_data->SetState(arm_tag, ArmEnum::PunchState::RETURN_PUNCH);
+
+			auto a = arm_data->GetState(arm_tag);
 
 			std::unique_ptr<IPrayerData> player_data = std::make_unique<IPrayerData>();
 			std::string player_tag = PLAYER_TAG + std::to_string(i + 1);

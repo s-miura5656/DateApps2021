@@ -45,17 +45,17 @@ bool PlayerManager::Initialize()
 		InitializeCharactorParametor(tag, arm_tag, 0);
 	}
 
-	////! これはキャラクター選択に追加する
-	//auto a = TypeSetting::Instance().GetPlayerType(PLAYER_TAG + std::to_string(1));
+	//! これはキャラクター選択に追加する
+	auto a = TypeSetting::Instance().GetPlayerType(PLAYER_TAG + std::to_string(1));
 
-	//auto charactor_param = TypeSetting::Instance().GetCharactorParam(TypeSetting::Instance().GetPlayerType(PLAYER_TAG + std::to_string(1)));
+	auto charactor_param = TypeSetting::Instance().GetCharactorParam(TypeSetting::Instance().GetPlayerType(PLAYER_TAG + std::to_string(1)));
 
-	//charactor_param = TypeSetting::Instance().GetCharactorParam(PlayerEnum::Personality::PLAYER_KING);
+	charactor_param = TypeSetting::Instance().GetCharactorParam(PlayerEnum::Personality::PLAYER_KING);
 
-	//charactor_param.player_param.position = _i_player_data->GetPosition(PLAYER_TAG + std::to_string(1));
+	charactor_param.player_param.position = _i_player_data->GetPosition(PLAYER_TAG + std::to_string(1));
 
-	//_i_player_data->SetParametor(PLAYER_TAG + std::to_string(1), charactor_param.player_param);
-	//_i_arm_data->SetArmParam(ARM_TAG + std::to_string(1), charactor_param.arm_param);
+	_i_player_data->SetParametor(PLAYER_TAG + std::to_string(1), charactor_param.player_param);
+	_i_arm_data->SetArmParam(ARM_TAG + std::to_string(1), charactor_param.arm_param);
 
 	for (int i = 0; i < _players.size(); ++i)
 	{

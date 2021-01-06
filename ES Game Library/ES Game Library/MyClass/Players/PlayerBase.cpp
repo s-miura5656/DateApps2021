@@ -497,13 +497,13 @@ void PlayerBase::ParameterLevel()
 		_i_player_data->SetShotRigorFrame(_tag, 25);
 		_i_player_data->SetSpeed(_tag, 0.06f);
 		_i_arm_Data->SetLimitRange(_arm_tag, 12);
-		_i_arm_Data->SetGoSpeed(_arm_tag, 0.13f);
+		_i_arm_Data->SetGoSpeed(_arm_tag, 0.125f);
 		break;
 	case 3:
 		_i_player_data->SetShotRigorFrame(_tag, 20);
 		_i_player_data->SetSpeed(_tag, 0.07f);
 		_i_arm_Data->SetLimitRange(_arm_tag, 14);
-		_i_arm_Data->SetGoSpeed(_arm_tag, 0.16f);
+		_i_arm_Data->SetGoSpeed(_arm_tag, 0.15f);
 		break;
 	case 4:
 		_i_player_data->SetShotRigorFrame(_tag, 15);

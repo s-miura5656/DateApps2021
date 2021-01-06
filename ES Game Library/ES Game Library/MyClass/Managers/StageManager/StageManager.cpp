@@ -174,7 +174,7 @@ void StageManager::RandomBlockSet()
 	{
 		for (int x = 0; x < _mapdate[z].size(); x++)
 		{
-			if (_mapdate[z][x] != 'w' && _mapdate[z][x] != 'i' && _mapdate[z][x] != 'b')
+			if (_mapdate[z][x] == 'p' || _mapdate[z][x] == ' ')
 			{
 				random_block_pos.push_back(Vector3(x, 0, -z));
 			}
