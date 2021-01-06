@@ -33,6 +33,8 @@ private:
 	Vector3 corner[2];
 	int add_point;
 	int delta_point;
+	int lost_point;
+	bool lost_flag;
 	
 	std::vector<PointAnimation> pointAnimation;
 
