@@ -182,7 +182,17 @@ void PlayerBase::Draw3D()
 	}
 	else
 	{
-
+		if (_i_player_data->GetParameterLevel(_tag) >= 3)
+		{
+			_aura_effect->SetPosition(_transform.position + Vector3_Up);
+			_aura_effect->SetRotation(Vector3(-15,0,0));
+			_aura_effect->PlayOneShot();
+			_aura_effect->Draw();
+		}
+		else
+		{
+			_aura_effect->Stop();
+		}
 		_destroy_effect->Stop();
 		
 		ChangeAnimation();

@@ -66,7 +66,7 @@ int Block::Update()
 	//!ã‚©‚ç~‚Á‚Ä‚­‚é‚Æ‚«
 	if (_position.y > 0)
 	{
-		_position.y += -0.05;
+		_position.y += -0.1;
 		Fall();
 		return 0;
 	}
@@ -189,6 +189,12 @@ void Block::Fall()
 
 	_hit_box->SetHitBoxPosition(_position + Vector3(0, 1, 0));
 
+	_blinking->Update();
+
+	if (_position.y > 1)
+	{
+		return;
+	}
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
@@ -235,5 +241,4 @@ void Block::Fall()
 		}
 
 	}
-	_blinking->Update();
 }
