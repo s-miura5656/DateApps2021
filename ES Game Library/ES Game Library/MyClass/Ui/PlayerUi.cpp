@@ -41,6 +41,15 @@ int PlayerUi::Update()
 	if (score < add_point)
 	{
 		score++;
+
+		//! 増えるスコアが大きいときは倍の速度でスコアを増やす
+		if ((add_point - score) >=  50) { score += 2; }
+		if ((add_point - score) >= 100) { score += 3; }
+	}
+
+	if (score > add_point) 
+	{
+		score--;
 	}
 
 	std::string& arm_tag = ARM_TAG + std::to_string(player_index + 1);
@@ -131,13 +140,15 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 
 		pointAnimation[i].alpha -= 0.003;
 
-		//! バナーの座標に入手したポイントがたどり着いたとき
+		//! バナーの座標に入手したポイントがたどり着いたとき 1p & 3p
 		if (player_index == 0 || player_index == 2) {
 			if (pointAnimation[i].position.x <= banner_position.x + 100) {
 				add_point += pointAnimation[i].point;
 				pointAnimation.erase(pointAnimation.begin() + i);
 			}
 		}
+
+		//! バナーの座標に入手したポイントがたどり着いたとき 2p & 4p
 		if (player_index == 1 || player_index == 3) {
 			if (pointAnimation[i].position.x >= banner_position.x + 100) {
 				add_point += pointAnimation[i].point;
