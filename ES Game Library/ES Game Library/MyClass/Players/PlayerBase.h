@@ -82,7 +82,7 @@ protected:
 
 	int _new_point          = 0;
 	int _old_point          = 0;
-	int _level_up_count     = 1;
+
 	//! animation_limit
 	float _shot_frame = 60.0f;
 

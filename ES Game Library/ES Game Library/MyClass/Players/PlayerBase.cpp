@@ -142,23 +142,23 @@ void PlayerBase::Draw2D()
 	if (_tag == "Player_1")
 	{
 		SpriteBatch.DrawString(_font, Vector2(0, 180), Color(1.f, 1.f, 1.f), _T("PL1の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
-		SpriteBatch.DrawString(_font, Vector2(0, 280), Color(1.f, 1.f, 1.f), _T("PL1のレベル:%d"), _level_up_count);
+		SpriteBatch.DrawString(_font, Vector2(0, 280), Color(1.f, 1.f, 1.f), _T("PL1のレベル:%d"), _i_player_data->GetParameterLevel(_tag));
 		//SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("プレイヤーのHP:%d"), _i_player_data->GetHitPoint(_tag));
 		//SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("プレイヤーの移動速度:%f"), _i_player_data->GetSpeed(_tag));
 		//SpriteBatch.DrawString(_font, Vector2(0, 260), Color(1.f, 1.f, 1.f), _T("プレイヤーの発射硬直:%d"), _i_player_data->GetShotRigorFrame(_tag));
 
 	}
 	if (_tag == "Player_2") {
-		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 1.f, 1.f), _T("PL2のレベル:%d"), _level_up_count);
+		SpriteBatch.DrawString(_font, Vector2(0, 300), Color(1.f, 1.f, 1.f), _T("PL2のレベル:%d"), _i_player_data->GetParameterLevel(_tag));
 		SpriteBatch.DrawString(_font, Vector2(0, 200), Color(1.f, 1.f, 1.f), _T("PL2の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
 	}
 
 	if (_tag == "Player_3") {
-		SpriteBatch.DrawString(_font, Vector2(0, 320), Color(1.f, 1.f, 1.f), _T("PL3のレベル:%d"), _level_up_count);
+		SpriteBatch.DrawString(_font, Vector2(0, 320), Color(1.f, 1.f, 1.f), _T("PL3のレベル:%d"), _i_player_data->GetParameterLevel(_tag));
 		SpriteBatch.DrawString(_font, Vector2(0, 220), Color(1.f, 1.f, 1.f), _T("PL3の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag));
 	}
 if (_tag == "Player_4") { 
-	SpriteBatch.DrawString(_font, Vector2(0, 340), Color(1.f, 1.f, 1.f), _T("PL4のレベル:%d"), _level_up_count);
+	SpriteBatch.DrawString(_font, Vector2(0, 340), Color(1.f, 1.f, 1.f), _T("PL4のレベル:%d"), _i_player_data->GetParameterLevel(_tag));
 	SpriteBatch.DrawString(_font, Vector2(0, 240), Color(1.f, 1.f, 1.f), _T("PL4の所持ポイント:%d"), _i_player_data->GetRankingPoint(_tag)); }
 	if (_arm_tag == "Arm_1")
 	{
@@ -459,25 +459,25 @@ void PlayerBase::DebugControll()
 }
 void PlayerBase::ParameterLevel()
 {
-	int old_count = _level_up_count;
+	int old_count = _i_player_data->GetParameterLevel(_tag);
 	_new_point = _i_player_data->GetRankingPoint(_tag);
 	if (_new_point != _old_point)
 	{
 		if (_new_point < 500)
 		{
-			_level_up_count = 1;
+			_i_player_data->SetParameterLevel(_tag, 1);
 		}
 		else if (_new_point >= 500 && _new_point < 1000)
 		{
-			_level_up_count = 2;
+			_i_player_data->SetParameterLevel(_tag, 2);
 		}
 		else if (_new_point >= 1000 && _new_point < 1500)
 		{
-			_level_up_count = 3;
+			_i_player_data->SetParameterLevel(_tag, 3);
 		}
 		else if (_new_point >= 1500)
 		{
-			_level_up_count = 4;
+			_i_player_data->SetParameterLevel(_tag, 4);
 		}
 		_old_point = _new_point;
 	}
@@ -485,7 +485,7 @@ void PlayerBase::ParameterLevel()
 	if (old_count == _new_point)
 		return;
 
-	switch (_level_up_count)
+	switch (_i_player_data->GetParameterLevel(_tag))
 	{
 	case 1:
 		_i_player_data->SetShotRigorFrame(_tag, 30);

@@ -18,6 +18,7 @@ ItemManager::~ItemManager()
 	{
 		delete (*it);
 	}
+	item_base.clear();
 }
 
 bool ItemManager::Initialize()

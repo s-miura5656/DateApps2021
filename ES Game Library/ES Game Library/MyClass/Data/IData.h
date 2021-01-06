@@ -71,6 +71,10 @@ public:
 	void SetInvincibleMode(std::string& player_tag, bool invinciblemode)    { PlayerParametor::Instance()._player_params[player_tag].invincible_mode = invinciblemode; }
 	bool GetInvincibleMode(std::string& player_tag)				      const { return PlayerParametor::Instance()._player_params[player_tag].invincible_mode; }
 
+	//! プレイヤーのレベル
+	void SetParameterLevel(std::string& player_tag, int parameterlevel) { PlayerParametor::Instance()._player_params[player_tag].parameter_level = parameterlevel; }
+	int GetParameterLevel(std::string& player_tag)				      const { return PlayerParametor::Instance()._player_params[player_tag].parameter_level; }
+
 	std::map<std::string, PlayerParam> GetAllParametor()			  const { return PlayerParametor::Instance()._player_params; }
 };
 
