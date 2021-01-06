@@ -31,9 +31,6 @@ bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 	if(player_font == nullptr)
 		player_font = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 30);
 
-	//if (test == nullptr)
-	//	test = ResouceManager::Instance().LordSpriteFile(_T("HpSprite/ゲージベース2.png"));
-
 	score = 0;
 	prev_rank_point = 0;
 	corner[0] = Vector3( 640,   0, 0);
@@ -48,10 +45,6 @@ bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 int PlayerUi::Update()
 {
 	auto rank_point = _i_player_data->GetRankingPoint(tag);
-	
-	if (score < rank_point) {
-		auto rank_point = _i_player_data->GetRankingPoint(tag);
-	}
 
 	//! 配列のerase時と今のスコア比較
 	if (score < add_point)
@@ -61,19 +54,23 @@ int PlayerUi::Update()
 		if (score > add_point)
 			score = add_point;
 
+		//! 増えるスコアが大きいときは倍の速度でスコアを増やす
+			//if ((add_point - score) >=  50) { score += 2; }
+			//if ((add_point - score) >= 100) { score += 3; }
+	}
+
+	//! 配列のerase時と今のスコア比較
+	if (score > rank_point)
+	{
+		score = rank_point;
+	}
 		auto player_num = GraphicsDevice.WorldToScreen(_i_player_data->GetPosition(tag));
 		player_num.z = SpriteBatch_TopMost;
 		player_position.x = player_num.x;
 		player_position.y = player_num.y;
 
-		Vector3 _hit = _i_arm_data->GetHitPosition(_arm_tag);
-
-		//!　アームのポジションが初期状態でないとき（アームがプレイヤーにヒットした時に更新される）
-		if (_hit != Vector3_Zero)
-		{
-			move_pos.push_back(_hit);
-			//		_i_player_data->SetPosition(tag, Vector3_Zero);
-		}
+		std::string& arm_tag = ARM_TAG + std::to_string(player_index + 1);
+		Vector3 _hit = _i_arm_data->GetHitPosition(arm_tag);
 
 		for (int i = 0; i < move_pos.size(); ++i)
 		{
@@ -81,25 +78,7 @@ int PlayerUi::Update()
 
 			if (move_pos[i].y <= 0.0f)
 				move_pos.erase(move_pos.begin() + i);
-
-			//! 増えるスコアが大きいときは倍の速度でスコアを増やす
-			//if ((add_point - score) >=  50) { score += 2; }
-			//if ((add_point - score) >= 100) { score += 3; }
 		}
-
-		//! 配列のerase時と今のスコア比較
-		if (score > rank_point)
-		{
-			score--;
-		}
-	}
-	std::string& arm_tag = ARM_TAG + std::to_string(player_index + 1);
-	Vector3 _hit = _i_arm_data->GetHitPosition(arm_tag);
-
-	auto player_num = GraphicsDevice.WorldToScreen(_i_player_data->GetPosition(tag));
-	player_num.z = SpriteBatch_TopMost;
-	player_position.x = player_num.x;
-	player_position.y = player_num.y;
 
 	RegisterPointAnimation(player_num);
 	MovePointAnimation(player_num);
