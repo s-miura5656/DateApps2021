@@ -31,11 +31,13 @@ private:
 	int prev_rank_point;
 	Vector3 corner[2];
 	int add_point;
+	int delta_point;
 	
 	std::vector<PointAnimation> pointAnimation;
 
 	Vector2 player_position;//各プレイヤーの位置
 	static FONT player_font;
+
 public:
 	PlayerUi() {}
 	PlayerUi(const int player_no);
