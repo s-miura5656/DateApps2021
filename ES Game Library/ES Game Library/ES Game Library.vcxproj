@@ -189,7 +189,9 @@
     <ClCompile Include="MyClass\Players\Player\Player.cpp" />
     <ClCompile Include="MyClass\Scenes\Main\MainScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Result\ResultScene.cpp" />
+    <ClCompile Include="MyClass\Scenes\SelectScene\SelectScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Title\TitleScene.cpp" />
+    <ClCompile Include="MyClass\Scenes\TutorialScene\TutorialScene.cpp" />
     <ClCompile Include="MyClass\Stage\StageBase.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Block\Block.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.cpp" />
@@ -287,7 +289,9 @@
     <ClInclude Include="MyClass\Scenes\BaseScene.h" />
     <ClInclude Include="MyClass\Scenes\Main\MainScene.h" />
     <ClInclude Include="MyClass\Scenes\Result\ResultScene.h" />
+    <ClInclude Include="MyClass\Scenes\SelectScene\SelectScene.h" />
     <ClInclude Include="MyClass\Scenes\Title\TitleScene.h" />
+    <ClInclude Include="MyClass\Scenes\TutorialScene\TutorialScene.h" />
     <ClInclude Include="MyClass\Stage\StageBase.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Block\Block.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.h" />

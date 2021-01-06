@@ -19,97 +19,38 @@ TitleScene::~TitleScene()
 */
 bool TitleScene::Initialize()
 {
-	_background = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/background.png"));
-	_title      = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/Title.png"));
-	_robot      = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/robot.png"));
-	_b_button   = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/b_button.png"));
-	_tutorial   = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/tutorial.png"));
-
-	button_alpha = 1.0f;
-	alpha_flag   = true;
-	button_flag  = false;
-
-	tutorial_flag = false;
-
-	title_pos = Vector3(65.0f, -200.0f, +100.0f);
-
-	title_scale  = Vector2(1.0f, 1.0f);
-	button_scale = Vector2(0.9f, 0.9f);
+	_background         = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/background.png"));
+	_title_logo         = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/Title.png"));
+	_robot              = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/robot.png"));
+	_operation_button   = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/b_button.png"));
 	
-	ControllerManager::Instance().CreateGamePad(PLAYER_TAG + std::to_string(1));
-	ControllerManager::Instance().SetGamePadMaxCount(PLAYER_COUNT_MAX);
+	//! タイトルロゴのパラメーターのセット
+	title_logo_alpha    = 0.3f;
+	title_logo_position = Vector3(65.0f, -200.0f, +100.0f);
+	title_logo_scale    = Vector2(1.0f, 1.0f);
 
-	Viewport view = GraphicsDevice.GetViewport();
+	//! オペレーションボタン画像のパラメーターのセット
+	operation_button_alpha = 1.0f;
+	operation_button_scale = Vector2(0.9f, 0.9f);
+
+	button_flashing_flag   = true;
+	button_push_flag       = false;
+	tutorial_flag          = false;
+
+	Viewport view       = GraphicsDevice.GetViewport();
 	Vector3 _camera_pos = Vector3(0, 0, -10);
-	Vector3 _look_pos = Vector3(0, 0, 0);
+	Vector3 _look_pos   = Vector3(0, 0, 0);
 
 	SceneCamera::Instance().SetLookAt(_camera_pos, _look_pos, 0);
 	SceneCamera::Instance().SetPerspectiveFieldOfView(60.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 
 	return true;
 }
-/*
-* @fn タイトルの更新
-* @param　なし
-* @return　なし
-*/
+
 int TitleScene::Update()
 {
-	auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(1));
-	pad->GamePadRefresh();
-	
-	title_pos.y += 4.0f;
-
-	if (title_pos.y >= 125.0f)
-	{
-		title_pos.y = 125.0f;
-		button_flag = true;
-
-		if (!tutorial_flag)
-		{
-			if (pad->GetButtonBuffer(GamePad_Button2))
-			{
-				tutorial_flag = true;
-			}
-		}
-		else
-		{
-			if (pad->GetButtonBuffer(GamePad_Button2)) 
-			{
-				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
-			}
-		}
-	}
-
-	title_scale += Vector2(0.0075f, 0.0075f);
-
-	if (title_scale.x > 1.0f)
-	{
-		title_scale = Vector2(1.0f, 1.0f);
-	}
-
-	if (button_flag)
-	{
-		if (alpha_flag)
-		{
-			button_alpha -= 0.04f;
-
-			if (button_alpha <= 0.0f)
-			{
-
-				alpha_flag = !alpha_flag;
-			}
-		}
-		else
-		{
-			button_alpha += 0.04f;
-
-			if (button_alpha >= 1.0f)
-			{
-				alpha_flag = !alpha_flag;
-			}
-		}
-	}
+	TitleLanding();
+	OperationButton();
 
 	return 0;
 }
@@ -125,22 +66,81 @@ void TitleScene::Draw2D()
 	{
 		SpriteBatch.Draw(*_background, Vector3(0.0f, 0.0f, 10000.0f));
 
-		SpriteBatch.Draw(*_title, Vector3(title_pos), 1.0f, Vector3(0, 0, 0),
-			Vector3(0, 0, 0), Vector2(title_scale));
-		if (button_flag)
+		SpriteBatch.Draw(*_title_logo, Vector3(title_logo_position), title_logo_alpha, Vector3_Zero,
+			             Vector3_Zero, Vector2(title_logo_scale));
+
+		//! ボタン入力を受け付けるフラグがtrueの時に描画する
+		if (button_push_flag)
 		{
-			SpriteBatch.Draw(*_b_button, Vector3(410.0f, 340.0f, 100.0f), button_alpha, Vector3(0, 0, 0),
-				Vector3(0, 0, 0), Vector2(button_scale));
+			SpriteBatch.Draw(*_operation_button, Vector3(410.0f, 340.0f, 100.0f), operation_button_alpha, Vector3_Zero,
+				             Vector3_Zero, Vector2(operation_button_scale));
 		}
+
 		SpriteBatch.Draw(*_robot, Vector3(0.0f, 0.0f, 100.0f));
 	}
-
-	if (tutorial_flag)
-		SpriteBatch.Draw(*_tutorial, Vector3(0.0f, 0.0f, 10000.0f));
 }
 
 void TitleScene::Draw3D()
 {
 	SceneCamera::Instance().SetSceneCamera();
+}
+
+//! @fn タイトルロゴをスクロールさせる関数
+int TitleScene::TitleLanding()
+{
+	auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(1));
+	pad->GamePadRefresh();
+
+	title_logo_position.y += 4.0f;
+
+	//! タイトルロゴが落ち切った時にボタン入力を受け付ける
+	if (title_logo_position.y >= 125.0f)
+	{
+		title_logo_alpha      = 1.0f;
+		title_logo_position.y = 125.0f;
+		button_push_flag      = true;
+
+		//! チュートリアル画像の表示
+		if (!tutorial_flag)
+		{
+			if (pad->GetButtonBuffer(GamePad_Button2))
+			{
+				// ここでチュートリアルシーンに遷移
+				// tutorial_flag = true;
+				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TUTORIAL);
+			}
+		}
+	}
+
+	return 0;
+}
+
+//! @fn 操作ボタン画像の点滅処理をする関数
+int TitleScene::OperationButton()
+{
+	//! ボタン入力を受け付けるフラグがtrueの時、描画されている画像を点滅させる
+	if (button_push_flag)
+	{
+		if (button_flashing_flag)
+		{
+			operation_button_alpha -= 0.04f;
+
+			if (operation_button_alpha <= 0.0f)
+			{
+				button_flashing_flag = !button_flashing_flag;
+			}
+		}
+		else
+		{
+			operation_button_alpha += 0.04f;
+
+			if (operation_button_alpha >= 1.0f)
+			{
+				button_flashing_flag = !button_flashing_flag;
+			}
+		}
+	}
+
+	return 0;
 }
 

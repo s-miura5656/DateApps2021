@@ -5,9 +5,11 @@
 class ImpactSpeed
 {
 public:
+	ImpactSpeed();
+	~ImpactSpeed();
 
-	bool Initialize(Vector3(attenuate));
-	int Update(Vector3(impact_max), Vector3(attenuate_max));
+	virtual bool Initialize(Vector3(impact_power), Vector3(attenuate_init));
+	int Update(Vector3(attenuate_max));
 	void impactSpeed(Vector3(attenuate_up), MODEL model);
 
 private:

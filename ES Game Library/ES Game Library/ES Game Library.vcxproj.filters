@@ -229,6 +229,12 @@
     <Filter Include="Myclass\Players\Player\Crown">
       <UniqueIdentifier>{643cd3d4-3574-4056-930c-704e664ed175}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Scenes\SelectScene">
+      <UniqueIdentifier>{7c957301-2ba5-402c-be76-6d69f7313688}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Scenes\TutorialScene">
+      <UniqueIdentifier>{ddc65cd1-3df4-49b5-bb50-e8f73493201f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -483,6 +489,12 @@
     </ClCompile>
     <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp">
       <Filter>Myclass\Players\Player\Crown</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Scenes\TutorialScene\TutorialScene.cpp">
+      <Filter>Myclass\Scenes\TutorialScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Scenes\SelectScene\SelectScene.cpp">
+      <Filter>Myclass\Scenes\SelectScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -777,6 +789,12 @@
     </ClInclude>
     <ClInclude Include="MyClass\Managers\ResouceManager\ResouceManager.h">
       <Filter>Myclass\Managers\ResouceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Scenes\TutorialScene\TutorialScene.h">
+      <Filter>Myclass\Scenes\TutorialScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Scenes\SelectScene\SelectScene.h">
+      <Filter>Myclass\Scenes\SelectScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

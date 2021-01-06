@@ -4,6 +4,8 @@
 //! 余計なインクルードを減らすための手法
 #include "../../Scenes/Main/MainScene.h"
 #include "../../Scenes/Title/TitleScene.h"
+#include "../../Scenes/TutorialScene/TutorialScene.h"
+#include "../../Scenes/SelectScene/SelectScene.h"
 #include"../../Scenes/Result/ResultScene.h"
 #include "../ControllerManager/ContorollerManager.h"
 #include "../TimeManager/Time.h"
@@ -38,6 +40,12 @@ void SceneManager::ChangeScene()
 	switch (_scene_state) {
 	case SceneState::TITLE:
 		_scene.reset(new TitleScene);
+		break;
+	case SceneState::TUTORIAL:
+		_scene.reset(new TutorialScene);
+		break;
+	case SceneState::SELECT:
+		_scene.reset(new SelectScene);
 		break;
 	case SceneState::MAIN:
 		_scene.reset(new MainScene);

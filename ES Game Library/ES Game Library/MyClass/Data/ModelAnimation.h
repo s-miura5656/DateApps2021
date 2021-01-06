@@ -5,15 +5,18 @@
 
 static void ModelRotation(Vector3 rotation, MODEL model)
 {
-
 	model->Rotation(rotation.x, rotation.y, rotation.z);
-
 }
 
+//! @fn モデルを点滅させる関数
+//! @param (alpha_max) 透明度の上限値
+//! @param (alpha_min) 透明度の下限値
+//! @param (set_alpha) 透明度の初期値
+//! @param (speed) 点滅の速さ
+//! @param (model) 点滅させたいモデル
+//! @return 透明度の初期値をfloat型で返す
 static float ModelFlashing(float alpha_max, float alpha_min, float set_alpha, float speed, MODEL model)
 {
-
-	
 	static bool alpha_flag = true;
 
 	if (alpha_flag)
@@ -34,10 +37,15 @@ static float ModelFlashing(float alpha_max, float alpha_min, float set_alpha, fl
 	}
 
 	return set_alpha;
-	
-	
 }
-	 
+
+//! @fn モデルを拡大縮小する関数
+//! @param (scale_max) 拡大の最大値
+//! @param (scale_min) 縮小の最大値
+//! @param (scale_set) モデルの大きさの初期値
+//! @param (speed) 拡縮の速さ
+//! @param (model) 拡縮させるモデル
+//! @return モデルの大きさの初期値をfloat型で返す
 static float ModelScaling(float scale_max, float scale_min, float set_scale, float speed, MODEL model)
 {
 	static bool scale_flag = false;
@@ -59,23 +67,25 @@ static float ModelScaling(float scale_max, float scale_min, float set_scale, flo
 		}
 	}
 
-	
 	return set_scale;
 }
 
-static float ModelBound(float bound_x_max, float bound_y_max, float bound_z_max, float speed, MODEL model)
+//! @fn モデルを跳ねさせる関数
+//! @param (bound_max) 
+//! @param (speed) 跳ねる速さ
+//! @param (model) 跳ねさせるモデル
+static void ModelBound(Vector3 bound_max, float speed, MODEL model)
 {
 	static float theta = 0.0f;
 
 	Vector3 pos = model->GetPosition();
-	pos.x = MathHelper_Sin(theta) * bound_x_max;
-	pos.y = MathHelper_Sin(theta) * bound_y_max;
-	pos.z = MathHelper_Sin(theta) * bound_z_max;
+
+	pos.x = MathHelper_Sin(theta) * bound_max.x;
+	pos.y = MathHelper_Sin(theta) * bound_max.y;
+	pos.z = MathHelper_Sin(theta) * bound_max.z;
 	model->SetPosition(pos);
 
 	theta += speed;
 	if (theta >= 360.0f)
 		theta -= 360.0f;
-
-	return bound_x_max, bound_y_max, bound_z_max;
 }

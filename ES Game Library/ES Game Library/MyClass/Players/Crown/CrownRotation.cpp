@@ -46,19 +46,19 @@ bool CrownRotation::Initialize()
 int CrownRotation::Update()
 {
 	auto param_list = _i_player_data->GetAllParametor();
-		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
+		if (rankingpoint_max < param_list[tag].ranking_point)
 		{
-			std::string tag = PLAYER_TAG + std::to_string(i + 1);
-			if (rankingpoint_max < param_list[tag].ranking_point) 
-			{
-				crown_flag = true;
-			}
-			
-			if (_i_player_data->GetRankNum(tag) == 0)
-			{
-				_position = _i_player_data->GetPosition(tag) + Vector3(0, 1.1f, 0);
-			}
+			crown_flag = true;
 		}
+
+		if (_i_player_data->GetRankNum(tag) == 0)
+		{
+			_position = _i_player_data->GetPosition(tag) + Vector3(0, 1.1f, 0);
+		}
+	}
 
 		ModelRotation(Vector3(0.0f, 3.0f, 0.0f), _model);
 		_effect->SetPosition(_position + Vector3_Up * 0.1f);

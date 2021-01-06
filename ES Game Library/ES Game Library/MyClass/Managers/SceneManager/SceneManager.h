@@ -25,6 +25,8 @@ public:
 	enum SceneState
 	{
 		TITLE,
+		TUTORIAL,
+		SELECT,
 		MAIN,
 		RESULT
 	};
