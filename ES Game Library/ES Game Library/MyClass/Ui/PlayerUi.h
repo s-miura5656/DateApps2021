@@ -29,7 +29,7 @@ private:
 	static SPRITE  score_font;//各プレイヤーのスコア
 	int score;
 	int prev_rank_point;
-	Vector3 corner[4];
+	Vector3 corner[2];
 	int add_point;
 	
 	std::vector<PointAnimation> pointAnimation;

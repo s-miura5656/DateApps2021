@@ -27,10 +27,9 @@ bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 
 	score = 0;
 	prev_rank_point = 0;
-	corner[0] = Vector3(   0, 360, 0);
-	corner[1] = Vector3(   0, 360, 0);
-	corner[2] = Vector3(1280, 360, 0);
-	corner[3] = Vector3(1280, 360, 0);
+	corner[0] = Vector3( 640,   0, 0);
+	corner[1] = Vector3( 640, 720, 0);
+	
 	add_point = 0;
 
 	return true;
@@ -38,7 +37,7 @@ bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 
 int PlayerUi::Update()
 {
-
+	//! 配列のerase時と今のスコア比較
 	if (score < add_point)
 	{
 		score++;
@@ -62,6 +61,7 @@ void PlayerUi::Draw2D()
 {
 	SpriteBatch.Draw(*banner_sprite, banner_position);
 	
+	//! 入手ポイントのアニメーション
 	for (int i = 0; i < pointAnimation.size(); i++)
 	{
 		if (pointAnimation[i].point <= 10) {
@@ -113,22 +113,36 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 	//! 入手ポイントの移動
 	for (int i = 0; i < pointAnimation.size(); ++i)
 	{
-		Vector3 bezier = Vector3_Bezier(player_num, corner[0], corner[1], banner_position + Vector3(150, 0, 0), pointAnimation[i].theta);
-		Vector3 bezier2 = Vector3_Bezier(player_num, corner[2], corner[3], banner_position + Vector3(150, 0, 0), pointAnimation[i].theta);
+		Vector3 bezier  = Vector3_Bezier(player_num, corner[0], corner[0], banner_position + Vector3(100, 40, 0), pointAnimation[i].theta);
+		Vector3 bezier2 = Vector3_Bezier(player_num, corner[1], corner[1], banner_position + Vector3(  0, 0, 0), pointAnimation[i].theta);
 		pointAnimation[i].theta += 0.008;
+
+		//! 1pと2pのベジェ曲線
 		if (player_index == 0 || player_index == 1) {
 			pointAnimation[i].position.y = bezier.y;
 			pointAnimation[i].position.x = bezier.x;
 		}
+
+		//! 3pと4pのベジェ曲線
 		if (player_index == 2 || player_index == 3) {
 			pointAnimation[i].position.y = bezier2.y;
 			pointAnimation[i].position.x = bezier2.x;
 		}
+
 		pointAnimation[i].alpha -= 0.003;
 
-		if (pointAnimation[i].position.y <= banner_position.y + 40) {
-			add_point += pointAnimation[i].point;
-			pointAnimation.erase(pointAnimation.begin() + i);
+		//! バナーの座標に入手したポイントがたどり着いたとき
+		if (player_index == 0 || player_index == 2) {
+			if (pointAnimation[i].position.x <= banner_position.x + 100) {
+				add_point += pointAnimation[i].point;
+				pointAnimation.erase(pointAnimation.begin() + i);
+			}
+		}
+		if (player_index == 1 || player_index == 3) {
+			if (pointAnimation[i].position.x >= banner_position.x + 100) {
+				add_point += pointAnimation[i].point;
+				pointAnimation.erase(pointAnimation.begin() + i);
+			}
 		}
 	}
 }
