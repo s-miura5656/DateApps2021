@@ -32,6 +32,7 @@ protected:
 	bool Removeflag = false;
 	float _rotation = 0.f;
 	float _scale = 1.5f;
+	IMapData* _map_data;
 private:
 	
 };

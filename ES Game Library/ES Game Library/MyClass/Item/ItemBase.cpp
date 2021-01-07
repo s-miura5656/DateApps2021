@@ -21,6 +21,7 @@ void ItemBase::Draw3D()
 	rotation *= Matrix_CreateRotationY(_rotation);
 	//_box->SetDirection(Quaternion_CreateFromRotationMatrix(rotation));
 	//_box->SetPosition(_position);
+	_model->SetScale(_scale);
 	_model->SetPosition(_position + Vector3(0, 0.5, 0));
 	_model->SetRotation(Vector3(270, 180, 0));
 	_model->Draw();

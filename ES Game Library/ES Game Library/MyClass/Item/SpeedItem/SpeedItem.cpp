@@ -9,10 +9,12 @@ SpeedItem::SpeedItem(Vector3 position, std::string name)
 	_hit_box->Settags(name);
 	_hit_box->SetHitBox(1, 1, 1);
 	_i_player_data = new IPrayerData;
+	_map_data = new IMapData;
 }
 
 SpeedItem::~SpeedItem()
 {
+	delete _map_data;
 	delete _i_player_data;
 	_hit_box.reset();
 }
@@ -21,8 +23,15 @@ bool SpeedItem::Initialize()
 {
 	_speed = 0.09f;
 
+	auto data = _map_data->GetData();
+
+	int x = fabsf(_position.x);
+	int z = fabsf(_position.z);
+
+	data[z][x] = 'a';
+	_map_data->SetData(data);
+
 	_model = ResouceManager::Instance().LoadModelFile(_T("Item/player_speedup_item.X"));
-	_model->SetScale(_scale);
 	Material material;
 	material.Diffuse = Color(1.0f, 1.0f, 1.0f);
 	material.Ambient = Color(1.0f, 1.0f, 1.0f);
@@ -48,6 +57,13 @@ int SpeedItem::Update()
 			_i_player_data->SetParameter_Change_Flag(name, true);
 			_i_player_data->SetSpeed(name, _speed);
 			Removeflag = true;
+			auto data = _map_data->GetData();
+
+			int x = fabsf(_position.x);
+			int z = fabsf(_position.z);
+
+			data[z][x] = ' ';
+			_map_data->SetData(data);
 		}
 	}
 
