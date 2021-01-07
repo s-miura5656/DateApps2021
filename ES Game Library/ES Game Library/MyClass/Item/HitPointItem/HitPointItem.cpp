@@ -56,7 +56,7 @@ int HitPointItem::Update()
 		if (_hit_box->IsHitObjectsSquare(name))
 		{
 			//ItemEffect(name);
-			_i_player_data->SetParameter_PowerUp(name, true);
+			_i_player_data->SetParameter_PowerDown(name, true);
 			_i_player_data->SetSpeed(name, 0.01);
 			_i_arm_data->SetGoSpeed(arm_tag, 0.02);
 			Removeflag = true;

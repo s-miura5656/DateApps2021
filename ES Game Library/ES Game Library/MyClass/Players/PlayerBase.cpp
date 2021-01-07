@@ -185,7 +185,7 @@ void PlayerBase::Draw3D()
 	}
 	else
 	{
-		if (_i_player_data->GetParameter_PowerDown(_tag))
+		if (_i_player_data->GetParameter_PowerUp(_tag))
 		{
 			_aura_effect->SetPosition(_transform.position + Vector3_Up);
 			_aura_effect->SetRotation(Vector3(-15,0,0));

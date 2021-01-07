@@ -185,7 +185,7 @@ void StageManager::RandomBlockSet()
 		random_block_pos.at(i) = work;
 	}
 
-	for (int i = 0; i < MathHelper_Random(1,3); i++)
+	for (int i = 0; i < MathHelper_Random(1,2); i++)
 	{
 		std::string blocktag = DESTRUCTION_BLOCK_TAG + std::to_string(random_block_pos[i].x) + std::to_string(random_block_pos[i].z);
 		_stages.push_back(new Block(blocktag, _random_item[MathHelper_Random(2)]));
