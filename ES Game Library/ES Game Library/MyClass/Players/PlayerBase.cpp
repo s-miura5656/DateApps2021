@@ -41,7 +41,8 @@ int PlayerBase::Update()
 			_index_num.x = 7;
 			_index_num.z = 6;
 			player_data->SetIndexNum(_tag, _index_num);
-			player_data->SetPosition(_tag, _transform.position); 
+			player_data->SetPosition(_tag, _transform.position);
+			_i_player_data->SetParameter_Change_Flag(_tag, false);
 		}
 	}
 	else

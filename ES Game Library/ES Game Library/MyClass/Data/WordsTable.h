@@ -51,7 +51,7 @@ static const int FALL_BLOCK_COUNT = 10;
 static const int FALL_BLOCK_INTERVAL = 60;
 
 //!Ç¢Ç¬Ç‹Ç≈ã≠âªÅAé„ëÃâªÇ≥ÇÍÇƒÇ¢ÇÈÇ©parameter_change_count
-static const int PARAMETER_CHANGE_TIME = 60;
+static const int PARAMETER_CHANGE_TIME = 1200;
 namespace PlayerEnum {
 	enum Personality { NORMAL, ARM_RANGE, ARM_SPEED, PLAYER_MOVE_SPEED, PLAYER_DEFENCE, PLAYER_KING,PERSONALITY_MAX};
 

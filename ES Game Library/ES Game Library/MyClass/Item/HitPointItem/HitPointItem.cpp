@@ -38,11 +38,14 @@ int HitPointItem::Update()
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		std::string name = PLAYER_TAG + std::to_string(i + 1);
-
+		std::string name    = PLAYER_TAG + std::to_string(i + 1);
+		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
 		if (_hit_box->IsHitObjectsSquare(name))
 		{
 			//ItemEffect(name);
+			_i_player_data->SetParameter_Change_Flag(name, true);
+			_i_player_data->SetSpeed(name, 0.01);
+			_i_arm_data->SetGoSpeed(arm_tag, 0.02);
 			Removeflag = true;
 		}
 	}

@@ -76,7 +76,7 @@ public:
 	int GetParameterLevel(std::string& player_tag)				                const { return PlayerParametor::Instance()._player_params[player_tag].parameter_level; }
 
 	//! プレイヤーのパラメーターが変更されているか
-	void SetParameter_Change_Flag(std::string& player_tag, bool parameterchangeflag) { PlayerParametor::Instance()._player_params[player_tag].parameter_change_flag = parameterchangeflag; }
+	void SetParameter_Change_Flag(std::string& player_tag, bool parameterchangeflag) { PlayerParametor::Instance()._player_params[player_tag].parameter_change_flag = false; PlayerParametor::Instance()._player_params[player_tag].parameter_change_flag = parameterchangeflag; }
 	bool GetParameter_Change_Flag(std::string& player_tag)				       const { return PlayerParametor::Instance()._player_params[player_tag].parameter_change_flag; }
 
 	std::map<std::string, PlayerParam> GetAllParametor()			           const { return PlayerParametor::Instance()._player_params; }
