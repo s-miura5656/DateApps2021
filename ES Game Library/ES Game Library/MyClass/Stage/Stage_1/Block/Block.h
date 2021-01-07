@@ -31,6 +31,7 @@ private:
 	std::unique_ptr<ParticleSystem> _effect;
 	std::string                     _item_name;
 	std::unique_ptr<IArmData>		_i_arm_data;
+	std::unique_ptr<ParticleSystem> _aura_effect;
 	const int						_arm_distance = 2.5f;
 	int                             _speed;
 	int                             _player_point;
