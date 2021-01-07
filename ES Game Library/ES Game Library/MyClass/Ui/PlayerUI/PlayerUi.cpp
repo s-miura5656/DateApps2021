@@ -29,7 +29,7 @@ bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 		score_font = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber.png"));
 
 	if(player_font == nullptr)
-		player_font = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 10);
+		player_font = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"),2);
 
 	score = 0;
 	prev_rank_point = 0;
@@ -122,30 +122,7 @@ void PlayerUi::Draw2D()
 	SpriteBatch.Draw(*score_font, banner_position + Vector3((138 * 0.3) + 90, 10, -1), RectWH((int)((score % 1000) % 100 / 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
 	SpriteBatch.Draw(*score_font, banner_position + Vector3((204 * 0.3) + 90, 10, -1), RectWH((int)((score % 1000) % 100 % 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
 
-	SpriteBatch.DrawString(player_font, player_position, Color(0.f, 0.f, 0.f), _T("%dP"), player_index + 1);
-
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		if (_i_player_data->GetParameterLevel(tag) == i + 1)
-		SpriteBatch.DrawString(player_font, _T("LV:"), Vector2(banner_position.x, banner_position.y - 30), Color(255, 255, 255), Vector2(0.5, 0.5), Vector3(0, 0, 0), Vector3(0, 0, 0));
-	}
-
-	if (_i_player_data->GetParameterLevel(tag) == 1)
-	{
-		SpriteBatch.Draw(*score_font, banner_position + Vector3(50, -30, 0), RectWH(_i_player_data->GetParameterLevel(tag) * 64, 0, 64, 64), Color(1.f, 1.f, 1.f), Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
-	}
-	else if (_i_player_data->GetParameterLevel(tag) == 2)
-	{
-		SpriteBatch.Draw(*score_font, banner_position + Vector3(50, -35, 0), RectWH(_i_player_data->GetParameterLevel(tag) * 64, 0, 64, 64), Color(1.f, 1.f, 1.f), Vector3(0, 0, 0), Vector3(0, 0, 0), 0.5f);
-	}
-	else if (_i_player_data->GetParameterLevel(tag) == 3)
-	{
-		SpriteBatch.Draw(*score_font, banner_position + Vector3(50, -40, 0), RectWH(_i_player_data->GetParameterLevel(tag) * 64, 0, 64, 64), Color(1.f, 1.f, 1.f), Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
-	}
-	else if (_i_player_data->GetParameterLevel(tag) == 4)
-	{
-		SpriteBatch.Draw(*score_font, banner_position + Vector3(50, -45, 0), RectWH(_i_player_data->GetParameterLevel(tag) * 64, 0, 64, 64), Color(1.f, 1.f, 1.f), Vector3(0, 0, 0), Vector3(0, 0, 0), 0.9f);
-	}
+	SpriteBatch.DrawString(player_font, player_position + Vector2(-50,-100), Color(255.f, 0.f, 0.f), _T("%d位"), (_i_player_data->GetRankNum(tag)) + 1);
 }
 
 void PlayerUi::RegisterPointAnimation(Vector3 player_num)
