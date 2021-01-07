@@ -27,16 +27,16 @@ void ItemBase::Draw3D()
 
 void ItemBase::BoxShape(int scale)
 {
-	if (scale >= 5) {
-		scale = 5;
+	if (scale >= 4) {
+		scale = 4;
 	}
 	SimpleShape shape_box{};
 
 	shape_box.Type = Shape_Box;
 
-	shape_box.Width = 0.2  * scale;
-	shape_box.Height = 0.2 * scale;
-	shape_box.Depth = 0.2 * scale;
+	shape_box.Width = 0.3  * scale;
+	shape_box.Height = 0.3 * scale;
+	shape_box.Depth = 0.3 * scale;
 
 	_box = GraphicsDevice.CreateModelFromSimpleShape(shape_box);
 }

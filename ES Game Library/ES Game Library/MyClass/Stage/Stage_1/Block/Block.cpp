@@ -75,6 +75,8 @@ int Block::Update()
 	{
 		std::string arm_tag    = ARM_TAG + std::to_string(i + 1);
 
+		std::unique_ptr<IPrayerData> player_data = std::make_unique<IPrayerData>();
+		std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
 		float distance = Vector3_Distance(_i_arm_data->GetPosition(arm_tag), _position);
 
 		if (distance > _arm_distance)
@@ -108,9 +110,7 @@ int Block::Update()
 
 			auto a = arm_data->GetState(arm_tag);
 
-			std::unique_ptr<IPrayerData> player_data = std::make_unique<IPrayerData>();
-			std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
-			//player_data->SetRankingPoint(player_tag, player_data->GetRankingPoint(player_tag) + BLOCK_POINT);
+			player_data->SetRankingPoint(player_tag, player_data->GetRankingPoint(player_tag) + BLOCK_POINT);
 
 			_effect->SetPosition(_position + Vector3_Up * 0.5f);
 			_effect->PlayOneShot();
@@ -214,13 +214,13 @@ void Block::Fall()
 			switch (iplayerdata->GetRankNum(player_tag))
 			{
 			case 0:
-				point = 600;
+				point = 1000;
 				break;
 			case 1:
-				point = 400;
+				point = 600;
 				break;
 			case 2:
-				point = 100;
+				point = 200;
 				break;
 			case 3:
 				point = 0;

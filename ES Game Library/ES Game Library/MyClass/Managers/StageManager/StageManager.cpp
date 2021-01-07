@@ -112,7 +112,7 @@ bool StageManager::Initialize()
 int StageManager::Update()
 {
 	//5400
-	if (_time >= 0) {
+	if (_time >= 5400) {
 		_random_fall_time++;
 	}
 	else

@@ -496,33 +496,33 @@ void PlayerBase::ParameterLevel()
 	if (old_count == _new_point)
 		return;
 
-	switch (_i_player_data->GetParameterLevel(_tag))
-	{
-	case 1:
-		_i_player_data->SetShotRigorFrame(_tag, 30);
-		_i_player_data->SetSpeed(_tag, 0.05f);
-		_i_arm_Data->SetLimitRange(_arm_tag, 10);
-		_i_arm_Data->SetGoSpeed(_arm_tag, 0.1f);
-		break;
-	case 2:
-		_i_player_data->SetShotRigorFrame(_tag, 25);
-		_i_player_data->SetSpeed(_tag, 0.06f);
-		_i_arm_Data->SetLimitRange(_arm_tag, 12);
-		_i_arm_Data->SetGoSpeed(_arm_tag, 0.125f);
-		break;
-	case 3:
-		_i_player_data->SetShotRigorFrame(_tag, 20);
-		_i_player_data->SetSpeed(_tag, 0.07f);
-		_i_arm_Data->SetLimitRange(_arm_tag, 14);
-		_i_arm_Data->SetGoSpeed(_arm_tag, 0.15f);
-		break;
-	case 4:
-		_i_player_data->SetShotRigorFrame(_tag, 15);
-		_i_player_data->SetSpeed(_tag, 0.08f);
-		_i_arm_Data->SetLimitRange(_arm_tag, 16);
-		_i_arm_Data->SetGoSpeed(_arm_tag, 0.2f);
-		break;
-	}
+	//switch (_i_player_data->GetParameterLevel(_tag))
+	//{
+	//case 1:
+	//	_i_player_data->SetShotRigorFrame(_tag, 30);
+	//	_i_player_data->SetSpeed(_tag, 0.05f);
+	//	_i_arm_Data->SetLimitRange(_arm_tag, 10);
+	//	_i_arm_Data->SetGoSpeed(_arm_tag, 0.1f);
+	//	break;
+	//case 2:
+	//	_i_player_data->SetShotRigorFrame(_tag, 25);
+	//	_i_player_data->SetSpeed(_tag, 0.06f);
+	//	_i_arm_Data->SetLimitRange(_arm_tag, 12);
+	//	_i_arm_Data->SetGoSpeed(_arm_tag, 0.125f);
+	//	break;
+	//case 3:
+	//	_i_player_data->SetShotRigorFrame(_tag, 20);
+	//	_i_player_data->SetSpeed(_tag, 0.07f);
+	//	_i_arm_Data->SetLimitRange(_arm_tag, 14);
+	//	_i_arm_Data->SetGoSpeed(_arm_tag, 0.15f);
+	//	break;
+	//case 4:
+	//	_i_player_data->SetShotRigorFrame(_tag, 15);
+	//	_i_player_data->SetSpeed(_tag, 0.08f);
+	//	_i_arm_Data->SetLimitRange(_arm_tag, 16);
+	//	_i_arm_Data->SetGoSpeed(_arm_tag, 0.2f);
+	//	break;
+	//}
 }
 
 void PlayerBase::InvincibleMode()

@@ -427,24 +427,13 @@ void ArmBase::DeleteWire()
 
 int ArmBase::PointCalculation(std::string other_player_tag)
 {
-	int point;
-
 	auto player_data = _i_player_data.get();
 
-	switch (player_data->GetRankNum(other_player_tag))
+	int point = 200 + (200 * player_data->GetRankNum(_player_tag));
+
+	if (player_data->GetRankNum(_player_tag))
 	{
-	case 0:
-		point = 600;
-		break;
-	case 1:
-		point = 400;
-		break;
-	case 2:
-		point = 100;
-		break;
-	case 3:
-		point = 0;
-		break;
+		point = 1000;
 	}
 	if (player_data->GetRankingPoint(other_player_tag) < point)
 	{
@@ -456,9 +445,6 @@ int ArmBase::PointCalculation(std::string other_player_tag)
 		//point = LOST_PLAYER_POINT - 100 * player_data->GetRankNum(other_player_tag);
 		player_data->SetRankingPoint(other_player_tag, player_data->GetRankingPoint(other_player_tag) - point);
 	}
-	if (player_data->GetRankNum(other_player_tag) + 1 != PLAYER_COUNT_MAX && point > 0)
-	{
-		ItemCounter::SetItem(POINT_ITEM_TAG, player_data->GetPosition(other_player_tag), point);
-	}
+	player_data->SetRankingPoint(_player_tag, player_data->GetRankingPoint(_player_tag) + point);
 	return player_data->GetRankingPoint(_player_tag) + point;
 }

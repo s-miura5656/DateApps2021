@@ -24,12 +24,15 @@ bool PointItem::Initialize()
 
 	Material material;
 	material.Diffuse = Color(1.0f, 1.0f, 1.0f);
-	material.Ambient = Color(0.0f, 0.0f, 0.75f);
+	material.Ambient = Color(0.5f, 0.2f, 0.0f);
 	if (_point >= 300)
 	{
-		material.Ambient = Color(1.0f, 1.0f, 1.0f);
+		material.Ambient = Color(0.5f, 0.5f, 0.5f);
 	}
-
+	if (_point >= 1000)
+	{
+		material.Ambient = Color(1.0f, 1.0f, 0.0f);
+	}
 	BoxShape(_point / 100);
 
 	_box->SetMaterial(material);
