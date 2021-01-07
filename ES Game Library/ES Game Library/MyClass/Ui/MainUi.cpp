@@ -61,19 +61,19 @@ bool MainUi::Initialize()
 	
 	// Player1
 	player_ui.push_back(new PlayerUi(0));
-	player_ui[0]->Initialize(_T("BannerFrameSprite/red_banner.png"), Vector3(10, 50, 1));
+	player_ui[0]->Initialize(_T("BannerFrameSprite/red_banner.png"), Vector3(10, 200, 1));
 
 	// Player2
 	player_ui.push_back(new PlayerUi(1));
-	player_ui[1]->Initialize(_T("BannerFrameSprite/blue_banner.png"), Vector3(1280 - 300, 50, 1));
+	player_ui[1]->Initialize(_T("BannerFrameSprite/blue_banner.png"), Vector3(1280 - 300, 200, 1));
 
 	// Player3
 	player_ui.push_back(new PlayerUi(2));
-	player_ui[2]->Initialize(_T("BannerFrameSprite/green_banner.png"), Vector3(10, 300, 1));
+	player_ui[2]->Initialize(_T("BannerFrameSprite/green_banner.png"), Vector3(10, 500, 1));
 
 	// Player4
 	player_ui.push_back(new PlayerUi(3));
-	player_ui[3]->Initialize(_T("BannerFrameSprite/yellow_banner.png"), Vector3(1280 - 300, 300, 1));
+	player_ui[3]->Initialize(_T("BannerFrameSprite/yellow_banner.png"), Vector3(1280 - 300, 500, 1));
 	
 	return true;
 }

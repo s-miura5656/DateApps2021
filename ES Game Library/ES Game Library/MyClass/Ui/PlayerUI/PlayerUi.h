@@ -26,6 +26,8 @@ private:
 
 	Vector3 banner_position;//各プレイヤーのバナー
 	SPRITE  banner_sprite;//各プレイヤーのバナー
+	SPRITE  joy_icon;
+	SPRITE  normal_icon;
 
 	static SPRITE  score_font;//各プレイヤーのスコア
 	int score;
