@@ -106,19 +106,15 @@ bool StageManager::Initialize()
 	delete iplayer_data;
 
 	int size = _stages.size();
+	_random_item[0] = POWOR_ITEM_TAG;
+	_random_item[1] = SPEED_ITEM_TAG;
+	_random_item[2] = HITPOINT_ITEM_TAG;
 	return true;
 }
 
 int StageManager::Update()
 {
-	//5400
-	if (_time >= 5400) {
 		_random_fall_time++;
-	}
-	else
-	{
-		_time++;
-	}
 	//TODO:~‚Á‚Ä‚­‚é•p“x‚Í’²®‚·‚é
 	if (_random_fall_time >= FALL_BLOCK_INTERVAL)
 	{
@@ -127,7 +123,6 @@ int StageManager::Update()
 
 		RandomBlockSet();
 		_random_fall_time = 0;
-
 		delete imap_data;
 	}
 
@@ -190,11 +185,11 @@ void StageManager::RandomBlockSet()
 		random_block_pos.at(i) = work;
 	}
 
-	for (int i = 0; i < FALL_BLOCK_COUNT; i++)
+	for (int i = 0; i < 1 ; i++)
 	{
 		std::string blocktag = DESTRUCTION_BLOCK_TAG + std::to_string(random_block_pos[i].x) + std::to_string(random_block_pos[i].z);
-		_stages.push_back(new Block(blocktag, POINT_ITEM_TAG));
-		random_block_pos[i].y = MathHelper_Random(5, 10);
+		_stages.push_back(new Block(blocktag, _random_item[MathHelper_Random(1)]));
+		random_block_pos[i].y = 10;
 		_stages[_stages.size() - 1]->SetPosition(random_block_pos[i]);
 		_stages[_stages.size() - 1]->Initialize();
 	}

@@ -34,4 +34,5 @@ private:
 	const int						_arm_distance = 2.5f;
 	int                             _speed;
 	int                             _player_point;
+	bool                            _item_in_flag = false;
 };

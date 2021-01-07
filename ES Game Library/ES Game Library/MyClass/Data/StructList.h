@@ -17,6 +17,7 @@ struct PlayerParam {
 	int lost_point		 = 0;
 	int parameter_level = 1;
 	bool invincible_mode = false;
+	bool parameter_change_flag = false;
 };
 
 struct ArmParam {

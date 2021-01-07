@@ -133,6 +133,20 @@ int PlayerBase::Update()
 		}
 	}
 
+	if (_i_player_data->GetParameter_Change_Flag(_tag))
+	{
+		_parameter_change_count++;
+		if (_parameter_change_count >= PARAMETER_CHANGE_TIME)
+		{
+			_i_player_data->SetParameter_Change_Flag(_tag, false);
+			_parameter_change_count = 0;
+		}
+	}
+	else
+	{
+		_i_player_data->SetSpeed(_tag, 0.05f);
+		_i_arm_Data->SetGoSpeed(_arm_tag, 0.1f);
+	}
 	SetCollisionPosition();
 	return 0;
 }
@@ -182,7 +196,7 @@ void PlayerBase::Draw3D()
 	}
 	else
 	{
-		if (_i_player_data->GetParameterLevel(_tag) >= 3)
+		if (_i_player_data->GetParameter_Change_Flag(_tag))
 		{
 			_aura_effect->SetPosition(_transform.position + Vector3_Up);
 			_aura_effect->SetRotation(Vector3(-15,0,0));

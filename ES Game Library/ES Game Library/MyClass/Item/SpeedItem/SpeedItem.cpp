@@ -19,13 +19,13 @@ SpeedItem::~SpeedItem()
 
 bool SpeedItem::Initialize()
 {
-	_speed = 0.01f;
+	_speed = 0.09f;
 
 	Material material;
 	material.Diffuse = Color(0.0f, 0.0f, 1.0f);
 	material.Ambient = Color(0.0f, 0.0f, 0.75f);
 
-	BoxShape(0);
+	BoxShape(5);
 
 	_box->SetMaterial(material);
 
@@ -42,7 +42,9 @@ int SpeedItem::Update()
 
 		if (_hit_box->IsHitObjectsSquare(name))
 		{
-			ItemEffect(name);
+			//ItemEffect(name);
+			_i_player_data->SetParameter_Change_Flag(name, true);
+			_i_player_data->SetSpeed(name, _speed);
 			Removeflag = true;
 		}
 	}

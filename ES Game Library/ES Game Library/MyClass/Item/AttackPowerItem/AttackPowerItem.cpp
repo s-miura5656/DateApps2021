@@ -26,7 +26,7 @@ bool AttackPowerItem::Initialize()
 	material.Diffuse = Color(1.0f, 0.0f, 0.0f);
 	material.Ambient = Color(0.75f, 0.0f, 0.0f);
 
-	BoxShape(0);
+	BoxShape(5);
 
 	_box->SetMaterial(material);
 
@@ -40,10 +40,12 @@ int AttackPowerItem::Update()
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
-
+		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
 		if (_hit_box->IsHitObjectsSquare(name))
 		{
-			ItemEffect(name);
+			//ItemEffect(name);
+			_i_player_data->SetParameter_Change_Flag(name, true);
+			_i_arm_data->SetGoSpeed(arm_tag, 0.3);
 			Removeflag = true;
 		}
 	}

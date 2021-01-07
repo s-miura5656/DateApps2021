@@ -25,7 +25,7 @@ bool HitPointItem::Initialize()
 	material.Diffuse = Color(0.0f, 1.0f, 0.0f);
 	material.Ambient = Color(0.0f, 0.75f, 0.0f);
 
-	BoxShape(0);
+	BoxShape(5);
 
 	_box->SetMaterial(material);
 	
@@ -42,7 +42,7 @@ int HitPointItem::Update()
 
 		if (_hit_box->IsHitObjectsSquare(name))
 		{
-			ItemEffect(name);
+			//ItemEffect(name);
 			Removeflag = true;
 		}
 	}

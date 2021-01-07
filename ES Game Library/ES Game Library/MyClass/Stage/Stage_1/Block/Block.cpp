@@ -25,8 +25,12 @@ bool Block::Initialize()
 	{
 		_blinking = new Blinking;
 		_blinking->Initialize(_position);
+		Material mat;
 	}
-
+	if (_item_name != NULL_ITEM_TAG)
+	{
+		_item_in_flag = true;
+	}
 	_player_point = 0;
 
 	_effect.reset(new ParticleSystem);
@@ -151,6 +155,12 @@ void Block::DrawAlpha3D()
 	mat.Ambient = Color(1.0f, 1.0f, 1.0f);
 	mat.Specular = Color(0.5f, 0.5f, 0.5f);
 
+	if (_item_in_flag)
+	{
+		mat.Diffuse = Color(1.0f, 1.0f, 1.0f);
+		mat.Ambient = Color(1.0f, 1.0f, 1.0f);
+		mat.Specular = Color(1.0f, 1.0f, 1.0f);
+	}
 	_model->SetMaterial(mat);
 	_model->SetPosition(_position);
 	_model->SetRotation(0, 0, 0);
