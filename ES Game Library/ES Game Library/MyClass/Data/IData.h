@@ -75,9 +75,13 @@ public:
 	void SetParameterLevel(std::string& player_tag, int parameterlevel)              { PlayerParametor::Instance()._player_params[player_tag].parameter_level = parameterlevel; }
 	int GetParameterLevel(std::string& player_tag)				                const { return PlayerParametor::Instance()._player_params[player_tag].parameter_level; }
 
-	//! プレイヤーのパラメーターが変更されているか
-	void SetParameter_Change_Flag(std::string& player_tag, bool parameterchangeflag) { PlayerParametor::Instance()._player_params[player_tag].parameter_change_flag = false; PlayerParametor::Instance()._player_params[player_tag].parameter_change_flag = parameterchangeflag; }
-	bool GetParameter_Change_Flag(std::string& player_tag)				       const { return PlayerParametor::Instance()._player_params[player_tag].parameter_change_flag; }
+	//! プレイヤーのパラメーターが強化されているか
+	void SetParameter_PowerUp(std::string& player_tag, bool parameterpowerup) { PlayerParametor::Instance()._player_params[player_tag].parameter_powerup = false; PlayerParametor::Instance()._player_params[player_tag].parameter_powerup = parameterpowerup; }
+	bool GetParameter_PowerUp(std::string& player_tag)				       const { return PlayerParametor::Instance()._player_params[player_tag].parameter_powerup; }
+
+	//! プレイヤーのパラメーターが弱体化されているか
+	void SetParameter_PowerDown(std::string& player_tag, bool parameterpowerdown) { PlayerParametor::Instance()._player_params[player_tag].parameter_powerdown = parameterpowerdown; }
+	bool GetParameter_PowerDown(std::string& player_tag)				       const { return PlayerParametor::Instance()._player_params[player_tag].parameter_powerdown; }
 
 	std::map<std::string, PlayerParam> GetAllParametor()			           const { return PlayerParametor::Instance()._player_params; }
 };

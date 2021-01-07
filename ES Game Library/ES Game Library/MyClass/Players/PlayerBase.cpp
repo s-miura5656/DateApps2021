@@ -42,7 +42,8 @@ int PlayerBase::Update()
 			_index_num.z = 6;
 			player_data->SetIndexNum(_tag, _index_num);
 			player_data->SetPosition(_tag, _transform.position);
-			_i_player_data->SetParameter_Change_Flag(_tag, false);
+			_i_player_data->SetParameter_PowerUp(_tag, false);
+			_i_player_data->SetParameter_PowerDown(_tag, false);
 		}
 	}
 	else
@@ -133,21 +134,8 @@ int PlayerBase::Update()
 			InputMove(pad);
 		}
 	}
+	ItemParameterTime();
 
-	if (_i_player_data->GetParameter_Change_Flag(_tag))
-	{
-		_parameter_change_count++;
-		if (_parameter_change_count >= PARAMETER_CHANGE_TIME)
-		{
-			_i_player_data->SetParameter_Change_Flag(_tag, false);
-			_parameter_change_count = 0;
-		}
-	}
-	else
-	{
-		_i_player_data->SetSpeed(_tag, 0.05f);
-		_i_arm_Data->SetGoSpeed(_arm_tag, 0.1f);
-	}
 	SetCollisionPosition();
 	return 0;
 }
@@ -197,7 +185,7 @@ void PlayerBase::Draw3D()
 	}
 	else
 	{
-		if (_i_player_data->GetParameter_Change_Flag(_tag))
+		if (_i_player_data->GetParameter_PowerDown(_tag))
 		{
 			_aura_effect->SetPosition(_transform.position + Vector3_Up);
 			_aura_effect->SetRotation(Vector3(-15,0,0));
@@ -553,4 +541,33 @@ void PlayerBase::InvincibleMode()
 		_i_player_data->SetInvincibleMode(_tag, false);
 	}
 	
+}
+
+void PlayerBase::ItemParameterTime()
+{
+	if (_i_player_data->GetParameter_PowerUp(_tag))
+	{
+		_powerup_count++;
+		if (_powerup_count >= POWERUP_TIME)
+		{
+			_i_player_data->SetParameter_PowerUp(_tag, false);
+			_powerup_count = 0;
+		}
+	}
+
+	if (_i_player_data->GetParameter_PowerDown(_tag))
+	{
+		_powerdown_count++;
+		if (_powerdown_count >= POWERDOWN_TIME)
+		{
+			_i_player_data->SetParameter_PowerDown(_tag, false);
+			_powerdown_count = 0;
+		}
+	}
+
+	if (!_i_player_data->GetParameter_PowerUp(_tag) && !_i_player_data->GetParameter_PowerDown(_tag))
+	{
+		_i_player_data->SetSpeed(_tag, 0.05f);
+		_i_arm_Data->SetGoSpeed(_arm_tag, 0.1f);
+	}
 }

@@ -33,6 +33,7 @@ protected:
 	void DebugControll();
 	void ParameterLevel();
 	void InvincibleMode();
+	void ItemParameterTime();
 	//! file
 	ANIMATIONMODEL		_model;
 	FONT				_font;
@@ -81,7 +82,8 @@ protected:
 	int _shot_pending_count     = 0;
 	int _respawn_time           = 0;
 	int _invincible_count       = 0;
-	int _parameter_change_count = 0;
+	int _powerup_count          = 0;
+	int _powerdown_count        = 0;
 	int _new_point              = 0;
 	int _old_point              = 0;
 

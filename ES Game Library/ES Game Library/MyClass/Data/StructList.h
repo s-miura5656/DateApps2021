@@ -4,20 +4,21 @@
 #include "WordsTable.h"
 
 struct PlayerParam {
-	int state			 = PlayerEnum::WAIT;
-	Vector3 position	 = Vector3_Zero;
-	float angle			 = 180.f;
-	int hit_point		 = 1000;
-	int attack_powor	 = 1000;
-	float speed			 = 0.05f;
-	int ranking_point	 = 0;
-	int kill_count		 = 0;
-	int rank_num		 = 0;
-	int shot_rigor_frame = 30;
-	int lost_point		 = 0;
-	int parameter_level = 1;
-	bool invincible_mode = false;
-	bool parameter_change_flag = false;
+	int state			     = PlayerEnum::WAIT;
+	Vector3 position	     = Vector3_Zero;
+	float angle			     = 180.f;
+	int hit_point		     = 1000;
+	int attack_powor	     = 1000;
+	float speed			     = 0.05f;
+	int ranking_point	     = 0;
+	int kill_count		     = 0;
+	int rank_num		     = 0;
+	int shot_rigor_frame     = 30;
+	int lost_point		     = 0;
+	int parameter_level      = 1;
+	bool invincible_mode     = false;
+	bool parameter_powerup   = false;
+	bool parameter_powerdown = false;
 };
 
 struct ArmParam {

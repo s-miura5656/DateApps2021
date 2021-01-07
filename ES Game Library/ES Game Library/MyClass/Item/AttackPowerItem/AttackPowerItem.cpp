@@ -56,7 +56,7 @@ int AttackPowerItem::Update()
 		if (_hit_box->IsHitObjectsSquare(name))
 		{
 			//ItemEffect(name);
-			_i_player_data->SetParameter_Change_Flag(name, true);
+			_i_player_data->SetParameter_PowerUp(name, true);
 			_i_arm_data->SetGoSpeed(arm_tag, 0.3);
 			Removeflag = true;
 

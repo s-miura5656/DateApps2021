@@ -54,7 +54,7 @@ int SpeedItem::Update()
 		if (_hit_box->IsHitObjectsSquare(name))
 		{
 			//ItemEffect(name);
-			_i_player_data->SetParameter_Change_Flag(name, true);
+			_i_player_data->SetParameter_PowerDown(name, true);
 			_i_player_data->SetSpeed(name, _speed);
 			Removeflag = true;
 			auto data = _map_data->GetData();
