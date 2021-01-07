@@ -48,7 +48,7 @@ static const int INVINCIBLE_FRAME = 120;
 static const int FALL_BLOCK_COUNT = 10;
 
 //!ランダムで降ってくるブロックの頻度
-static const int FALL_BLOCK_INTERVAL = 1200;
+static const int FALL_BLOCK_INTERVAL = 60;
 
 //!いつまで強化、弱体化されているかparameter_change_count
 static const int PARAMETER_CHANGE_TIME = 600;

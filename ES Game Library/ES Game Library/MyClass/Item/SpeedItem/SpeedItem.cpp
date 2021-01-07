@@ -21,13 +21,15 @@ bool SpeedItem::Initialize()
 {
 	_speed = 0.09f;
 
+	_model = ResouceManager::Instance().LoadModelFile(_T("Item/player_speedup_item.X"));
+	_model->SetScale(_scale);
 	Material material;
-	material.Diffuse = Color(0.0f, 0.0f, 1.0f);
-	material.Ambient = Color(0.0f, 0.0f, 0.75f);
+	material.Diffuse = Color(1.0f, 1.0f, 1.0f);
+	material.Ambient = Color(1.0f, 1.0f, 1.0f);
 
-	BoxShape(5);
+	//BoxShape(5);
 
-	_box->SetMaterial(material);
+	_model->SetMaterial(material);
 
 	return true;
 }

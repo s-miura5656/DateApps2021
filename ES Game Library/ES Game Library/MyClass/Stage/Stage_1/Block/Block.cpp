@@ -158,7 +158,7 @@ void Block::DrawAlpha3D()
 	if (_item_in_flag)
 	{
 		mat.Diffuse = Color(1.0f, 1.0f, 1.0f);
-		mat.Ambient = Color(255.0f, 1.0f, 1.0f);
+		mat.Ambient = Color(255.0f, 255.0f, 1.0f);
 		mat.Specular = Color(1.0f, 1.0f, 1.0f);
 	}
 	_model->SetMaterial(mat);

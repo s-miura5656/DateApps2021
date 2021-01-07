@@ -35,7 +35,7 @@ bool PointItem::Initialize()
 	}
 	BoxShape(_point / 100);
 
-	_box->SetMaterial(material);
+	//_box->SetMaterial(material);
 
 	return true;
 }

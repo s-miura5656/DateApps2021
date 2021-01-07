@@ -24,13 +24,15 @@ bool AttackPowerItem::Initialize()
 {
 	_attack_powor = 100;
 	
+	_model = ResouceManager::Instance().LoadModelFile(_T("Item/arm_speedup_item.X"));
+	_model->SetScale(_scale);
 	Material material;
-	material.Diffuse = Color(1.0f, 0.0f, 0.0f);
-	material.Ambient = Color(0.75f, 0.0f, 0.0f);
+	material.Diffuse = Color(1.0f, 1.0f, 1.0f);
+	material.Ambient = Color(1.0f, 1.0f, 1.0f);
 
-	BoxShape(5);
+	//BoxShape(5);
 
-	_box->SetMaterial(material);
+	_model->SetMaterial(material);
 
 	return true;
 }

@@ -3,7 +3,7 @@
 #include "../../ESGLib.h"
 #include "../Collision/HitBox.h"
 #include "../Data/IData.h"
-
+#include "../Managers/ResouceManager/ResouceManager.h"
 class ItemBase
 {
 public:
@@ -23,7 +23,7 @@ protected:
 	int _attack_powor = 100;
 	float _speed		  = 0.01f;
 
-	MODEL _box;
+	MODEL _model;//!継承されるモデルのベース
 	Vector3 _position;
 	IPrayerData* _i_player_data;
 	IArmData* _i_arm_data;
@@ -31,6 +31,7 @@ protected:
 
 	bool Removeflag = false;
 	float _rotation = 0.f;
+	float _scale = 1.5f;
 private:
 	
 };
