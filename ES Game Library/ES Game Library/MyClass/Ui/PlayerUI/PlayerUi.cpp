@@ -27,6 +27,8 @@ bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 	joy_icon = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/icon01_.png"));
 	normal_icon = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/icon02_.png"));
 
+	ranking = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/ranking.png"));
+
 	if (score_font == nullptr)
 		score_font = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber.png"));
 
@@ -43,18 +45,25 @@ bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 	lost_point = 0;
 	lost_flag = false;
 
+	/*for (int i = 0; i < player_index; i++)
+	{*/
+		player_pos = Vector3_Zero;
+	
+
 	return true;
 }
 
 int PlayerUi::Update()
 {
 	auto rank_point = _i_player_data->GetRankingPoint(tag);
-
 		auto player_num = GraphicsDevice.WorldToScreen(_i_player_data->GetPosition(tag));
 		player_num.z = SpriteBatch_TopMost;
 		player_position.x = player_num.x;
 		player_position.y = player_num.y;
 
+		player_pos.x = player_num.x;
+		player_pos.y = player_num.y;
+		
 		std::string& arm_tag = ARM_TAG + std::to_string(player_index + 1);
 		Vector3 _hit = _i_arm_data->GetHitPosition(arm_tag);
 
@@ -98,7 +107,7 @@ void PlayerUi::Draw2D()
 			if (pointAnimation[i].point >= s * 100) {
 				if ((pointAnimation[i].point / 1000) >= 1) {
 					SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(10 * ((0.1 * s) + 0.3f), -25, 0),
-						RectWH(((int)((pointAnimation[i].point / 1000)) * 64), 0, 64 , 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
+						RectWH(((int)((pointAnimation[i].point / 1000)) * 64), 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
 						Vector3(0, 0, 0), (0.1 * s) + 0.3f);
 				}
 				SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(74 * ((0.1 * s) + 0.3f), -25, 0),
@@ -115,8 +124,6 @@ void PlayerUi::Draw2D()
 		}
 	}
 
-	
-
 	//バナースコアアニメーション
 	SpriteBatch.Draw(*score_font, banner_position + Vector3((10 * 0.3) + 90, 10, -1), RectWH((int)(score / 1000) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
 	SpriteBatch.Draw(*score_font, banner_position + Vector3((74 * 0.3) + 90, 10, -1), RectWH((int)((score % 1000) / 100) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
@@ -131,9 +138,8 @@ void PlayerUi::Draw2D()
 		SpriteBatch.Draw(*normal_icon, banner_position + Vector3((10 * 1.2) + 100, -64 * 1.2, -1), RectWH(player_index * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.2f);
 
 	}
-		//プレイヤーの順位
-		SpriteBatch.DrawString(player_font, player_position + Vector2(-50, -100), Color(255.f, 0.f, 0.f), _T("%d位"), (_i_player_data->GetRankNum(tag)) + 1);
-
+	
+	SpriteBatch.Draw(*ranking, player_pos + Vector3(-50 * 0.7,(-128-40) * 0.7,0), RectWH((_i_player_data->GetRankNum(tag)) * 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
 }
 
 void PlayerUi::RegisterPointAnimation(Vector3 player_num)
