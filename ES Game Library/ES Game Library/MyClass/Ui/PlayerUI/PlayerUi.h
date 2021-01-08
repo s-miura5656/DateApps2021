@@ -28,6 +28,8 @@ private:
 	SPRITE  banner_sprite;//各プレイヤーのバナー
 	SPRITE  joy_icon;
 	SPRITE  normal_icon;
+	Vector3 player_pos;
+	SPRITE  ranking;
 
 	static SPRITE  score_font;//各プレイヤーのスコア
 	int score;
