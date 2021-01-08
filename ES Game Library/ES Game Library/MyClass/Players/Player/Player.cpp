@@ -13,7 +13,8 @@ Player::Player(std::string tag)
 	
 	_hit_box.reset(new HitBox());
 	_destroy_effect.reset(new ParticleSystem);
-	_aura_effect.reset(new ParticleSystem);
+	_powerup_effect.reset(new ParticleSystem);
+	_powerdown_effect.reset(new ParticleSystem);
 	_i_player_data.reset(new IPrayerData);
 	_i_arm_Data.reset(new IArmData);
 	_i_map_data.reset(new IMapData);
@@ -34,11 +35,12 @@ Player::~Player()
 bool Player::Initialize()
 {
 	//! file
-	_font         = ResouceManager::Instance().LordFontFile(_T("UD デジタル 教科書体 NK-B"), 30);
-	_model        = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
-	_shader		  = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
-	auto&& effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damage_effect02.efk"));
-	auto&& aura   = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Aura_A/aura_A_01.efk"));
+	_font            = ResouceManager::Instance().LordFontFile(_T("UD デジタル 教科書体 NK-B"), 30);
+	_model           = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
+	_shader		     = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
+	auto&& effect    = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damage_effect02.efk"));
+	auto&& powerup   = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Aura_A/aura_A_01.efk"));
+	auto&& powerdown = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/DebuffAura/debuff_aura_01.efk"));
 
 	//! Position
 	_model->SetPosition(_i_player_data->GetPosition(_tag));
@@ -74,10 +76,13 @@ bool Player::Initialize()
 	_destroy_effect->SetSpeed(1.0f);
 	_destroy_effect->SetScale(1.0f);
 
-	_aura_effect->RegisterParticle(aura);
-	_aura_effect->SetSpeed(1.0f);
-	_aura_effect->SetScale(1.0f);
+	_powerup_effect->RegisterParticle(powerup);
+	_powerup_effect->SetSpeed(1.0f);
+	_powerup_effect->SetScale(1.0f);
 
+	_powerdown_effect->RegisterParticle(powerdown);
+	_powerdown_effect->SetSpeed(1.0f);
+	_powerdown_effect->SetScale(1.0f);
 	//! collision
 	_hit_box->Init();
 	_hit_box->Settags(_tag);

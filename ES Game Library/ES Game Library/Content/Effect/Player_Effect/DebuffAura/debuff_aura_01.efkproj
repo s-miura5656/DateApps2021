@@ -15,21 +15,21 @@
             <Min>30</Min>
           </Life>
           <GenerationTime>
-            <Center>5</Center>
-            <Max>5</Max>
-            <Min>5</Min>
+            <Center>10</Center>
+            <Max>10</Max>
+            <Min>10</Min>
           </GenerationTime>
         </CommonValues>
         <LocationValues>
           <Type>2</Type>
           <Easing>
-            <End>
+            <Start>
               <Y>
-                <Center>2</Center>
-                <Max>2</Max>
-                <Min>2</Min>
+                <Center>3</Center>
+                <Max>3</Max>
+                <Min>3</Min>
               </Y>
-            </End>
+            </Start>
           </Easing>
         </LocationValues>
         <RotationValues>
@@ -42,9 +42,9 @@
           <PVA>
             <Rotation>
               <X>
-                <Center>-90</Center>
-                <Max>-90</Max>
-                <Min>-90</Min>
+                <Center>90</Center>
+                <Max>90</Max>
+                <Min>90</Min>
               </X>
               <Z>
                 <Max>180</Max>
@@ -58,12 +58,12 @@
           <AlphaBlend>2</AlphaBlend>
           <FadeInType>1</FadeInType>
           <FadeIn>
-            <StartSpeed>-30</StartSpeed>
+            <Frame>4</Frame>
           </FadeIn>
           <FadeOutType>1</FadeOutType>
           <FadeOut>
-            <Frame>20</Frame>
-            <StartSpeed>-30</StartSpeed>
+            <Frame>16</Frame>
+            <EndSpeed>-20</EndSpeed>
           </FadeOut>
         </RendererCommonValues>
         <DrawingValues>
@@ -91,11 +91,12 @@
                   <Min>1</Min>
                 </X>
                 <Y>
-                  <Center>2.5</Center>
-                  <Max>2.5</Max>
-                  <Min>2.5</Min>
+                  <Center>6</Center>
+                  <Max>6</Max>
+                  <Min>6</Min>
                 </Y>
               </End>
+              <StartSpeed>-30</StartSpeed>
               <EndSpeed>-30</EndSpeed>
             </Outer_Easing>
             <Inner>2</Inner>
@@ -114,11 +115,12 @@
               </Start>
               <End>
                 <X>
-                  <Center>1</Center>
-                  <Max>1</Max>
-                  <Min>1</Min>
+                  <Center>1.5</Center>
+                  <Max>1.5</Max>
+                  <Min>1.5</Min>
                 </X>
               </End>
+              <StartSpeed>-30</StartSpeed>
               <EndSpeed>-30</EndSpeed>
             </Inner_Easing>
             <CenterRatio>2</CenterRatio>
@@ -135,8 +137,10 @@
                 <Min>0</Min>
               </End>
             </CenterRatio_Easing>
-            <OuterColor>1</OuterColor>
             <OuterColor_Fixed>
+              <R>130</R>
+              <G>30</G>
+              <B>126</B>
               <A>255</A>
             </OuterColor_Fixed>
             <OuterColor_Random>
@@ -154,9 +158,9 @@
               </A>
             </OuterColor_Random>
             <CenterColor_Fixed>
-              <R>243</R>
-              <G>209</G>
-              <B>14</B>
+              <R>94</R>
+              <G>12</G>
+              <B>147</B>
             </CenterColor_Fixed>
             <CenterColor_Random>
               <R>
@@ -182,6 +186,7 @@
           <Node>
             <CommonValues>
               <MaxGeneration>
+                <Value>10</Value>
                 <Infinite>True</Infinite>
               </MaxGeneration>
               <Life>
@@ -257,7 +262,7 @@
               </Easing>
             </ScalingValues>
             <RendererCommonValues>
-              <ColorTexture>star.png</ColorTexture>
+              <ColorTexture>Particle01.png</ColorTexture>
               <AlphaBlend>2</AlphaBlend>
               <FadeInType>1</FadeInType>
               <FadeIn>
@@ -268,6 +273,15 @@
                 <Frame>80</Frame>
               </FadeOut>
             </RendererCommonValues>
+            <DrawingValues>
+              <Sprite>
+                <ColorAll_Fixed>
+                  <R>187</R>
+                  <G>109</G>
+                  <B>181</B>
+                </ColorAll_Fixed>
+              </Sprite>
+            </DrawingValues>
             <Name>star</Name>
             <Children />
           </Node>
@@ -320,12 +334,13 @@
               </End>
             </Inner_Easing>
             <CenterColor_Fixed>
-              <R>199</R>
-              <G>170</G>
-              <B>61</B>
+              <R>154</R>
+              <G>64</G>
+              <B>198</B>
             </CenterColor_Fixed>
           </Ring>
         </DrawingValues>
+        <IsRendered>False</IsRendered>
         <Name>ring</Name>
         <Children />
       </Node>

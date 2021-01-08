@@ -185,10 +185,10 @@ void StageManager::RandomBlockSet()
 		random_block_pos.at(i) = work;
 	}
 
-	for (int i = 0; i < MathHelper_Random(1,2); i++)
+	for (int i = 0; i < MathHelper_Random(1,2); i++) 
 	{
 		std::string blocktag = DESTRUCTION_BLOCK_TAG + std::to_string(random_block_pos[i].x) + std::to_string(random_block_pos[i].z);
-		_stages.push_back(new Block(blocktag, _random_item[MathHelper_Random(2)]));
+		_stages.push_back(new Block(blocktag, SPEED_ITEM_TAG));
 		random_block_pos[i].y = 10;
 		_stages[_stages.size() - 1]->SetPosition(random_block_pos[i]);
 		_stages[_stages.size() - 1]->Initialize();

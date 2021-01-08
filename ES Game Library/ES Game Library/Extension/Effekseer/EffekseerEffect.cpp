@@ -158,6 +158,11 @@ D3DVECTOR CEffekseerEffect::GetPosition(const Effekseer::Handle inHandle)
 	return pos;
 }
 
+void CEffekseerEffect::SetColor(const Effekseer::Handle inHandle, DWORD inColor)
+{
+	m_manager->SetAllColor(inHandle, Effekseer::Color(inColor >> 16, inColor >> 8, inColor));
+}
+
 //------------------------------------------------------------------------------
 //	ç¿ïWéÊìæ
 //------------------------------------------------------------------------------

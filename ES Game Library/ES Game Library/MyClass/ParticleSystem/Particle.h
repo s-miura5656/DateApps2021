@@ -39,4 +39,6 @@ private:
 
 	//! speed
 	float _speed = 1.0f;
+
+	Color _wire_color;
 };

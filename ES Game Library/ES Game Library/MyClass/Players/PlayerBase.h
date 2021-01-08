@@ -60,8 +60,8 @@ protected:
 	std::unique_ptr<IArmData>	    _i_arm_Data;
 	std::unique_ptr<IMapData>       _i_map_data;
 	std::unique_ptr<ParticleSystem> _destroy_effect;
-	std::unique_ptr<ParticleSystem> _aura_effect;
-
+	std::unique_ptr<ParticleSystem> _powerup_effect;
+	std::unique_ptr<ParticleSystem> _powerdown_effect;
 	//! tag
 	std::string _tag;
 	std::string _arm_tag;

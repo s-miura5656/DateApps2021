@@ -29,9 +29,9 @@ static const int BLOCK_POINT	   = 100;
 static const int PLAYER_POINT	   = 600;
 static const int LOST_PLAYER_POINT = 600;
 
-static const int FIRST_RANK_POINT = 1000;
+static const int FIRST_RANK_POINT  = 1000;
 static const int SECOND_RANK_POINT = 600;
-static const int THIRD_RANK_POINT = 400;
+static const int THIRD_RANK_POINT  = 400;
 static const int FOURTH_RANK_POINT = 200;
 //! リスポーン時間
 static const int RESPAWN_TIME	   = 180;
@@ -59,6 +59,10 @@ static const int POWERUP_TIME = 600;
 
 //!いつまで弱体化されているかparameter_change_count
 static const int POWERDOWN_TIME = 300;
+
+//!1位の弱体化する確率
+static const int WEAK_PROBABILITY_NUMBER = 50;
+
 namespace PlayerEnum {
 	enum Personality { NORMAL, ARM_RANGE, ARM_SPEED, PLAYER_MOVE_SPEED, PLAYER_DEFENCE, PLAYER_KING,PERSONALITY_MAX};
 

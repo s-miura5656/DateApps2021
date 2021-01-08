@@ -187,14 +187,25 @@ void PlayerBase::Draw3D()
 	{
 		if (_i_player_data->GetParameter_PowerUp(_tag))
 		{
-			_aura_effect->SetPosition(_transform.position + Vector3_Up);
-			_aura_effect->SetRotation(Vector3(-15,0,0));
-			_aura_effect->PlayOneShot();
-			_aura_effect->Draw();
+			_powerup_effect->SetPosition(_transform.position + Vector3_Up);
+			_powerup_effect->SetRotation(Vector3(-15,0,0));
+			_powerup_effect->PlayOneShot();
+			_powerup_effect->Draw();
 		}
 		else
 		{
-			_aura_effect->Stop();
+			_powerup_effect->Stop();
+		}
+		if (_i_player_data->GetParameter_PowerDown(_tag))
+		{
+			_powerdown_effect->SetPosition(_transform.position + Vector3_Up);
+			_powerdown_effect->SetRotation(Vector3(-15, 0, 0));
+			_powerdown_effect->PlayOneShot();
+			_powerdown_effect->Draw();
+		}
+		else
+		{
+			_powerdown_effect->Stop();
 		}
 		_destroy_effect->Stop();
 		
@@ -240,7 +251,23 @@ void PlayerBase::DrawModel()
 	if (_i_player_data->GetState(_tag) != PlayerEnum::Animation::DAMAGE)
 	{
 		_shader->SetTechnique("FixAnimationModel");
-		_model->Draw(_shader);
+		if (!_i_player_data->GetInvincibleMode(_tag))
+		{
+			_model->Draw(_shader);
+		}
+		else if(_invincible_count % 7 == 0)
+		{
+			_shader->SetTechnique("DamageAnimationModel");
+			GraphicsDevice.BeginAlphaBlend();
+			_model->Draw(_shader);
+			GraphicsDevice.EndAlphaBlend();
+		}
+		else
+		{
+			GraphicsDevice.BeginAlphaBlend();
+			_model->Draw(_shader);
+			GraphicsDevice.EndAlphaBlend();
+		}
 	}
 	else
 	{
