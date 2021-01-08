@@ -142,24 +142,20 @@ void ArmBase::Draw3D()
 	_shot_effect->SetRotation(rotation);
 	_shot_effect->Draw();
 
-	int wire_count = 0;
+	auto limitrange = (int)_i_arm_Data->GetLimitRange(_tag) / 3;
+	for (int i = 0; i < _wires.size(); i++)
+	{
+		if (_wires.size() > limitrange * 2)
+			_wires[i]->SetColor(Color(255, 0, 0));
+		else if (_wires.size() > limitrange)
+			_wires[i]->SetColor(Color(255, 255, 0));
+		else
+			_wires[i]->SetColor(Color(0, 255, 0));
+	}
 	//! ƒƒCƒ„[ƒ‚ƒfƒ‹‚Ì•`‰æ
 	for (auto& wire : _wires)
 	{
-		if (wire_count > 4)
-		{
-			wire->SetColor(Color(255, 0, 0));
-		}
-		else if(wire_count > 1)
-		{
-			wire->SetColor(Color(255,255,0));
-		}
-		else
-		{
-			wire->SetColor(Color(0, 255, 0));
-		}
 		wire->Draw3D();
-		wire_count++;
 	}
 }
 
