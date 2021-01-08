@@ -53,7 +53,7 @@ bool Wire::Initialize()
 	auto&& effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/wire/wire.efk"));
 	_effect->RegisterParticle(effect);
 	_effect->SetSpeed(1.0f);
-	_effect->SetScale(1.0f);
+	_effect->SetScale(2.0f);
 	_effect->SetRotation(_transform.rotation);
 	_effect->SetPosition(_transform.position);
 	_effect->PlayOneShot();

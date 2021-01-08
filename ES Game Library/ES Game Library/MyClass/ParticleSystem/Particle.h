@@ -19,7 +19,7 @@ public:
 	void SetScale(Vector3 scale);
 	void SetScale(float scale);
 	void SetSpeed(float speed);
-	
+	void SetColor(Color wirecolor);
 
 private:
 	//! file

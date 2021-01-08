@@ -142,10 +142,24 @@ void ArmBase::Draw3D()
 	_shot_effect->SetRotation(rotation);
 	_shot_effect->Draw();
 
+	int wire_count = 0;
 	//! ƒƒCƒ„[ƒ‚ƒfƒ‹‚Ì•`‰æ
 	for (auto& wire : _wires)
 	{
+		if (wire_count > 4)
+		{
+			wire->SetColor(Color(255, 0, 0));
+		}
+		else if(wire_count > 1)
+		{
+			wire->SetColor(Color(255,255,0));
+		}
+		else
+		{
+			wire->SetColor(Color(0, 255, 0));
+		}
 		wire->Draw3D();
+		wire_count++;
 	}
 }
 

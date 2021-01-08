@@ -58,8 +58,6 @@ void ParticleSystem::SetRotation(Vector3 rotation)
 	_rotation.x = MathHelper_ToRadians(rotation.x);
 	_rotation.y = MathHelper_ToRadians(rotation.y);
 	_rotation.z = MathHelper_ToRadians(rotation.z);
-
-	//_wire_color = Color((int)rotation.x, (int)rotation.y, (int)rotation.z);
 }
 
 void ParticleSystem::SetScale(Vector3 scale)
@@ -75,4 +73,9 @@ void ParticleSystem::SetScale(float scale)
 void ParticleSystem::SetSpeed(float speed)
 {
 	_speed = speed;
+}
+
+void ParticleSystem::SetColor(Color wirecolor)
+{
+	_wire_color = wirecolor;
 }
