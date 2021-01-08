@@ -181,7 +181,7 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 		if (player_index == 0 || player_index == 2) {
 			if (pointAnimation[i].position.x <= banner_position.x + 100) {
 				add_point += pointAnimation[i].point;
-				delta_point = (add_point - score) / GameTimer.GetFPS() * 1;
+				delta_point = (add_point - score) / GameTimer.GetFPS() * 4;
 				pointAnimation.erase(pointAnimation.begin() + i);
 			}
 		}
@@ -190,7 +190,7 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 		if (player_index == 1 || player_index == 3) {
 			if (pointAnimation[i].position.x >= banner_position.x + 100) {
 				add_point += pointAnimation[i].point;
-				delta_point = (add_point - score) / GameTimer.GetFPS() * 1;
+				delta_point = (add_point - score) / GameTimer.GetFPS() * 4;
 				pointAnimation.erase(pointAnimation.begin() + i);
 			}
 		}
