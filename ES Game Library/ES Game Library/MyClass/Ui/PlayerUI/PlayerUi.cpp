@@ -94,36 +94,22 @@ void PlayerUi::Draw2D()
 	//! 入手ポイントのアニメーション
 	for (int i = 0; i < pointAnimation.size(); i++)
 	{
-		for (int s = 1; s < 10;s++) {
-			if (pointAnimation[i].point >= s * 1000) {
-				SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(10 * (1 + (0.1 * s)), -25, 0),
-					RectWH((int)(pointAnimation[i].point / 1000) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
-					Vector3(0, 0, 0), (0.1 * s) + 1.0f);
-				SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(74 * (1 + (0.1 * s)), -25, 0),
-					RectWH((int)((pointAnimation[i].point % 1000) / 100) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
-					Vector3(0, 0, 0), (0.1 * s) + 1.0f);
-				SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(138 * (1 + (0.1 * s)), -25, 0),
-					RectWH((int)((pointAnimation[i].point % 1000) % 100 / 10) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
-					Vector3(0, 0, 0), (0.1 * s) + 1.0f);
-				SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(204 * (1 + (0.1 * s)), -25, 0),
-					RectWH((int)((pointAnimation[i].point % 1000) % 100 % 10) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
-					Vector3(0, 0, 0), (0.1 * s) + 1.0f);
-				break;
-			}
-			else {
+		for (int s = 1; s < FIRST_RANK_POINT / 10;s++) {
 				if (pointAnimation[i].point >= s * 100) {
 					SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(10 * ((0.1 * s) + 0.3f), -25, 0),
-						RectWH((int)(pointAnimation[i].point / 100) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
+						RectWH( ((int)((pointAnimation[i].point / 1000)) * 64), 0, 64 * (pointAnimation[i].point / 1000), 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
 						Vector3(0, 0, 0), (0.1 * s) + 0.3f);
 					SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(74 * ((0.1 * s) + 0.3f), -25, 0),
-						RectWH((int)((pointAnimation[i].point % 100) / 10) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
+						RectWH((int)((pointAnimation[i].point % 1000) / 100) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
 						Vector3(0, 0, 0), (0.1 * s) + 0.3f);
 					SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(138 * ((0.1 * s) + 0.3f), -25, 0),
-						RectWH((int)((pointAnimation[i].point % 100) % 10) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
+						RectWH((int)((pointAnimation[i].point % 1000) % 100 / 10) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
+						Vector3(0, 0, 0), (0.1 * s) + 0.3f);
+					SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(204 * ((0.1 * s) + 0.3f), -25, 0),
+						RectWH((int)((pointAnimation[i].point % 1000) % 100 % 10) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
 						Vector3(0, 0, 0), (0.1 * s) + 0.3f);
 					break;
 				}
-			}
 		}
 	}
 	
