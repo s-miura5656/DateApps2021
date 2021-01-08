@@ -65,7 +65,7 @@ bool MainUi::Initialize()
 
 	// Player2
 	player_ui.push_back(new PlayerUi(1));
-	player_ui[1]->Initialize(_T("BannerFrameSprite/blue_banner.png"), Vector3(1280 - 300, 200, 1));
+	player_ui[1]->Initialize(_T("BannerFrameSprite/blue_banner.png"), Vector3(1280 - 250, 200, 1));
 
 	// Player3
 	player_ui.push_back(new PlayerUi(2));
@@ -73,7 +73,7 @@ bool MainUi::Initialize()
 
 	// Player4
 	player_ui.push_back(new PlayerUi(3));
-	player_ui[3]->Initialize(_T("BannerFrameSprite/yellow_banner.png"), Vector3(1280 - 300, 500, 1));
+	player_ui[3]->Initialize(_T("BannerFrameSprite/yellow_banner.png"), Vector3(1280 - 250, 500, 1));
 	
 	return true;
 }

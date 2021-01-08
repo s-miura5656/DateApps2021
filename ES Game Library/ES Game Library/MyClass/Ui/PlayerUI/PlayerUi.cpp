@@ -24,8 +24,8 @@ bool PlayerUi::Initialize(LPCTSTR banner_name, const Vector3& banner_pos)
 	banner_sprite   = ResouceManager::Instance().LordSpriteFile(banner_name);
 	banner_position = banner_pos;
 
-	joy_icon       = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/robot_serial_01.png"));
-	normal_icon    = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/robot2_serial_number.png"));
+	joy_icon       = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/icon01_.png"));
+	normal_icon    = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/icon02_.png"));
 
 	if (score_font == nullptr)
 		score_font = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber.png"));
@@ -113,7 +113,6 @@ void PlayerUi::Draw2D()
 		}
 	}
 	
-
 	//バナースコアアニメーション
 	SpriteBatch.Draw(*score_font, banner_position + Vector3((10 * 0.3) + 90, 10, -1), RectWH((int)(score / 1000) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
 	SpriteBatch.Draw(*score_font, banner_position + Vector3((74 * 0.3) + 90, 10, -1), RectWH((int)((score % 1000) / 100) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.3f);
@@ -122,10 +121,10 @@ void PlayerUi::Draw2D()
 
 	//! 一位のとき
 	if (_i_player_data->GetRankNum(tag) + 1 == 1) {
-		SpriteBatch.Draw(*joy_icon, banner_position + Vector3((10 * 1.5) + 130, -64 * 1.5, -1), RectWH(player_index * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.5f);
+		SpriteBatch.Draw(*joy_icon, banner_position + Vector3((10 * 1.5) + 80, -64 * 1.f, -1), RectWH(player_index * 128, 0, 128, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.f);
 	}
 	else {
-		SpriteBatch.Draw(*normal_icon, banner_position + Vector3((10 * 1.2) + 130, -64 * 1.2, -1), RectWH(player_index * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.2f);
+		SpriteBatch.Draw(*normal_icon, banner_position + Vector3((10 * 1.2) + 100, -64 * 1.2, -1), RectWH(player_index * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.2f);
 	}
 
 	//プレイヤーの順位
