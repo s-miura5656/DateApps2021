@@ -146,9 +146,9 @@ void ArmBase::Draw3D()
 	for (int i = 0; i < _wires.size(); i++)
 	{
 		if (_wires.size() > limitrange * 2)
-			_wires[i]->SetColor(Color(255, 255 - (85 * (i - limitrange * 2)), 0));
+			_wires[i]->SetColor(Color(255, 0, 0));
 		else if (_wires.size() > limitrange)
-			_wires[i]->SetColor(Color(85 * (i - limitrange), 255, 0));
+			_wires[i]->SetColor(Color(255, 255, 0));
 		else
 			_wires[i]->SetColor(Color(0, 255, 0));
 	}
