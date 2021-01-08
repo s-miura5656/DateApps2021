@@ -29,6 +29,10 @@ static const int BLOCK_POINT	   = 100;
 static const int PLAYER_POINT	   = 600;
 static const int LOST_PLAYER_POINT = 600;
 
+static const int FIRST_RANK_POINT = 1000;
+static const int SECOND_RANK_POINT = 600;
+static const int THIRD_RANK_POINT = 400;
+static const int FOURTH_RANK_POINT = 200;
 //! ÉäÉXÉ|Å[Éìéûä‘
 static const int RESPAWN_TIME	   = 180;
 

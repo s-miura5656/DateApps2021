@@ -4,6 +4,7 @@
 #include "../Collision/HitBox.h"
 #include "../Data/IData.h"
 #include "../Managers/ResouceManager/ResouceManager.h"
+#include"../Managers/AudioManager/AudioManager.h"
 class ItemBase
 {
 public:
