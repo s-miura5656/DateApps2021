@@ -108,21 +108,23 @@ void PlayerUi::Draw2D()
 				RectWH((int)((pointAnimation[i].point % 1000) % 100 % 10) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
 				Vector3(0, 0, 0), 1.0f);
 		}
-		for (int p = 1; p < 10; p++)
+		else {
+			for (int p = 1; p < 10; p++)
 			{
-			if(pointAnimation[i].point == p * 100)
-				SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(10 * ((0.1 * p) + 0.3f), -25, 0),
-					RectWH((int)(pointAnimation[i].point / 100) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
-					Vector3(0, 0, 0), (0.1 * p) + 0.3f);
+				if (pointAnimation[i].point >= p * 100)
+					SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(10 * ((0.1 * p) + 0.3f), -25, 0),
+						RectWH((int)(pointAnimation[i].point / 100) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
+						Vector3(0, 0, 0), (0.1 * p) + 0.3f);
 				SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(74 * ((0.1 * p) + 0.3f), -25, 0),
 					RectWH((int)((pointAnimation[i].point % 100) / 10) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
 					Vector3(0, 0, 0), (0.1 * p) + 0.3f);
-				SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(138 * ((0.1 * p) + 0.3f) , -25, 0),
+				SpriteBatch.Draw(*score_font, pointAnimation[i].position + Vector3(138 * ((0.1 * p) + 0.3f), -25, 0),
 					RectWH((int)((pointAnimation[i].point % 100) % 10) * 64, 0, 64, 64), pointAnimation[i].alpha, Vector3(0, 0, 0),
 					Vector3(0, 0, 0), (0.1 * p) + 0.3f);
 				break;
 			}
-		}
+		     }
+	}
 	
 
 	//バナースコアアニメーション
