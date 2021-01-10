@@ -46,6 +46,8 @@ bool PlayerUi::Initialize(const Vector3& banner_pos, RectWH banner_rectWH)
 	lost_point = 0;
 	lost_flag = false;
 
+	ranking_timer = 10;
+
 	player_pos = Vector3_Zero;
 	
 	return true;
@@ -97,7 +99,7 @@ int PlayerUi::Update()
 void PlayerUi::Draw2D()
 {
 	SpriteBatch.Draw(*banner_sprite, banner_position, banner_rw);
-	int seconds = TimeManager::Instance().GetTimeLeft();
+	int seconds = TimeManager::Instance().GetTime();
 
 	//! 入手ポイントのアニメーション
 	for (int i = 0; i < pointAnimation.size(); i++)
@@ -141,7 +143,7 @@ void PlayerUi::Draw2D()
 	}
 
 	//! 開始十秒後に順位表示
-	if (seconds < 110) {
+	if (seconds < ranking_timer) {
 		SpriteBatch.Draw(*ranking, player_pos + Vector3(-50 * 0.7, (-128 - 40) * 0.7, 0), RectWH((_i_player_data->GetRankNum(tag)) * 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
 	}
 }

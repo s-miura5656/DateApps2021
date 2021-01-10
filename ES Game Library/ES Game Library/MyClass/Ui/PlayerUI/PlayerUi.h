@@ -41,6 +41,8 @@ private:
 	int delta_point;
 	int lost_point;
 	bool lost_flag;
+
+	int ranking_timer;
 	
 	std::vector<PointAnimation> pointAnimation;
 
