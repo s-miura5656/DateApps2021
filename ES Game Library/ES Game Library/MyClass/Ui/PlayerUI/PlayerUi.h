@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../ESGLib.h"
 #include "../../Data/IData.h"
+#include "../../Managers/TimeManager/Time.h"
 
 struct PointAnimation
 {
@@ -26,6 +27,7 @@ private:
 
 	Vector3 banner_position;//各プレイヤーのバナー
 	SPRITE  banner_sprite;//各プレイヤーのバナー
+	RectWH  banner_rw;
 	SPRITE  joy_icon;
 	SPRITE  normal_icon;
 	Vector3 player_pos;
@@ -39,6 +41,8 @@ private:
 	int delta_point;
 	int lost_point;
 	bool lost_flag;
+
+	int ranking_timer;
 	
 	std::vector<PointAnimation> pointAnimation;
 
@@ -56,7 +60,7 @@ public:
 	PlayerUi(const int player_no);
 	~PlayerUi();
 
-	bool Initialize(LPCTSTR banner_name, const Vector3& banner_pos);
+	bool Initialize(const Vector3& banner_pos, RectWH banner_rectWH);
 	int  Update();
 	void Draw2D();
 	void RegisterPointAnimation(Vector3 player_num);
