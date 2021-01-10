@@ -26,6 +26,7 @@ private:
 
 	Vector3 banner_position;//各プレイヤーのバナー
 	SPRITE  banner_sprite;//各プレイヤーのバナー
+	RectWH  banner_rw;
 	SPRITE  joy_icon;
 	SPRITE  normal_icon;
 	Vector3 player_pos;
@@ -56,7 +57,7 @@ public:
 	PlayerUi(const int player_no);
 	~PlayerUi();
 
-	bool Initialize(LPCTSTR banner_name, const Vector3& banner_pos);
+	bool Initialize(const Vector3& banner_pos, RectWH banner_rectWH);
 	int  Update();
 	void Draw2D();
 	void RegisterPointAnimation(Vector3 player_num);
