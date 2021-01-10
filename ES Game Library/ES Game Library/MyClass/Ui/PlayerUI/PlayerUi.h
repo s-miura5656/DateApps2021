@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../ESGLib.h"
 #include "../../Data/IData.h"
+#include "../../Managers/TimeManager/Time.h"
 
 struct PointAnimation
 {

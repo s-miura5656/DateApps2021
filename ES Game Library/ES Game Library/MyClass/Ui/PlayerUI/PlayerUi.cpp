@@ -97,6 +97,7 @@ int PlayerUi::Update()
 void PlayerUi::Draw2D()
 {
 	SpriteBatch.Draw(*banner_sprite, banner_position, banner_rw);
+	int seconds = TimeManager::Instance().GetTimeLeft();
 
 	//! 入手ポイントのアニメーション
 	for (int i = 0; i < pointAnimation.size(); i++)
@@ -123,21 +124,26 @@ void PlayerUi::Draw2D()
 	}
 
 	//バナースコアアニメーション
-	SpriteBatch.Draw(*score_font, banner_position + Vector3( (10 * 0.6) + 50, 10, -1), RectWH((int) (score / 1000) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.6f);
-	SpriteBatch.Draw(*score_font, banner_position + Vector3(( 74 * 0.6) + 50, 10, -1), RectWH((int)((score % 1000) / 100) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.6f);
+	SpriteBatch.Draw(*score_font, banner_position + Vector3((10 * 0.6) + 50, 10, -1), RectWH((int)(score / 1000) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.6f);
+	SpriteBatch.Draw(*score_font, banner_position + Vector3((74 * 0.6) + 50, 10, -1), RectWH((int)((score % 1000) / 100) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.6f);
 	SpriteBatch.Draw(*score_font, banner_position + Vector3((138 * 0.6) + 50, 10, -1), RectWH((int)((score % 1000) % 100 / 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.6f);
 	SpriteBatch.Draw(*score_font, banner_position + Vector3((204 * 0.6) + 50, 10, -1), RectWH((int)((score % 1000) % 100 % 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.6f);
 
+
 	//! 一位のとき
-	if (_i_player_data->GetRankNum(tag) + 1 == 1) {
+	if (_i_player_data->GetRankNum(tag) + 1 == 1)
+	{
 		SpriteBatch.Draw(*joy_icon, banner_position + Vector3((10 * 1.5) + 80, -64 * 1.f, -1), RectWH(player_index * 128, 0, 128, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.f);
 	}
-	else {
+	else
+	{
 		SpriteBatch.Draw(*normal_icon, banner_position + Vector3((10 * 1.2) + 100, -64 * 1.2, -1), RectWH(player_index * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.2f);
-
 	}
-	
-	SpriteBatch.Draw(*ranking, player_pos + Vector3(-50 * 0.7,(-128-40) * 0.7,0), RectWH((_i_player_data->GetRankNum(tag)) * 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+
+	//! 開始十秒後に順位表示
+	if (seconds < 110) {
+		SpriteBatch.Draw(*ranking, player_pos + Vector3(-50 * 0.7, (-128 - 40) * 0.7, 0), RectWH((_i_player_data->GetRankNum(tag)) * 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+	}
 }
 
 void PlayerUi::RegisterPointAnimation(Vector3 player_num)
