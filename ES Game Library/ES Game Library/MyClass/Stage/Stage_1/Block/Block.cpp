@@ -122,6 +122,8 @@ int Block::Update()
 			//!アイテムが入ってないブロックの時はアイテムを生成しない
 			if (_item_name != NULL_ITEM_TAG)
 			{
+				data[z][x] = '?';
+				map_data->SetData(data);
 				ItemCounter::SetItem(_item_name, _position,BLOCK_POINT + _player_point);
 			}
 

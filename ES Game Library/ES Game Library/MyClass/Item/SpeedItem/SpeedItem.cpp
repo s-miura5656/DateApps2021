@@ -88,7 +88,7 @@ int SpeedItem::Update()
 			int x = fabsf(_position.x);
 			int z = fabsf(_position.z);
 
-			data[z][x] = ' ';
+			data[z][x] = '?';
 			_map_data->SetData(data);
 		}
 	}

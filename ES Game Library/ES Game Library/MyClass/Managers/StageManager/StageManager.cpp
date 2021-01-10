@@ -44,6 +44,18 @@ bool StageManager::Initialize()
 			}
 		}
 	}
+
+	//!外壁、破壊不可ブロック、破壊可能ブロック以外の座標を
+	for (int z = 0; z < _mapdate.size(); z++)
+	{
+		for (int x = 0; x < _mapdate[z].size(); x++)
+		{
+			if (_mapdate[z][x] == '?')
+			{
+				_random_block_position.push_back(Vector3(x, 0, -z));
+			}
+		}
+	}
 	//ファイルを閉じる
 	fclose(fp);
 
@@ -163,19 +175,20 @@ void StageManager::DrawAlpha3D()
  */
 void StageManager::RandomBlockSet()
 {
-	//!外壁、破壊不可ブロック、破壊可能ブロック以外の座標を保存する
-	std::vector<Vector3> random_block_pos;
-	for (int z = 0; z < _mapdate.size(); z++)
+	std::vector<Vector3>random_block_pos;
+	for (int i = 0; i < _random_block_position.size(); i++)
 	{
-		for (int x = 0; x < _mapdate[z].size(); x++)
+		int x = _random_block_position[i].x;
+		int z = -_random_block_position[i].z;
+		if (_mapdate[z][x] == '?')
 		{
-			if (_mapdate[z][x] == 'p' || _mapdate[z][x] == ' ')
-			{
-				random_block_pos.push_back(Vector3(x, 0, -z));
-			}
+			random_block_pos.push_back(_random_block_position[i]);
 		}
 	}
-
+	if (random_block_pos.size() == 0)
+	{
+		return;
+	}
 	//!保存した座標をシャッフルする
 	for (int i = 0; i < random_block_pos.size(); ++i)
 	{
@@ -192,5 +205,9 @@ void StageManager::RandomBlockSet()
 		random_block_pos[i].y = 10;
 		_stages[_stages.size() - 1]->SetPosition(random_block_pos[i]);
 		_stages[_stages.size() - 1]->Initialize();
+		if (random_block_pos.size() == 1)
+		{
+			return;
+		}
 	}
 }
