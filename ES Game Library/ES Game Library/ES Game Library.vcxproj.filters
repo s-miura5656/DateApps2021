@@ -178,6 +178,12 @@
     <Filter Include="Myclass\Stage\Stage_1\Piller">
       <UniqueIdentifier>{d7edd38a-d77c-47ec-a91f-7a0a64734f54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Managers\ControllerManager">
+      <UniqueIdentifier>{cc293e60-72d0-4f57-8ce0-c22a34510d69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Myclass\Controller">
+      <UniqueIdentifier>{9a6a0ddd-5308-48f6-8e6f-fbe6dbd184e1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Myclass\Ui">
       <UniqueIdentifier>{54aad0ac-4238-4349-b700-20af82a6ef51}</UniqueIdentifier>
     </Filter>
@@ -223,23 +229,14 @@
     <Filter Include="Myclass\Players\Player\Crown">
       <UniqueIdentifier>{643cd3d4-3574-4056-930c-704e664ed175}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Managers\InputManager">
-      <UniqueIdentifier>{5d3780d0-44af-42c2-b6df-2aa9271e5665}</UniqueIdentifier>
+    <Filter Include="Myclass\Scenes\SelectScene">
+      <UniqueIdentifier>{7c957301-2ba5-402c-be76-6d69f7313688}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Players\Player\Arm\Wire">
-      <UniqueIdentifier>{a9d1b5d7-c99b-4b77-8ee6-a1a21e729278}</UniqueIdentifier>
+    <Filter Include="Myclass\Scenes\TutorialScene">
+      <UniqueIdentifier>{ddc65cd1-3df4-49b5-bb50-e8f73493201f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Stage\Stage_1\Blinking">
-      <UniqueIdentifier>{b7b2b0e1-dd66-42b2-a881-4559f6b80576}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Players\Player\Type">
-      <UniqueIdentifier>{19e43a76-c2c4-416f-9433-e6520aa5cffc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Item\PointItem">
-      <UniqueIdentifier>{1f2bcd4a-7f29-4a3a-b5d3-1aae45dd7ba4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Ui\PlayerUI">
-      <UniqueIdentifier>{66e18376-83ac-4e11-b4ad-a3f7e848f0e4}</UniqueIdentifier>
+    <Filter Include="Myclass\Scenes\DemoMovie">
+      <UniqueIdentifier>{d91b8c07-9d2c-4063-aa06-8897afc15e2d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +442,12 @@
     <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp">
       <Filter>Myclass\Item\HitPointItem</Filter>
     </ClCompile>
+    <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp">
+      <Filter>Myclass\Managers\ControllerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Controller\ControllerConfig.cpp">
+      <Filter>Myclass\Controller</Filter>
+    </ClCompile>
     <ClCompile Include="MyClass\Ui\ResultUi.cpp">
       <Filter>Myclass\Ui</Filter>
     </ClCompile>
@@ -490,23 +493,14 @@
     <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp">
       <Filter>Myclass\Players\Player\Crown</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Managers\InputManager\InputManager.cpp">
-      <Filter>Myclass\Managers\InputManager</Filter>
+    <ClCompile Include="MyClass\Scenes\TutorialScene\TutorialScene.cpp">
+      <Filter>Myclass\Scenes\TutorialScene</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Players\Wire\Wire.cpp">
-      <Filter>Myclass\Players\Player\Arm\Wire</Filter>
+    <ClCompile Include="MyClass\Scenes\SelectScene\SelectScene.cpp">
+      <Filter>Myclass\Scenes\SelectScene</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Stage\Stage_1\Blinking\Blinking.cpp">
-      <Filter>Myclass\Stage\Stage_1\Blinking</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Players\TypeSetting\TypeSetting.cpp">
-      <Filter>Myclass\Players\Player\Type</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Item\PointItem\PointItem.cpp">
-      <Filter>Myclass\Item\PointItem</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Ui\PlayerUI\PlayerUi.cpp">
-      <Filter>Myclass\Ui\PlayerUI</Filter>
+    <ClCompile Include="MyClass\Scenes\DemoMovie\DemoMovieScene.cpp">
+      <Filter>Myclass\Scenes\DemoMovie</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -736,6 +730,12 @@
     <ClInclude Include="MyClass\Item\HitPointItem\HitPointItem.h">
       <Filter>Myclass\Item\HitPointItem</Filter>
     </ClInclude>
+    <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h">
+      <Filter>Myclass\Managers\ControllerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Controller\ControllerConfig.h">
+      <Filter>Myclass\Controller</Filter>
+    </ClInclude>
     <ClInclude Include="MyClass\Ui\BaseUi.h">
       <Filter>Myclass\Ui</Filter>
     </ClInclude>
@@ -796,23 +796,14 @@
     <ClInclude Include="MyClass\Managers\ResouceManager\ResouceManager.h">
       <Filter>Myclass\Managers\ResouceManager</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Managers\InputManager\InputManager.h">
-      <Filter>Myclass\Managers\InputManager</Filter>
+    <ClInclude Include="MyClass\Scenes\TutorialScene\TutorialScene.h">
+      <Filter>Myclass\Scenes\TutorialScene</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Players\Wire\Wire.h">
-      <Filter>Myclass\Players\Player\Arm\Wire</Filter>
+    <ClInclude Include="MyClass\Scenes\SelectScene\SelectScene.h">
+      <Filter>Myclass\Scenes\SelectScene</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Stage\Stage_1\Blinking\Blinking.h">
-      <Filter>Myclass\Stage\Stage_1\Blinking</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Players\TypeSetting\TypeSetting.h">
-      <Filter>Myclass\Players\Player\Type</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Item\PointItem\PointItem.h">
-      <Filter>Myclass\Item\PointItem</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Ui\PlayerUI\PlayerUi.h">
-      <Filter>Myclass\Ui\PlayerUI</Filter>
+    <ClInclude Include="MyClass\Scenes\DemoMovie\DemoMovieScene.h">
+      <Filter>Myclass\Scenes\DemoMovie</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

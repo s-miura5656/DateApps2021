@@ -24,7 +24,10 @@ public:
 	//! @enum ÉVÅ[Éìñº
 	enum SceneState
 	{
+		DEMOMOVIE,
 		TITLE,
+		TUTORIAL,
+		SELECT,
 		MAIN,
 		RESULT
 	};

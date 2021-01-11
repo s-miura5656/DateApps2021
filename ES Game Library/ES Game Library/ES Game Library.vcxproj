@@ -57,7 +57,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_WIN32_WINNT=0x0600;_X86_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_WIN32_WINNT=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -165,15 +165,15 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="MyClass\Collision\HitBox.cpp" />
+    <ClCompile Include="MyClass\Controller\ControllerConfig.cpp" />
     <ClCompile Include="MyClass\Data\ImpactSpeed.cpp" />
     <ClCompile Include="MyClass\Item\AttackPowerItem\AttackPowerItem.cpp" />
     <ClCompile Include="MyClass\Item\HitPointItem\HitPointItem.cpp" />
     <ClCompile Include="MyClass\Item\ItemBase.cpp" />
     <ClCompile Include="MyClass\Item\ItemFactory\ItemFactory.cpp" />
-    <ClCompile Include="MyClass\Item\PointItem\PointItem.cpp" />
     <ClCompile Include="MyClass\Item\SpeedItem\SpeedItem.cpp" />
     <ClCompile Include="MyClass\Managers\AudioManager\AudioManager.cpp" />
-    <ClCompile Include="MyClass\Managers\InputManager\InputManager.cpp" />
+    <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp" />
     <ClCompile Include="MyClass\Managers\ItemManager\ItemManager.cpp" />
     <ClCompile Include="MyClass\Managers\PlayerManager\PlayerManager.cpp" />
     <ClCompile Include="MyClass\Managers\ResouceManager\ResouceManager.cpp" />
@@ -187,13 +187,13 @@
     <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp" />
     <ClCompile Include="MyClass\Players\PlayerBase.cpp" />
     <ClCompile Include="MyClass\Players\Player\Player.cpp" />
-    <ClCompile Include="MyClass\Players\TypeSetting\TypeSetting.cpp" />
-    <ClCompile Include="MyClass\Players\Wire\Wire.cpp" />
+    <ClCompile Include="MyClass\Scenes\DemoMovie\DemoMovieScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Main\MainScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Result\ResultScene.cpp" />
+    <ClCompile Include="MyClass\Scenes\SelectScene\SelectScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Title\TitleScene.cpp" />
+    <ClCompile Include="MyClass\Scenes\TutorialScene\TutorialScene.cpp" />
     <ClCompile Include="MyClass\Stage\StageBase.cpp" />
-    <ClCompile Include="MyClass\Stage\Stage_1\Blinking\Blinking.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Block\Block.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Metal\Metal.cpp" />
@@ -202,7 +202,6 @@
     <ClCompile Include="MyClass\Stage\Stage_1\WallCorner\WallCorner.cpp" />
     <ClCompile Include="MyClass\Stage\Stage_1\Warp\Warp.cpp" />
     <ClCompile Include="MyClass\Ui\MainUi.cpp" />
-    <ClCompile Include="MyClass\Ui\PlayerUI\PlayerUi.cpp" />
     <ClCompile Include="MyClass\Ui\ResultUi.cpp" />
     <ClCompile Include="MyClass\Ui\TitleUi.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -259,6 +258,7 @@
     <ClInclude Include="GameScene\SceneShared.hpp" />
     <ClInclude Include="GameScene\TemplateScene.hpp" />
     <ClInclude Include="MyClass\Collision\HitBox.h" />
+    <ClInclude Include="MyClass\Controller\ControllerConfig.h" />
     <ClInclude Include="MyClass\Data\IData.h" />
     <ClInclude Include="MyClass\Data\ImpactSpeed.h" />
     <ClInclude Include="MyClass\Data\MyAlgorithm.h" />
@@ -270,10 +270,9 @@
     <ClInclude Include="MyClass\Item\Itembase.hpp" />
     <ClInclude Include="MyClass\Item\ItemCounter\ItemCounter.h" />
     <ClInclude Include="MyClass\Item\ItemFactory\ItemFactory.h" />
-    <ClInclude Include="MyClass\Item\PointItem\PointItem.h" />
     <ClInclude Include="MyClass\Item\SpeedItem\SpeedItem.h" />
     <ClInclude Include="MyClass\Managers\AudioManager\AudioManager.h" />
-    <ClInclude Include="MyClass\Managers\InputManager\InputManager.h" />
+    <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h" />
     <ClInclude Include="MyClass\Managers\ItemManager\ItemManager.h" />
     <ClInclude Include="MyClass\Managers\ManagerBase.h" />
     <ClInclude Include="MyClass\Managers\PlayerManager\PlayerManager.h" />
@@ -288,14 +287,14 @@
     <ClInclude Include="MyClass\Players\Crown\CrownRotation.h" />
     <ClInclude Include="MyClass\Players\PlayerBase.h" />
     <ClInclude Include="MyClass\Players\Player\Player.h" />
-    <ClInclude Include="MyClass\Players\TypeSetting\TypeSetting.h" />
-    <ClInclude Include="MyClass\Players\Wire\Wire.h" />
     <ClInclude Include="MyClass\Scenes\BaseScene.h" />
+    <ClInclude Include="MyClass\Scenes\DemoMovie\DemoMovieScene.h" />
     <ClInclude Include="MyClass\Scenes\Main\MainScene.h" />
     <ClInclude Include="MyClass\Scenes\Result\ResultScene.h" />
+    <ClInclude Include="MyClass\Scenes\SelectScene\SelectScene.h" />
     <ClInclude Include="MyClass\Scenes\Title\TitleScene.h" />
+    <ClInclude Include="MyClass\Scenes\TutorialScene\TutorialScene.h" />
     <ClInclude Include="MyClass\Stage\StageBase.h" />
-    <ClInclude Include="MyClass\Stage\Stage_1\Blinking\Blinking.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Block\Block.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Indestructible\Indestructible.h" />
     <ClInclude Include="MyClass\Stage\Stage_1\Metal\Metal.h" />
@@ -305,7 +304,6 @@
     <ClInclude Include="MyClass\Stage\Stage_1\Warp\Warp.h" />
     <ClInclude Include="MyClass\Ui\BaseUi.h" />
     <ClInclude Include="MyClass\Ui\MainUi.h" />
-    <ClInclude Include="MyClass\Ui\PlayerUI\PlayerUi.h" />
     <ClInclude Include="MyClass\Ui\ResultUi.h" />
     <ClInclude Include="MyClass\Ui\TitleUi.h" />
     <ClInclude Include="StdAfx.h" />
