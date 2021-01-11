@@ -29,9 +29,10 @@ public:
 		TUTORIAL,
 		SELECT,
 		MAIN,
-		RESULT
+		RESULT,
+		SELECT
 	};
-
+	//!
 
 	~SceneManager();
 

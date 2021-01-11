@@ -2,7 +2,7 @@
 #include "../../Managers/SceneManager/SceneManager.h"
 #include "../../Managers/ResouceManager/ResouceManager.h"
 #include "../../Data/MyAlgorithm.h"
-#include "../../Managers/ControllerManager/ContorollerManager.h"
+#include "../../Managers/InputManager/InputManager.h"
 #include "../../Data/IData.h"
 
 SelectScene::SelectScene()
@@ -60,8 +60,8 @@ int SelectScene::Update()
 {
 	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
 	{
-		auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(i + 1));
-		pad->GamePadRefresh();
+		auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
+		pad->Refresh();
 
 		// プレイヤー全員の選択が終わったらフラグで判断してメインシーンへ
 		//if()
@@ -71,17 +71,17 @@ int SelectScene::Update()
 
 		if (_select_complete_flag)
 		{
-			if (pad->GetButtonBuffer(GamePad_Button2))
+			if (pad->ButtonDown(GamePad_Button2))
 			{
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
 			}
 		}
 	
-		if (pad->GetPadStateX() > 0)
+		if (pad->Stick(i + 1).x > 0)
 		{
 			_chara_select[i]++;
 		}
-		if (pad->GetPadStateX() < 0)
+		if (pad->Stick(i + 1).x < 0)
 		{
 			_chara_select[i]--;
 		}

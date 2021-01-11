@@ -90,10 +90,15 @@ void TitleScene::Draw3D()
 //! @fn タイトルロゴをスクロールさせる関数
 int TitleScene::TitleLanding()
 {
-	auto pad = ControllerManager::Instance().GetController(PLAYER_TAG + std::to_string(1));
-	pad->GamePadRefresh();
-
+	auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(1));
+	pad->Refresh();
+	
 	title_logo_position.y += 4.0f;
+
+	if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+	{
+		SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::SELECT);
+	}
 
 	//! タイトルロゴが落ち切った時にボタン入力を受け付ける
 	if (title_logo_position.y >= 125.0f)
@@ -103,18 +108,11 @@ int TitleScene::TitleLanding()
 		button_push_flag      = true;
 
 		demo_scene_count++;
-		
-			if (pad->GetButtonBuffer(GamePad_Button2))
-			{
-				// ここでチュートリアルシーンに遷移
-				// tutorial_flag = true;
-				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TUTORIAL);
-			}
 	}
 
 	if(demo_scene_count >= 100)
 	{ 
-		SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::DEMOMOVIE);
+		//SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::DEMOMOVIE);
 	}
 
 

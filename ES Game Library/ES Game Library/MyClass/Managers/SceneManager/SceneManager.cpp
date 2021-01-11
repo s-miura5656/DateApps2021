@@ -11,7 +11,7 @@
 #include "../InputManager/InputManager.h"
 #include "../TimeManager/Time.h"
 #include "../ResouceManager/ResouceManager.h"
-
+#include"../../Scenes/SelectScene/SelectScene.h"
 //! @brief コンストラクタ
 //! @detail SceneManager が作られたときに呼び出されるよ
 SceneManager::SceneManager()
@@ -56,6 +56,9 @@ void SceneManager::ChangeScene()
 		break;
 	case SceneState::RESULT:
 		_scene.reset(new ResultScene);
+		break;
+	case SceneState::SELECT:
+		_scene.reset(new SelectScene);
 		break;
 	}
 
