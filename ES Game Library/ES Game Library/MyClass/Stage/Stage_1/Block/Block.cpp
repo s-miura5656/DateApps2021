@@ -40,7 +40,7 @@ bool Block::Initialize()
 	_hit_box->SetHitBoxScale(1.0f);
 
 	//Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
-	_model  = ResouceManager::Instance().LoadModelFile(_T("MapSprite/capsule2.X"));
+	_model  = ResouceManager::Instance().LoadModelFile(_T("MapSprite/DestructionBox.X"));
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
 	auto effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/effekseer_break02/break_effect.efk"));
 

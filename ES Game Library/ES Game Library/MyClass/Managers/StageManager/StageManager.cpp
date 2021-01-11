@@ -22,7 +22,7 @@ bool StageManager::Initialize()
 {
 	_bg_sprite = ResouceManager::Instance().LordSpriteFile(_T("MapSprite/BG.png"));
 
-	FILE* fp = fopen("MapSprite/map.csv", "r");
+	FILE* fp = fopen("MapSprite/Stage/map_A.csv", "r");
 
 	//マップデータを読み込む
 	char lordchar[CHAR_MAX + 1];

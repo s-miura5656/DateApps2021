@@ -33,7 +33,7 @@ bool SpeedItem::Initialize()
 	data[z][x] = 'a';
 	_map_data->SetData(data);
 
-	_model = ResouceManager::Instance().LoadModelFile(_T("Item/player_speedup_item.X"));
+	_model = ResouceManager::Instance().LoadModelFile(_T("Item/Itembox.X"));
 	Material material;
 	material.Diffuse = Color(1.0f, 1.0f, 1.0f);
 	material.Ambient = Color(1.0f, 1.0f, 1.0f);
