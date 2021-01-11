@@ -42,6 +42,7 @@ private:
 	int add_point;
 	int delta_point;
 	int lost_point;
+	float _font_size = 0.6;
 	bool lost_flag;
 
 	int ranking_timer;

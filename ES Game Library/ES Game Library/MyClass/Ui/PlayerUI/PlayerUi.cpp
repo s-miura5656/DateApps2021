@@ -78,7 +78,10 @@ int PlayerUi::Update()
 		if (score > add_point)
 			score = add_point;
 	}
-
+	else
+	{
+		_font_size = 0.6;
+	}
 	//! 配列のerase時と今のスコア比較
 	if (score > rank_point)
 	{
@@ -155,12 +158,11 @@ void PlayerUi::Draw2D()
 			}
 		}
 	}
-
 	//バナースコアアニメーション
-	SpriteBatch.Draw(*score_font, banner_position + Vector3((10 * 0.6) + 50, 10, -1), RectWH((int)(score / 1000) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.6f);
-	SpriteBatch.Draw(*score_font, banner_position + Vector3((74 * 0.6) + 50, 10, -1), RectWH((int)((score % 1000) / 100) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.6f);
-	SpriteBatch.Draw(*score_font, banner_position + Vector3((138 * 0.6) + 50, 10, -1), RectWH((int)((score % 1000) % 100 / 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.6f);
-	SpriteBatch.Draw(*score_font, banner_position + Vector3((204 * 0.6) + 50, 10, -1), RectWH((int)((score % 1000) % 100 % 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.6f);
+	SpriteBatch.Draw(*score_font, banner_position + Vector3((10 * 0.6) + 50, 10, -1), RectWH((int)(score / 1000) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), _font_size);
+	SpriteBatch.Draw(*score_font, banner_position + Vector3((74 * 0.6) + 50, 10, -1), RectWH((int)((score % 1000) / 100) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), _font_size);
+	SpriteBatch.Draw(*score_font, banner_position + Vector3((138 * 0.6) + 50, 10, -1), RectWH((int)((score % 1000) % 100 / 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), _font_size);
+	SpriteBatch.Draw(*score_font, banner_position + Vector3((204 * 0.6) + 50, 10, -1), RectWH((int)((score % 1000) % 100 % 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), _font_size);
 
 
 	//! 一位のとき
@@ -198,7 +200,10 @@ void PlayerUi::RegisterPointAnimation(Vector3 player_num)
 
 void PlayerUi::MovePointAnimation(Vector3 player_num)
 {
-
+	if (pointAnimation.size() == 0)
+	{
+		return;
+	}
 	//! 入手ポイントの移動
 	for (int i = 0; i < pointAnimation.size(); ++i)
 	{
@@ -224,6 +229,7 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 		if (player_index == 0 || player_index == 2) {
 			if (pointAnimation[i].position.x <= banner_position.x + 100) {
 				add_point += pointAnimation[i].point;
+				_font_size = 0.6 + ((float)(add_point - score) / (float)1000);
 				delta_point = (add_point - score) / GameTimer.GetFPS() * 4;
 				pointAnimation.erase(pointAnimation.begin() + i);
 			}
@@ -233,6 +239,7 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 		if (player_index == 1 || player_index == 3) {
 			if (pointAnimation[i].position.x >= banner_position.x + 100) {
 				add_point += pointAnimation[i].point;
+				_font_size = 0.6 + ((float)(add_point - score) / (float)1000);
 				delta_point = (add_point - score) / GameTimer.GetFPS() * 4;
 				pointAnimation.erase(pointAnimation.begin() + i);
 			}
