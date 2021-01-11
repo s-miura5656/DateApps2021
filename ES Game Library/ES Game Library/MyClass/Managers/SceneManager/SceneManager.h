@@ -26,7 +26,8 @@ public:
 	{
 		TITLE,
 		MAIN,
-		RESULT
+		RESULT,
+		SELECT
 	};
 
 
