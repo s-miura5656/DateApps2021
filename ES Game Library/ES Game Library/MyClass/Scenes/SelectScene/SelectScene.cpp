@@ -30,13 +30,13 @@ bool SelectScene::Initialize()
 		SPRITE texture   = ResouceManager::Instance().LordSpriteFile(path.c_str());
 		_texture[i]      = texture;
 		_chara_select[i] = 0;
-		_player_button_flag[i] = true;
+		_player_button_flag[i] = false;
 	}
 
 	_player_position[0] = -3;
-	_player_position[1] = -1;
-	_player_position[2] = 1;
-	_player_position[3] = 3;
+	_player_position[1] = -0.8;
+	_player_position[2] = 1.4;
+	_player_position[3] = 3.6;
 
 	_select_complete_flag = false;
 
@@ -50,14 +50,13 @@ bool SelectScene::Initialize()
 
 	Light light;
 	light.Type      = Light_Directional;
-	light.Direction = Vector3(0, -1, 1);
+	light.Direction = Vector3(1, -1, 1);
 	light.Diffuse   = Color(1.0f, 1.0f, 1.0f);
 	light.Ambient   = Color(1.0f, 1.0f, 1.0f);
 	light.Specular  = Color(1.0f, 1.0f, 1.0f);
 
 	SceneLight::Instance().SetLightParametor(light);
 	SceneLight::Instance().SetSceneLight();
-
 	return true;
 }
 
@@ -143,7 +142,7 @@ void SelectScene::Draw3D()
 		}*/
 		_shader->SetTexture("m_Texture", *_texture[i]);
 		_shader->SetParameter("vp", vp);
-		_shader->SetParameter("model_ambient", Color(1.f, 1.f, 1.f));
+		_shader->SetParameter("model_ambient", Color(1.0f, 1.0f, 1.0f));
 		_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
 		_shader->SetParameter("eye_pos", SceneCamera::Instance().GetCamera().GetPosition());
 
