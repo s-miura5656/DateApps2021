@@ -63,7 +63,7 @@ int SelectScene::Update()
 		auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
 		pad->Refresh();
 
-		// プレイヤー全員の選択が終わったらフラグで判断してメインシーンへ
+		//! プレイヤー全員の選択が終わったらフラグで判断してメインシーンへ
 		//if()
 		{
 			_select_complete_flag = true;
