@@ -3,8 +3,6 @@
 #include "../BaseScene.h"
 #include"../../Managers/ControllerManager/ContorollerManager.h"
 #include"../../Data/ImpactSpeed.h"
-//#include"../TutorialScene/TutorialScene.h"
-
 
 class TitleScene : public BaseScene
 {
@@ -28,14 +26,17 @@ private:
 	SPRITE _robot;
 	SPRITE _operation_button;
 	SPRITE _tutorial;
+	
 
 	float title_logo_alpha;
 	float operation_button_alpha;
+	int demo_scene_count;
 
 	//! flag
-	bool  button_flashing_flag;
-	bool  button_push_flag;
-	bool  tutorial_flag;
+	bool button_flashing_flag;
+	bool button_push_flag;
+	bool tutorial_flag;
+	bool demo_scene_flag;
 
 	Vector3 title_logo_position;
 	Vector2 title_logo_scale;

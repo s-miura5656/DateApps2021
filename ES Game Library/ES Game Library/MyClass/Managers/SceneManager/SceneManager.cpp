@@ -3,6 +3,7 @@
 //! 前方宣言
 //! 余計なインクルードを減らすための手法
 #include "../../Scenes/Main/MainScene.h"
+#include "../../Scenes/DemoMovie/DemoMovieScene.h"
 #include "../../Scenes/Title/TitleScene.h"
 #include "../../Scenes/TutorialScene/TutorialScene.h"
 #include "../../Scenes/SelectScene/SelectScene.h"
@@ -38,6 +39,9 @@ void SceneManager::ChangeScene()
 	}
 
 	switch (_scene_state) {
+	case SceneState::DEMOMOVIE:
+		_scene.reset(new DemoMovieScene);
+		break;
 	case SceneState::TITLE:
 		_scene.reset(new TitleScene);
 		break;

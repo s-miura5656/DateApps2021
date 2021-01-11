@@ -235,6 +235,9 @@
     <Filter Include="Myclass\Scenes\TutorialScene">
       <UniqueIdentifier>{ddc65cd1-3df4-49b5-bb50-e8f73493201f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Scenes\DemoMovie">
+      <UniqueIdentifier>{d91b8c07-9d2c-4063-aa06-8897afc15e2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -495,6 +498,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Scenes\SelectScene\SelectScene.cpp">
       <Filter>Myclass\Scenes\SelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Scenes\DemoMovie\DemoMovieScene.cpp">
+      <Filter>Myclass\Scenes\DemoMovie</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -795,6 +801,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Scenes\SelectScene\SelectScene.h">
       <Filter>Myclass\Scenes\SelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Scenes\DemoMovie\DemoMovieScene.h">
+      <Filter>Myclass\Scenes\DemoMovie</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

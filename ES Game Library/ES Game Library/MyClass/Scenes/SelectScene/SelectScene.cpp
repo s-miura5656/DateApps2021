@@ -44,11 +44,11 @@ bool SelectScene::Initialize()
 	SceneCamera::Instance().SetPerspectiveFieldOfView(57, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 
 	Light light;
-	light.Type = Light_Directional;
+	light.Type      = Light_Directional;
 	light.Direction = Vector3(0, -1, 1);
-	light.Diffuse = Color(1.0f, 1.0f, 1.0f);
-	light.Ambient = Color(1.0f, 1.0f, 1.0f);
-	light.Specular = Color(1.0f, 1.0f, 1.0f);
+	light.Diffuse   = Color(1.0f, 1.0f, 1.0f);
+	light.Ambient   = Color(1.0f, 1.0f, 1.0f);
+	light.Specular  = Color(1.0f, 1.0f, 1.0f);
 
 	SceneLight::Instance().SetLightParametor(light);
 	SceneLight::Instance().SetSceneLight();
@@ -69,11 +69,14 @@ int SelectScene::Update()
 			_select_complete_flag = true;
 		}
 
-		if (pad->GetButtonBuffer(GamePad_Button2))
+		if (_select_complete_flag)
 		{
-			if(_select_complete_flag)
-			SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
+			if (pad->GetButtonBuffer(GamePad_Button2))
+			{
+				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
+			}
 		}
+	
 		if (pad->GetPadStateX() > 0)
 		{
 			_chara_select[i]++;
