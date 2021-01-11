@@ -27,6 +27,8 @@ private:
 
 	Vector3 banner_position;//各プレイヤーのバナー
 	SPRITE  banner_sprite;//各プレイヤーのバナー
+	SPRITE  banner_status;//各プレイヤーのバナー
+	SPRITE  item_icon;//各プレイヤーのバナー
 	RectWH  banner_rw;
 	SPRITE  joy_icon;
 	SPRITE  normal_icon;

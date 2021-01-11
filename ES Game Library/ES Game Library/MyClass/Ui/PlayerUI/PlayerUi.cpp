@@ -24,7 +24,8 @@ bool PlayerUi::Initialize(const Vector3& banner_pos, RectWH banner_rectWH)
 	banner_sprite = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/score_0110.png"));
 	banner_position = banner_pos;
 	banner_rw = banner_rectWH;
-
+	banner_status = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/status.png"));
+	item_icon = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/item_icon.png"));
 	joy_icon = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/icon01_.png"));
 	normal_icon = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/icon02_.png"));
 
@@ -99,6 +100,36 @@ int PlayerUi::Update()
 void PlayerUi::Draw2D()
 {
 	SpriteBatch.Draw(*banner_sprite, banner_position, banner_rw);
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string name = PLAYER_TAG + std::to_string(i + 1);
+		if (name == tag)
+		{
+			SpriteBatch.Draw(*banner_status, banner_position + Vector3(0, 74, 0), RectWH(256 * i,0,256,128));
+			if (_i_player_data->GetParameter_PowerUp(tag))
+			{
+				if (_i_player_data->GetSpeed(tag) != 0.05)
+				{
+					SpriteBatch.Draw(*item_icon, banner_position + Vector3(30, 130, 0), RectWH(0, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+					SpriteBatch.DrawString(player_font, _T("移動速度アップ！"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140),
+						Color(255, 255, 255), Vector2(0.4, 0.4), Vector3(0, 0, 0), Vector3(0, 0, 0));
+				}
+				else if (_i_arm_data->GetGoSpeed(_arm_tag) != 0.1)
+				{
+					SpriteBatch.Draw(*item_icon, banner_position + Vector3(30, 130, 0), RectWH(64, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+					SpriteBatch.DrawString(player_font, _T("アームの速度アップ！"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140),
+						Color(255, 255, 255), Vector2(0.4, 0.4), Vector3(0, 0, 0), Vector3(0, 0, 0));
+				}
+			}
+			else if (_i_player_data->GetParameter_PowerDown(tag))
+			{
+				SpriteBatch.Draw(*item_icon, banner_position + Vector3(30, 130, 0), RectWH(128, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+				SpriteBatch.DrawString(player_font, _T("ステータスダウン"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140), 
+					Color(255, 255, 255),Vector2(0.4,0.4),Vector3(0,0,0),Vector3(0,0,0));
+			}
+			break;
+		}
+	}
 	int seconds = TimeManager::Instance().GetTime();
 
 	//! 入手ポイントのアニメーション
