@@ -181,9 +181,6 @@
     <Filter Include="Myclass\Managers\ControllerManager">
       <UniqueIdentifier>{cc293e60-72d0-4f57-8ce0-c22a34510d69}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Myclass\Controller">
-      <UniqueIdentifier>{9a6a0ddd-5308-48f6-8e6f-fbe6dbd184e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Myclass\Ui">
       <UniqueIdentifier>{54aad0ac-4238-4349-b700-20af82a6ef51}</UniqueIdentifier>
     </Filter>
@@ -231,12 +228,6 @@
     </Filter>
     <Filter Include="Myclass\Scenes\SelectScene">
       <UniqueIdentifier>{7c957301-2ba5-402c-be76-6d69f7313688}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Scenes\TutorialScene">
-      <UniqueIdentifier>{ddc65cd1-3df4-49b5-bb50-e8f73493201f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Myclass\Scenes\DemoMovie">
-      <UniqueIdentifier>{d91b8c07-9d2c-4063-aa06-8897afc15e2d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Myclass\Scenes\SelectScene">
       <UniqueIdentifier>{78f0a48d-b843-402f-a109-68ffa967dca5}</UniqueIdentifier>
@@ -445,9 +436,6 @@
     <ClCompile Include="MyClass\Managers\ControllerManager\ContorollerManager.cpp">
       <Filter>Myclass\Managers\ControllerManager</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Controller\ControllerConfig.cpp">
-      <Filter>Myclass\Controller</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Ui\ResultUi.cpp">
       <Filter>Myclass\Ui</Filter>
     </ClCompile>
@@ -493,14 +481,8 @@
     <ClCompile Include="MyClass\Players\Crown\CrownRotation.cpp">
       <Filter>Myclass\Players\Player\Crown</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass\Scenes\TutorialScene\TutorialScene.cpp">
-      <Filter>Myclass\Scenes\TutorialScene</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass\Scenes\SelectScene\SelectScene.cpp">
       <Filter>Myclass\Scenes\SelectScene</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass\Scenes\DemoMovie\DemoMovieScene.cpp">
-      <Filter>Myclass\Scenes\DemoMovie</Filter>
     </ClCompile>
     <ClCompile Include="MyClass\Scenes\Title\TitleScene.cpp">
       <Filter>Myclass\Scenes\Title</Filter>
@@ -736,9 +718,6 @@
     <ClInclude Include="MyClass\Managers\ControllerManager\ContorollerManager.h">
       <Filter>Myclass\Managers\ControllerManager</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Controller\ControllerConfig.h">
-      <Filter>Myclass\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Ui\BaseUi.h">
       <Filter>Myclass\Ui</Filter>
     </ClInclude>
@@ -799,14 +778,8 @@
     <ClInclude Include="MyClass\Managers\ResouceManager\ResouceManager.h">
       <Filter>Myclass\Managers\ResouceManager</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass\Scenes\TutorialScene\TutorialScene.h">
-      <Filter>Myclass\Scenes\TutorialScene</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass\Scenes\SelectScene\SelectScene.h">
       <Filter>Myclass\Scenes\SelectScene</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass\Scenes\DemoMovie\DemoMovieScene.h">
-      <Filter>Myclass\Scenes\DemoMovie</Filter>
     </ClInclude>
     <ClInclude Include="MyClass\Scenes\Title\TitleScene.h">
       <Filter>Myclass\Scenes\Title</Filter>
