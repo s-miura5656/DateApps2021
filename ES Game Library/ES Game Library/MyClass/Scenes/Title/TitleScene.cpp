@@ -95,11 +95,6 @@ int TitleScene::TitleLanding()
 	
 	title_logo_position.y += 4.0f;
 
-	if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
-	{
-		SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::SELECT);
-	}
-
 	//! タイトルロゴが落ち切った時にボタン入力を受け付ける
 	if (title_logo_position.y >= 125.0f)
 	{
@@ -107,6 +102,10 @@ int TitleScene::TitleLanding()
 		title_logo_position.y = 125.0f;
 		button_push_flag      = true;
 
+		if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+		{
+			SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::SELECT);
+		}
 		demo_scene_count++;
 	}
 

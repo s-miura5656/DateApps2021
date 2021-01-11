@@ -27,6 +27,8 @@ private:
 
 	Vector3 banner_position;//各プレイヤーのバナー
 	SPRITE  banner_sprite;//各プレイヤーのバナー
+	SPRITE  banner_status;//各プレイヤーのバナー
+	SPRITE  item_icon;//各プレイヤーのバナー
 	RectWH  banner_rw;
 	SPRITE  joy_icon;
 	SPRITE  normal_icon;
@@ -40,6 +42,7 @@ private:
 	int add_point;
 	int delta_point;
 	int lost_point;
+	float _font_size = 0.6;
 	bool lost_flag;
 
 	int ranking_timer;

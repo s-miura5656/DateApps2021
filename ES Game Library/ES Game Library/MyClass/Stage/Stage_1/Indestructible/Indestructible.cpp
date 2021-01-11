@@ -15,7 +15,7 @@ Indestructible::~Indestructible()
 bool Indestructible::Initialize()
 {
 	//Xファイルの読み込み
-	_model  = ResouceManager::Instance().LoadModelFile(_T("MapSprite/stage.X"));
+	_model  = ResouceManager::Instance().LoadModelFile(_T("MapSprite/Stage/stage plan A.X"));
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
 
 	//スケールの設定
