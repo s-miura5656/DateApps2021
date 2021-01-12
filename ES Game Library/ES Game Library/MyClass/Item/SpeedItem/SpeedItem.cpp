@@ -13,8 +13,8 @@ SpeedItem::SpeedItem(Vector3 position, std::string name)
 	_i_arm_data = new IArmData;
 	_map_data = new IMapData;
 
-	_effect_time = 600;
-	_player_speed = 0.09;
+	_effect_time = POWERUP_TIME;
+	_player_speed = 0.05;
 	_arm_speed = 0.1;
 }
 
@@ -56,38 +56,68 @@ int SpeedItem::Update()
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		std::string name = PLAYER_TAG + std::to_string(i + 1);
+		std::string name    = PLAYER_TAG + std::to_string(i + 1);
 		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
 
 		if (_hit_box->IsHitObjectsSquare(name))
 		{
-			_hit_box->GetHitBoxTag(name)->GetPlayerBase()->GetItem(this);
-			//ItemEffect(name);
-			//_i_player_data->SetParameter_PowerUp(name, true);
-			//_i_player_data->SetSpeed(name, _speed);
-			/*int weak_probability = MathHelper_Random(100);
-			if (weak_probability <= WEAK_PROBABILITY_NUMBER - 10 * _i_player_data->GetRankNum(name))
+			std::string status_name = "";
+			int items_probability = MathHelper_Random(100);
+			switch (_i_player_data->GetRankNum(name))
 			{
-				_i_player_data->SetParameter_PowerDown(name, true);
-				_i_player_data->SetSpeed(name, 0.01);
-				_i_arm_data->SetGoSpeed(arm_tag, 0.02);
+			case 0:
+				if (items_probability >= 70)
+				{
+					status_name = ITEM_PLAYER_SPEEDUP;
+				}
+				else
+				{
+					status_name = ITEM_POWERDOWN;
+				}
+				break;
+			case 1 || 2:
+				if (items_probability >= 34)
+				{
+					status_name = ITEM_PLAYER_SPEEDUP;
+				}
+				else if (items_probability >= 77)
+				{
+					status_name = ITEM_ARM_SPEEDUP;
+				}
+				else
+				{
+					status_name = ITEM_POWERDOWN;
+				}
+				break;
+			case 3:
+				if (items_probability >= 50)
+				{
+					string sanda;
+				}
+				else if (items_probability >= 75)
+				{
+					status_name = ITEM_PLAYER_SPEEDUP;
+				}
+				else
+				{
+					status_name = ITEM_ARM_SPEEDUP;
+				}
+				break;
 			}
-			else 
+			if (status_name == ITEM_PLAYER_SPEEDUP)
 			{
-				int which_powerup = MathHelper_Random(1);
-				if (which_powerup == 0)
-				{
-					_i_player_data->SetParameter_PowerUp(name, true);
-					_i_arm_data->SetGoSpeed(arm_tag, 0.1f);
-					_i_player_data->SetSpeed(name, 0.09f);
-				}
-				if (which_powerup == 1)
-				{
-					_i_player_data->SetParameter_PowerUp(name, true);
-					_i_player_data->SetSpeed(name, 0.05f);
-					_i_arm_data->SetGoSpeed(arm_tag, 0.3);
-				}
-			}*/
+				_player_speed = 0.09;
+			}
+			else if (status_name == ITEM_ARM_SPEEDUP)
+			{
+				_arm_speed = 0.3;
+			}
+			else if(status_name == ITEM_POWERDOWN)
+			{
+				_effect_time = POWERDOWN_TIME;
+				_player_speed = 0.03;
+			}
+			_hit_box->GetHitBoxTag(name)->GetPlayerBase()->GetItem(this, status_name);
 			
 			Removeflag = true;
 			auto data = _map_data->GetData();

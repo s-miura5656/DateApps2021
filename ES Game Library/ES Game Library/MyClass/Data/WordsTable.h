@@ -24,6 +24,11 @@ static const std::string WALL_METAL_TAG           = "WallMetal_";
 static const std::string ROTATION_FLOOR_TAG		  = "RotationFloor_";
 static const std::string WARP_TAG				  = "Warp_";
 
+//!アイテムの種類のタグ
+static const std::string ITEM_PLAYER_SPEEDUP = "Item_player_speedup";
+static const std::string ITEM_ARM_SPEEDUP    = "Item_arm_speedup";
+static const std::string ITEM_POWERDOWN      = "Item_powerdown_";
+
 //! ポイントテーブル
 static const int BLOCK_POINT	   = 100;
 static const int PLAYER_POINT	   = 600;

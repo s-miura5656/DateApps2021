@@ -22,7 +22,7 @@ public:
 	virtual void Draw3D();
 	virtual void DrawAlpha3D();
 
-	virtual void GetItem(ItemBase* item);
+	virtual void GetItem(ItemBase* item,string item_tag);
 
 protected:
 	//! function
@@ -70,7 +70,7 @@ protected:
 	//! tag
 	std::string _tag;
 	std::string _arm_tag;
-
+	std::string _status_tag = "";
 	//! index
 	IndexNum _index_num;
 	int _animation_index;
@@ -88,10 +88,10 @@ protected:
 	int _respawn_time           = 0;
 	int _invincible_count       = 0;
 	int _powerup_count          = 0;
-	int _powerdown_count        = 0;
+	int _powerdown_count        = 9999;
 	int _new_point              = 0;
 	int _old_point              = 0;
-
+	int _status_time            = 0;
 	//! animation_limit
 	float _shot_frame = 60.0f;
 

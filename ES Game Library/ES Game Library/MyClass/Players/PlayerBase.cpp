@@ -186,18 +186,7 @@ void PlayerBase::Draw3D()
 	}
 	else
 	{
-		if (_i_player_data->GetParameter_PowerUp(_tag))
-		{
-			_powerup_effect->SetPosition(_transform.position + Vector3_Up);
-			_powerup_effect->SetRotation(Vector3(-15,0,0));
-			_powerup_effect->PlayOneShot();
-			_powerup_effect->Draw();
-		}
-		else
-		{
-			_powerup_effect->Stop();
-		}
-		if (_i_player_data->GetParameter_PowerDown(_tag))
+		if (_status_tag == ITEM_POWERDOWN)
 		{
 			_powerdown_effect->SetPosition(_transform.position + Vector3_Up);
 			_powerdown_effect->SetRotation(Vector3(-15, 0, 0));
@@ -207,6 +196,17 @@ void PlayerBase::Draw3D()
 		else
 		{
 			_powerdown_effect->Stop();
+		}
+		if (_status_tag == ITEM_PLAYER_SPEEDUP || _status_tag == ITEM_ARM_SPEEDUP)
+		{
+			_powerup_effect->SetPosition(_transform.position + Vector3_Up);
+			_powerup_effect->SetRotation(Vector3(-15, 0, 0));
+			_powerup_effect->PlayOneShot();
+			_powerup_effect->Draw();
+		}
+		else
+		{
+			_powerup_effect->Stop();
 		}
 		_destroy_effect->Stop();
 		
@@ -229,11 +229,14 @@ void PlayerBase::Draw3D()
 void PlayerBase::DrawAlpha3D()
 {
 }
-void PlayerBase::GetItem(ItemBase* item)
+void PlayerBase::GetItem(ItemBase* item, string item_tag)
 {
 	auto effect = item->GetEffect();
+	_status_tag = item_tag;
+	_i_player_data->SetStatusTag(_tag, _status_tag);
 	_i_player_data->SetSpeed(_tag, effect._player_speed);
 	_i_arm_Data->SetGoSpeed(_arm_tag, effect._arm_speed);
+	_status_time = effect._effect_time;
 	_powerup_count = 0;
 }
 #pragma endregion
@@ -508,59 +511,6 @@ void PlayerBase::DebugControll()
 }
 void PlayerBase::ParameterLevel()
 {
-	int old_count = _i_player_data->GetParameterLevel(_tag);
-	_new_point = _i_player_data->GetRankingPoint(_tag);
-	if (_new_point != _old_point)
-	{
-		if (_new_point < 500)
-		{
-			_i_player_data->SetParameterLevel(_tag, 1);
-		}
-		else if (_new_point >= 500 && _new_point < 1000)
-		{
-			_i_player_data->SetParameterLevel(_tag, 2);
-		}
-		else if (_new_point >= 1000 && _new_point < 1500)
-		{
-			_i_player_data->SetParameterLevel(_tag, 3);
-		}
-		else if (_new_point >= 1500)
-		{
-			_i_player_data->SetParameterLevel(_tag, 4);
-		}
-		_old_point = _new_point;
-	}
-
-	if (old_count == _new_point)
-		return;
-
-	//switch (_i_player_data->GetParameterLevel(_tag))
-	//{
-	//case 1:
-	//	_i_player_data->SetShotRigorFrame(_tag, 30);
-	//	_i_player_data->SetSpeed(_tag, 0.05f);
-	//	_i_arm_Data->SetLimitRange(_arm_tag, 10);
-	//	_i_arm_Data->SetGoSpeed(_arm_tag, 0.1f);
-	//	break;
-	//case 2:
-	//	_i_player_data->SetShotRigorFrame(_tag, 25);
-	//	_i_player_data->SetSpeed(_tag, 0.06f);
-	//	_i_arm_Data->SetLimitRange(_arm_tag, 12);
-	//	_i_arm_Data->SetGoSpeed(_arm_tag, 0.125f);
-	//	break;
-	//case 3:
-	//	_i_player_data->SetShotRigorFrame(_tag, 20);
-	//	_i_player_data->SetSpeed(_tag, 0.07f);
-	//	_i_arm_Data->SetLimitRange(_arm_tag, 14);
-	//	_i_arm_Data->SetGoSpeed(_arm_tag, 0.15f);
-	//	break;
-	//case 4:
-	//	_i_player_data->SetShotRigorFrame(_tag, 15);
-	//	_i_player_data->SetSpeed(_tag, 0.08f);
-	//	_i_arm_Data->SetLimitRange(_arm_tag, 16);
-	//	_i_arm_Data->SetGoSpeed(_arm_tag, 0.2f);
-	//	break;
-	//}
 }
 
 void PlayerBase::InvincibleMode()
@@ -580,37 +530,15 @@ void PlayerBase::InvincibleMode()
 
 void PlayerBase::ItemParameterTime()
 {
-	if (_powerup_count >= POWERUP_TIME)
+	if (_powerup_count >= _status_time)
 	{
 		_i_player_data->SetSpeed(_tag, 0.05f);
 		_i_arm_Data->SetGoSpeed(_arm_tag, 0.1f);
+		_status_tag = "";
+		_i_player_data->SetStatusTag(_tag, _status_tag);
 	}
 	else
 	{
 		_powerup_count++;
 	}
-	/*if (_i_player_data->GetParameter_PowerUp(_tag))
-	{
-		_powerup_count++;
-		if (_powerup_count >= POWERUP_TIME)
-		{
-			_i_player_data->SetParameter_PowerUp(_tag, false);
-			_powerup_count = 0;
-		}
-	}
-
-	if (_i_player_data->GetParameter_PowerDown(_tag))
-	{
-		_powerdown_count++;
-		if (_powerdown_count >= POWERDOWN_TIME)
-		{
-			_i_player_data->SetParameter_PowerDown(_tag, false);
-			_powerdown_count = 0;
-		}
-	}*/
-	//if (!_i_player_data->GetParameter_PowerUp(_tag) && !_i_player_data->GetParameter_PowerDown(_tag))
-	//{
-	//	_i_player_data->SetSpeed(_tag, 0.05f);
-	//	_i_arm_Data->SetGoSpeed(_arm_tag, 0.1f);
-	//}
 }

@@ -4,6 +4,7 @@
 #include "WordsTable.h"
 
 struct PlayerParam {
+	std::string status_tag = "";
 	int state			     = PlayerEnum::WAIT;
 	Vector3 position	     = Vector3_Zero;
 	float angle			     = 180.f;

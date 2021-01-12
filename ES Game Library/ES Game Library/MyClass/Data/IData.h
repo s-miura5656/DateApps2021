@@ -83,6 +83,10 @@ public:
 	void SetParameter_PowerDown(std::string& player_tag, bool parameterpowerdown) { PlayerParametor::Instance()._player_params[player_tag].parameter_powerup = false; PlayerParametor::Instance()._player_params[player_tag].parameter_powerdown = parameterpowerdown; }
 	bool GetParameter_PowerDown(std::string& player_tag)				       const { return PlayerParametor::Instance()._player_params[player_tag].parameter_powerdown; }
 
+	//! プレイヤーのステータス効果のタグ
+	void SetStatusTag(std::string& player_tag, std::string statustag) { PlayerParametor::Instance()._player_params[player_tag].status_tag = statustag; }
+	std::string GetStatusTag(std::string& player_tag)				      const { return PlayerParametor::Instance()._player_params[player_tag].status_tag; }
+
 	std::map<std::string, PlayerParam> GetAllParametor()			           const { return PlayerParametor::Instance()._player_params; }
 };
 
