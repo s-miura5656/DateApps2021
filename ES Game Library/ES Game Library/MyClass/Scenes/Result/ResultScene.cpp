@@ -105,7 +105,7 @@ int ResultScene::Update()
 		auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
 		pad->Refresh();
 		//パンチを出すボタンがおされたときにタイトルへシーン遷移する。
-		if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+		if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
 		{
 			SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TITLE);
 		}
