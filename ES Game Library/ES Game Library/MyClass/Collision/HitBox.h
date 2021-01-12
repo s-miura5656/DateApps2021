@@ -1,11 +1,13 @@
 #pragma once
 #include "../../ESGLib.h"
 #include <functional>
-
 using namespace std;
+
+class PlayerBase;
 
 class HitBox {
 public:
+	HitBox() {};
 	//デストラクタ
 	virtual ~HitBox();
 
@@ -19,7 +21,7 @@ public:
 	virtual void SetHitBox(float width, float height, float depth);
 
 	//消去時に呼ばれる処理
-	void HitBox::OnReMove();
+	void OnReMove();
 
 	void SetHitBoxScale(float sca);	
 	void SetHitBoxScale(Vector3 sca);
@@ -30,7 +32,7 @@ public:
 	HitBox* GetThisHitBox() { return this; };
 
 	//衝突しているHitBoxのリストを取得
-	std::list<HitBox*> HitBox::HitHitBoxlist();
+	std::list<HitBox*> HitHitBoxlist();
 
 	void    Settags(std::string tags);
 	void    SetColor(Vector3 colors);
@@ -54,6 +56,10 @@ public:
 
 	MODEL IshitNearestObject(std::list<HitBox*> is_hit_list, Vector3 pos, Vector3 front_vec);
 
+	void SetPlayerBase(PlayerBase* playerbase);
+
+	PlayerBase* GetPlayerBase();
+
 	std::list<HitBox*> IsHitBoxList();
 	std::list<HitBox*> IsHitBoxList(std::string tag);
 	std::list<HitBox*> GetHitBoxList() const { return _HitBox_list; }
@@ -76,6 +82,8 @@ private:
 	Vector3 _scale = Vector3_One;
 
 	Vector3 _color = Vector3(1.0f, 0.0f, 0.0f);
+
+	PlayerBase* _player_base = nullptr;
 
 	//衝突判定関数
 	bool HitBox::IsHit(HitBox* other);

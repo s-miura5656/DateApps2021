@@ -3,7 +3,6 @@ float4x3 WorldMatrixArray[MAX_MATRICES];
 int NumBones;
 
 float4x4 vp;
-float4 wvp;
 
 sampler base_Texture : register(s0);
 
@@ -108,6 +107,13 @@ float4 DAMAGE_PS(VSOUTPUT psin) : COLOR
     return color;
 }
 
+float4 UNLIT_PS(VSOUTPUT psin) : COLOR
+{
+    float4 color = tex2D(s1, psin.Uv);
+
+    return color;
+}
+
 technique FixAnimationModel
 {
 	pass Pass0
@@ -123,5 +129,14 @@ technique DamageAnimationModel
     {
         VertexShader = compile vs_3_0 A_VS();
         PixelShader  = compile ps_3_0 DAMAGE_PS();
+    }
+}
+
+technique UnlitAnimationModel
+{
+    pass Pass0
+    {
+        VertexShader = compile vs_3_0 A_VS();
+        PixelShader  = compile ps_3_0 UNLIT_PS();
     }
 }

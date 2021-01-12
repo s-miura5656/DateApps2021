@@ -1,7 +1,7 @@
 #include "HitBox.h"
 #include "../Data/MyAlgorithm.h"
 #include <algorithm>
-
+#include "../Players/PlayerBase.h"
 //static
 std::list<HitBox*> HitBox::_HitBox_list;
 
@@ -10,6 +10,9 @@ MODEL HitBox::_model = nullptr;
 //デストラクタ
 HitBox::~HitBox() 
 {
+	if (_player_base != nullptr)
+		delete _player_base;
+	
 	OnReMove();
 }
 
@@ -352,6 +355,11 @@ std::list<HitBox*> HitBox::IsHitBoxList() {
 	return HitList;
 }
 
+PlayerBase* HitBox::GetPlayerBase()
+{
+	return _player_base;
+}
+
 /**
  * @fn 当たっているヒットボックスを取得
  * @param (tag) タグのヒットボックスを除外する
@@ -372,4 +380,9 @@ std::list<HitBox*> HitBox::IsHitBoxList(std::string tag)
 		it++;
 	}
 	return HitList;
+}
+
+void HitBox::SetPlayerBase(PlayerBase* playerbase)
+{
+	_player_base = playerbase;
 }

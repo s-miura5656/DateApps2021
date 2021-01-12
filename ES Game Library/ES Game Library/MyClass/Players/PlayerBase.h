@@ -5,7 +5,10 @@
 #include "../Managers/InputManager/InputManager.h"
 #include "../Data/StructList.h"
 #include"../Managers/AudioManager/AudioManager.h"
+
 class ParticleSystem;
+class ArmBase;
+class ItemBase;
 
 class PlayerBase
 {
@@ -18,6 +21,8 @@ public:
 	virtual void Draw2D();
 	virtual void Draw3D();
 	virtual void DrawAlpha3D();
+
+	virtual void GetItem(ItemBase* item);
 
 protected:
 	//! function

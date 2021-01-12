@@ -51,3 +51,12 @@ void ItemBase::RotationItem()
 	if (_rotation >= 360.0f)
 		_rotation -= 360.0f;
 }
+ITEMEFFECT ItemBase::GetEffect()
+{
+	ITEMEFFECT effect;
+	effect._effect_time = _effect_time;
+	effect._player_speed = _player_speed;
+	effect._arm_speed = _arm_speed;
+
+	return effect;
+}

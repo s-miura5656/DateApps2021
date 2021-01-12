@@ -1,5 +1,6 @@
 #include "SpeedItem.h"
 #include "../../Data/WordsTable.h"
+#include "../../Players/PlayerBase.h"
 
 SpeedItem::SpeedItem(Vector3 position, std::string name)
 {
@@ -11,6 +12,10 @@ SpeedItem::SpeedItem(Vector3 position, std::string name)
 	_i_player_data = new IPrayerData;
 	_i_arm_data = new IArmData;
 	_map_data = new IMapData;
+
+	_effect_time = 600;
+	_player_speed = 0.09;
+	_arm_speed = 0.1;
 }
 
 SpeedItem::~SpeedItem()
@@ -56,10 +61,11 @@ int SpeedItem::Update()
 
 		if (_hit_box->IsHitObjectsSquare(name))
 		{
+			_hit_box->GetHitBoxTag(name)->GetPlayerBase()->GetItem(this);
 			//ItemEffect(name);
 			//_i_player_data->SetParameter_PowerUp(name, true);
 			//_i_player_data->SetSpeed(name, _speed);
-			int weak_probability = MathHelper_Random(100);
+			/*int weak_probability = MathHelper_Random(100);
 			if (weak_probability <= WEAK_PROBABILITY_NUMBER - 10 * _i_player_data->GetRankNum(name))
 			{
 				_i_player_data->SetParameter_PowerDown(name, true);
@@ -81,7 +87,8 @@ int SpeedItem::Update()
 					_i_player_data->SetSpeed(name, 0.05f);
 					_i_arm_data->SetGoSpeed(arm_tag, 0.3);
 				}
-			}
+			}*/
+			
 			Removeflag = true;
 			auto data = _map_data->GetData();
 
@@ -95,3 +102,4 @@ int SpeedItem::Update()
 
 	return 0;
 }
+

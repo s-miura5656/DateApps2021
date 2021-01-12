@@ -5,6 +5,12 @@
 #include "../Data/IData.h"
 #include "../Managers/ResouceManager/ResouceManager.h"
 #include"../Managers/AudioManager/AudioManager.h"
+
+struct ITEMEFFECT {
+	int _effect_time;
+	float _arm_speed;
+	float _player_speed;
+};
 class ItemBase
 {
 public:
@@ -18,7 +24,7 @@ public:
 	void BoxShape(int scale);
 	void RotationItem();
 	bool IsFlag() const { return Removeflag; };
-
+	virtual ITEMEFFECT GetEffect();
 protected:
 	int _hit_point    = 1000;
 	int _attack_powor = 100;
@@ -34,6 +40,10 @@ protected:
 	float _rotation = 0.f;
 	float _scale = 1.5f;
 	IMapData* _map_data;
+
+	int _effect_time;
+	float _arm_speed;
+	float _player_speed;
 private:
 	
 };

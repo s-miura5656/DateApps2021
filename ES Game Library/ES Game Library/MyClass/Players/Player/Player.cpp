@@ -87,6 +87,7 @@ bool Player::Initialize()
 	_hit_box->Init();
 	_hit_box->Settags(_tag);
 	_hit_box->SetHitBoxScale(0.6f);
+	_hit_box->SetPlayerBase(this);
 
 	//! shader
 	_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");

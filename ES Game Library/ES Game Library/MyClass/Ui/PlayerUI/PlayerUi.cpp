@@ -174,10 +174,10 @@ void PlayerUi::Draw2D()
 	{
 		SpriteBatch.Draw(*normal_icon, banner_position + Vector3((10 * 1.2) + 100, -64 * 1.2, -1), RectWH(player_index * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.2f);
 	}
-
+	SpriteBatch.Draw(*ranking, player_pos + Vector3(-50 * 0.7, (-128 - 40) * 0.7, 0), RectWH((_i_player_data->GetRankNum(tag)) * 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
 	//! 開始十秒後に順位表示
 	if (seconds < ranking_timer) {
-		SpriteBatch.Draw(*ranking, player_pos + Vector3(-50 * 0.7, (-128 - 40) * 0.7, 0), RectWH((_i_player_data->GetRankNum(tag)) * 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+
 	}
 }
 

@@ -139,6 +139,21 @@ void ResultScene::Draw3D()
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
+		if (i == 0) {
+			static double advance_time = 0.0;
+
+			_player_model->SetTrackEnable(0, FALSE);
+			_player_model->SetTrackEnable(2, TRUE);
+			_player_model->SetTrackPosition(2, advance_time);
+
+			advance_time += GameTimer.GetElapsedSecond() / 2.0;
+		}
+		else {
+			_player_model->SetTrackEnable(0, TRUE);
+			_player_model->SetTrackEnable(2, FALSE);
+			_player_model->SetTrackPosition(0, 0.0);
+		}
+
 		_shader->SetTexture("m_Texture", *_texture[i]);
 		_shader->SetParameter("vp", vp);
 		_player_model->SetScale(SetPlayerScale(i));

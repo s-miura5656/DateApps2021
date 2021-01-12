@@ -2,6 +2,7 @@
 #include "../Data/MyAlgorithm.h"
 #include "../Managers/SceneManager/SceneManager.h"
 #include "../ParticleSystem/Particle.h"
+#include "../Item/Itembase.hpp"
 
 #pragma region Šî–{‹@”\
 PlayerBase::PlayerBase()
@@ -227,6 +228,13 @@ void PlayerBase::Draw3D()
 
 void PlayerBase::DrawAlpha3D()
 {
+}
+void PlayerBase::GetItem(ItemBase* item)
+{
+	auto effect = item->GetEffect();
+	_i_player_data->SetSpeed(_tag, effect._player_speed);
+	_i_arm_Data->SetGoSpeed(_arm_tag, effect._arm_speed);
+	_powerup_count = 0;
 }
 #pragma endregion
 
@@ -572,7 +580,16 @@ void PlayerBase::InvincibleMode()
 
 void PlayerBase::ItemParameterTime()
 {
-	if (_i_player_data->GetParameter_PowerUp(_tag))
+	if (_powerup_count >= POWERUP_TIME)
+	{
+		_i_player_data->SetSpeed(_tag, 0.05f);
+		_i_arm_Data->SetGoSpeed(_arm_tag, 0.1f);
+	}
+	else
+	{
+		_powerup_count++;
+	}
+	/*if (_i_player_data->GetParameter_PowerUp(_tag))
 	{
 		_powerup_count++;
 		if (_powerup_count >= POWERUP_TIME)
@@ -590,11 +607,10 @@ void PlayerBase::ItemParameterTime()
 			_i_player_data->SetParameter_PowerDown(_tag, false);
 			_powerdown_count = 0;
 		}
-	}
-
-	if (!_i_player_data->GetParameter_PowerUp(_tag) && !_i_player_data->GetParameter_PowerDown(_tag))
-	{
-		_i_player_data->SetSpeed(_tag, 0.05f);
-		_i_arm_Data->SetGoSpeed(_arm_tag, 0.1f);
-	}
+	}*/
+	//if (!_i_player_data->GetParameter_PowerUp(_tag) && !_i_player_data->GetParameter_PowerDown(_tag))
+	//{
+	//	_i_player_data->SetSpeed(_tag, 0.05f);
+	//	_i_arm_Data->SetGoSpeed(_arm_tag, 0.1f);
+	//}
 }
