@@ -28,7 +28,7 @@ static const std::string WARP_TAG				  = "Warp_";
 static const std::string ITEM_PLAYER_SPEEDUP = "Item_player_speedup";
 static const std::string ITEM_ARM_SPEEDUP    = "Item_arm_speedup";
 static const std::string ITEM_POWERDOWN      = "Item_powerdown_";
-
+static const std::string ITEM_THUNDER        = "Item_thunder_";
 //! ポイントテーブル
 static const int BLOCK_POINT	   = 100;
 static const int PLAYER_POINT	   = 600;

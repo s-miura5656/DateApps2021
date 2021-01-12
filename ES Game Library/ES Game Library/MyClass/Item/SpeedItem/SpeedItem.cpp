@@ -67,41 +67,25 @@ int SpeedItem::Update()
 			{
 			case 0:
 				if (items_probability >= 70)
-				{
 					status_name = ITEM_PLAYER_SPEEDUP;
-				}
 				else
-				{
 					status_name = ITEM_POWERDOWN;
-				}
 				break;
 			case 1 || 2:
 				if (items_probability >= 34)
-				{
 					status_name = ITEM_PLAYER_SPEEDUP;
-				}
 				else if (items_probability >= 77)
-				{
 					status_name = ITEM_ARM_SPEEDUP;
-				}
 				else
-				{
 					status_name = ITEM_POWERDOWN;
-				}
 				break;
 			case 3:
 				if (items_probability >= 50)
-				{
-					string sanda;
-				}
+					status_name = ITEM_THUNDER;
 				else if (items_probability >= 75)
-				{
 					status_name = ITEM_PLAYER_SPEEDUP;
-				}
 				else
-				{
 					status_name = ITEM_ARM_SPEEDUP;
-				}
 				break;
 			}
 			if (status_name == ITEM_PLAYER_SPEEDUP)
@@ -117,7 +101,26 @@ int SpeedItem::Update()
 				_effect_time = POWERDOWN_TIME;
 				_player_speed = 0.03;
 			}
-			_hit_box->GetHitBoxTag(name)->GetPlayerBase()->GetItem(this, status_name);
+			status_name = ITEM_THUNDER;
+			if (status_name == ITEM_THUNDER)
+			{
+				_player_speed = 0.01;
+				for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+				{
+					std::string playertag = PLAYER_TAG + std::to_string(i + 1);
+					if (playertag == name)
+						continue;
+					else
+					{
+						_effect_time = POWERDOWN_TIME;
+						_hit_box->GetHitBoxTag(playertag)->GetPlayerBase()->GetItem(this, status_name);
+					}
+				}
+			}
+			else
+			{
+				_hit_box->GetHitBoxTag(name)->GetPlayerBase()->GetItem(this, status_name);
+			}
 			
 			Removeflag = true;
 			auto data = _map_data->GetData();
