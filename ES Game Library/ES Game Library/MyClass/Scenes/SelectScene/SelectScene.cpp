@@ -28,7 +28,7 @@ bool SelectScene::Initialize()
 		auto path        = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(i + 1), ".png");
 		SPRITE texture   = ResouceManager::Instance().LordSpriteFile(path.c_str());
 		_texture[i]      = texture;
-		_player_button_flag[i] = true;
+		_player_button_flag[i] = false;
 	}
 
 	_player_position[0] = -3;

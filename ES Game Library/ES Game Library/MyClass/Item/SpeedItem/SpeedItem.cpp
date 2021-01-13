@@ -89,13 +89,9 @@ int SpeedItem::Update()
 				break;
 			}
 			if (status_name == ITEM_PLAYER_SPEEDUP)
-			{
 				_player_speed = 0.09;
-			}
 			else if (status_name == ITEM_ARM_SPEEDUP)
-			{
 				_arm_speed = 0.3;
-			}
 			else if(status_name == ITEM_POWERDOWN)
 			{
 				_effect_time = POWERDOWN_TIME;
