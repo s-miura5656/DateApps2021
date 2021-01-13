@@ -232,6 +232,9 @@
     <Filter Include="Myclass\Scenes\SelectScene">
       <UniqueIdentifier>{78f0a48d-b843-402f-a109-68ffa967dca5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Ui\PlayerUI">
+      <UniqueIdentifier>{2af7cbbc-a846-47ca-82d8-4693078015f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -489,6 +492,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Scenes\SelectScene\SelectScene.cpp">
       <Filter>Myclass\Scenes\SelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Ui\PlayerUI\PlayerUi.cpp">
+      <Filter>Myclass\Ui\PlayerUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -786,6 +792,15 @@
     </ClInclude>
     <ClInclude Include="MyClass\Scenes\SelectScene\SelectScene.h">
       <Filter>Myclass\Scenes\SelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Ui\PlayerUI\PlayerUi.h">
+      <Filter>Myclass\Ui\PlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Ui\UIObject.h">
+      <Filter>Myclass</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Ui\UiParametor.h">
+      <Filter>Myclass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
