@@ -154,6 +154,7 @@ void ResultScene::Draw3D()
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
+		//アニメーション
 		//if (i == 0) {
 		//	static double advance_time = 0.0;
 
