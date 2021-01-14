@@ -22,6 +22,9 @@ Arm::Arm(std::string name)
 
 Arm::~Arm()
 {
+	_shot_effect->Stop();
+	_wall_hit_effect->Stop();
+
 	_wall_hit_effect.reset();
 	_shot_effect.reset();
 	_i_map_data.reset();
