@@ -26,7 +26,11 @@ private:
 	SPRITE                _player_rank_num;
 	SPRITE                _background;
 	SPRITE                _totitle;
-	SPRITE                _player_ground;
+	SPRITE                _player_first_ground;
+	SPRITE                _first_banner;
+	SPRITE                _non_first_banner;
+	SPRITE                _robot_fece;
+	SPRITE                _texture;
 	EFFECT                _shader;
 	ANIMATIONMODEL        _player_model;
 	FONT                  _font;
@@ -47,6 +51,5 @@ private:
 	Vector3               _player_small_position;
 	Vector3               _background_position;
 	Vector3               _totitle_position;
-	std::vector<SPRITE>   _texture;
 	std::vector<Vector3>  _player_rank_num_position;
 };

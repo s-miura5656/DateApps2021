@@ -24,13 +24,16 @@ bool ResultScene::Initialize()
 	ArrivalCount();
 
 	//! file
-	_player_rank_num = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/number.png"));
-	_background		 = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/ground.png"));
-	_player_ground   = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/player_grond.png"));
-	_totitle	     = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/button.png"));
-	_font			 = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 100);
-	_shader			 = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
-	_player_model	 = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
+	_player_rank_num     = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/number.png"));
+	_background		     = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/ground.png"));
+	_player_first_ground = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/player_grond.png"));
+	_first_banner        = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/1st_banner.png"));
+	_robot_fece          = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/robot_face.png"));
+	_non_first_banner    = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/2nd_3rd_4th_banner.png"));
+	_totitle	         = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/button.png"));
+	_font                = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 100);
+	_shader  	         = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
+	_player_model        = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 
 	_player_model->SetRotation(0, 180, 0);
 	_player_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
@@ -43,9 +46,8 @@ bool ResultScene::Initialize()
 		//_texture.push_back(texture);
 
 		//プレイヤーごとにテクスチャを用意する。debug
-		auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(i + 1), ".png");
-		SPRITE texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
-		_texture.push_back(texture);
+		auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(GetRankNum(0)), ".png");
+		_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 	}
 
 	//! material
@@ -126,15 +128,22 @@ void ResultScene::Draw2D()
 {
 	SpriteBatch.Draw(*_background,_background_position);
 
-	SpriteBatch.Draw(*_totitle,_totitle_position);
+	//SpriteBatch.Draw(*_totitle,_totitle_position);
 	
-	SpriteBatch.Draw(*_player_ground, Vector3(37,8,10000));
+	SpriteBatch.Draw(*_player_first_ground, Vector3(24,32,10000));
 
+	SpriteBatch.Draw(*_first_banner, Vector3(556, 32, 10000));
+
+	for (int i = 0; i < PLAYER_COUNT_MAX - 1; i++)
+	{
+		SpriteBatch.Draw(*_robot_fece, Vector3(556, 148 * (i + 1) + 32, 10000),RectWH(176 * i,0,176,128));
+		SpriteBatch.Draw(*_non_first_banner,Vector3(556 + 176, 148 * (i + 1) + 32, 10000));
+	}
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		SpriteBatch.DrawString(_font, SetPointTextPosition(i), Color(255, 0, 0), _T("%d"), GetPoints(i));
-		SpriteBatch.Draw(*_player_rank_num, SetPlayerRankNumberPosition(i),
-			RectWH((GetRankNum(i) - 1) * 128, 0, 128, 64), 1,Vector3_Zero,Vector3_Zero, SetTextSize(i));
+		//SpriteBatch.DrawString(_font, SetPointTextPosition(i), Color(255, 0, 0), _T("%d"), GetPoints(i));
+		//SpriteBatch.Draw(*_player_rank_num, SetPlayerRankNumberPosition(i),
+		//	RectWH((GetRankNum(i) - 1) * 128, 0, 128, 64), 1,Vector3_Zero,Vector3_Zero, SetTextSize(i));
 	}
 }
 /*
@@ -145,31 +154,15 @@ void ResultScene::Draw3D()
 	Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
 	SceneCamera::Instance().SetSceneCamera();
 
-	_shader->SetTexture("m_Texture", *_texture[0]);
+	_shader->SetTexture("m_Texture", *_texture);
 	_shader->SetParameter("vp", vp);
 	_shader->SetTechnique("UnlitAnimationModel");
 	_player_model->SetScale(5.0f);
-	_player_model->SetPosition(Vector3(0,0,0));
+	_player_model->SetPosition(Vector3(-6,0,0));
 	_player_model->Draw(_shader);
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		//アニメーション
-		//if (i == 0) {
-		//	static double advance_time = 0.0;
-
-		//	_player_model->SetTrackEnable(0, FALSE);
-		//	_player_model->SetTrackEnable(2, TRUE);
-		//	_player_model->SetTrackPosition(2, advance_time);
-
-		//	advance_time += GameTimer.GetElapsedSecond() / 2.0;
-		//}
-		//else {
-		//	_player_model->SetTrackEnable(0, TRUE);
-		//	_player_model->SetTrackEnable(2, FALSE);
-		//	_player_model->SetTrackPosition(0, 0.0);
-		//}
-
 		//_shader->SetTexture("m_Texture", *_texture[i]);
 		//_shader->SetParameter("vp", vp);
 		//_shader->SetTechnique("UnlitAnimationModel");
