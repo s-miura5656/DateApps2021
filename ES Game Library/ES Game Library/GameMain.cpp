@@ -15,7 +15,7 @@ bool GameMain::Initialize()
 
 	Effekseer.Attach(GraphicsDevice, 8192);
 	SceneManager::Instance().Initialize();
-	SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::RESULT);
+	SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TITLE);
 	SceneManager::Instance().ChangeScene();
 
 	//hdr = GraphicsDevice.CreateHDRRenderTarget(1280, 720, DepthFormat_Unknown);

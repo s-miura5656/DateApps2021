@@ -94,9 +94,9 @@ bool StageManager::Initialize()
 				break;
 			case 'r':
 				imap_data->SetRespawnPosition(Vector3(x,0,-z));
-				_stages.push_back(new Warp(tag));
-				_stages[_count]->SetPosition(Vector3(x, 0.1, -z));
-				_stages[_count]->Initialize();
+				//_stages.push_back(new Warp(tag));
+				//_stages[_count]->SetPosition(Vector3(x, 0.1, -z));
+				//_stages[_count]->Initialize();
 				break;
 			case 'o':
 				tag = WARP_TAG + tag;
