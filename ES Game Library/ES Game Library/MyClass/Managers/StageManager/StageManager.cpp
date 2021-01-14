@@ -94,6 +94,9 @@ bool StageManager::Initialize()
 				break;
 			case 'r':
 				imap_data->SetRespawnPosition(Vector3(x,0,-z));
+				_stages.push_back(new Warp(tag));
+				_stages[_count]->SetPosition(Vector3(x, 0.1, -z));
+				_stages[_count]->Initialize();
 				break;
 			case 'o':
 				tag = WARP_TAG + tag;
@@ -200,14 +203,8 @@ void StageManager::RandomBlockSet()
 
 	for (int i = 0; i < MathHelper_Random(1,2); i++) 
 	{
-		std::string blocktag = DESTRUCTION_BLOCK_TAG + std::to_string(random_block_pos[i].x) + std::to_string(random_block_pos[i].z);
-		_stages.push_back(new Block(blocktag, SPEED_ITEM_TAG));
-		random_block_pos[i].y = 10;
-		_stages[_stages.size() - 1]->SetPosition(random_block_pos[i]);
-		_stages[_stages.size() - 1]->Initialize();
+		ItemCounter::SetItem(SPEED_ITEM_TAG, random_block_pos[i], 0);
 		if (random_block_pos.size() == 1)
-		{
 			return;
-		}
 	}
 }

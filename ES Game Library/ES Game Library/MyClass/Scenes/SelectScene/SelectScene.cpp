@@ -128,7 +128,6 @@ void SelectScene::Draw3D()
 		/*_shader->SetParameter("model_ambient", Color(0.25f, 0.25f, 0.25f));
 		_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
 		_shader->SetParameter("eye_pos", SceneCamera::Instance().GetCamera().GetPosition());*/
-		
 		_shader->SetTechnique("UnlitAnimationModel");
 		_player_model->Draw(_shader);
 	}

@@ -439,22 +439,7 @@ int ArmBase::PointCalculation(std::string other_player_tag)
 {
 	auto player_data = _i_player_data.get();
 
-	int point = 0;
-	switch (player_data->GetRankNum(_player_tag))
-	{
-	case 0:
-		point = 200;
-		break;
-	case 1:
-		point = 400;
-		break;
-	case 2:
-		point = 600;
-		break;
-	case 3:
-		point = 1000;
-		break;
-	}
+	int point = 500;
 	if (player_data->GetRankingPoint(other_player_tag) < point)
 	{
 		point = player_data->GetRankingPoint(other_player_tag);
