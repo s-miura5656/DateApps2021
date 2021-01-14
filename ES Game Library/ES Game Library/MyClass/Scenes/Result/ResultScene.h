@@ -26,6 +26,7 @@ private:
 	SPRITE                _player_rank_num;
 	SPRITE                _background;
 	SPRITE                _totitle;
+	SPRITE                _player_ground;
 	EFFECT                _shader;
 	ANIMATIONMODEL        _player_model;
 	FONT                  _font;

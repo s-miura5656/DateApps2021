@@ -26,6 +26,7 @@ bool ResultScene::Initialize()
 	//! file
 	_player_rank_num = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/number.png"));
 	_background		 = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/ground.png"));
+	_player_ground   = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/player_grond.png"));
 	_totitle	     = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/button.png"));
 	_font			 = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 100);
 	_shader			 = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
@@ -37,7 +38,12 @@ bool ResultScene::Initialize()
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		//プレイヤーごとにテクスチャを用意する。
-		auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(GetRankNum(i)), ".png");
+		//auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(GetRankNum(i)), ".png");
+		//SPRITE texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
+		//_texture.push_back(texture);
+
+		//プレイヤーごとにテクスチャを用意する。debug
+		auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(i + 1), ".png");
 		SPRITE texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 		_texture.push_back(texture);
 	}
@@ -90,7 +96,7 @@ bool ResultScene::Initialize()
 	//背景の座標
 	_background_position = Vector3(0, 0, 10000);
 	//シーン遷移の方法の座標
-	_totitle_position    = Vector3(900, 600, 0);
+	_totitle_position    = Vector3(900, 640, 0);
 
 	return true;
 }
@@ -122,6 +128,8 @@ void ResultScene::Draw2D()
 
 	SpriteBatch.Draw(*_totitle,_totitle_position);
 	
+	SpriteBatch.Draw(*_player_ground, Vector3(37,8,10000));
+
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		SpriteBatch.DrawString(_font, SetPointTextPosition(i), Color(255, 0, 0), _T("%d"), GetPoints(i));
@@ -137,28 +145,36 @@ void ResultScene::Draw3D()
 	Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
 	SceneCamera::Instance().SetSceneCamera();
 
+	_shader->SetTexture("m_Texture", *_texture[0]);
+	_shader->SetParameter("vp", vp);
+	_shader->SetTechnique("UnlitAnimationModel");
+	_player_model->SetScale(5.0f);
+	_player_model->SetPosition(Vector3(0,0,0));
+	_player_model->Draw(_shader);
+
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		if (i == 0) {
-			static double advance_time = 0.0;
+		//if (i == 0) {
+		//	static double advance_time = 0.0;
 
-			_player_model->SetTrackEnable(0, FALSE);
-			_player_model->SetTrackEnable(2, TRUE);
-			_player_model->SetTrackPosition(2, advance_time);
+		//	_player_model->SetTrackEnable(0, FALSE);
+		//	_player_model->SetTrackEnable(2, TRUE);
+		//	_player_model->SetTrackPosition(2, advance_time);
 
-			advance_time += GameTimer.GetElapsedSecond() / 2.0;
-		}
-		else {
-			_player_model->SetTrackEnable(0, TRUE);
-			_player_model->SetTrackEnable(2, FALSE);
-			_player_model->SetTrackPosition(0, 0.0);
-		}
+		//	advance_time += GameTimer.GetElapsedSecond() / 2.0;
+		//}
+		//else {
+		//	_player_model->SetTrackEnable(0, TRUE);
+		//	_player_model->SetTrackEnable(2, FALSE);
+		//	_player_model->SetTrackPosition(0, 0.0);
+		//}
 
-		_shader->SetTexture("m_Texture", *_texture[i]);
-		_shader->SetParameter("vp", vp);
-		_player_model->SetScale(SetPlayerScale(i));
-		_player_model->SetPosition(SetPlayerPosition(i));
-		_player_model->Draw(_shader);
+		//_shader->SetTexture("m_Texture", *_texture[i]);
+		//_shader->SetParameter("vp", vp);
+		//_shader->SetTechnique("UnlitAnimationModel");
+		//_player_model->SetScale(SetPlayerScale(i));
+		//_player_model->SetPosition(SetPlayerPosition(i));
+		//_player_model->Draw(_shader);
 	}
 }
 /*
