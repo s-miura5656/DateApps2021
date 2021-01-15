@@ -13,13 +13,15 @@ TimeManager::~TimeManager()
 
 void TimeManager::Initialize()
 {
-	limitTime  = 120.9f;
+	limitTime  = 12.9f;
 	time       = 0.0f;
 
 	startTime  = 10.0f;
 	countTime  = 3;
 
 	startFlag = false;
+
+	game_end = false;
 
 }
  
@@ -33,6 +35,15 @@ void TimeManager::Update()
 			time += (float)GameTimer.GetElapsedSecond();
 		}
 	}
+	
+	if (GetTimeLeft() <= 1) {
+		game_end = true;
+		if (game_end == true)
+		{
+			transition_time += (float)GameTimer.GetElapsedSecond();
+		}
+	}
+
 
 	startTime--;
 	if (startTime == 120) {
@@ -115,5 +126,6 @@ bool TimeManager::StartFlag()
 { 
 	return 	startFlag;
 }
+
 
 

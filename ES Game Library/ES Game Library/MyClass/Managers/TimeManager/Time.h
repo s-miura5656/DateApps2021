@@ -33,11 +33,16 @@ public:
 	int Countdown();
 	float GetStartTime();
 	bool StartFlag();
+	float GetTransitionTimer() const { return transition_time; }
 
 private:
 	//! 制限時間
 	float limitTime;
 	float time;
+
+	//! 終了後のタイマー
+	float transition_time;
+	bool game_end;
 
 	//! カウントダウン
 	float startTime;
