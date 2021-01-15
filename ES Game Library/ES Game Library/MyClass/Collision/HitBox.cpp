@@ -10,8 +10,8 @@ MODEL HitBox::_model = nullptr;
 //デストラクタ
 HitBox::~HitBox() 
 {
-	if (_player_base != nullptr)
-		delete _player_base;
+	//if (_player_base != nullptr)
+	//	delete _player_base;
 	
 	OnReMove();
 }
