@@ -31,7 +31,7 @@ bool ResultScene::Initialize()
 	_robot_fece          = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/robot_face.png"));
 	_non_first_banner    = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/2nd_3rd_4th_banner.png"));
 	_totitle	         = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/button.png"));
-	_font                = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 100);
+	_font                = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 50);
 	_shader  	         = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
 	_player_model        = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 
@@ -134,10 +134,13 @@ void ResultScene::Draw2D()
 
 	SpriteBatch.Draw(*_first_banner, Vector3(556, 32, 10000));
 
+	SpriteBatch.DrawString(_font, Vector2(782, 82), Color(255, 0, 0), _T("%d位　　  %dpt"), 1, GetPoints(0));
+
 	for (int i = 0; i < PLAYER_COUNT_MAX - 1; i++)
 	{
 		SpriteBatch.Draw(*_robot_fece, Vector3(556, 148 * (i + 1) + 32, 10000),RectWH(176 * i,0,176,128));
 		SpriteBatch.Draw(*_non_first_banner,Vector3(556 + 176, 148 * (i + 1) + 32, 10000));
+		SpriteBatch.DrawString(_font, Vector2(782, 148 * (i + 1) + 82), Color(255, 0, 0), _T("%d位　　  %dpt"),i +2, GetPoints(i+1));
 	}
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
