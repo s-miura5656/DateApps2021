@@ -38,7 +38,7 @@ bool SpeedItem::Initialize()
 	data[z][x] = 'a';
 	_map_data->SetData(data);
 
-	_model = ResouceManager::Instance().LoadModelFile(_T("Item/Itembox.X"));
+	_model = ResouceManager::Instance().LoadModelFile(_T("Item/Itembox_v2.X"));
 	Material material;
 	material.Diffuse = Color(1.0f, 1.0f, 1.0f);
 	material.Ambient = Color(1.0f, 1.0f, 1.0f);

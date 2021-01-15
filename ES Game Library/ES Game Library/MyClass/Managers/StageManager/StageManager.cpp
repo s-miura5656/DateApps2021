@@ -21,7 +21,7 @@ StageManager::~StageManager()
 bool StageManager::Initialize()
 {
 	_bg_sprite = ResouceManager::Instance().LordSpriteFile(_T("MapSprite/BG.png"));
-
+	_respawn   = ResouceManager::Instance().LoadModelFile(_T("MapSprite/Respawn/Respawn.X"));
 	FILE* fp = fopen("MapSprite/Stage/map_A.csv", "r");
 
 	//マップデータを読み込む
@@ -94,9 +94,9 @@ bool StageManager::Initialize()
 				break;
 			case 'r':
 				imap_data->SetRespawnPosition(Vector3(x,0,-z));
-				//_stages.push_back(new Warp(tag));
-				//_stages[_count]->SetPosition(Vector3(x, 0.1, -z));
-				//_stages[_count]->Initialize();
+				_respawn->SetPosition(x, 0, -z);
+				_respawn->SetRotation(Vector3_Zero);
+				_respawn->SetScale(1.0f);
 				break;
 			case 'o':
 				tag = WARP_TAG + tag;
@@ -164,6 +164,12 @@ void StageManager::Draw3D()
 	{
 		_stages[i]->Draw3D();
 	}
+	Material mat;	
+	mat.Diffuse  = Color(1.0f, 1.0f, 1.0f);
+	mat.Ambient  = Color(1.0f, 1.0f, 1.0f);
+	mat.Specular = Color(1.0f, 1.0f, 1.0f);
+	_respawn->SetMaterial(mat);
+	_respawn->Draw();
 }
 
 void StageManager::DrawAlpha3D()

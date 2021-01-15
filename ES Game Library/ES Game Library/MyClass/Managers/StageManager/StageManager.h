@@ -31,6 +31,7 @@ private:
 	std::vector<StageBase*>	    _stages;
 	std::vector<cstring>		_mapdate; //! マップデータの読み込み
 	SPRITE                      _bg_sprite;
+	MODEL                       _respawn;
 	string                      _random_item[3];
 	int                         _count;
 	int                         _probability;	

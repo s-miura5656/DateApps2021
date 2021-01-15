@@ -161,7 +161,7 @@ void ResultScene::Draw3D()
 	_shader->SetParameter("vp", vp);
 	_shader->SetTechnique("UnlitAnimationModel");
 	_player_model->SetScale(5.0f);
-	_player_model->SetPosition(Vector3(-6,0,0));
+	_player_model->SetPosition(Vector3(-6,-3,0));
 	_player_model->Draw(_shader);
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
