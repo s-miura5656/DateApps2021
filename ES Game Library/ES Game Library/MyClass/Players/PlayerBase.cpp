@@ -157,28 +157,7 @@ void PlayerBase::Draw3D()
 	}
 	else
 	{
-		if (_status_tag == ITEM_POWERDOWN)
-		{
-			_powerdown_effect->SetPosition(_transform.position + Vector3_Up);
-			_powerdown_effect->SetRotation(Vector3(-15, 0, 0));
-			_powerdown_effect->PlayOneShot();
-			_powerdown_effect->Draw();
-		}
-		else
-		{
-			_powerdown_effect->Stop();
-		}
-		if (_status_tag == ITEM_PLAYER_SPEEDUP || _status_tag == ITEM_ARM_SPEEDUP)
-		{
-			_powerup_effect->SetPosition(_transform.position + Vector3_Up);
-			_powerup_effect->SetRotation(Vector3(-15, 0, 0));
-			_powerup_effect->PlayOneShot();
-			_powerup_effect->Draw();
-		}
-		else
-		{
-			_powerup_effect->Stop();
-		}
+		EffectDraw();
 		_destroy_effect->Stop();
 		
 		ChangeAnimation();
@@ -513,5 +492,53 @@ void PlayerBase::ItemParameterTime()
 	else
 	{
 		_powerup_count++;
+	}
+}
+
+void PlayerBase::EffectDraw()
+{
+	if (_status_tag == ITEM_PLAYER_SPEEDUP)
+	{
+		_player_speedup_effect->SetPosition(_transform.position + Vector3_Up);
+		_player_speedup_effect->SetRotation(Vector3(-15, 0, 0));
+		_player_speedup_effect->PlayOneShot();
+		_player_speedup_effect->Draw();
+	}
+	else
+	{
+		_player_speedup_effect->Stop();
+	}
+	if (_status_tag == ITEM_ARM_SPEEDUP)
+	{
+		_arm_speedup_effect->SetPosition(_transform.position + Vector3_Up);
+		_arm_speedup_effect->SetRotation(Vector3(-15, 0, 0));
+		_arm_speedup_effect->PlayOneShot();
+		_arm_speedup_effect->Draw();
+	}
+	else
+	{
+		_arm_speedup_effect->Stop();
+	}
+	if (_status_tag == ITEM_POWERDOWN)
+	{
+		_powerdown_effect->SetPosition(_transform.position + Vector3_Up);
+		_powerdown_effect->SetRotation(Vector3(-15, 0, 0));
+		_powerdown_effect->PlayOneShot();
+		_powerdown_effect->Draw();
+	}
+	else
+	{
+		_powerdown_effect->Stop();
+	}
+	if (_status_tag == ITEM_THUNDER)
+	{
+		_thunder_effect->SetPosition(_transform.position + Vector3_Up);
+		_thunder_effect->SetRotation(Vector3(-15, 0, 0));
+		_thunder_effect->PlayOneShot();
+		_thunder_effect->Draw();
+	}
+	else
+	{
+		_thunder_effect->Stop();
 	}
 }

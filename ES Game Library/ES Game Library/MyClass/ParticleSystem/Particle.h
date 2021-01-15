@@ -20,7 +20,7 @@ public:
 	void SetScale(float scale);
 	void SetSpeed(float speed);
 	void SetColor(Color wirecolor);
-
+	void SetNomalEffect();
 private:
 	//! file
 	EFFEKSEER _particle;

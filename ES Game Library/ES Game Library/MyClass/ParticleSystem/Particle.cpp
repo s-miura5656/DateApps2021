@@ -79,3 +79,9 @@ void ParticleSystem::SetColor(Color wirecolor)
 {
 	_wire_color = wirecolor;
 }
+
+void ParticleSystem::SetNomalEffect()
+{
+	_speed = 1.0f;
+	_scale = Vector3_One;
+}
