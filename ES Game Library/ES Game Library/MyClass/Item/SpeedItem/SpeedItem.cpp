@@ -66,15 +66,15 @@ int SpeedItem::Update()
 			switch (_i_player_data->GetRankNum(name))
 			{
 			case 0:
-				if (items_probability >= 70)
+				if (items_probability >= 34)
 					status_name = ITEM_PLAYER_SPEEDUP;
 				else
 					status_name = ITEM_POWERDOWN;
 				break;
 			case 1 || 2:
-				if (items_probability >= 34)
+				if (items_probability >= 77)
 					status_name = ITEM_PLAYER_SPEEDUP;
-				else if (items_probability >= 77)
+				else if (items_probability >= 34)
 					status_name = ITEM_ARM_SPEEDUP;
 				else
 					status_name = ITEM_POWERDOWN;
@@ -82,7 +82,7 @@ int SpeedItem::Update()
 			case 3:
 				if (items_probability >= 50)
 					status_name = ITEM_THUNDER;
-				else if (items_probability >= 75)
+				else if (items_probability >= 25)
 					status_name = ITEM_PLAYER_SPEEDUP;
 				else
 					status_name = ITEM_ARM_SPEEDUP;

@@ -23,7 +23,7 @@ bool Indestructible::Initialize()
 	//ƒ}ƒeƒŠƒAƒ‹‚Ìİ’è
 
 	_model_material.Diffuse  = Color(1.0f, 1.0f, 1.0f);
-	_model_material.Ambient  = Color(1.0f, 1.0f, 1.0f);
+	_model_material.Ambient  = Color(0.25f, 0.25f, 0.25f);
 	_model_material.Specular = Color(1.0f, 1.0f, 1.0f);
 
 	

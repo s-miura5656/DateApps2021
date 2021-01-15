@@ -49,7 +49,7 @@ bool Block::Initialize()
 	_effect->SetScale(1.0f);
 
 	//スケールの設定
-	_scale = 0.85f;
+	_scale = 1.0f;
 	_model->SetScale(_scale);
 	//マテリアルの設定
 	

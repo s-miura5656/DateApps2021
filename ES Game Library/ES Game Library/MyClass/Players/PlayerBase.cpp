@@ -230,6 +230,7 @@ void PlayerBase::DrawModel()
 	Matrix vp = camera->GetViewProjectionMatrix();
 	_shader->SetParameter("vp", vp);
 
+	_model->SetScale(_transform.scale * 1.25);
 	if (_i_player_data->GetState(_tag) != PlayerEnum::Animation::DAMAGE)
 	{
 		_shader->SetTechnique("FixAnimationModel");
@@ -263,6 +264,7 @@ void PlayerBase::DrawModel()
 
 	_i_player_data->SetAngle(_tag, _transform.rotation.y);
 	_i_player_data->SetPosition(_tag, _transform.position);
+	_model->SetScale(_transform.scale);
 }
 
 //! @fn プレイヤーモデルのアニメーション切り替え

@@ -63,7 +63,6 @@ bool StageManager::Initialize()
 	int player_num = 1;
 
 	IMapData* imap_data = new IMapData;
-	std::vector<int> warpdata;
 
 	_count = 0;
 	for (int z = 0; z < _mapdate.size(); z++)
@@ -98,20 +97,11 @@ bool StageManager::Initialize()
 				_respawn->SetRotation(Vector3_Zero);
 				_respawn->SetScale(1.0f);
 				break;
-			case 'o':
-				tag = WARP_TAG + tag;
-				_stages.push_back(new Warp(tag));
-				_stages[_count]->SetPosition(Vector3(x, 0.1, -z));
-				_stages[_count]->Initialize();
-				warpdata.push_back(_count);
-				_count++;
-				break;
 			}
 		}
 	}
 
 	imap_data->SetData(_mapdate);
-	imap_data->SetWarp(warpdata);
 
 	_stages.push_back(new Indestructible);
 	_stages[_stages.size() - 1]->Initialize();
