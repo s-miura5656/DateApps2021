@@ -20,8 +20,12 @@ StageManager::~StageManager()
 
 bool StageManager::Initialize()
 {
-	_bg_sprite = ResouceManager::Instance().LordSpriteFile(_T("MapSprite/BG.png"));
+	MediaManager.Attach(GraphicsDevice);
+	_bg_movie  = ResouceManager::Instance().LordMediaFile(_T("MapSprite/bg.wmv"));
 	_respawn   = ResouceManager::Instance().LoadModelFile(_T("MapSprite/Respawn/Respawn.X"));
+
+	_bg_movie->Play();
+
 	FILE* fp = fopen("MapSprite/Stage/map_A.csv", "r");
 
 	//マップデータを読み込む
@@ -144,7 +148,7 @@ int StageManager::Update()
 
 void StageManager::Draw2D()
 {
-	SpriteBatch.Draw(*_bg_sprite, Vector3(0, 0, 10000), 1.0f);
+	SpriteBatch.Draw(*_bg_movie, Vector3(0, 0, 10000),1.0f);
 }
 
 void StageManager::Draw3D()
