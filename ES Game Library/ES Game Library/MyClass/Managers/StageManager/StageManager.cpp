@@ -199,6 +199,7 @@ void StageManager::RandomBlockSet()
 
 	for (int i = 0; i < MathHelper_Random(1,2); i++) 
 	{
+		random_block_pos[i].y = 10;
 		ItemCounter::SetItem(SPEED_ITEM_TAG, random_block_pos[i], 0);
 		if (random_block_pos.size() == 1)
 			return;

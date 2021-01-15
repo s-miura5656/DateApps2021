@@ -53,7 +53,10 @@ bool SpeedItem::Initialize()
 int SpeedItem::Update()
 {
 	RotationItem();
-
+	if (_position.y <= 0)
+		_position.y = 0;
+	else
+		_position.y -= 0.1;
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string name    = PLAYER_TAG + std::to_string(i + 1);
