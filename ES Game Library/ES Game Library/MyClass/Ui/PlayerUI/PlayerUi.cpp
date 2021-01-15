@@ -25,7 +25,7 @@ bool PlayerUi::Initialize(const Vector3& banner_pos, RectWH banner_rectWH)
 	banner_position = banner_pos;
 	banner_rw = banner_rectWH;
 	banner_status = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/status.png"));
-	item_icon = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/item_icon.png"));
+	item_icon = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/item_.png"));
 	joy_icon = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/icon01_.png"));
 	normal_icon = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/icon02_.png"));
 
@@ -136,7 +136,9 @@ void PlayerUi::Draw2D()
 			}
 			else if (_i_player_data->GetStatusTag(tag) == ITEM_THUNDER)
 			{
-				SpriteBatch.Draw(*item_icon, banner_position + Vector3(30, 130, 0), RectWH( 0, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+				SpriteBatch.Draw(*item_icon, banner_position + Vector3(30, 130, 0), RectWH(192, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+				SpriteBatch.DrawString(player_font, _T("THUNDER"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140),
+					Color(255, 255, 255), Vector2(0.4, 0.4), Vector3(0, 0, 0), Vector3(0, 0, 0));
 			}
 			/*if (_i_player_data->GetParameter_PowerUp(tag))
 			{
