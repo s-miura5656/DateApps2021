@@ -497,48 +497,24 @@ void PlayerBase::ItemParameterTime()
 
 void PlayerBase::EffectDraw()
 {
-	if (_status_tag == ITEM_PLAYER_SPEEDUP)
+	if (_status_tag != _status_old)
 	{
-		_player_speedup_effect->SetPosition(_transform.position + Vector3_Up);
-		_player_speedup_effect->SetRotation(Vector3(-15, 0, 0));
-		_player_speedup_effect->PlayOneShot();
-		_player_speedup_effect->Draw();
+		if (_status_old != "")
+		{
+			for (auto&& effect : _effect)
+			{
+				_effect.at(_status_old)->Stop();
+			}
+		}
+		_status_old = _status_tag;
 	}
-	else
-	{
-		_player_speedup_effect->Stop();
-	}
-	if (_status_tag == ITEM_ARM_SPEEDUP)
-	{
-		_arm_speedup_effect->SetPosition(_transform.position + Vector3_Up);
-		_arm_speedup_effect->SetRotation(Vector3(-15, 0, 0));
-		_arm_speedup_effect->PlayOneShot();
-		_arm_speedup_effect->Draw();
-	}
-	else
-	{
-		_arm_speedup_effect->Stop();
-	}
-	if (_status_tag == ITEM_POWERDOWN)
-	{
-		_powerdown_effect->SetPosition(_transform.position + Vector3_Up);
-		_powerdown_effect->SetRotation(Vector3(-15, 0, 0));
-		_powerdown_effect->PlayOneShot();
-		_powerdown_effect->Draw();
-	}
-	else
-	{
-		_powerdown_effect->Stop();
-	}
-	if (_status_tag == ITEM_THUNDER)
-	{
-		_thunder_effect->SetPosition(_transform.position + Vector3_Up);
-		_thunder_effect->SetRotation(Vector3(-15, 0, 0));
-		_thunder_effect->PlayOneShot();
-		_thunder_effect->Draw();
-	}
-	else
-	{
-		_thunder_effect->Stop();
-	}
+
+	if (_status_tag == "")
+		return;
+	
+	_effect.at(_status_tag)->SetPosition(_transform.position + Vector3_Up);
+	_effect.at(_status_tag)->SetRotation(Vector3(-15, 0, 0));
+	_effect.at(_status_tag)->PlayOneShot();
+	_effect.at(_status_tag)->Draw();
+
 }

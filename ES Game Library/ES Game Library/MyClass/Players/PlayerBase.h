@@ -70,10 +70,12 @@ protected:
 	std::unique_ptr<ParticleSystem> _arm_speedup_effect;
 	std::unique_ptr<ParticleSystem> _powerdown_effect;
 	std::unique_ptr<ParticleSystem> _thunder_effect;
+	std::map<string, std::unique_ptr<ParticleSystem>> _effect;
 	//! tag
 	std::string _tag;
 	std::string _arm_tag;
 	std::string _status_tag = "";
+	std::string _status_old = "";
 	//! index
 	IndexNum _index_num;
 	int _animation_index;

@@ -24,8 +24,6 @@ Player::Player(std::string tag)
 
 Player::~Player()
 {
-	_destroy_effect->Stop();
-
 	_arm.reset();
 	_i_map_data.reset();
 	_i_arm_Data.reset();
@@ -90,6 +88,11 @@ bool Player::Initialize()
 
 	_thunder_effect->RegisterParticle(thunder);
 	_thunder_effect->SetNomalEffect();
+
+	_effect.insert(std::make_pair(ITEM_PLAYER_SPEEDUP, std::move(_player_speedup_effect)));
+	_effect.insert(std::make_pair(ITEM_ARM_SPEEDUP, std::move(_arm_speedup_effect)));
+	_effect.insert(std::make_pair(ITEM_POWERDOWN, std::move(_powerdown_effect)));
+	_effect.insert(std::make_pair(ITEM_THUNDER, std::move(_thunder_effect)));
 
 	//! collision
 	_hit_box->Init();
