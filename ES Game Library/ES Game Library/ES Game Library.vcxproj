@@ -206,6 +206,7 @@
     <ClCompile Include="MyClass\Ui\PlayerUI\PlayerUi.cpp" />
     <ClCompile Include="MyClass\Ui\ResultUi.cpp" />
     <ClCompile Include="MyClass\Ui\TitleUi.cpp" />
+    <ClCompile Include="MyClass\Ui\UiParametor.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -310,6 +311,7 @@
     <ClInclude Include="MyClass\Ui\PlayerUI\PlayerUi.h" />
     <ClInclude Include="MyClass\Ui\ResultUi.h" />
     <ClInclude Include="MyClass\Ui\TitleUi.h" />
+    <ClInclude Include="MyClass\Ui\UiParametor.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="ESGLib.h" />
     <ClInclude Include="DirectX\Audio\DXAudio8.hpp" />

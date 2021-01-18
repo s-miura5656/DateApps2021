@@ -19,40 +19,42 @@ public:
 	int Update()	  override;
 	void Draw2D()	  override;
 	
-	IPrayerData* _i_player_data;
+	PlayerUi* player_ui[4];
 
-	IArmData* _i_arm_data;
+	//IPrayerData* _i_player_data;
 
-	std::vector<PlayerUi*> player_ui;
+	//IArmData* _i_arm_data;
 
-	FONT player_date;//各プレイヤーのステータス表記
+	//std::vector<PlayerUi*> player_ui;
 
-	Vector2 score_pos[PLAYER_COUNT_MAX];//各プレイヤーのスコア
+	//FONT player_date;//各プレイヤーのステータス表記
 
-	Vector2 speed_ui_pos[PLAYER_COUNT_MAX];//各プレイヤーのスピード
+	//Vector2 score_pos[PLAYER_COUNT_MAX];//各プレイヤーのスコア
 
-	Color color[PLAYER_COUNT_MAX];//各プレイヤーの色指定
+	//Vector2 speed_ui_pos[PLAYER_COUNT_MAX];//各プレイヤーのスピード
 
-	SPRITE time_banner;//タイムバナー
-	Vector3 time_banner_pos;
-	Vector3 minutes_pos;
-	Vector3 tens_place_pos;
-	Vector3 ones_place_pos;
-	
+	//Color color[PLAYER_COUNT_MAX];//各プレイヤーの色指定
 
-	SPRITE number_sprite;//数字
-	RectWH number[10];
+	//SPRITE time_banner;//タイムバナー
+	//Vector3 time_banner_pos;
+	//Vector3 minutes_pos;
+	//Vector3 tens_place_pos;
+	//Vector3 ones_place_pos;
+	//
+
+	//SPRITE number_sprite;//数字
+	//RectWH number[10];
 
 
 
-	Color black;//黒
-	Color White;//白
+	//Color black;//黒
+	//Color White;//白
 
-	FONT time_limit_font;
-	Vector3 Countdown_pos;
+	//FONT time_limit_font;
+	//Vector3 Countdown_pos;
 
-	FONT back_count;
-	FONT front_count;
+	//FONT back_count;
+	//FONT front_count;
 
-	int move_flag;
+	//int move_flag;
 };

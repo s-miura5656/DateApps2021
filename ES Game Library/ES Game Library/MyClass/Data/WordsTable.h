@@ -3,7 +3,7 @@
 #include "../../ESGLib.h"
 
 //! プレイヤーの最大数
-static const int PLAYER_COUNT_MAX = 4;
+//static const int PLAYER_COUNT_MAX = 4;
 
 //! 連想配列用タグ
 static const std::string PLAYER_TAG = "Player_";
@@ -70,6 +70,11 @@ static const int WEAK_PROBABILITY_NUMBER = 50;
 
 //!何秒経過後にリザルトへ遷移するか
 static const int RESULT_GO_TIME = 3;
+
+enum Players
+{
+	PLAYER1, PLAYER2, PLAYER3, PLAYER4, PLAYER_COUNT_MAX
+};
 
 namespace PlayerEnum {
 	enum Personality { NORMAL, ARM_RANGE, ARM_SPEED, PLAYER_MOVE_SPEED, PLAYER_DEFENCE, PLAYER_KING,PERSONALITY_MAX};
