@@ -21,9 +21,12 @@ bool SelectScene::Initialize()
 	_button_go = ResouceManager::Instance().LordSpriteFile(_T("Select/button_go02.png"));
 	_player_model = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 	_shader       = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
-
 	_chara_frame = ResouceManager::Instance().LordSpriteFile(_T("Select/character_frame.png"));
 	_button_frame = ResouceManager::Instance().LordSpriteFile(_T("Select/button_frame.png"));
+	_left_arrow = ResouceManager::Instance().LordSpriteFile(_T("Select/left_arrow.png"));
+	_left_arrow_dark = ResouceManager::Instance().LordSpriteFile(_T("Select/left_arrow_dark.png"));
+	_right_arrow = ResouceManager::Instance().LordSpriteFile(_T("Select/right_arrow.png"));
+	_right_arrow_dark = ResouceManager::Instance().LordSpriteFile(_T("Select/right_arrow_dark.png"));
 
 	for (int i = 0; i < TEXTURE_MAX; i++)
 	{
@@ -161,6 +164,8 @@ void SelectScene::Draw2D()
 		if (!_select_complete_flag[i])
 		{
 			SpriteBatch.Draw(*_chara_frame, player_num + Vector3(0, 195, 9000), 1.0f);
+			SpriteBatch.Draw(*_left_arrow, player_num + Vector3(0, 195, 9000), 1.0f);
+			SpriteBatch.Draw(*_right_arrow, player_num + Vector3(0, 195, 9000), 1.0f);
 			SpriteBatch.Draw(*_button_ready, player_num + Vector3(0, 400, 9000), 1.0f);
 		}
 		else

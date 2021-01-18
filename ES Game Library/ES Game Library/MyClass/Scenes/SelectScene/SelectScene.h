@@ -26,10 +26,10 @@ private:
 	SPRITE _button_go;
 	SPRITE _chara_frame;
 	SPRITE _button_frame;
-	SPRITE _left_arrow_A;
-	SPRITE _left_arrow_B;
-	SPRITE _right_arrow_A;
-	SPRITE _right_arrow_B;
+	SPRITE _left_arrow;
+	SPRITE _left_arrow_dark;
+	SPRITE _right_arrow;
+	SPRITE _right_arrow_dark;
 	ANIMATIONMODEL _player_model;
 
 	int _select_count = 0;
@@ -39,7 +39,7 @@ private:
 	bool _player_button_flag[PLAYER_COUNT_MAX];
 
 	bool _select_complete_flag[PLAYER_COUNT_MAX];
-	bool _game_start_flag = true;
+	bool _game_start_flag = false;
 	enum
 	{
 		RED,
