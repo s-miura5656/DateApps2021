@@ -25,6 +25,7 @@ void AudioManager::PunchShotPlay()
 		if (!sound->IsPlaying())
 		{
 			sound->Play();
+			break;
 		}
 	}
 }
@@ -35,6 +36,7 @@ void AudioManager::IndestructiblePlay()
 		if (!sound->IsPlaying())
 		{
 			sound->Play();
+			break;
 		}
 	}
 }
@@ -45,6 +47,7 @@ void AudioManager::DestructionPlay()
 		if (!sound->IsPlaying())
 		{
 			sound->Play();
+			break;
 		}
 	}
 }
@@ -55,6 +58,7 @@ void AudioManager::MapGimmickPlay()
 		if (!sound->IsPlaying())
 		{
 			sound->Play();
+			break;
 		}
 	}
 }
@@ -65,20 +69,23 @@ void AudioManager::PointAddition()
 		if (!sound->IsPlaying())
 		{
 			sound->Play();
+			break;
 		}
 	}
 }
-void AudioManager::Explosion()
+void AudioManager::ExplosionPlay()
 {
 	for (auto& sound : _explosion)
 	{
 		if (!sound->IsPlaying())
 		{
 			sound->Play();
+			break;
 		}
 	}
 }
 void AudioManager::MainBgmPlay()
 {
+	if(!_mainbgm->IsPlaying())
 	_mainbgm->Play();
 }

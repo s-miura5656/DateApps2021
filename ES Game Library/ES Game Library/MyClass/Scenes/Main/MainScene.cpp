@@ -10,7 +10,7 @@
 #include "../../Data/IData.h"
 #include "../../Data/Parametor.h"
 #include "../../Managers/InputManager/InputManager.h"
-
+#include "../../Managers/AudioManager/AudioManager.h"
 MainScene::MainScene()
 {
 	_managers.push_back(new StageManager);
@@ -57,16 +57,15 @@ bool MainScene::Initialize()
 	{
 		manager->Initialize();
 	}
-
+	AudioManager::Instance().Initialize();
 	InputDevice.CreateKeyboard();
-
 	return true;
 }
 
 int MainScene::Update()
 {
+	AudioManager::Instance().MainBgmPlay();
 	auto _temporary_managers = _managers;
-
 	for (auto&& manager : _temporary_managers)
 	{
 		manager->Update();
@@ -123,9 +122,8 @@ int MainScene::Update()
 	delete pArmData;
 	delete pPlayerData;
 	*/
-	float timeleft = TimeManager::Instance().GetTimeLeft();
 
-	if (timeleft <= 0.9f)
+	if (TimeManager::Instance().GetTransitionTimer() > 5)
 	{
 		ResultTransition();
 	}

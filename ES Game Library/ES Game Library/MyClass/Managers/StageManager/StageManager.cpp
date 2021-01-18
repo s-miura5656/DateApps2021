@@ -20,8 +20,12 @@ StageManager::~StageManager()
 
 bool StageManager::Initialize()
 {
-	_bg_sprite = ResouceManager::Instance().LordSpriteFile(_T("MapSprite/BG.png"));
+	MediaManager.Attach(GraphicsDevice);
+	_bg_movie  = ResouceManager::Instance().LordMediaFile(_T("MapSprite/bg.wmv"));
 	_respawn   = ResouceManager::Instance().LoadModelFile(_T("MapSprite/Respawn/Respawn.X"));
+
+	_bg_movie->Play();
+
 	FILE* fp = fopen("MapSprite/Stage/map_A.csv", "r");
 
 	//マップデータを読み込む
@@ -78,14 +82,6 @@ bool StageManager::Initialize()
 				_stages[_count]->Initialize();
 				_count++;
 				break;
-			case 's':
-				tag = DESTRUCTION_BLOCK_TAG + tag;
-				_stages.push_back(new Block(tag, POINT_ITEM_TAG));
-				_stages[_count]->SetPosition(Vector3(x, 0, -z));
-				_stages[_count]->Initialize();
-				_count++;
-				_mapdate[z][x] = 'b';
-				break;
 			case 'p':
 				tag = PLAYER_TAG + std::to_string(player_num);
 				iplayer_data->SetPosition(tag, Vector3(x, 0, -z));
@@ -119,7 +115,9 @@ bool StageManager::Initialize()
 
 int StageManager::Update()
 {
-		_random_fall_time++;
+	if(_bg_movie->IsComplete())
+	_bg_movie->Replay();
+	_random_fall_time++;
 	//TODO:降ってくる頻度は調整する
 	if (_random_fall_time >= FALL_BLOCK_INTERVAL)
 	{
@@ -144,7 +142,7 @@ int StageManager::Update()
 
 void StageManager::Draw2D()
 {
-	SpriteBatch.Draw(*_bg_sprite, Vector3(0, 0, 10000), 1.0f);
+	SpriteBatch.Draw(*_bg_movie, Vector3(0, 0, 10000),1.0f);
 }
 
 void StageManager::Draw3D()

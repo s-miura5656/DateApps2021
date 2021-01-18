@@ -4,7 +4,7 @@
 #include "../../../Data/WordsTable.h"
 #include "../../../Managers/SceneManager/SceneManager.h"
 #include "../../../ParticleSystem/Particle.h"
-
+#include "../../../Managers/AudioManager/AudioManager.h"
 Block::Block(std::string tag, std::string item)
 {
 	_item_name = item;
@@ -125,6 +125,7 @@ int Block::Update()
 
 			}
 
+			AudioManager::Instance().DestructionPlay();
 			return 1;
 		}
 	}

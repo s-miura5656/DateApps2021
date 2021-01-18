@@ -3,7 +3,7 @@
 #include "../Managers/SceneManager/SceneManager.h"
 #include "../ParticleSystem/Particle.h"
 #include "../Item/Itembase.hpp"
-
+#include "../Managers/AudioManager/AudioManager.h"
 #pragma region 基本機能
 PlayerBase::PlayerBase()
 {
@@ -53,6 +53,7 @@ int PlayerBase::Update()
 		{
 			DestroyArm();
 			_death_flag      = true;
+			AudioManager::Instance().DestructionPlay();
 			player_data->SetInvincibleMode(_tag, true);
 			return 0;
 		}
@@ -386,6 +387,7 @@ void PlayerBase::SetCollisionPosition()
 //! fn アームの生成
 void PlayerBase::CreateArm()
 {
+	AudioManager::Instance().PunchShotPlay();
 	_arm.reset();
 	_arm = nullptr;
 
