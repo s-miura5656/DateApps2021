@@ -119,11 +119,11 @@ int Block::Update()
 			_effect->SetPosition(_position + Vector3_Up * 0.5f);
 			_effect->PlayOneShot();
 
-			//!アイテムが入ってないブロックの時はアイテムを生成しない
-			if (_item_name != NULL_ITEM_TAG)
-			{
+			////!アイテムが入ってないブロックの時はアイテムを生成しない
+			//if (_item_name != NULL_ITEM_TAG)
+			//{
 
-			}
+			//}
 
 			AudioManager::Instance().DestructionPlay();
 			return 1;

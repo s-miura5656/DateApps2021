@@ -157,6 +157,10 @@ void StageManager::Draw3D()
 	mat.Ambient  = Color(1.0f, 1.0f, 1.0f);
 	mat.Specular = Color(1.0f, 1.0f, 1.0f);
 	_respawn->SetMaterial(mat);
+	_rotation += 3;
+	if (_rotation >= 360)
+		_rotation = 0;
+	_respawn->SetRotation(Vector3(0, _rotation,0));
 	_respawn->Draw();
 }
 

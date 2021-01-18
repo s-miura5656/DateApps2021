@@ -53,7 +53,7 @@ int PlayerBase::Update()
 		{
 			DestroyArm();
 			_death_flag      = true;
-			AudioManager::Instance().DestructionPlay();
+			AudioManager::Instance().ExplosionPlay();
 			player_data->SetInvincibleMode(_tag, true);
 			return 0;
 		}
