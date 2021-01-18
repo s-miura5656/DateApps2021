@@ -27,12 +27,12 @@ class PlayerUi : public BaseUi
 {
 public:
 	PlayerUi() {}
-	PlayerUi(const int player_no);
+	PlayerUi(int player_no);
 	~PlayerUi();
 	//void RegisterPointAnimation(Vector3 player_num);
 	//void MovePointAnimation(Vector3 player_num);
 
-	bool Initialize(const Players player);
+	bool Initialize(int player);
 	bool Initialize() override { return true; };
 	int Update()	  override;
 	void Draw2D()	  override;
@@ -58,8 +58,9 @@ private:
 
 	enum RANKING //順位
 	{ FIRST, SECOND, THIRD, FOURTH };
-	//Vector3 player_pos;
-	//SPRITE  ranking;
+	SPRITE  ranking;
+	RectWH  ranking_rw;
+	Vector3 player_pos;
 
 	//static SPRITE  score_font;//各プレイヤーのスコア
 	//int score;
@@ -82,7 +83,7 @@ private:
 
 	//std::vector<Vector3> move_pos;
 
-	std::unique_ptr<IPrayerData> _i_player_data;
+	IPrayerData* _i_player_data;
 	//std::unique_ptr<IArmData>    _i_arm_data;
 
 

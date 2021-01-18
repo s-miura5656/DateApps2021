@@ -20,11 +20,14 @@ MainUi::~MainUi()
 
 bool MainUi::Initialize()
 {
-	for (int i = 0; i < 4; i++)
+	for (int  i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		player_ui[i] = new PlayerUi;
-		player_ui[i]->Initialize((Players)i);
+		player_ui[i] = new PlayerUi(i + 1);
+		player_ui[i]->Initialize(i);
 	}
+		
+
+		
 
 	////!file
 	//time_limit_font   = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 50);

@@ -28,15 +28,17 @@ public:
 
 	}
 
-	Vector3 GetBannerPosition(const Players player) const { return _bunner_position[player]; }
-	RectWH GetBannerRectWH(const Players player)const { return _bunner_rectwh[player]; }
+	Vector3 GetBannerPosition(int player) const { return _bunner_position[player]; }
+	RectWH GetBannerRectWH(int player)const { return _bunner_rectwh[player]; }
 
-	Vector3 GetStatusBannerPsition(const Players player) const { return _status_bunner_position[player]; }
-	RectWH GetStatusBannerRectWH(const Players player)const { return _status_rectwh[player]; }
+	Vector3 GetStatusBannerPsition(int player) const { return _status_bunner_position[player]; }
+	RectWH GetStatusBannerRectWH(int player)const { return _status_rectwh[player]; }
 
-	Vector3 GetPlayerIconPosition(const Players player) const { return _player_icon_position[player]; }
-	RectWH GetPlayerJoyIconRectwh(const Players player)const { return _player_joy_icon_rectwh[player]; }
-	RectWH GetPlayerNormalIconRectwh(const Players player)const { return _player_normal_icon_rectwh[player]; }
+	Vector3 GetPlayerIconPosition(int player) const { return _player_icon_position[player]; }
+	RectWH GetPlayerJoyIconRectwh(int player)const { return _player_joy_icon_rectwh[player]; }
+	RectWH GetPlayerNormalIconRectwh(int player)const { return _player_normal_icon_rectwh[player]; }
+
+	RectWH GetPlayerRankingRectwh(int ranking)const { return _player_ranking[ranking]; }
 
 private:
 	UiParametor();
@@ -65,6 +67,8 @@ private:
 	Vector3 _player_icon_position[PLAYER_COUNT_MAX];
 	RectWH _player_normal_icon_rectwh[PLAYER_COUNT_MAX];
 	RectWH _player_joy_icon_rectwh[PLAYER_COUNT_MAX];
+
+	RectWH _player_ranking[PLAYER_COUNT_MAX];
 };
 
 
