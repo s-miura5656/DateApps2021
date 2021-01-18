@@ -64,9 +64,12 @@ bool MainScene::Initialize()
 
 int MainScene::Update()
 {
-	if (TimeManager::Instance().GetTransitionTimer() <= 0)
+	if (TimeManager::Instance().StartFlag() && TimeManager::Instance().GetTransitionTimer() <= 0)
 	{
 		AudioManager::Instance().MainBgmPlay();
+	}
+	if (TimeManager::Instance().GetTransitionTimer() <= 0)
+	{
 		auto _temporary_managers = _managers;
 		for (auto&& manager : _temporary_managers)
 		{
@@ -75,6 +78,8 @@ int MainScene::Update()
 	}
 	else
 	{
+		AudioManager::Instance().MainBgmStop();
+		AudioManager::Instance().WhistlePlay();
 		_managers[3]->Update();
 	}
 	/*

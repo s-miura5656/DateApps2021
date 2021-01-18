@@ -2,6 +2,8 @@
 #include"../ResouceManager/ResouceManager.h"
 AudioManager::AudioManager()
 {
+	_signal = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/signal.wav"));
+	_signal->Play();
 }
 
 AudioManager::~AudioManager()
@@ -15,7 +17,9 @@ bool AudioManager::Initialize()
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/mapgimmick.wav"), _mapgimmick, MAX_PLAY, false);
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/pointaddition.wav"), _pointaddition, MAX_PLAY, false);
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/explosion.wav"), _explosion, MAX_PLAY, false);
+	_whistle = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/whistle.wav"));
 	_mainbgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/MainBgm.wav"));
+
 	return true;
 }
 void AudioManager::PunchShotPlay()
@@ -84,8 +88,23 @@ void AudioManager::ExplosionPlay()
 		}
 	}
 }
+void AudioManager::WhistlePlay()
+{
+	if (_whistle_flag)
+		return;
+	if (!_whistle->IsPlaying())
+	{
+		_whistle->Play();
+		_whistle_flag = true;
+	}
+}
 void AudioManager::MainBgmPlay()
 {
 	if(!_mainbgm->IsPlaying())
 	_mainbgm->Play();
+}
+
+void AudioManager::MainBgmStop()
+{
+	_mainbgm->Stop();
 }

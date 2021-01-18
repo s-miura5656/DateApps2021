@@ -19,8 +19,12 @@ public:
 	void PointAddition();
 	//!プレイヤーが死ぬとき
 	void ExplosionPlay();
+	//!メイン終了ホイッスル
+	void WhistlePlay();
 	//!メインBGM
 	void MainBgmPlay();
+	//!メインBGMの終了
+	void MainBgmStop();
 	//! シングルトンオブジェクトを他で呼び出す時の記述
 	static AudioManager& Instance() {
 		static AudioManager instance;
@@ -33,5 +37,8 @@ private:
 	SOUND _mapgimmick[MAX_PLAY];
 	SOUND _pointaddition[MAX_PLAY];
 	SOUND _explosion[MAX_PLAY];
+	SOUND _whistle;
+	SOUND _signal;
 	MUSIC _mainbgm;
+	bool  _whistle_flag = false;
 };
