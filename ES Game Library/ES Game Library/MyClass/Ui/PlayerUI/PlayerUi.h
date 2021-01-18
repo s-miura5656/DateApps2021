@@ -40,8 +40,7 @@ public:
 private:
 	int player_index;//プレイヤーナンバー
 	std::string tag;
-	//std::string _arm_tag;
-
+	
 	Vector3 _banner_pos;//各プレイヤーのバナー
 	SPRITE  _banner_sprite;//各プレイヤーのバナー
 	RectWH  _banner_rw;
@@ -59,7 +58,6 @@ private:
 	enum RANKING //順位
 	{ FIRST, SECOND, THIRD, FOURTH };
 	SPRITE  ranking;
-	RectWH  ranking_rw;
 	Vector3 player_pos;
 
 	//static SPRITE  score_font;//各プレイヤーのスコア
@@ -84,9 +82,7 @@ private:
 	//std::vector<Vector3> move_pos;
 
 	IPrayerData* _i_player_data;
-	//std::unique_ptr<IArmData>    _i_arm_data;
-
-
+	
 
 	//void RegisterPointAnimation(Vector3 player_num);
 	//void MovePointAnimation(Vector3 player_num);

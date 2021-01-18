@@ -38,8 +38,7 @@ public:
 	RectWH GetPlayerJoyIconRectwh(int player)const { return _player_joy_icon_rectwh[player]; }
 	RectWH GetPlayerNormalIconRectwh(int player)const { return _player_normal_icon_rectwh[player]; }
 
-	RectWH GetPlayerRankingRectwh(int ranking)const { return _player_ranking[ranking]; }
-
+	
 private:
 	UiParametor();
 	UiParametor(const UiParametor&)	   = delete;
@@ -68,7 +67,6 @@ private:
 	RectWH _player_normal_icon_rectwh[PLAYER_COUNT_MAX];
 	RectWH _player_joy_icon_rectwh[PLAYER_COUNT_MAX];
 
-	RectWH _player_ranking[PLAYER_COUNT_MAX];
 };
 
 
