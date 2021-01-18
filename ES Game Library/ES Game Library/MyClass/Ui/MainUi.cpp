@@ -126,9 +126,13 @@ void MainUi::Draw2D()
 	}
 
 	//! タイムリミット（三秒前）
-	if ((minutes == 0 && tens == 0) && ones <= 3)
+	if (((minutes == 0 && tens == 0) && ones <= 3) && TimeManager::Instance().GetTransitionTimer() < 0 )
 	{
 		SpriteBatch.Draw(*number_sprite, Countdown_pos, number[ones]);
+	}
+	else if(TimeManager::Instance().GetTransitionTimer() > 0)
+	{
+		SpriteBatch.DrawString(front_count, Vector2(500, 340), White, _T("F I N S H !!"));
 	}
 
 }

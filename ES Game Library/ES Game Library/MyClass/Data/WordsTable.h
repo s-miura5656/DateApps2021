@@ -57,7 +57,7 @@ static const int INVINCIBLE_FRAME = 120;
 static const int FALL_BLOCK_COUNT = 10;
 
 //!ランダムで降ってくるブロックの頻度
-static const int FALL_BLOCK_INTERVAL = 120;
+static const int FALL_BLOCK_INTERVAL = 1200;
 
 //!いつまで強化されているかparameter_change_count
 static const int POWERUP_TIME = 600;
@@ -67,6 +67,9 @@ static const int POWERDOWN_TIME = 300;
 
 //!1位の弱体化する確率
 static const int WEAK_PROBABILITY_NUMBER = 50;
+
+//!何秒経過後にリザルトへ遷移するか
+static const int RESULT_GO_TIME = 3;
 
 namespace PlayerEnum {
 	enum Personality { NORMAL, ARM_RANGE, ARM_SPEED, PLAYER_MOVE_SPEED, PLAYER_DEFENCE, PLAYER_KING,PERSONALITY_MAX};

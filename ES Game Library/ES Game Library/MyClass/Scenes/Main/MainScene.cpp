@@ -123,7 +123,7 @@ int MainScene::Update()
 	delete pPlayerData;
 	*/
 
-	if (TimeManager::Instance().GetTransitionTimer() > 5)
+	if (TimeManager::Instance().GetTransitionTimer() > RESULT_GO_TIME)
 	{
 		ResultTransition();
 	}
