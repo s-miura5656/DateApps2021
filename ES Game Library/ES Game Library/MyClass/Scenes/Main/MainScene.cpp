@@ -57,7 +57,7 @@ bool MainScene::Initialize()
 	{
 		manager->Initialize();
 	}
-	AudioManager::Instance().Initialize();
+	AudioManager::Instance().GameStartWhistlePlay();
 	InputDevice.CreateKeyboard();
 	return true;
 }
@@ -79,7 +79,7 @@ int MainScene::Update()
 	else
 	{
 		AudioManager::Instance().MainBgmStop();
-		AudioManager::Instance().WhistlePlay();
+		AudioManager::Instance().GameEndWhistlePlay();
 		_managers[3]->Update();
 	}
 	/*

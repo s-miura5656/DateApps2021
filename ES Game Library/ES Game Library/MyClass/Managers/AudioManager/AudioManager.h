@@ -7,6 +7,8 @@ public:
 	~AudioManager();
 	bool Initialize();
 	enum{ MAX_PLAY = 4};
+	//!ゲームが始まるホイッスル
+	void GameStartWhistlePlay();
 	//!パンチが発射されるとき
 	void PunchShotPlay();
 	//!破壊不可のブロックに触れた時
@@ -26,7 +28,7 @@ public:
 	//! サンダー取得音
 	void ThunderPlay();
 	//!メイン終了ホイッスル
-	void WhistlePlay();
+	void GameEndWhistlePlay();
 	//!メインBGM
 	void MainBgmPlay();
 	//!メインBGMの終了

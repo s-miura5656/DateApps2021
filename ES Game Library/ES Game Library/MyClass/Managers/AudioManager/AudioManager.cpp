@@ -2,8 +2,6 @@
 #include"../ResouceManager/ResouceManager.h"
 AudioManager::AudioManager()
 {
-	_signal = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/signal.wav"));
-	_signal->Play();
 }
 
 AudioManager::~AudioManager()
@@ -21,9 +19,14 @@ bool AudioManager::Initialize()
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Item/powerdown.wav"), _powerdown, MAX_PLAY, false);
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Item/thunder.wav"), _thunder, MAX_PLAY, false);
 	_whistle = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/whistle.wav"));
+	_signal = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/signal.wav"));
 	_mainbgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/main.wav"));
 
 	return true;
+}
+void AudioManager::GameStartWhistlePlay()
+{
+	_signal->Play();
 }
 void AudioManager::PunchShotPlay()
 {
@@ -124,7 +127,7 @@ void AudioManager::ThunderPlay()
 		}
 	}
 }
-void AudioManager::WhistlePlay()
+void AudioManager::GameEndWhistlePlay()
 {
 	if (_whistle_flag)
 		return;
