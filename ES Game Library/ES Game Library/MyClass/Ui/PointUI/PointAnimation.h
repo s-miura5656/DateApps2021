@@ -28,5 +28,8 @@ public:
 
 private:
 
+	std::vector<PointMove> pointMove;
+	std::vector<Vector3> move_pos;
+
 };
 
