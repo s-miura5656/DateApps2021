@@ -39,7 +39,7 @@ private:
 	bool _player_button_flag[PLAYER_COUNT_MAX];
 
 	bool _select_complete_flag[PLAYER_COUNT_MAX];
-	bool _game_start_flag = false;
+	bool _game_start_flag = true;
 	enum
 	{
 		RED,

@@ -523,6 +523,8 @@ void PlayerBase::EffectDraw()
 		return;
 	
 	_effect.at(_status_tag)->SetPosition(_transform.position + Vector3_Up);
+	if(_status_tag == ITEM_ARM_SPEEDUP)
+		_effect.at(_status_tag)->SetPosition(_transform.position + Vector3_Down);
 	_effect.at(_status_tag)->SetRotation(Vector3(-15, 0, 0));
 	_effect.at(_status_tag)->PlayOneShot();
 	_effect.at(_status_tag)->Draw();

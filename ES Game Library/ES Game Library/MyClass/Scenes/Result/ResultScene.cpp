@@ -27,9 +27,9 @@ bool ResultScene::Initialize()
 	_player_rank_num     = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/number.png"));
 	_background		     = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/ground.png"));
 	_player_first_ground = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/player_grond.png"));
-	_first_banner        = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/1st_banner.png"));
-	_robot_fece          = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/robot_face.png"));
-	_non_first_banner    = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/2nd_3rd_4th_banner.png"));
+	_robot_win           = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/robot_win.png"));
+	_robot_fece          = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/result_robo.png"));
+	_light               = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/light.png"));
 	_totitle	         = ResouceManager::Instance().LordSpriteFile(_T("ResultSprite/button.png"));
 	_font                = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 50);
 	_shader  	         = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
@@ -41,11 +41,6 @@ bool ResultScene::Initialize()
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		//プレイヤーごとにテクスチャを用意する。
-		//auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(GetRankNum(i)), ".png");
-		//SPRITE texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
-		//_texture.push_back(texture);
-
-		//プレイヤーごとにテクスチャを用意する。debug
 		auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(GetRankNum(0)), ".png");
 		_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 	}
@@ -128,25 +123,14 @@ void ResultScene::Draw2D()
 {
 	SpriteBatch.Draw(*_background,_background_position);
 
-	//SpriteBatch.Draw(*_totitle,_totitle_position);
-	
-	SpriteBatch.Draw(*_player_first_ground, Vector3(24,32,10000));
-
-	SpriteBatch.Draw(*_first_banner, Vector3(556, 32, 10000));
-
-	SpriteBatch.DrawString(_font, Vector2(782, 82), Color(255, 0, 0), _T("%d位　　  %dpt"), 1, GetPoints(0));
+	SpriteBatch.Draw(*_light, Vector3(0, 0, 10000));
+	SpriteBatch.Draw(*_robot_win, Vector3(45, 105, 10000), RectWH((GetRankNum(0) - 1) * 512, 0, 512, 512));
+	SpriteBatch.DrawString(_font, Vector2(200, 600), Color(255, 255, 255), _T("%dpt"), GetPoints(0));
 
 	for (int i = 0; i < PLAYER_COUNT_MAX - 1; i++)
 	{
-		SpriteBatch.Draw(*_robot_fece, Vector3(556, 148 * (i + 1) + 32, 10000),RectWH(176 * i,0,176,128));
-		SpriteBatch.Draw(*_non_first_banner,Vector3(556 + 176, 148 * (i + 1) + 32, 10000));
-		SpriteBatch.DrawString(_font, Vector2(782, 148 * (i + 1) + 82), Color(255, 0, 0), _T("%d位　　  %dpt"),i +2, GetPoints(i+1));
-	}
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		//SpriteBatch.DrawString(_font, SetPointTextPosition(i), Color(255, 0, 0), _T("%d"), GetPoints(i));
-		//SpriteBatch.Draw(*_player_rank_num, SetPlayerRankNumberPosition(i),
-		//	RectWH((GetRankNum(i) - 1) * 128, 0, 128, 64), 1,Vector3_Zero,Vector3_Zero, SetTextSize(i));
+		SpriteBatch.Draw(*_robot_fece, Vector3(850, 120 + 205 * i, 10000),RectWH(128 * i,0, 128,128));
+		SpriteBatch.DrawString(_font, Vector2(1080, 170 + 210 * (i)), Color(255, 0, 0), _T("%dpt"),GetPoints(i+1));
 	}
 }
 /*
@@ -157,22 +141,12 @@ void ResultScene::Draw3D()
 	Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
 	SceneCamera::Instance().SetSceneCamera();
 
-	_shader->SetTexture("m_Texture", *_texture);
-	_shader->SetParameter("vp", vp);
-	_shader->SetTechnique("UnlitAnimationModel");
-	_player_model->SetScale(5.0f);
-	_player_model->SetPosition(Vector3(-6,-3,0));
-	_player_model->Draw(_shader);
-
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		//_shader->SetTexture("m_Texture", *_texture[i]);
-		//_shader->SetParameter("vp", vp);
-		//_shader->SetTechnique("UnlitAnimationModel");
-		//_player_model->SetScale(SetPlayerScale(i));
-		//_player_model->SetPosition(SetPlayerPosition(i));
-		//_player_model->Draw(_shader);
-	}
+	//_shader->SetTexture("m_Texture", *_texture);
+	//_shader->SetParameter("vp", vp);
+	//_shader->SetTechnique("UnlitAnimationModel");
+	//_player_model->SetScale(5.0f);
+	//_player_model->SetPosition(Vector3(-6,-3,0));
+	//_player_model->Draw(_shader);
 }
 /*
 * @fn 同着の数を数える
