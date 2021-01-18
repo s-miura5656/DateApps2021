@@ -16,6 +16,7 @@ PlayerUi::~PlayerUi()
 
 bool PlayerUi::Initialize(int player)
 {
+	
 	auto player_num = GraphicsDevice.WorldToScreen(_i_player_data->GetPosition(tag));
 
 	player_pos.x = player_num.x;
@@ -37,8 +38,7 @@ bool PlayerUi::Initialize(int player)
 	ranking = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/runking.png"));
 	ranking_rw = UiParametor::Instance().GetPlayerRankingRectwh(player);
 
-
-
+	
 	return true;
 }
 
@@ -60,11 +60,13 @@ void PlayerUi::Draw2D()
 		SpriteBatch.Draw(*_player_icon, _player_icon_pos, _player_joy_icon_rw);
 
 	}
-	else//‡ˆÊ‚ª‚¤‚Ü‚­Žæ‚ê‚Ä‚¢‚È‚¢
+	else
 	{
 		SpriteBatch.Draw(*_player_icon, _player_icon_pos, _player_normal_icon_rw);
 	}
 
-	SpriteBatch.Draw(*ranking, player_pos,RectWH(i_player_data->GetRankNum() * )
+	SpriteBatch.Draw(*ranking, player_pos,RectWH(i_player_data->GetRankNum(tag) * 128,0,128,128),
+		(DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+		
 	delete i_player_data;
 }
