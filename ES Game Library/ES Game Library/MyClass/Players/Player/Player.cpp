@@ -106,9 +106,6 @@ bool Player::Initialize()
 	auto path = ConvertFilePath("Player/", _tag, ".png");
 	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
-
-	//!audio
-	AudioManager::Instance().Initialize();
 	return true;
 }
 
