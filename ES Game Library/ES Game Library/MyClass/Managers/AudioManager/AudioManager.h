@@ -19,6 +19,12 @@ public:
 	void PointAddition();
 	//!プレイヤーが死ぬとき
 	void ExplosionPlay();
+	//!パワーアップアイテム取得音
+	void PowerUpPlay();
+	//! パワーダウン取得音
+	void PowerDownPlay();
+	//! サンダー取得音
+	void ThunderPlay();
 	//!メイン終了ホイッスル
 	void WhistlePlay();
 	//!メインBGM
@@ -37,6 +43,9 @@ private:
 	SOUND _mapgimmick[MAX_PLAY];
 	SOUND _pointaddition[MAX_PLAY];
 	SOUND _explosion[MAX_PLAY];
+	SOUND _powerup[MAX_PLAY];
+	SOUND _powerdown[MAX_PLAY];
+	SOUND _thunder[MAX_PLAY];
 	SOUND _whistle;
 	SOUND _signal;
 	MUSIC _mainbgm;

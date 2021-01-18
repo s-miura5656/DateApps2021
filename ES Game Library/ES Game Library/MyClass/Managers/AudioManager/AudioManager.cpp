@@ -17,8 +17,11 @@ bool AudioManager::Initialize()
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/mapgimmick.wav"), _mapgimmick, MAX_PLAY, false);
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/pointaddition.wav"), _pointaddition, MAX_PLAY, false);
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/explosion.wav"), _explosion, MAX_PLAY, false);
+	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Item/powerup.wav"), _powerup, MAX_PLAY, false);
+	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Item/powerdown.wav"), _powerdown, MAX_PLAY, false);
+	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Item/thunder.wav"), _thunder, MAX_PLAY, false);
 	_whistle = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/whistle.wav"));
-	_mainbgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/MainBgm.wav"));
+	_mainbgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/main.wav"));
 
 	return true;
 }
@@ -80,6 +83,39 @@ void AudioManager::PointAddition()
 void AudioManager::ExplosionPlay()
 {
 	for (auto& sound : _explosion)
+	{
+		if (!sound->IsPlaying())
+		{
+			sound->Play();
+			break;
+		}
+	}
+}
+void AudioManager::PowerUpPlay()
+{
+	for (auto& sound : _powerup)
+	{
+		if (!sound->IsPlaying())
+		{
+			sound->Play();
+			break;
+		}
+	}
+}
+void AudioManager::PowerDownPlay()
+{
+	for (auto& sound : _powerdown)
+	{
+		if (!sound->IsPlaying())
+		{
+			sound->Play();
+			break;
+		}
+	}
+}
+void AudioManager::ThunderPlay()
+{
+	for (auto& sound : _thunder)
 	{
 		if (!sound->IsPlaying())
 		{
