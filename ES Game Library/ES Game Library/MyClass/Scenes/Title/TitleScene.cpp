@@ -66,7 +66,6 @@ int TitleScene::Update()
 void TitleScene::Draw2D()
 {
 
-
 	SpriteBatch.Draw(*_background, Vector3(0.0f, 0.0f, 10000.0f));
 
 	SpriteBatch.Draw(*_title_logo, Vector3(title_logo_position), title_logo_alpha, Vector3_Zero,
