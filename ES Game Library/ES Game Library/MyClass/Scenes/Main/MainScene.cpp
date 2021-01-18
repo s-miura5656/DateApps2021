@@ -64,11 +64,18 @@ bool MainScene::Initialize()
 
 int MainScene::Update()
 {
-	AudioManager::Instance().MainBgmPlay();
-	auto _temporary_managers = _managers;
-	for (auto&& manager : _temporary_managers)
+	if (TimeManager::Instance().GetTransitionTimer() <= 0)
 	{
-		manager->Update();
+		AudioManager::Instance().MainBgmPlay();
+		auto _temporary_managers = _managers;
+		for (auto&& manager : _temporary_managers)
+		{
+			manager->Update();
+		}
+	}
+	else
+	{
+		_managers[3]->Update();
 	}
 	/*
 	std::string pl_tag = "Player_1";
