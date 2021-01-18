@@ -29,6 +29,8 @@ public:
 	PlayerUi() {}
 	PlayerUi(int player_no);
 	~PlayerUi();
+
+	Vector3 player_pos;
 	//void RegisterPointAnimation(Vector3 player_num);
 	//void MovePointAnimation(Vector3 player_num);
 
@@ -58,7 +60,7 @@ private:
 	enum RANKING //順位
 	{ FIRST, SECOND, THIRD, FOURTH };
 	SPRITE  ranking;
-	Vector3 player_pos;
+	
 
 	//static SPRITE  score_font;//各プレイヤーのスコア
 	//int score;
