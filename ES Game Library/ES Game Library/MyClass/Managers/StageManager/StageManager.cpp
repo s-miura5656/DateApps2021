@@ -123,7 +123,9 @@ bool StageManager::Initialize()
 
 int StageManager::Update()
 {
-		_random_fall_time++;
+	if(_bg_movie->IsComplete())
+	_bg_movie->Replay();
+	_random_fall_time++;
 	//TODO:~‚Á‚Ä‚­‚é•p“x‚Í’²®‚·‚é
 	if (_random_fall_time >= FALL_BLOCK_INTERVAL)
 	{
