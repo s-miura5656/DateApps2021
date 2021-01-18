@@ -16,6 +16,11 @@ PlayerUi::~PlayerUi()
 
 bool PlayerUi::Initialize(int player)
 {
+	auto player_num = GraphicsDevice.WorldToScreen(_i_player_data->GetPosition(tag));
+
+	player_pos.x = player_num.x;
+	player_pos.y = player_num.y;
+
 	_banner_sprite = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/score_0110.png"));
 	_banner_pos = UiParametor::Instance().GetBannerPosition(player);
 	_banner_rw  = UiParametor::Instance().GetBannerRectWH(player);
@@ -59,5 +64,7 @@ void PlayerUi::Draw2D()
 	{
 		SpriteBatch.Draw(*_player_icon, _player_icon_pos, _player_normal_icon_rw);
 	}
+
+	SpriteBatch.Draw(*ranking, player_pos,RectWH(i_player_data->GetRankNum() * )
 	delete i_player_data;
 }
