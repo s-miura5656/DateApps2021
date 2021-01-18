@@ -82,14 +82,6 @@ bool StageManager::Initialize()
 				_stages[_count]->Initialize();
 				_count++;
 				break;
-			case 's':
-				tag = DESTRUCTION_BLOCK_TAG + tag;
-				_stages.push_back(new Block(tag, POINT_ITEM_TAG));
-				_stages[_count]->SetPosition(Vector3(x, 0, -z));
-				_stages[_count]->Initialize();
-				_count++;
-				_mapdate[z][x] = 'b';
-				break;
 			case 'p':
 				tag = PLAYER_TAG + std::to_string(player_num);
 				iplayer_data->SetPosition(tag, Vector3(x, 0, -z));

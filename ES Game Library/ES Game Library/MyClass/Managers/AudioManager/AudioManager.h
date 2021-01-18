@@ -18,8 +18,14 @@ public:
 	//!ポイント取得時
 	void PointAddition();
 	//!プレイヤーが死ぬとき
-	void Explosion();
+	void ExplosionPlay();
+	//!メインBGM
 	void MainBgmPlay();
+	//! シングルトンオブジェクトを他で呼び出す時の記述
+	static AudioManager& Instance() {
+		static AudioManager instance;
+		return instance;
+	};
 private:
 	SOUND _punchshot[MAX_PLAY];
 	SOUND _indestructible[MAX_PLAY];
