@@ -123,9 +123,8 @@ int MainScene::Update()
 	delete pArmData;
 	delete pPlayerData;
 	*/
-	float timeleft = TimeManager::Instance().GetTimeLeft();
 
-	if (timeleft <= 0.9f)
+	if (TimeManager::Instance().GetTransitionTimer() > 5)
 	{
 		ResultTransition();
 	}
