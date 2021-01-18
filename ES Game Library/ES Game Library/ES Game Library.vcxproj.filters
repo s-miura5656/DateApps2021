@@ -244,6 +244,9 @@
     <Filter Include="Myclass\Scenes\SelectScene">
       <UniqueIdentifier>{78f0a48d-b843-402f-a109-68ffa967dca5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Ui\PointUI">
+      <UniqueIdentifier>{515dbd7c-5a07-46f1-8f90-1057cb9cc803}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -516,6 +519,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Ui\UiParametor.cpp">
       <Filter>Myclass\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Ui\PointUI\PointAnimation.cpp">
+      <Filter>Myclass\Ui\PointUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -828,6 +834,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Ui\UiParametor.h">
       <Filter>Myclass\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Ui\PointUI\PointAnimation.h">
+      <Filter>Myclass\Ui\PointUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
