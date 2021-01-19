@@ -5,7 +5,7 @@
 #include "../../Managers/InputManager/InputManager.h"
 #include "../../Data/MyAlgorithm.h"
 #include "../../Data/IData.h"
-
+#include "../../Managers/AudioManager/AudioManager.h"
 ResultScene::ResultScene()
 {
 
@@ -13,7 +13,7 @@ ResultScene::ResultScene()
 
 ResultScene::~ResultScene()
 {
-
+	AudioManager::Instance().ResultBgmStop();
 }
 
 /*
@@ -103,6 +103,7 @@ bool ResultScene::Initialize()
 */
 int ResultScene::Update()
 {
+	AudioManager::Instance().ResultBgmPlay();
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));

@@ -29,10 +29,18 @@ public:
 	void ThunderPlay();
 	//!メイン終了ホイッスル
 	void GameEndWhistlePlay();
-	//!メインBGM
+	//!タイトルBGMの開始
+	void TitleBgmPlay();
+	//!タイトルBGMの終了
+	void TitleBgmStop();
+	//!メインBGMの開始
 	void MainBgmPlay();
 	//!メインBGMの終了
 	void MainBgmStop();
+	//!リザルトBGMの開始
+	void ResultBgmPlay();
+	//!リザルトBGMの終了
+	void ResultBgmStop();
 	//! シングルトンオブジェクトを他で呼び出す時の記述
 	static AudioManager& Instance() {
 		static AudioManager instance;
@@ -50,6 +58,8 @@ private:
 	SOUND _thunder[MAX_PLAY];
 	SOUND _whistle;
 	SOUND _signal;
+	MUSIC _titlebgm;
 	MUSIC _mainbgm;
+	MUSIC _resultbgm;
 	bool  _whistle_flag = false;
 };

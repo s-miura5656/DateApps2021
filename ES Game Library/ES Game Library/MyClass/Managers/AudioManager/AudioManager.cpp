@@ -20,7 +20,9 @@ bool AudioManager::Initialize()
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Item/thunder.wav"), _thunder, MAX_PLAY, false);
 	_whistle = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/whistle.wav"));
 	_signal = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/signal.wav"));
+	_titlebgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/title.wav"));
 	_mainbgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/main.wav"));
+	_resultbgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/result.wav"));
 
 	return true;
 }
@@ -137,6 +139,15 @@ void AudioManager::GameEndWhistlePlay()
 		_whistle_flag = true;
 	}
 }
+void AudioManager::TitleBgmPlay()
+{
+	if (!_titlebgm->IsPlaying())
+		_titlebgm->Play();
+}
+void AudioManager::TitleBgmStop()
+{
+	_titlebgm->Stop();
+}
 void AudioManager::MainBgmPlay()
 {
 	if(!_mainbgm->IsPlaying())
@@ -146,4 +157,15 @@ void AudioManager::MainBgmPlay()
 void AudioManager::MainBgmStop()
 {
 	_mainbgm->Stop();
+}
+
+void AudioManager::ResultBgmPlay()
+{
+	if (!_resultbgm->IsPlaying())
+		_resultbgm->Play();
+}
+
+void AudioManager::ResultBgmStop()
+{
+	_resultbgm->Stop();
 }

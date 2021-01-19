@@ -3,7 +3,7 @@
 #include"../../Data/ModelAnimation.h"
 #include"../../Managers/SceneManager/SceneManager.h"
 #include"../../Managers/ResouceManager/ResouceManager.h"
-
+#include"../../Managers/AudioManager/AudioManager.h"
 TitleScene::TitleScene()
 {
 }
@@ -54,7 +54,7 @@ int TitleScene::Update()
 {
 	TitleLanding();
 	OperationButton();
-
+	AudioManager::Instance().TitleBgmPlay();
 	return 0;
 }
 

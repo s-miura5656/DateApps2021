@@ -4,13 +4,14 @@
 #include "../../Data/MyAlgorithm.h"
 #include "../../Managers/InputManager/InputManager.h"
 #include "../../Data/IData.h"
-
+#include"../../Managers/AudioManager/AudioManager.h"
 SelectScene::SelectScene()
 {
 }
 
 SelectScene::~SelectScene()
 {
+	AudioManager::Instance().TitleBgmStop();
 }
 
 bool SelectScene::Initialize()
@@ -72,6 +73,7 @@ bool SelectScene::Initialize()
 
 int SelectScene::Update()
 {
+	AudioManager::Instance().TitleBgmPlay();
 	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
 	{
 		auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
