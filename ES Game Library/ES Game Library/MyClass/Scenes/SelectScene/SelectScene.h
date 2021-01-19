@@ -19,7 +19,7 @@ private:
 	enum { TEXTURE_MAX = 7 };
 
 	EFFECT _shader;
-	SPRITE _texture[PLAYER_COUNT_MAX];
+	SPRITE _texture[TEXTURE_MAX];
 	SPRITE _bg_sprite;
 	SPRITE _banner;
 	SPRITE _button_ready;
@@ -37,7 +37,8 @@ private:
 	int _chara_select[PLAYER_COUNT_MAX];
 	float _player_position[PLAYER_COUNT_MAX];
 	bool _player_button_flag[PLAYER_COUNT_MAX];
-
+	bool _left_arrow_flag[PLAYER_COUNT_MAX];
+	bool _right_arrow_flag[PLAYER_COUNT_MAX];
 	bool _select_complete_flag[PLAYER_COUNT_MAX];
 	bool _game_start_flag = false;
 	enum

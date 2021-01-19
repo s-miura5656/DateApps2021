@@ -38,7 +38,7 @@ bool SelectScene::Initialize()
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		_player_button_flag[i] = true;
+		_player_button_flag[i]   = true;
 		_select_complete_flag[i] = false;
 		_chara_select[i] = i;
 	}
@@ -87,7 +87,8 @@ int SelectScene::Update()
 
 			if (pad->Stick(STICK_INFO::LEFT_STICK).x == 0)
 			{
-
+				_left_arrow_flag[i]  = true;
+				_right_arrow_flag[i] = true;
 			}
 
 			if (pad->Stick(STICK_INFO::LEFT_STICK).x != 0)
@@ -97,9 +98,18 @@ int SelectScene::Update()
 
 				if (_select_count >= 10)
 				{
-					std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ?
-						_chara_select[i]-- : _chara_select[i]++;
-
+					//std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ?
+					//	_chara_select[i]--, _left_arrow_flag[i] = false : _chara_select[i]++, _right_arrow_flag[i] = false;
+					if (pad->Stick(STICK_INFO::LEFT_STICK).x > 0)
+					{
+						_chara_select[i]++;
+						_right_arrow_flag[i] = false;
+					}
+					else if(pad->Stick(STICK_INFO::LEFT_STICK).x < 0)
+					{
+						_chara_select[i]--;
+						_left_arrow_flag[i] = false;
+					}
 					_select_count = 0;
 				}
 
@@ -155,7 +165,7 @@ int SelectScene::Update()
 
 void SelectScene::Draw2D()
 {
-	SpriteBatch.Draw(*_bg_sprite, Vector3(0, 0, 10000));
+	SpriteBatch.Draw(*_bg_sprite, Vector3(0, 0, 10000), 1.0f);
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		auto player_num = GraphicsDevice.WorldToScreen(Vector3(_player_position[i], 0, 0));
@@ -164,8 +174,6 @@ void SelectScene::Draw2D()
 		if (!_select_complete_flag[i])
 		{
 			SpriteBatch.Draw(*_chara_frame, player_num + Vector3(0, 195, 9000), 1.0f);
-			SpriteBatch.Draw(*_left_arrow, player_num + Vector3(0, 195, 9000), 1.0f);
-			SpriteBatch.Draw(*_right_arrow, player_num + Vector3(0, 195, 9000), 1.0f);
 			SpriteBatch.Draw(*_button_ready, player_num + Vector3(0, 400, 9000), 1.0f);
 		}
 		else
@@ -173,6 +181,16 @@ void SelectScene::Draw2D()
 			SpriteBatch.Draw(*_button_frame, player_num + Vector3(0, 400, 9000), 1.0f);
 			SpriteBatch.Draw(*_button_go, player_num + Vector3(0, 400, 9000), 1.0f);
 		}
+
+		if (_left_arrow_flag[i])
+			SpriteBatch.Draw(*_left_arrow, player_num + Vector3(0, 195, 9000), 1.0f);
+		else
+			SpriteBatch.Draw(*_left_arrow_dark, player_num + Vector3(0, 195, 9000), 1.0f);
+
+		if (_right_arrow_flag[i])
+			SpriteBatch.Draw(*_right_arrow, player_num + Vector3(0, 195, 9000), 1.0f);
+		else
+			SpriteBatch.Draw(*_right_arrow_dark, player_num + Vector3(0, 195, 9000), 1.0f);
 	}
 }
 
