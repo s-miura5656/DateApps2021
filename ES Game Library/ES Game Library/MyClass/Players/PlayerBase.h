@@ -5,6 +5,7 @@
 #include "../Managers/InputManager/InputManager.h"
 #include "../Data/StructList.h"
 #include"../Managers/AudioManager/AudioManager.h"
+
 class ParticleSystem;
 class ArmBase;
 class ItemBase;
@@ -59,16 +60,16 @@ protected:
 	Vector3 _new_pos		 = Vector3_Zero;
 
 	//! pointer
-	std::unique_ptr<ArmBase>	    _arm;
-	std::unique_ptr<HitBox>		    _hit_box;
-	std::unique_ptr<IPrayerData>    _i_player_data;
-	std::unique_ptr<IArmData>	    _i_arm_Data;
-	std::unique_ptr<IMapData>       _i_map_data;
-	std::unique_ptr<ParticleSystem> _destroy_effect;
-	std::unique_ptr<ParticleSystem> _player_speedup_effect;
-	std::unique_ptr<ParticleSystem> _arm_speedup_effect;
-	std::unique_ptr<ParticleSystem> _powerdown_effect;
-	std::unique_ptr<ParticleSystem> _thunder_effect;
+	std::unique_ptr<ArmBase>	                      _arm;
+	std::unique_ptr<HitBox>		                      _hit_box;
+	std::unique_ptr<IPrayerData>                      _i_player_data;
+	std::unique_ptr<IArmData>	                      _i_arm_Data;
+	std::unique_ptr<IMapData>                         _i_map_data;
+	std::unique_ptr<ParticleSystem>                   _destroy_effect;
+	std::unique_ptr<ParticleSystem>                   _player_speedup_effect;
+	std::unique_ptr<ParticleSystem>                   _arm_speedup_effect;
+	std::unique_ptr<ParticleSystem>                   _powerdown_effect;
+	std::unique_ptr<ParticleSystem>                   _thunder_effect;
 	std::map<string, std::unique_ptr<ParticleSystem>> _effect;
 	//! tag
 	std::string _tag;

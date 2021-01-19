@@ -27,8 +27,8 @@ private:
 	SPRITE                _background;
 	SPRITE                _totitle;
 	SPRITE                _player_first_ground;
-	SPRITE                _first_banner;
-	SPRITE                _non_first_banner;
+	SPRITE                _robot_win;
+	SPRITE                _light;
 	SPRITE                _robot_fece;
 	SPRITE                _texture;
 	EFFECT                _shader;

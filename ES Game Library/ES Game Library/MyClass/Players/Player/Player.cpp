@@ -40,9 +40,9 @@ bool Player::Initialize()
 	_shader		           = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
 	auto&& effect          = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damage_effect02.efk"));
 	auto&& playerspeedup   = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Aura_A/aura_A_01.efk"));
-	auto&& armspeedup      = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Aura_A/aura_A_01.efk"));
+	auto&& armspeedup      = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/punch_up_effect/punch_up_effect.efk"));
 	auto&& powerdown       = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/DebuffAura/debuff_aura_01.efk"));
-	auto&& thunder         = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/DebuffAura/debuff_aura_01.efk"));
+	auto&& thunder         = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/thunder_effect/thunder_effekt.efk"));
 
 	//! Position
 	_model->SetPosition(_i_player_data->GetPosition(_tag));
@@ -82,12 +82,14 @@ bool Player::Initialize()
 
 	_arm_speedup_effect->RegisterParticle(armspeedup);
 	_arm_speedup_effect->SetNomalEffect();
+	_arm_speedup_effect->SetScale(2.0f);
 
 	_powerdown_effect->RegisterParticle(powerdown);
 	_powerdown_effect->SetNomalEffect();
 
 	_thunder_effect->RegisterParticle(thunder);
 	_thunder_effect->SetNomalEffect();
+	_thunder_effect->SetScale(10.0f);
 
 	_effect.insert(std::make_pair(ITEM_PLAYER_SPEEDUP, std::move(_player_speedup_effect)));
 	_effect.insert(std::make_pair(ITEM_ARM_SPEEDUP, std::move(_arm_speedup_effect)));
@@ -105,9 +107,6 @@ bool Player::Initialize()
 	auto path = ConvertFilePath("Player/", _tag, ".png");
 	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
-
-	//!audio
-	AudioManager::Instance().Initialize();
 	return true;
 }
 

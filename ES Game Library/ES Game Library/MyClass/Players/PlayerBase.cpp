@@ -53,7 +53,7 @@ int PlayerBase::Update()
 		{
 			DestroyArm();
 			_death_flag      = true;
-			AudioManager::Instance().DestructionPlay();
+			AudioManager::Instance().ExplosionPlay();
 			player_data->SetInvincibleMode(_tag, true);
 			return 0;
 		}
@@ -184,6 +184,14 @@ void PlayerBase::GetItem(ItemBase* item, string item_tag)
 {
 	auto effect = item->GetEffect();
 	_status_tag = item_tag;
+	if(_status_tag == ITEM_PLAYER_SPEEDUP)
+		AudioManager::Instance().PowerUpPlay();
+	else if(_status_tag == ITEM_ARM_SPEEDUP)
+		AudioManager::Instance().PowerUpPlay();
+	else if (_status_tag == ITEM_POWERDOWN)
+		AudioManager::Instance().PowerDownPlay();
+	else if (_status_tag == ITEM_THUNDER)
+		AudioManager::Instance().ThunderPlay();
 	_i_player_data->SetStatusTag(_tag, _status_tag);
 	_i_player_data->SetSpeed(_tag, effect._player_speed);
 	_i_arm_Data->SetGoSpeed(_arm_tag, effect._arm_speed);
@@ -515,6 +523,8 @@ void PlayerBase::EffectDraw()
 		return;
 	
 	_effect.at(_status_tag)->SetPosition(_transform.position + Vector3_Up);
+	if(_status_tag == ITEM_ARM_SPEEDUP)
+		_effect.at(_status_tag)->SetPosition(_transform.position + Vector3_Down);
 	_effect.at(_status_tag)->SetRotation(Vector3(-15, 0, 0));
 	_effect.at(_status_tag)->PlayOneShot();
 	_effect.at(_status_tag)->Draw();

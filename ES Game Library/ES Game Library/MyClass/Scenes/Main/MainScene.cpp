@@ -57,18 +57,30 @@ bool MainScene::Initialize()
 	{
 		manager->Initialize();
 	}
-	AudioManager::Instance().Initialize();
+	AudioManager::Instance().GameStartWhistlePlay();
 	InputDevice.CreateKeyboard();
 	return true;
 }
 
 int MainScene::Update()
 {
-	AudioManager::Instance().MainBgmPlay();
-	auto _temporary_managers = _managers;
-	for (auto&& manager : _temporary_managers)
+	if (TimeManager::Instance().StartFlag() && TimeManager::Instance().GetTransitionTimer() <= 0)
 	{
-		manager->Update();
+		AudioManager::Instance().MainBgmPlay();
+	}
+	if (TimeManager::Instance().GetTransitionTimer() <= 0)
+	{
+		auto _temporary_managers = _managers;
+		for (auto&& manager : _temporary_managers)
+		{
+			manager->Update();
+		}
+	}
+	else
+	{
+		AudioManager::Instance().MainBgmStop();
+		AudioManager::Instance().GameEndWhistlePlay();
+		_managers[3]->Update();
 	}
 	/*
 	std::string pl_tag = "Player_1";
@@ -123,7 +135,7 @@ int MainScene::Update()
 	delete pPlayerData;
 	*/
 
-	if (TimeManager::Instance().GetTransitionTimer() > 5)
+	if (TimeManager::Instance().GetTransitionTimer() > RESULT_GO_TIME)
 	{
 		ResultTransition();
 	}

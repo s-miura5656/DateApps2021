@@ -3,7 +3,7 @@
 #include"../../Data/ModelAnimation.h"
 #include"../../Managers/SceneManager/SceneManager.h"
 #include"../../Managers/ResouceManager/ResouceManager.h"
-
+#include"../../Managers/AudioManager/AudioManager.h"
 TitleScene::TitleScene()
 {
 }
@@ -54,7 +54,7 @@ int TitleScene::Update()
 {
 	TitleLanding();
 	OperationButton();
-
+	AudioManager::Instance().TitleBgmPlay();
 	return 0;
 }
 
@@ -65,7 +65,6 @@ int TitleScene::Update()
 */
 void TitleScene::Draw2D()
 {
-
 
 	SpriteBatch.Draw(*_background, Vector3(0.0f, 0.0f, 10000.0f));
 

@@ -37,5 +37,6 @@ private:
 	int                         _probability;	
 	int                         _random_fall_time = 0;
 	int                         _time = 0;
+	float                       _rotation = 0;
 	std::vector<Vector3>        _random_block_position;
 };

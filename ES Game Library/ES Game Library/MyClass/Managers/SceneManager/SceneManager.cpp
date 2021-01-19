@@ -9,6 +9,7 @@
 #include "../TimeManager/Time.h"
 #include "../ResouceManager/ResouceManager.h"
 #include"../../Scenes/SelectScene/SelectScene.h"
+#include"../../Managers/AudioManager/AudioManager.h"
 //! @brief コンストラクタ
 //! @detail SceneManager が作られたときに呼び出されるよ
 SceneManager::SceneManager()
@@ -34,6 +35,9 @@ void SceneManager::ChangeScene()
 	if (_scene != nullptr) {
 		_scene.reset();
 	}
+
+	//!audio
+	AudioManager::Instance().Initialize();
 
 	switch (_scene_state) {
 	case SceneState::TITLE:
