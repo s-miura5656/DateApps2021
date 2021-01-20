@@ -23,6 +23,7 @@ void TimeManager::Initialize()
 
 	game_end = false;
 
+	transition_time = 0;
 }
  
 

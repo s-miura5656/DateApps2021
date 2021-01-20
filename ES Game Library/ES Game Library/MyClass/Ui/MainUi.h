@@ -55,4 +55,6 @@ public:
 	FONT front_count;
 
 	int move_flag;
+	float font_size;
+	bool time_limit_decreasing;
 };
