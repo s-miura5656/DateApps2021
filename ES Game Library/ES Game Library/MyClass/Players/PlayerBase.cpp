@@ -38,9 +38,10 @@ int PlayerBase::Update()
 			_respawn_time = 0;
 			_death_flag = false;
 			_move_flag  = false;
-			_transform.position = IMapData::GetRespawnPosition();
-			_index_num.x = 7;
-			_index_num.z = 6;
+			auto respawnpos = IMapData::GetRespawnPosition(_tag);
+			_transform.position = respawnpos;
+			_index_num.x = respawnpos.x;
+			_index_num.z = respawnpos.y;
 			player_data->SetIndexNum(_tag, _index_num);
 			player_data->SetPosition(_tag, _transform.position);
 			_i_player_data->SetParameter_PowerUp(_tag, false);

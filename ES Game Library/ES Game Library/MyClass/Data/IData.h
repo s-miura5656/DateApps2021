@@ -155,6 +155,6 @@ public:
 	void SetWarp(std::vector<int> warp_suffix) { MapParam::Instance()._warp_suffix = warp_suffix; }
 	std::vector<int> GetWarp() const { return MapParam::Instance()._warp_suffix; }
 
-	void SetRespawnPosition(Vector3 respawn_position) { MapParam::Instance()._respawn_position = respawn_position; }
-	static Vector3 GetRespawnPosition()  { return MapParam::Instance()._respawn_position; }
+	void SetRespawnPosition(std::string playertag, Vector3 respawn_position) { MapParam::Instance()._respawn_position.insert(std::make_pair(playertag,respawn_position)); }
+	static Vector3 GetRespawnPosition(std::string playertag)  { return MapParam::Instance()._respawn_position.at(playertag); }
 };

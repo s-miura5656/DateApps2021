@@ -69,6 +69,7 @@ bool StageManager::Initialize()
 	IMapData* imap_data = new IMapData;
 
 	_count = 0;
+	int	respawn_player_tag = 1;
 	for (int z = 0; z < _mapdate.size(); z++)
 	{
 		for (int x = 0; x < _mapdate[z].size(); x++)
@@ -88,10 +89,11 @@ bool StageManager::Initialize()
 				player_num++;
 				break;
 			case 'r':
-				imap_data->SetRespawnPosition(Vector3(x,0,-z));
-				_respawn->SetPosition(x, 0, -z);
+				tag = PLAYER_TAG + std::to_string(respawn_player_tag);
+				imap_data->SetRespawnPosition(tag,Vector3(x,0,-z));
 				_respawn->SetRotation(Vector3_Zero);
 				_respawn->SetScale(1.0f);
+				respawn_player_tag++;
 				break;
 			}
 		}
@@ -152,16 +154,21 @@ void StageManager::Draw3D()
 	{
 		_stages[i]->Draw3D();
 	}
-	Material mat;	
-	mat.Diffuse  = Color(1.0f, 1.0f, 1.0f);
-	mat.Ambient  = Color(1.0f, 1.0f, 1.0f);
-	mat.Specular = Color(1.0f, 1.0f, 1.0f);
-	_respawn->SetMaterial(mat);
-	_rotation += 3;
-	if (_rotation >= 360)
-		_rotation = 0;
-	_respawn->SetRotation(Vector3(0, _rotation,0));
-	_respawn->Draw();
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		std::string tag = PLAYER_TAG + std::to_string(i + 1);
+		Material mat;
+		mat.Diffuse = Color(1.0f, 1.0f, 1.0f);
+		mat.Ambient = Color(1.0f, 1.0f, 1.0f);
+		mat.Specular = Color(1.0f, 1.0f, 1.0f);
+		_respawn->SetMaterial(mat);
+		_rotation += 3;
+		if (_rotation >= 360)
+			_rotation = 0;
+		_respawn->SetRotation(Vector3(0, _rotation, 0));
+		_respawn->SetPosition(IMapData::GetRespawnPosition(tag));
+		_respawn->Draw();
+	}
 }
 
 void StageManager::DrawAlpha3D()
