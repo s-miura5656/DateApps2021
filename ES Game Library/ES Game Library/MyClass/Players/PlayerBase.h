@@ -40,6 +40,7 @@ protected:
 	void InvincibleMode();
 	void ItemParameterTime();
 	void EffectDraw();
+
 	//! file
 	ANIMATIONMODEL		_model;
 	FONT				_font;

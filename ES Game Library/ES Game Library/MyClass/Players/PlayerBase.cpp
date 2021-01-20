@@ -157,10 +157,12 @@ void PlayerBase::Draw3D()
 	{
 		_destroy_effect->SetPosition(_transform.position + Vector3_Up);
 		_destroy_effect->PlayOneShot();
+		_destroy_effect->Draw();
 	}
 	else
 	{
 		EffectDraw();
+
 		_destroy_effect->Stop();
 		
 		ChangeAnimation();
@@ -218,12 +220,14 @@ void PlayerBase::DrawModel()
 	_shader->SetParameter("eye_pos", camera.GetPosition());
 
 	Matrix vp = camera->GetViewProjectionMatrix();
+
 	_shader->SetParameter("vp", vp);
 
 	_model->SetScale(_transform.scale * 1.25);
 	if (_i_player_data->GetState(_tag) != PlayerEnum::Animation::DAMAGE)
 	{
 		_shader->SetTechnique("FixAnimationModel");
+
 		if (!_i_player_data->GetInvincibleMode(_tag))
 		{
 			_model->Draw(_shader);
@@ -255,6 +259,7 @@ void PlayerBase::DrawModel()
 	_i_player_data->SetAngle(_tag, _transform.rotation.y);
 	_i_player_data->SetPosition(_tag, _transform.position);
 	_model->SetScale(_transform.scale);
+
 }
 
 //! @fn プレイヤーモデルのアニメーション切り替え

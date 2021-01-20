@@ -64,7 +64,6 @@ bool Arm::Initialize()
 	auto&& effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/roket_punch/roket_punch_fixed.efk"));
 	_shot_effect->RegisterParticle(effect);
 	_shot_effect->SetSpeed(1.0f);
-	_shot_effect->SetScale(4.0f);
 	_shot_effect->PlayOneShot();
 
 	effect = ResouceManager::Instance().LordEffekseerFile(_T("Effect/effekseer_hit/impossible_block.efk"));

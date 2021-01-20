@@ -140,6 +140,7 @@ void ArmBase::Draw3D()
 	Vector3 rotation = _transform.rotation;
 	rotation.y += 180;
 	_shot_effect->SetRotation(rotation);
+	_shot_effect->SetScale(8.0 - (0.8f * (_wires.size() + 1)));
 	_shot_effect->Draw();
 
 	auto limitrange = (int)_i_arm_Data->GetLimitRange(_tag) / 3;
