@@ -111,7 +111,8 @@ private:
 	void operator=(const SceneCamera&) = delete;
 
 	Camera _camera;
-	float time = 1;
-	float num = 1;
+	float _time = 1;
+	float _num  = 1;
+	bool  _shake_flag = false;
 };
 
