@@ -18,6 +18,7 @@ public:
 
 	void SetTransForm(Transform transform) { _transform = transform; }
 	void SetColor(Color wirecolor) { _effect->SetColor(wirecolor); }
+	void SetScale(float wirescale) { _effect->SetScale(wirescale); }
 private:
 	//! pointer
 	std::unique_ptr<ParticleSystem> _effect;

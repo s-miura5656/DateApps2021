@@ -20,6 +20,8 @@ int PlayerBase::Update()
 	auto pad = InputManager::Instance().GetGamePad(_tag);
 	auto&& player_data = _i_player_data;
 
+	ItemParameterTime();
+
 	ParameterLevel();
 
 	pad->Refresh();
@@ -41,7 +43,7 @@ int PlayerBase::Update()
 			auto respawnpos = IMapData::GetRespawnPosition(_tag);
 			_transform.position = respawnpos;
 			_index_num.x = respawnpos.x;
-			_index_num.z = respawnpos.y;
+			_index_num.z = -respawnpos.z;
 			player_data->SetIndexNum(_tag, _index_num);
 			player_data->SetPosition(_tag, _transform.position);
 			_i_player_data->SetParameter_PowerUp(_tag, false);
@@ -137,7 +139,6 @@ int PlayerBase::Update()
 			InputMove(pad);
 		}
 	}
-	ItemParameterTime();
 
 	SetCollisionPosition();
 	return 0;
@@ -525,9 +526,8 @@ void PlayerBase::EffectDraw()
 	
 	_effect.at(_status_tag)->SetPosition(_transform.position + Vector3_Up);
 	if(_status_tag == ITEM_ARM_SPEEDUP)
-		_effect.at(_status_tag)->SetPosition(_transform.position + Vector3_Down);
+		_effect.at(_status_tag)->SetPosition(_transform.position + Vector3(0,0.5,0));
 	_effect.at(_status_tag)->SetRotation(Vector3(-15, 0, 0));
 	_effect.at(_status_tag)->PlayOneShot();
 	_effect.at(_status_tag)->Draw();
-
 }
