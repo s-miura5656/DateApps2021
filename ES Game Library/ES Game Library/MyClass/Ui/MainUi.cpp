@@ -54,6 +54,8 @@ bool MainUi::Initialize()
 	black    = Color(0.f, 0.f, 0.f);
 	White    = Color(1.f, 1.f, 1.f);
 
+	font_size = 0.8f;
+
 	for (int i = 0; i < _countof(number); i++)
 	{
 		number[i] = RectWH(i * 64, 0, 64, 64);
@@ -83,6 +85,23 @@ int MainUi::Update()
 	for (auto&& pui : player_ui)
 		pui->Update();
 
+	int time_limit = TimeManager::Instance().GetTimeLeft();
+
+	if (time_limit == 60 || time_limit == 30) {
+		time_limit_decreasing = true;
+	}
+
+	if (time_limit_decreasing == true && font_size <= 1.2) {
+		font_size += 0.02f;
+	}
+
+	if (font_size >= 1.2) {
+		time_limit_decreasing = false;
+	}
+
+	if (font_size >= 0.8 && time_limit_decreasing == false) {
+		font_size -= 0.01;
+	}
 	return 0;
 }
 
@@ -91,6 +110,7 @@ void MainUi::Draw2D()
 	for (auto& pui : player_ui)
 		pui->Draw2D();
 
+	float test = TimeManager::Instance().GetTimeLeft();
 	int minutes   = TimeManager::Instance().GetTimeMinutes();
 	int seconds   = TimeManager::Instance().GetTimeSeconds();
 	int ones      = TimeManager::Instance().GetTimeOnesPlace();
@@ -98,9 +118,11 @@ void MainUi::Draw2D()
 	int Countdown = TimeManager::Instance().Countdown();
 	float Start   = TimeManager::Instance().GetStartTime();
 	
-	SpriteBatch.Draw(*number_sprite, minutes_pos, number[minutes], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.8f);
-	SpriteBatch.Draw(*number_sprite, tens_place_pos, number[tens], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.8f);
-	SpriteBatch.Draw(*number_sprite, ones_place_pos, number[ones], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.8f);
+	SpriteBatch.Draw(*number_sprite, minutes_pos, number[minutes], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), font_size);
+	SpriteBatch.Draw(*number_sprite, tens_place_pos, number[tens], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), font_size);
+	SpriteBatch.Draw(*number_sprite, ones_place_pos, number[ones], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), font_size);
+
+	SpriteBatch.DrawString(time_limit_font, Vector2(300, 300), White, _T("%f"), test);
 
 	SpriteBatch.DrawString(back_count, Vector2(595, 20), black, _T(":"));
 	SpriteBatch.DrawString(time_limit_font, Vector2(595, 20), White, _T(":"));

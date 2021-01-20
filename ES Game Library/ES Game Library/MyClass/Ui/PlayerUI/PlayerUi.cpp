@@ -89,21 +89,14 @@ int PlayerUi::Update()
 	{
 		_font_size = 0.6;
 	}
+
 	//! 配列のerase時と今のスコア比較
 	if (score > rank_point)
 	{
-		//lost_flag = true;
 		score -= 10;
-		//score += lost_point;
 		add_point = rank_point;
 	}
 
-	/*if (lost_flag = true)
-	{
-		lost_point = (rank_point - score) / GameTimer.GetFPS() * 1;
-		lost_flag = false;
-	}
-	*/
     return 0;
 }
 
@@ -140,27 +133,6 @@ void PlayerUi::Draw2D()
 				SpriteBatch.DrawString(player_font, _T("THUNDER"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140),
 					Color(255, 255, 255), Vector2(0.4, 0.4), Vector3(0, 0, 0), Vector3(0, 0, 0));
 			}
-			/*if (_i_player_data->GetParameter_PowerUp(tag))
-			{
-				if (_i_player_data->GetSpeed(tag) != 0.05)
-				{
-					SpriteBatch.Draw(*item_icon, banner_position + Vector3(30, 130, 0), RectWH(0, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
-					SpriteBatch.DrawString(player_font, _T("アームの速度アップ！"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140),
-						Color(255, 255, 255), Vector2(0.4, 0.4), Vector3(0, 0, 0), Vector3(0, 0, 0));
-				}
-				else if (_i_arm_data->GetGoSpeed(_arm_tag) != 0.1)
-				{
-					SpriteBatch.Draw(*item_icon, banner_position + Vector3(30, 130, 0), RectWH(64, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
-					SpriteBatch.DrawString(player_font, _T("移動速度アップ！"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140),
-						Color(255, 255, 255), Vector2(0.4, 0.4), Vector3(0, 0, 0), Vector3(0, 0, 0));
-				}
-			}
-			else if (_i_player_data->GetParameter_PowerDown(tag))
-			{
-				SpriteBatch.Draw(*item_icon, banner_position + Vector3(30, 130, 0), RectWH(128, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
-				SpriteBatch.DrawString(player_font, _T("ステータスダウン"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140), 
-					Color(255, 255, 255),Vector2(0.4,0.4),Vector3(0,0,0),Vector3(0,0,0));
-			}*/
 			break;
 		}
 	}
@@ -238,8 +210,8 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 	//! 入手ポイントの移動
 	for (int i = 0; i < pointAnimation.size(); ++i)
 	{
-		Vector3 bezier  = Vector3_Bezier(player_num, corner[0], corner[0], banner_position + Vector3(100, 40, 0), pointAnimation[i].theta);
-		Vector3 bezier2 = Vector3_Bezier(player_num, corner[1], corner[1], banner_position + Vector3(  0, 0, 0), pointAnimation[i].theta);
+		Vector3 bezier  = Vector3_Bezier(player_num, corner[0], corner[0], player_num + Vector3( -80, 0, 0), pointAnimation[i].theta);
+		Vector3 bezier2 = Vector3_Bezier(player_num, corner[1], corner[1], player_num + Vector3( -80, 0, 0), pointAnimation[i].theta);
 		pointAnimation[i].theta += 0.008;
 
 		//! 1pと2pのベジェ曲線
@@ -256,9 +228,29 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 
 		pointAnimation[i].alpha -= 0.003;
 
-		//! バナーの座標に入手したポイントがたどり着いたとき 1p & 3p
-		if (player_index == 0 || player_index == 2) {
-			if (pointAnimation[i].position.x <= banner_position.x + 100) {
+		////! バナーの座標に入手したポイントがたどり着いたとき 1p & 3p
+		//if (player_index == 0 || player_index == 2) {
+		//	if (pointAnimation[i].position.x <= banner_position.x + 100) {
+		//		add_point += pointAnimation[i].point;
+		//		_font_size = 0.6 + ((float)(add_point - score) / (float)1000);
+		//		delta_point = (add_point - score) / GameTimer.GetFPS() * 4;
+		//		pointAnimation.erase(pointAnimation.begin() + i);
+		//	}
+		//}
+
+		////! バナーの座標に入手したポイントがたどり着いたとき 2p & 4p
+		//if (player_index == 1 || player_index == 3) {
+		//	if (pointAnimation[i].position.x >= banner_position.x + 100) {
+		//		add_point += pointAnimation[i].point;
+		//		_font_size = 0.6 + ((float)(add_point - score) / (float)1000);
+		//		delta_point = (add_point - score) / GameTimer.GetFPS() * 4;
+		//		pointAnimation.erase(pointAnimation.begin() + i);
+		//	}
+		//}
+
+		//! playerの座標に入手したポイントがたどり着いたとき 1p & 2p
+		if (player_index == 0 || player_index == 1) {
+			if (pointAnimation[i].position.y >= player_num.y + 3) {
 				add_point += pointAnimation[i].point;
 				_font_size = 0.6 + ((float)(add_point - score) / (float)1000);
 				delta_point = (add_point - score) / GameTimer.GetFPS() * 4;
@@ -266,9 +258,9 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 			}
 		}
 
-		//! バナーの座標に入手したポイントがたどり着いたとき 2p & 4p
-		if (player_index == 1 || player_index == 3) {
-			if (pointAnimation[i].position.x >= banner_position.x + 100) {
+		//!  playerの座標に入手したポイントがたどり着いたとき 3p & 4p
+		if (player_index == 2 || player_index == 3) {
+			if (pointAnimation[i].position.y <= player_num.y + 3) {
 				add_point += pointAnimation[i].point;
 				_font_size = 0.6 + ((float)(add_point - score) / (float)1000);
 				delta_point = (add_point - score) / GameTimer.GetFPS() * 4;
