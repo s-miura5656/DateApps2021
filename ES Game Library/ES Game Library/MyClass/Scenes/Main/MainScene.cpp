@@ -64,10 +64,16 @@ bool MainScene::Initialize()
 
 int MainScene::Update()
 {
+	KeyboardState key = Keyboard->GetState();
+	if (key.IsKeyDown(Keys_Space))
+	{
+		SceneCamera::Instance().ShakeCamera();
+	}
 	if (TimeManager::Instance().StartFlag() && TimeManager::Instance().GetTransitionTimer() <= 0)
 	{
 		AudioManager::Instance().MainBgmPlay();
 	}
+
 	if (TimeManager::Instance().GetTransitionTimer() <= 0)
 	{
 		auto _temporary_managers = _managers;
@@ -82,58 +88,6 @@ int MainScene::Update()
 		AudioManager::Instance().GameEndWhistlePlay();
 		_managers[3]->Update();
 	}
-	/*
-	std::string pl_tag = "Player_1";
-	std::string arm_tag = "Arm_1";
-
-	IPrayerData* pPlayerData = new IPrayerData;
-	IArmData* pArmData = new IArmData;
-
-	KeyboardState key = InputDevice.GetKeyboard()->GetState();
-	
-	if (key.IsKeyDown(Keys_A) && pPlayerData->GetSpeed(pl_tag) <= 0.9)
-	{
-		pPlayerData->SetSpeed(PLAYER_TAG + std::to_string(1), pPlayerData->GetSpeed(pl_tag) + 0.01f);
-	}
-	if (key.IsKeyDown(Keys_Z) && pPlayerData->GetSpeed(pl_tag) >= 0)
-	{
-		pPlayerData->SetSpeed(PLAYER_TAG + std::to_string(1), pPlayerData->GetSpeed(pl_tag) - 0.01f);
-	}
-	if (key.IsKeyDown(Keys_S) && pPlayerData->GetShotRigorFrame(pl_tag) <= 75)
-	{
-		pPlayerData->SetShotRigorFrame(PLAYER_TAG + std::to_string(1), pPlayerData->GetShotRigorFrame(pl_tag) + 1);
-	}
-	if (key.IsKeyDown(Keys_X) && pPlayerData->GetShotRigorFrame(pl_tag) >= 0)
-	{
-		pPlayerData->SetShotRigorFrame(PLAYER_TAG + std::to_string(1), pPlayerData->GetShotRigorFrame(pl_tag) - 1);
-	}
-	if (key.IsKeyDown(Keys_D) && pArmData->GetGoSpeed(arm_tag) <= 0.9)
-	{
-		pArmData->SetGoSpeed(arm_tag, pArmData->GetGoSpeed(arm_tag) + 0.01f);
-	}
-	if (key.IsKeyDown(Keys_C) && pArmData->GetGoSpeed(arm_tag) >= 0)
-	{
-		pArmData->SetGoSpeed(arm_tag, pArmData->GetGoSpeed(arm_tag) - 0.01f);
-	}
-	if (key.IsKeyDown(Keys_F))
-	{
-		pArmData->SetLimitRange(arm_tag, pArmData->GetLimitRange(arm_tag) + 1);
-	}
-	if (key.IsKeyDown(Keys_V) &&  pArmData->GetLimitRange(arm_tag) >= 0)
-	{
-		pArmData->SetLimitRange(arm_tag, pArmData->GetLimitRange(arm_tag) - 1);
-	}
-	if (key.IsKeyDown(Keys_G) && pArmData->GetTurnFrame(arm_tag) <= 50)
-	{
-		pArmData->SetTurnFrame(arm_tag, pArmData->GetTurnFrame(arm_tag) + 1);
-	}
-	if (key.IsKeyDown(Keys_B) && pArmData->GetTurnFrame(arm_tag) >= 0)
-	{
-		pArmData->SetTurnFrame(arm_tag, pArmData->GetTurnFrame(arm_tag) - 1);
-	}
-	delete pArmData;
-	delete pPlayerData;
-	*/
 
 	if (TimeManager::Instance().GetTransitionTimer() > RESULT_GO_TIME)
 	{

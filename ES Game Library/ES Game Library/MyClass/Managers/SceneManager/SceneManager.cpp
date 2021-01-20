@@ -117,3 +117,18 @@ void SceneManager::SetResultData(int ranknum[PLAYER_COUNT_MAX], int points[PLAYE
 	}
 }
 
+void SceneCamera::ShakeCamera()
+{
+
+	if (time >= 60)
+	{
+		_camera->SetView(Vector3(7, 26.7f, -20.6f), Vector3(60.7, 0, 0));
+		return;
+	}
+
+	float x = 7 + ((60 / time) * num) * 0.01;
+
+	time++;
+	num *= -1;
+	_camera->SetView(Vector3(x, 26.7f, -20.6f), Vector3(60.7, 0, 0));
+}
