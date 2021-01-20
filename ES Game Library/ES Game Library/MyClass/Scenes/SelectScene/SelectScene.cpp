@@ -42,6 +42,8 @@ bool SelectScene::Initialize()
 		_player_button_flag[i]   = true;
 		_select_complete_flag[i] = false;
 		_chara_select[i] = i;
+		_player_rotation[i] = 180.0f;
+		_player_rotation_flag[i] = false;
 	}
 
 	_player_position[0] = -3;
@@ -79,14 +81,27 @@ int SelectScene::Update()
 		auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
 		pad->Refresh();
 
+			// カラー選択　関数作る
+		if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+		{
+			_select_complete_flag[i] = true;
+			_player_rotation_flag[i] = true;
+		}
+
+		if (_player_rotation_flag[i])
+			_player_rotation[i] += 10;
+
+		if (_player_rotation[i] >= 500)
+		{
+			_player_rotation_flag[i] = false;
+		}
+
+		if(!_player_rotation_flag[i])
+		   _player_rotation[i] = 180.0f;
+
+
 		if (!_select_complete_flag[i])
 		{
-			// カラー選択　関数作る
-			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
-			{
-				_select_complete_flag[i] = true;
-			}
-
 			if (pad->Stick(STICK_INFO::LEFT_STICK).x == 0)
 			{
 				_left_arrow_flag[i]  = true;
@@ -107,7 +122,7 @@ int SelectScene::Update()
 						_chara_select[i]++;
 						_right_arrow_flag[i] = false;
 					}
-					else if(pad->Stick(STICK_INFO::LEFT_STICK).x < 0)
+					else if (pad->Stick(STICK_INFO::LEFT_STICK).x < 0)
 					{
 						_chara_select[i]--;
 						_left_arrow_flag[i] = false;
@@ -128,6 +143,8 @@ int SelectScene::Update()
 						std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _chara_select[i]-- : _chara_select[i]++;
 					}
 				}
+
+
 			}
 
 			if (_chara_select[i] > TEXTURE_MAX - 1)
@@ -150,11 +167,7 @@ int SelectScene::Update()
 		}
 
 		//! プレイヤー全員の選択が終わったらフラグで判断してメインシーンへ
-		if (_select_complete_flag[0] && _select_complete_flag[1] && _select_complete_flag[2] && _select_complete_flag[3])
-		{
-			_game_start_flag = true;
-		}
-		if (_game_start_flag)
+		if (GameStart())
 		{
 			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
@@ -236,11 +249,24 @@ void SelectScene::Draw3D()
 
 		_player_model->SetScale(1.0f);
 		_player_model->SetPosition(Vector3(_player_position[i], 0, 0));
-		_player_model->SetRotation(0, 180, 0);
+		_player_model->SetRotation(0, _player_rotation[i], 0);
 
 		Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
 		_shader->SetParameter("vp", vp);
 		_shader->SetTechnique("UnlitAnimationModel");
 		_player_model->Draw(_shader);
 	}
+}
+
+bool SelectScene::GameStart()
+{
+	for (auto start_flag : _select_complete_flag)
+	{
+		if (start_flag)
+			continue;
+		else
+			return false;
+	}
+
+	return true;
 }

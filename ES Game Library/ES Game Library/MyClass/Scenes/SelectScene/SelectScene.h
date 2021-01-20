@@ -15,6 +15,7 @@ public:
 	void DrawAlpha3D() override {}
 
 private:
+	bool GameStart();
 
 	enum { TEXTURE_MAX = 7 };
 
@@ -36,11 +37,14 @@ private:
 
 	int _chara_select[PLAYER_COUNT_MAX];
 	float _player_position[PLAYER_COUNT_MAX];
+	float _player_rotation[PLAYER_COUNT_MAX];
 	bool _player_button_flag[PLAYER_COUNT_MAX];
 	bool _left_arrow_flag[PLAYER_COUNT_MAX];
 	bool _right_arrow_flag[PLAYER_COUNT_MAX];
 	bool _select_complete_flag[PLAYER_COUNT_MAX];
 	bool _game_start_flag = true;
+	bool _player_rotation_flag[PLAYER_COUNT_MAX];
+
 	enum
 	{
 		RED,
