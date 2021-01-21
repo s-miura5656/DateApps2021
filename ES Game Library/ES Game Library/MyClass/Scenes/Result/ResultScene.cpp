@@ -131,7 +131,7 @@ void ResultScene::Draw2D()
 	for (int i = 0; i < PLAYER_COUNT_MAX - 1; i++)
 	{
 		SpriteBatch.Draw(*_robot_fece, Vector3(850, 120 + 205 * i, 10000),RectWH(128 * i,0, 128,128));
-		SpriteBatch.DrawString(_font, Vector2(1080, 170 + 210 * (i)), Color(255, 0, 0), _T("%dpt"),GetPoints(i+1));
+		SpriteBatch.DrawString(_font, Vector2(980, 170 + 210 * (i)), Color(255, 0, 0), _T("%dpt"), GetPoints(i + 1));
 	}
 }
 /*
