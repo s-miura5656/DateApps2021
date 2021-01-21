@@ -14,6 +14,7 @@ ResultScene::ResultScene()
 ResultScene::~ResultScene()
 {
 	AudioManager::Instance().ResultBgmStop();
+	SceneManager::Instance().ClearPlayerTexture();
 }
 
 /*

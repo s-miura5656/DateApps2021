@@ -53,6 +53,7 @@ public:
 	void SetResultData(int[PLAYER_COUNT_MAX], int[PLAYER_COUNT_MAX]);
 	void SetPlayerTexture(std::string name, SPRITE texture) { _texture.insert(std::make_pair(name,texture)); }
     SPRITE GetPlayerTexture(std::string name) {return _texture.at(name); }
+	void ClearPlayerTexture() { _texture.clear(); }
 private:
 	SceneManager();
 	//! シングルトンオブジェクトを他で作らせないための記述
