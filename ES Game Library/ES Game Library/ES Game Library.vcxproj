@@ -189,6 +189,7 @@
     <ClCompile Include="MyClass\Players\Player\Player.cpp" />
     <ClCompile Include="MyClass\Players\TypeSetting\TypeSetting.cpp" />
     <ClCompile Include="MyClass\Players\Wire\Wire.cpp" />
+    <ClCompile Include="MyClass\Scenes\Main\Camera\MainCamera.cpp" />
     <ClCompile Include="MyClass\Scenes\Main\MainScene.cpp" />
     <ClCompile Include="MyClass\Scenes\Result\ResultScene.cpp" />
     <ClCompile Include="MyClass\Scenes\SelectScene\SelectScene.cpp" />
@@ -292,6 +293,7 @@
     <ClInclude Include="MyClass\Players\TypeSetting\TypeSetting.h" />
     <ClInclude Include="MyClass\Players\Wire\Wire.h" />
     <ClInclude Include="MyClass\Scenes\BaseScene.h" />
+    <ClInclude Include="MyClass\Scenes\Main\Camera\MainCamera.h" />
     <ClInclude Include="MyClass\Scenes\Main\MainScene.h" />
     <ClInclude Include="MyClass\Scenes\Result\ResultScene.h" />
     <ClInclude Include="MyClass\Scenes\SelectScene\SelectScene.h" />

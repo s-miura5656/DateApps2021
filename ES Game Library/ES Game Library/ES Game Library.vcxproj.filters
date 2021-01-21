@@ -244,6 +244,9 @@
     <Filter Include="Myclass\Scenes\SelectScene">
       <UniqueIdentifier>{78f0a48d-b843-402f-a109-68ffa967dca5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Myclass\Scenes\Main\MainCamera">
+      <UniqueIdentifier>{2d48dc61-1aeb-446f-bb69-333bc664729d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -513,6 +516,9 @@
     </ClCompile>
     <ClCompile Include="MyClass\Scenes\SelectScene\SelectScene.cpp">
       <Filter>Myclass\Scenes\SelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass\Scenes\Main\Camera\MainCamera.cpp">
+      <Filter>Myclass\Scenes\Main\MainCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -822,6 +828,9 @@
     </ClInclude>
     <ClInclude Include="MyClass\Scenes\SelectScene\SelectScene.h">
       <Filter>Myclass\Scenes\SelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass\Scenes\Main\Camera\MainCamera.h">
+      <Filter>Myclass\Scenes\Main\MainCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

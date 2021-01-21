@@ -1,7 +1,7 @@
 #include "SpeedItem.h"
 #include "../../Data/WordsTable.h"
 #include "../../Players/PlayerBase.h"
-
+#include "../../Scenes/Main/Camera/MainCamera.h"
 SpeedItem::SpeedItem(Vector3 position, std::string name)
 {
 	this->_position = position;
@@ -114,12 +114,12 @@ int SpeedItem::Update()
 						_hit_box->GetHitBoxTag(playertag)->GetPlayerBase()->GetItem(this, status_name);
 					}
 				}
+				MainCamera::Instance().TimeReset();
 			}
 			else
 			{
 				_hit_box->GetHitBoxTag(name)->GetPlayerBase()->GetItem(this, status_name);
 			}
-			
 			Removeflag = true;
 			auto data = _map_data->GetData();
 

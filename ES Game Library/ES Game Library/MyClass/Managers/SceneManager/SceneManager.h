@@ -104,15 +104,11 @@ public:
 	void SetPerspectiveFieldOfView(const float inFovY, const float inWidth, const float inHeight, const float inZn, const float inZf) {
 		_camera->SetPerspectiveFieldOfView(inFovY, inWidth, inHeight, inZn, inZf); }
 	void SetView(Vector3 camera_pos, Vector3 camera_angle) { _camera->SetView(camera_pos, camera_angle);} 
-	void ShakeCamera();
 	Camera GetCamera() const { return _camera; }
 private:
 	SceneCamera(const SceneCamera&)    = delete;
 	void operator=(const SceneCamera&) = delete;
 
 	Camera _camera;
-	float _time = 1;
-	float _num  = 1;
-	bool  _shake_flag = false;
 };
 
