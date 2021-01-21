@@ -40,7 +40,7 @@ private:
 
 	std::vector<PlayerTexture*> _textures;
 
-	int _select_count = 0;
+	int _select_count[PLAYER_COUNT_MAX];
 
 	int _chara_select_seve[PLAYER_COUNT_MAX];
 	int _chara_select[PLAYER_COUNT_MAX];
