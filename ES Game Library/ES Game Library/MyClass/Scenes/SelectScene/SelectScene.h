@@ -3,6 +3,9 @@
 #include "../BaseScene.h"
 #include "../../Data/WordsTable.h"
 
+class BaseInput;
+class PlayerTexture;
+
 class SelectScene : public BaseScene
 {
 public:
@@ -16,6 +19,8 @@ public:
 
 private:
 	bool GameStart();
+
+	void ColorSelect(int player_number, BaseInput* pad);
 
 	enum { TEXTURE_MAX = 7 };
 
@@ -33,8 +38,11 @@ private:
 	SPRITE _right_arrow_dark;
 	ANIMATIONMODEL _player_model;
 
+	std::vector<PlayerTexture*> _textures;
+
 	int _select_count = 0;
 
+	int _chara_select_seve[PLAYER_COUNT_MAX];
 	int _chara_select[PLAYER_COUNT_MAX];
 	float _player_position[PLAYER_COUNT_MAX];
 	float _player_rotation[PLAYER_COUNT_MAX];
@@ -55,4 +63,21 @@ private:
 		PINK,
 		PURPLE
 	};
+};
+
+class PlayerTexture
+{
+public:
+	PlayerTexture() {};
+	~PlayerTexture() {};
+
+	void SetTexture(SPRITE texture) { _texture = texture; }
+	SPRITE GetTexture() const { return _texture; }
+
+	void SetFlag(bool flag) { _flag = flag; }
+	bool IsFlag() const { return _flag; }
+
+private:
+	SPRITE _texture = nullptr;
+	bool _flag = false;
 };

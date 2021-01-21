@@ -5,13 +5,20 @@
 #include "../../Managers/InputManager/InputManager.h"
 #include "../../Data/IData.h"
 #include"../../Managers/AudioManager/AudioManager.h"
+
 SelectScene::SelectScene()
 {
+
 }
 
 SelectScene::~SelectScene()
 {
 	AudioManager::Instance().TitleBgmStop();
+
+	for (auto it = _textures.rend(); it != _textures.rbegin(); --it)
+	{
+		delete (*it);
+	}
 }
 
 bool SelectScene::Initialize()
@@ -29,12 +36,16 @@ bool SelectScene::Initialize()
 	_right_arrow = ResouceManager::Instance().LordSpriteFile(_T("Select/right_arrow.png"));
 	_right_arrow_dark = ResouceManager::Instance().LordSpriteFile(_T("Select/right_arrow_dark.png"));
 
+	SPRITE texture;
+
 	for (int i = 0; i < TEXTURE_MAX; i++)
 	{
+		_textures.push_back(new PlayerTexture);
+
 		// プレイヤーごとにテクスチャを用意する
 		auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(i + 1), ".png");
-		SPRITE texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
-		_texture[i] = texture;
+		texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
+		_textures[i]->SetTexture(texture);
 	}
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
@@ -42,6 +53,7 @@ bool SelectScene::Initialize()
 		_player_button_flag[i]   = true;
 		_select_complete_flag[i] = false;
 		_chara_select[i] = i;
+		_chara_select_seve[i] = i;
 		_player_rotation[i] = 180.0f;
 		_player_rotation_flag[i] = false;
 	}
@@ -76,35 +88,47 @@ bool SelectScene::Initialize()
 int SelectScene::Update()
 {
 	AudioManager::Instance().TitleBgmPlay();
+
 	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
 	{
 		auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
 		pad->Refresh();
 
-			// カラー選択　関数作る
+		// カラー選択　関数作る
 		if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 		{
 			_select_complete_flag[i] = true;
 			_player_rotation_flag[i] = true;
+
+			//_chara_select[i] = _chara_select_seve[i];
 		}
 
-		if (_player_rotation_flag[i])
-			_player_rotation[i] += 10;
+		/*if (_chara_select_seve[i] == _chara_select[i])
+		{
+			_select_complete_flag[i] = false;
+			_player_rotation_flag[i] = false;
+		}
+		*/
 
-		if (_player_rotation[i] >= 500)
+		// 選択後モデル回転
+		if (_player_rotation_flag[i])
+			_player_rotation[i] += 10.0f;
+
+		if (_player_rotation[i] >= 500.0f)
 		{
 			_player_rotation_flag[i] = false;
 		}
 
-		if(!_player_rotation_flag[i])
-		   _player_rotation[i] = 180.0f;
+		if (!_player_rotation_flag[i])
+			_player_rotation[i] = 180.0f;
+
 
 
 		if (!_select_complete_flag[i])
 		{
 			if (pad->Stick(STICK_INFO::LEFT_STICK).x == 0)
 			{
-				_left_arrow_flag[i]  = true;
+				_left_arrow_flag[i] = true;
 				_right_arrow_flag[i] = true;
 			}
 
@@ -115,6 +139,7 @@ int SelectScene::Update()
 
 				if (_select_count >= 10)
 				{
+					//ColorSelect(i, pad);
 					//std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ?
 					//	_chara_select[i]--, _left_arrow_flag[i] = false : _chara_select[i]++, _right_arrow_flag[i] = false;
 					if (pad->Stick(STICK_INFO::LEFT_STICK).x > 0)
@@ -129,33 +154,14 @@ int SelectScene::Update()
 					}
 					_select_count = 0;
 				}
-
-				// プレイヤー同士のカラー被り避け
-				for (int j = 0; j < PLAYER_COUNT_MAX; ++j)
-				{
-					if (i == j)
-					{
-						continue;
-					}
-
-					if (_chara_select[i] == _chara_select[j])
-					{
-						std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _chara_select[i]-- : _chara_select[i]++;
-					}
-				}
-
-
-			}
-
-			if (_chara_select[i] > TEXTURE_MAX - 1)
-			{
-				_chara_select[i] = 0;
-			}
-			else if (_chara_select[i] < 0)
-			{
-				_chara_select[i] = TEXTURE_MAX - 1;
 			}
 		}
+
+		if (_chara_select[i] > TEXTURE_MAX - 1)
+			_chara_select[i] = 0;
+
+		if (_chara_select[i] < 0)
+			_chara_select[i] = TEXTURE_MAX - 1;
 
 		// カラー再選択
 		if (_select_complete_flag[i])
@@ -219,31 +225,31 @@ void SelectScene::Draw3D()
 		switch (_chara_select[i])
 		{
 		case RED:
-			_shader->SetTexture("m_Texture", *_texture[RED]);
+			_shader->SetTexture("m_Texture", *_textures[RED]->GetTexture());
 			break;
 
 		case BLUE:
-			_shader->SetTexture("m_Texture", *_texture[BLUE]);
+			_shader->SetTexture("m_Texture", *_textures[BLUE]->GetTexture());
 			break;
 
 		case GREEN:
-			_shader->SetTexture("m_Texture", *_texture[GREEN]);
+			_shader->SetTexture("m_Texture", *_textures[GREEN]->GetTexture());
 			break;
 
 		case YELLOW:
-			_shader->SetTexture("m_Texture", *_texture[YELLOW]);
+			_shader->SetTexture("m_Texture", *_textures[YELLOW]->GetTexture());
 			break;
 
 		case LIGHTBLUE:
-			_shader->SetTexture("m_Texture", *_texture[LIGHTBLUE]);
+			_shader->SetTexture("m_Texture", *_textures[LIGHTBLUE]->GetTexture());
 			break;
 
 		case PINK:
-			_shader->SetTexture("m_Texture", *_texture[PINK]);
+			_shader->SetTexture("m_Texture", *_textures[PINK]->GetTexture());
 			break;
 
 		case PURPLE:
-			_shader->SetTexture("m_Texture", *_texture[PURPLE]);
+			_shader->SetTexture("m_Texture", *_textures[PURPLE]->GetTexture());
 			break;
 		}
 
@@ -260,6 +266,7 @@ void SelectScene::Draw3D()
 
 bool SelectScene::GameStart()
 {
+	// 全プレイヤーの選択が終わっているか判断する関数
 	for (auto start_flag : _select_complete_flag)
 	{
 		if (start_flag)
@@ -269,4 +276,45 @@ bool SelectScene::GameStart()
 	}
 
 	return true;
+}
+
+void SelectScene::ColorSelect(int player_number, BaseInput* pad)
+{
+	_textures[_chara_select[player_number]]->SetFlag(false);
+
+	std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _chara_select[player_number]-- : _chara_select[player_number]++;
+
+	if (_chara_select[player_number] < 0)
+	{
+		_chara_select[player_number] = _textures.size() - 1;
+	}
+	else if (_chara_select[player_number] > _textures.size() - 1)
+	{
+		_chara_select[player_number] = 0;
+	}
+
+	while (true)
+	{
+		if (_textures[_chara_select[player_number]]->IsFlag())
+		{
+			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _chara_select[player_number]-- : _chara_select[player_number]++;
+			
+			if (_chara_select[player_number] < 0)
+			{
+				_chara_select[player_number] = _textures.size() - 1;
+			}
+			else if (_chara_select[player_number] > _textures.size() - 1)
+			{
+				_chara_select[player_number] = 0;
+			}
+			continue;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	_textures[_chara_select[player_number]]->SetFlag(true);
+	_left_arrow_flag[player_number] = false;
 }
