@@ -15,10 +15,10 @@ SelectScene::~SelectScene()
 {
 	AudioManager::Instance().TitleBgmStop();
 
-	for (auto it = _textures.rend(); it != _textures.rbegin(); --it)
-	{
-		delete (*it);
-	}
+	//for (auto it = _textures.rend(); it != _textures.rbegin(); --it)
+	//{
+	//	delete (*it);
+	//}
 }
 
 bool SelectScene::Initialize()
@@ -173,10 +173,17 @@ int SelectScene::Update()
 		}
 
 		//! プレイヤー全員の選択が終わったらフラグで判断してメインシーンへ
-		if (GameStart())
+		if (_game_start_flag)
 		{
 			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+			{
+				for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+				{
+					std::string tag = PLAYER_TAG + to_string(i + 1);
+					SceneManager::Instance().SetPlayerTexture(tag, _textures[_chara_select[i]]->GetTexture());
+				}
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
+			}
 		}
 	}
 

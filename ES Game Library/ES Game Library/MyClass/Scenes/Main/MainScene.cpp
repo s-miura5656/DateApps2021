@@ -56,11 +56,13 @@ bool MainScene::Initialize()
 	}
 	AudioManager::Instance().GameStartWhistlePlay();
 	InputDevice.CreateKeyboard();
+
 	return true;
 }
 
 int MainScene::Update()
 {
+
 	MainCamera::Instance().Update();
 	if (TimeManager::Instance().StartFlag() && TimeManager::Instance().GetTransitionTimer() <= 0)
 	{

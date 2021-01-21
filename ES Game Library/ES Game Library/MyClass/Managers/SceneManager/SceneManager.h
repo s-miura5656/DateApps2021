@@ -51,7 +51,8 @@ public:
 	ResultData* GetResultData() { return _result_data.get(); }
 
 	void SetResultData(int[PLAYER_COUNT_MAX], int[PLAYER_COUNT_MAX]);
-
+	void SetPlayerTexture(std::string name, SPRITE texture) { _texture.insert(std::make_pair(name,texture)); }
+    SPRITE GetPlayerTexture(std::string name) {return _texture.at(name); }
 private:
 	SceneManager();
 	//! シングルトンオブジェクトを他で作らせないための記述
@@ -60,6 +61,7 @@ private:
 
     std::unique_ptr<BaseScene> _scene;
 	std::unique_ptr<ResultData> _result_data;
+	std::map<std::string,SPRITE> _texture;
 	int _scene_state;
 	int _old_scene_state;
 };
