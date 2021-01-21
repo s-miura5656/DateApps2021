@@ -57,6 +57,7 @@ bool SelectScene::Initialize()
 		_chara_select_seve[i] = i;
 		_player_rotation[i] = 180.0f;
 		_player_rotation_flag[i] = false;
+		_select_count[i] = 0;
 	}
 
 	_player_position[0] = -3;
@@ -124,15 +125,15 @@ int SelectScene::Update()
 			if (pad->Stick(STICK_INFO::LEFT_STICK).x != 0)
 			{
 				// スティック倒して一定時間で次のカラーへ
-				_select_count++;
+				_select_count[i]++;
 
-				if (_select_count >= 10)
+				if (_select_count[i] >= 10)
 				{
 					_textures[_chara_select[i]]->SetFlag(false);
 					std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _chara_select[i]-- : _chara_select[i]++;
 					ColorSelect(i, pad);
 
-					_select_count = 0;
+					_select_count[i] = 0;
 				}
 			}
 		}
@@ -160,7 +161,7 @@ int SelectScene::Update()
 				for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 				{
 					std::string tag = PLAYER_TAG + to_string(i + 1);
-					SceneManager::Instance().SetPlayerTexture(tag, _textures[_chara_select[i]]->GetTexture());
+					SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
 				}
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
 			}
