@@ -4,6 +4,7 @@
 #include "../ParticleSystem/Particle.h"
 #include "../Item/Itembase.hpp"
 #include "../Managers/AudioManager/AudioManager.h"
+#include "../Scenes/Main/Camera/MainCamera.h"
 #pragma region Šî–{‹@”\
 PlayerBase::PlayerBase()
 {
@@ -57,6 +58,7 @@ int PlayerBase::Update()
 			DestroyArm();
 			_death_flag      = true;
 			AudioManager::Instance().ExplosionPlay();
+			MainCamera::Instance().TimeReset();
 			player_data->SetInvincibleMode(_tag, true);
 			return 0;
 		}
