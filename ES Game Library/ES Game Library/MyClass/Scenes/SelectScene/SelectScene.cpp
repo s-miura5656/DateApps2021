@@ -53,6 +53,7 @@ bool SelectScene::Initialize()
 		_player_button_flag[i]   = true;
 		_select_complete_flag[i] = false;
 		_chara_select[i] = i;
+		_textures[i]->SetFlag(true);
 		_chara_select_seve[i] = i;
 		_player_rotation[i] = 180.0f;
 		_player_rotation_flag[i] = false;
@@ -99,29 +100,17 @@ int SelectScene::Update()
 		{
 			_select_complete_flag[i] = true;
 			_player_rotation_flag[i] = true;
-
-			//_chara_select[i] = _chara_select_seve[i];
 		}
-
-		/*if (_chara_select_seve[i] == _chara_select[i])
-		{
-			_select_complete_flag[i] = false;
-			_player_rotation_flag[i] = false;
-		}
-		*/
 
 		// ‘I‘ðŒãƒ‚ƒfƒ‹‰ñ“]
 		if (_player_rotation_flag[i])
 			_player_rotation[i] += 10.0f;
 
 		if (_player_rotation[i] >= 500.0f)
-		{
 			_player_rotation_flag[i] = false;
-		}
 
 		if (!_player_rotation_flag[i])
 			_player_rotation[i] = 180.0f;
-
 
 
 		if (!_select_complete_flag[i])
@@ -139,19 +128,10 @@ int SelectScene::Update()
 
 				if (_select_count >= 10)
 				{
-					//ColorSelect(i, pad);
-					//std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ?
-					//	_chara_select[i]--, _left_arrow_flag[i] = false : _chara_select[i]++, _right_arrow_flag[i] = false;
-					if (pad->Stick(STICK_INFO::LEFT_STICK).x > 0)
-					{
-						_chara_select[i]++;
-						_right_arrow_flag[i] = false;
-					}
-					else if (pad->Stick(STICK_INFO::LEFT_STICK).x < 0)
-					{
-						_chara_select[i]--;
-						_left_arrow_flag[i] = false;
-					}
+					_textures[_chara_select[i]]->SetFlag(false);
+					std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _chara_select[i]-- : _chara_select[i]++;
+					ColorSelect(i, pad);
+
 					_select_count = 0;
 				}
 			}
@@ -287,41 +267,23 @@ bool SelectScene::GameStart()
 
 void SelectScene::ColorSelect(int player_number, BaseInput* pad)
 {
-	_textures[_chara_select[player_number]]->SetFlag(false);
-
-	std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _chara_select[player_number]-- : _chara_select[player_number]++;
-
-	if (_chara_select[player_number] < 0)
-	{
-		_chara_select[player_number] = _textures.size() - 1;
-	}
-	else if (_chara_select[player_number] > _textures.size() - 1)
-	{
-		_chara_select[player_number] = 0;
-	}
-
 	while (true)
 	{
+		if (_chara_select[player_number] < 0)
+			_chara_select[player_number] = _textures.size() - 1;
+		else if (_chara_select[player_number] > _textures.size() - 1)
+			_chara_select[player_number] = 0;
+
 		if (_textures[_chara_select[player_number]]->IsFlag())
 		{
 			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _chara_select[player_number]-- : _chara_select[player_number]++;
-			
-			if (_chara_select[player_number] < 0)
-			{
-				_chara_select[player_number] = _textures.size() - 1;
-			}
-			else if (_chara_select[player_number] > _textures.size() - 1)
-			{
-				_chara_select[player_number] = 0;
-			}
 			continue;
 		}
 		else
 		{
+			_textures[_chara_select[player_number]]->SetFlag(true);
+			_left_arrow_flag[player_number] = false;
 			break;
 		}
 	}
-
-	_textures[_chara_select[player_number]]->SetFlag(true);
-	_left_arrow_flag[player_number] = false;
 }
