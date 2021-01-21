@@ -43,7 +43,9 @@ bool ResultScene::Initialize()
 
 		if (GetRankNum(i) == 1)
 		{
-			_texture = SceneManager::Instance().GetPlayerTexture(tag);
+			std::string player_number = PLAYER_TAG + to_string(SceneManager::Instance().GetPlayerTexture(tag));
+			auto path = ConvertFilePath("Player/", player_number, ".png");
+			_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 		}
 		else
 		{

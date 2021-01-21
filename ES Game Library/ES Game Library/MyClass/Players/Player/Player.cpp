@@ -105,7 +105,8 @@ bool Player::Initialize()
 
 	//! shader
 	_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
-	auto path = ConvertFilePath("Player/", _tag, ".png");
+	std::string player_number = PLAYER_TAG + to_string(SceneManager::Instance().GetPlayerTexture(_tag));
+	auto path = ConvertFilePath("Player/", player_number, ".png");
 	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
 	return true;

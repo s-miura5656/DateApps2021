@@ -218,7 +218,7 @@ void PlayerBase::DrawModel()
 	//! シェーダー側に値をセット
 	auto camera = SceneCamera::Instance().GetCamera();
 	_shader->SetParameter("model_ambient", _model_material.Ambient);
-	_shader->SetTexture("m_Texture", *SceneManager::Instance().GetPlayerTexture(_tag));
+	_shader->SetTexture("m_Texture", *_texture);
 	_shader->SetParameter("eye_pos", camera.GetPosition());
 
 	Matrix vp = camera->GetViewProjectionMatrix();
