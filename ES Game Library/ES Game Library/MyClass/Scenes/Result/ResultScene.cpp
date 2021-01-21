@@ -36,16 +36,19 @@ bool ResultScene::Initialize()
 	_shader  	         = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
 	_player_model        = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 
-	_player_model->SetRotation(0, 180, 0);
-	_player_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
-
+	//!
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		//プレイヤーごとにテクスチャを用意する。
-		auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(GetRankNum(0)), ".png");
-		_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
-	}
+		std::string tag = PLAYER_TAG + to_string(i + 1);
 
+		if (GetRankNum(i) == 1)
+		{
+			_texture = SceneManager::Instance().GetPlayerTexture(tag);
+		}
+		else
+		{
+		}
+	}
 	//! material
 	Material material;
 	material.Diffuse  = Color(1.0f, 1.0f, 1.0f); // 陰影のグラデーション 明るい部分
@@ -62,6 +65,13 @@ bool ResultScene::Initialize()
 
 	SceneCamera::Instance().SetLookAt(camera_pos, look_pos, 0);
 	SceneCamera::Instance().SetPerspectiveFieldOfView(60.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
+
+	//!プレイヤーの初期設定
+	_player_model->SetScale(5.0f);
+	_player_model->SetPosition(Vector3(-5, -3, 0));
+	_player_model->SetRotation(0, 180, 0);
+	_player_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
+	_player_model->SetTrackEnable(1, TRUE);
 
 	//!プレイヤーモデルのスケールの設定
 	_player_model_big_scale   = 1.0;
@@ -109,7 +119,6 @@ int ResultScene::Update()
 	{
 		auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
 		pad->Refresh();
-		//パンチを出すボタンがおされたときにタイトルへシーン遷移する。
 		if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
 		{
 			SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TITLE);
@@ -126,7 +135,7 @@ void ResultScene::Draw2D()
 	SpriteBatch.Draw(*_background,_background_position);
 
 	SpriteBatch.Draw(*_light, Vector3(0, 0, 10000));
-	SpriteBatch.Draw(*_robot_win, Vector3(45, 105, 10000), RectWH((GetRankNum(0) - 1) * 512, 0, 512, 512));
+	//SpriteBatch.Draw(*_robot_win, Vector3(45, 105, 10000), RectWH((GetRankNum(0) - 1) * 512, 0, 512, 512));
 	SpriteBatch.DrawString(_font, Vector2(200, 600), Color(255, 255, 255), _T("%dpt"), GetPoints(0));
 
 	for (int i = 0; i < PLAYER_COUNT_MAX - 1; i++)
@@ -143,12 +152,12 @@ void ResultScene::Draw3D()
 	Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
 	SceneCamera::Instance().SetSceneCamera();
 
-	//_shader->SetTexture("m_Texture", *_texture);
-	//_shader->SetParameter("vp", vp);
-	//_shader->SetTechnique("UnlitAnimationModel");
-	//_player_model->SetScale(5.0f);
-	//_player_model->SetPosition(Vector3(-6,-3,0));
-	//_player_model->Draw(_shader);
+	_shader->SetTexture("m_Texture", * _texture);
+	_shader->SetParameter("vp", vp);
+	_shader->SetTechnique("UnlitAnimationModel");
+	_player_model->SetTrackPosition(1, _animation_count);
+	_animation_count += GameTimer.GetElapsedSecond();
+	_player_model->Draw(_shader);
 }
 /*
 * @fn 同着の数を数える

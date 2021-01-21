@@ -15,6 +15,9 @@ public:
 	void DrawAlpha3D() override {}
 
 private:
+
+	double _animation_count = 0;
+
 	void                  ArrivalCount();
 	int                   GetRankNum(int);
 	int                   GetPoints(int);
