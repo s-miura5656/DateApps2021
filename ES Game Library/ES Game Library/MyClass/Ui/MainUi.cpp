@@ -27,12 +27,21 @@ bool MainUi::Initialize()
 	front_count       = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 90);
 
 	time_banner       = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/time_2.png"));
-	number_sprite     = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/number_3.png"));
+	number_sprite     = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber.png"));
 
-	time_banner_pos = Vector3(640 - 125, 5, 1);
-	minutes_pos     = Vector3(540, 20, 0);
+	time_banner_pos = Vector3(640 - 125, 10, 1);
+	minutes_pos     = Vector3(530, 20, 0);
 	tens_place_pos  = Vector3(630, 20, 0);
-	ones_place_pos  = Vector3(680, 20, 0);
+	ones_place_pos  = Vector3(690, 20, 0);
+	colon_pos       = Vector3(580, 20, 0);
+
+	/*minutes_pos_v2_w    = Vector2(543, 23) + Vector2(0,100);
+	tens_place_pos_v2_w = Vector2(633, 23) + Vector2(0, 100);
+	ones_place_pos_v2_w = Vector2(683, 23) + Vector2(0, 100);
+
+	minutes_pos_v2_b    = Vector2(540, 20) + Vector2(0, 100);
+	tens_place_pos_v2_b = Vector2(630, 20) + Vector2(0, 100);
+	ones_place_pos_v2_b = Vector2(680, 20) + Vector2(0, 100);*/
 
 	Countdown_pos   = Vector3(605, 345, 0);
 
@@ -46,21 +55,32 @@ bool MainUi::Initialize()
 	speed_ui_pos[2] = Vector2(  10, 680);
 	speed_ui_pos[3] = Vector2(1025, 680);
 
-	color[0] = Color(255,   0,   0);
+	/*color[0] = Color(255,   0,   0);
 	color[1] = Color(  0,   0, 255);
 	color[2] = Color(255, 255,   0);
-	color[3] = Color(  0, 255,   0);
+	color[3] = Color(  0, 255,   0);*/
 
 	black    = Color(0.f, 0.f, 0.f);
 	White    = Color(1.f, 1.f, 1.f);
 
+	time_size_pp = false;
+	time_limit_decreasing = false;
 	font_size = 0.8f;
+	time_size_up = 0.0;
+	time_size_down = 0.0;
+	time_size_flag = false;
 
 	for (int i = 0; i < _countof(number); i++)
 	{
 		number[i] = RectWH(i * 64, 0, 64, 64);
 	}
-	
+
+	Danger = Color(255, 255, 255);
+	r = 255;
+	g = 255;
+	b = 255;
+	Blinking = false;
+
 	// Player1
 	player_ui.push_back(new PlayerUi(0));
 	player_ui[0]->Initialize(Vector3(10, 200, 1), RectWH(0,0,256,64));
@@ -82,26 +102,46 @@ bool MainUi::Initialize()
 
 int MainUi::Update()
 {
+
 	for (auto&& pui : player_ui)
 		pui->Update();
 
 	int time_limit = TimeManager::Instance().GetTimeLeft();
 
-	if (time_limit == 60 || time_limit == 30) {
+	if (time_limit == 60) {
 		time_limit_decreasing = true;
 	}
 
-	if (time_limit_decreasing == true && font_size <= 1.2) {
-		font_size += 0.02f;
+	if (time_limit_decreasing == true && font_size <= 1.5) {
+		font_size += time_size_up;
 	}
 
-	if (font_size >= 1.2) {
+	if (font_size >= 1.5) {
 		time_limit_decreasing = false;
 	}
 
 	if (font_size >= 0.8 && time_limit_decreasing == false) {
-		font_size -= 0.01;
+		font_size -= time_size_down;
 	}
+
+	if (time_limit <= 30 && time_limit > 0)
+	{
+		MainUi::ColorBlinking();
+		MainUi::TimeSizeFluctuation();
+
+		//! 十秒ごとに拡大縮小のサイズ変更 
+		if (time_limit % 10 == 0) {
+			if (!time_size_pp) {
+				time_size_up += 0.02f;
+				time_size_down += 0.01f;
+				time_size_pp = true;
+			}
+		}
+		else {
+			time_size_pp = false;
+		}
+	}
+	
 	return 0;
 }
 
@@ -118,14 +158,18 @@ void MainUi::Draw2D()
 	int Countdown = TimeManager::Instance().Countdown();
 	float Start   = TimeManager::Instance().GetStartTime();
 	
-	SpriteBatch.Draw(*number_sprite, minutes_pos, number[minutes], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), font_size);
-	SpriteBatch.Draw(*number_sprite, tens_place_pos, number[tens], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), font_size);
-	SpriteBatch.Draw(*number_sprite, ones_place_pos, number[ones], (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), font_size);
+	SpriteBatch.Draw(*number_sprite, minutes_pos, number[minutes], (DWORD)Danger, Vector3(0, 0, 0), Vector3(96, 32, 0), font_size);
+	SpriteBatch.Draw(*number_sprite, colon_pos, number[10]       , (DWORD)Danger, Vector3(0, 0, 0), Vector3(64, 32, 0), font_size);
+	SpriteBatch.Draw(*number_sprite, tens_place_pos, number[tens], (DWORD)Danger, Vector3(0, 0, 0), Vector3(32, 32, 0), font_size);
+	SpriteBatch.Draw(*number_sprite, ones_place_pos, number[ones], (DWORD)Danger, Vector3(0, 0, 0), Vector3(-32, 32, 0), font_size);
 
-	SpriteBatch.DrawString(time_limit_font, Vector2(300, 300), White, _T("%f"), test);
+	/*SpriteBatch.DrawString(time_limit_font, minutes_pos_v2_b, black, Vector2(1.15f, 1.15f), Vector3(0, 0, 0), Vector3(0, 0, 0), _T("%d"), minutes);
+	SpriteBatch.DrawString(time_limit_font, tens_place_pos_v2_b, black, Vector2(1.15f, 1.15f), Vector3(0, 0, 0), Vector3(0, 0, 0), _T("%d"), tens);
+	SpriteBatch.DrawString(time_limit_font, ones_place_pos_v2_b, black, Vector2(1.15f, 1.15f), Vector3(0, 0, 0), Vector3(0, 0, 0), _T("%d"), ones);
 
-	SpriteBatch.DrawString(back_count, Vector2(595, 20), black, _T(":"));
-	SpriteBatch.DrawString(time_limit_font, Vector2(595, 20), White, _T(":"));
+	SpriteBatch.DrawString(time_limit_font, minutes_pos_v2_w, White, Vector2(1.0f, 1.0f), Vector3(0, 0, 0), Vector3(0, 0, 0), _T("%d"), minutes);
+	SpriteBatch.DrawString(time_limit_font, tens_place_pos_v2_w, White, Vector2(1.0f, 1.0f), Vector3(0, 0, 0), Vector3(0, 0, 0), _T("%d"), tens);
+	SpriteBatch.DrawString(time_limit_font, ones_place_pos_v2_w, White, Vector2(1.0f, 1.0f), Vector3(0, 0, 0), Vector3(0, 0, 0), _T("%d"), ones);*/
 
 	SpriteBatch.Draw(*time_banner, time_banner_pos);
 
@@ -158,6 +202,52 @@ void MainUi::Draw2D()
 	}
 
 
+}
+
+void MainUi::ColorBlinking()
+{
+	Danger = Color(r, g, b);
+	//! 赤点滅
+	if (g >= 0 && b >= 0 && Blinking == false) {
+		g -= 5;
+		b -= 5;
+		if (g < 0 || b < 0)
+		{
+			g = 0;
+			b = 0;
+			Blinking = true;
+		}
+	}
+	//! 白点滅
+	else if (Blinking == true) {
+		g += 5;
+		b += 5;
+		if (g > 255 || b > 255) {
+			g = 255;
+			b = 255;
+			Blinking = false;
+		}
+	}
+}
+
+void MainUi::TimeSizeFluctuation()
+{
+	//! 拡大
+	if (time_size_flag == false && font_size <= 1.2) {
+		font_size += time_size_up;
+		if (font_size >= 1.2) {
+			font_size = 1.2f;
+			time_size_flag = true;
+		}
+	}
+	//! 縮小
+	else if (time_size_flag == true) {
+		font_size -= time_size_down;
+		if (font_size <= 0.8) {
+			font_size = 0.8f;
+			time_size_flag = false;
+		}
+	}
 }
 
 
