@@ -72,6 +72,7 @@ int PlayerBase::Update()
 		if (player_data->GetState(_tag) == PlayerEnum::Animation::DAMAGE)
 		{
 			_damage_hit_count++;
+			_powerup_count = 9999;
 
 			if (_damage_hit_count > DEATH_RIGOR)
 			{
