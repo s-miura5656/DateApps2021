@@ -3,6 +3,7 @@
 #include "../Managers/TimeManager/Time.h"
 #include "../Players/PlayerBase.h"
 #include "../Managers/ResouceManager/ResouceManager.h"
+#include "../Managers/SceneManager/SceneManager.h"
 #include <codecvt>
 
 
@@ -95,19 +96,19 @@ bool MainUi::Initialize()
 
 	// Player1
 	player_ui.push_back(new PlayerUi(0));
-	player_ui[0]->Initialize(Vector3(10, 200, 1), RectWH(0,0,256,64));
+	player_ui[0]->Initialize(Vector3(10, 200, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_1") - 1),0,256,64));
 
 	// Player2
 	player_ui.push_back(new PlayerUi(1));
-	player_ui[1]->Initialize(Vector3(1280 - 250, 200, 1), RectWH(256, 0, 256, 64));
+	player_ui[1]->Initialize(Vector3(1280 - 250, 200, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_2") - 1), 0, 256, 64));
 
 	// Player3
 	player_ui.push_back(new PlayerUi(2));
-	player_ui[2]->Initialize(Vector3(10, 500, 1), RectWH(512, 0, 256, 64));
+	player_ui[2]->Initialize(Vector3(10, 500, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_3") - 1), 0, 256, 64));
 
 	// Player4
 	player_ui.push_back(new PlayerUi(3));
-	player_ui[3]->Initialize(Vector3(1280 - 250, 500, 1), RectWH(768, 0, 256, 64));
+	player_ui[3]->Initialize(Vector3(1280 - 250, 500, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_4") - 1), 0, 256, 64));
 	
 	return true;
 }

@@ -18,11 +18,12 @@ bool AudioManager::Initialize()
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Item/powerup.wav"), _powerup, MAX_PLAY, false);
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Item/powerdown.wav"), _powerdown, MAX_PLAY, false);
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Item/thunder.wav"), _thunder, MAX_PLAY, false);
-	_whistle = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/whistle.wav"));
-	_signal = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/signal.wav"));
-	_titlebgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/title.wav"));
-	_mainbgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/main.wav"));
-	_resultbgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/result.wav"));
+	_whistle        = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/whistle.wav"));
+	_signal         = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/signal.wav"));
+	_titlebgm       = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/title.wav"));
+	_mainbgm        = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/main.wav"));
+	_speedupmainbgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/mainspeedup.wav"));
+	_resultbgm      = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/result.wav"));
 
 	return true;
 }
@@ -158,7 +159,16 @@ void AudioManager::MainBgmStop()
 {
 	_mainbgm->Stop();
 }
+void AudioManager::SpeedUpMainBgmPlay()
+{
+	if (!_speedupmainbgm->IsPlaying())
+		_speedupmainbgm->Play();
+}
 
+void AudioManager::SpeedUpMainBgmStop()
+{
+	_speedupmainbgm->Stop();
+}
 void AudioManager::ResultBgmPlay()
 {
 	if (!_resultbgm->IsPlaying())

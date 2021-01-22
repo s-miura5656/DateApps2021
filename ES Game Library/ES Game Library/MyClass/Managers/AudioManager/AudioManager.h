@@ -37,6 +37,10 @@ public:
 	void MainBgmPlay();
 	//!メインBGMの終了
 	void MainBgmStop();
+	//!メインBGMの開始
+	void SpeedUpMainBgmPlay();
+	//!メインBGMの終了
+	void SpeedUpMainBgmStop();
 	//!リザルトBGMの開始
 	void ResultBgmPlay();
 	//!リザルトBGMの終了
@@ -60,6 +64,7 @@ private:
 	SOUND _signal;
 	MUSIC _titlebgm;
 	MUSIC _mainbgm;
+	MUSIC _speedupmainbgm;
 	MUSIC _resultbgm;
 	bool  _whistle_flag = false;
 };

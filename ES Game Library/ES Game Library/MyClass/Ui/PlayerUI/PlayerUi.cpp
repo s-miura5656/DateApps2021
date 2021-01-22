@@ -1,6 +1,6 @@
 #include "PlayerUi.h"
 #include "../../Managers/ResouceManager/ResouceManager.h"
-
+#include "../../Managers/SceneManager/SceneManager.h"
 SPRITE PlayerUi::score_font = nullptr;
 FONT  PlayerUi::player_font = nullptr;
 
@@ -108,7 +108,7 @@ void PlayerUi::Draw2D()
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
 		if (name == tag)
 		{
-			SpriteBatch.Draw(*banner_status, banner_position + Vector3(0, 74, 0), RectWH(256 * i,0,256,128));
+			SpriteBatch.Draw(*banner_status, banner_position + Vector3(0, 74, 0), RectWH(256 * (SceneManager::Instance().GetPlayerTexture(tag) - 1 ),0,256,128));
 			if (_i_player_data->GetStatusTag(tag) == ITEM_PLAYER_SPEEDUP)
 			{
 				SpriteBatch.Draw(*item_icon, banner_position + Vector3(30, 130, 0), RectWH(0, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
@@ -171,16 +171,16 @@ void PlayerUi::Draw2D()
 	//! 一位のとき
 	if (_i_player_data->GetRankNum(tag) + 1 == 1)
 	{
-		SpriteBatch.Draw(*joy_icon, banner_position + Vector3((10 * 1.5) + 80, -64 * 1.f, -1), RectWH(player_index * 128, 0, 128, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.f);
+		SpriteBatch.Draw(*joy_icon, banner_position + Vector3((10 * 1.5) + 80, -64 * 1.f, -1), RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.f);
 	}
 	else
 	{
-		SpriteBatch.Draw(*normal_icon, banner_position + Vector3((10 * 1.2) + 100, -64 * 1.2, -1), RectWH(player_index * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.2f);
+		SpriteBatch.Draw(*joy_icon, banner_position + Vector3((10 * 1.2) + 100, -64 * 1.2, -1), RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 128, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.2f);
 	}
 	SpriteBatch.Draw(*ranking, player_pos + Vector3(-50 * 0.7, (-128 - 40) * 0.7, 0), RectWH((_i_player_data->GetRankNum(tag)) * 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
 	//! 開始十秒後に順位表示
-	if (seconds < ranking_timer) {
-
+	if (seconds < 10) {
+		
 	}
 }
 

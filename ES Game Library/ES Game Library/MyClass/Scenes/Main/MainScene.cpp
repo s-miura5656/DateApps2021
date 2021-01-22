@@ -64,11 +64,15 @@ int MainScene::Update()
 {
 
 	MainCamera::Instance().Update();
-	if (TimeManager::Instance().StartFlag() && TimeManager::Instance().GetTransitionTimer() <= 0)
+	if (TimeManager::Instance().StartFlag() && TimeManager::Instance().GetTransitionTimer() <= 0 && TimeManager::Instance().GetTimeLeft() > 30)
 	{
 		AudioManager::Instance().MainBgmPlay();
 	}
-
+	if (TimeManager::Instance().GetTimeLeft() < 30)
+	{
+		AudioManager::Instance().MainBgmStop();
+		AudioManager::Instance().SpeedUpMainBgmPlay();
+	}
 	if (TimeManager::Instance().GetTransitionTimer() <= 0)
 	{
 		auto _temporary_managers = _managers;
@@ -79,7 +83,7 @@ int MainScene::Update()
 	}
 	else
 	{
-		AudioManager::Instance().MainBgmStop();
+		AudioManager::Instance().SpeedUpMainBgmStop();
 		AudioManager::Instance().GameEndWhistlePlay();
 		_managers[3]->Update();
 	}
