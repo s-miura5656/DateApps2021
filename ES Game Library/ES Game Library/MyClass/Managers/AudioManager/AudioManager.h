@@ -23,7 +23,7 @@ public:
 	void ExplosionPlay();
 	//!パワーアップアイテム取得音
 	void PowerUpPlay();
-	//! パワーダウン取得音
+	//! スカアイテム音
 	void PowerDownPlay();
 	//! サンダー取得音
 	void ThunderPlay();

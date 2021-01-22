@@ -190,14 +190,18 @@ void PlayerBase::GetItem(ItemBase* item, string item_tag)
 {
 	auto effect = item->GetEffect();
 	_status_tag = item_tag;
-	if(_status_tag == ITEM_PLAYER_SPEEDUP)
+	if (_status_tag == ITEM_PLAYER_SPEEDUP)
+	{
 		AudioManager::Instance().PowerUpPlay();
-	else if(_status_tag == ITEM_ARM_SPEEDUP)
+	}
+	else if (_status_tag == ITEM_ARM_SPEEDUP)
+	{
 		AudioManager::Instance().PowerUpPlay();
-	else if (_status_tag == ITEM_POWERDOWN)
-		AudioManager::Instance().PowerDownPlay();
+	}
 	else if (_status_tag == ITEM_THUNDER)
+	{
 		AudioManager::Instance().ThunderPlay();
+	}
 	_i_player_data->SetStatusTag(_tag, _status_tag);
 	_i_player_data->SetSpeed(_tag, effect._player_speed);
 	_i_arm_Data->SetGoSpeed(_arm_tag, effect._arm_speed);

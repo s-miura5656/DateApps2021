@@ -45,7 +45,7 @@ int ArmBase::Update()
 	if (_arm_state == ArmEnum::PunchState::PUNCH)
 	{
 		//! アームの最大距離の判定
-		if (_angle_positions.size() >= _i_arm_Data->GetLimitRange(_tag))
+		if (_angle_positions.size() >= _i_arm_Data->GetLimitRange(_tag) && _i_player_data->GetStatusTag(_player_tag) != ITEM_ARM_SPEEDUP)
 		{
 			_wait_count++;
 
@@ -141,9 +141,12 @@ void ArmBase::Draw3D()
 	rotation.y += 180;
 	_shot_effect->SetRotation(rotation);
 	_shot_effect->SetScale(8.0 - (0.8f * (_wires.size() + 1)));
+	if (_i_player_data->GetStatusTag(_player_tag) == ITEM_ARM_SPEEDUP)
+		_shot_effect->SetScale(12.0f);
 	_shot_effect->Draw();
 
 	auto limitrange = (int)_i_arm_Data->GetLimitRange(_tag) / 3;
+
 	for (int i = 0; i < _wires.size(); i++)
 	{
 		if (_wires.size() > limitrange * 2)
@@ -165,6 +168,30 @@ void ArmBase::Draw3D()
 	//! ワイヤーモデルの描画
 	for (auto& wire : _wires)
 	{
+		if (_i_player_data->GetStatusTag(_player_tag) == ITEM_ARM_SPEEDUP)
+		{
+			if (Rainbow_wire >= 3)
+			{
+				Rainbow_wire = 0;
+			}
+			switch (Rainbow_wire)
+			{
+			case 0:
+				for (int i = 0; i < _wires.size(); i++)
+					_wires[i]->SetColor(Color(255, 0, 0));
+				break;
+			case 1:
+				for (int i = 0; i < _wires.size(); i++)
+					_wires[i]->SetColor(Color(0, 255, 0));
+				break;
+			case 2:
+				for (int i = 0; i < _wires.size(); i++)
+					_wires[i]->SetColor(Color(0, 0, 255));
+				break;
+			}
+			Rainbow_wire++;
+			wire->SetScale(1.5f);
+		}
 		wire->Draw3D();
 	}
 }
@@ -427,7 +454,14 @@ void ArmBase::ChangeDirection(BaseInput* pad)
 
 void ArmBase::CreateWire()
 {
-	if (_angle_positions.size() < _i_arm_Data->GetLimitRange(_tag) - 1)
+	if (_i_player_data->GetStatusTag(_player_tag) == ITEM_ARM_SPEEDUP)
+	{
+		Transform transform = _transform;
+		transform.rotation.y = _new_angle;
+		_wires.push_back(std::make_unique<Wire>(transform));
+		_wires.rbegin()->get()->Initialize();
+	}
+	else if (_angle_positions.size() < _i_arm_Data->GetLimitRange(_tag) - 1)
 	{
 		Transform transform = _transform;
 		transform.rotation.y = _new_angle;

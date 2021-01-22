@@ -2,6 +2,7 @@
 #include "../../Data/WordsTable.h"
 #include "../../Players/PlayerBase.h"
 #include "../../Scenes/Main/Camera/MainCamera.h"
+#include "../../Managers/AudioManager/AudioManager.h"
 SpeedItem::SpeedItem(Vector3 position, std::string name)
 {
 	this->_position = position;
@@ -12,7 +13,6 @@ SpeedItem::SpeedItem(Vector3 position, std::string name)
 	_i_player_data = new IPrayerData;
 	_i_arm_data = new IArmData;
 	_map_data = new IMapData;
-
 	_effect_time = POWERUP_TIME;
 	_player_speed = 0.05;
 	_arm_speed = 0.1;
@@ -71,24 +71,18 @@ int SpeedItem::Update()
 			case 0:
 				if (items_probability >= 34)
 					status_name = ITEM_PLAYER_SPEEDUP;
-				else
-					status_name = ITEM_POWERDOWN;
 				break;
 			case 1:
 				if (items_probability >= 77)
 					status_name = ITEM_PLAYER_SPEEDUP;
 				else if (items_probability >= 34)
 					status_name = ITEM_ARM_SPEEDUP;
-				else
-					status_name = ITEM_POWERDOWN;
 				break;
 			case 2:
 				if (items_probability >= 77)
 					status_name = ITEM_PLAYER_SPEEDUP;
 				else if (items_probability >= 34)
 					status_name = ITEM_ARM_SPEEDUP;
-				else
-					status_name = ITEM_POWERDOWN;
 				break;
 			case 3:
 				if (items_probability >= 50)
@@ -102,12 +96,12 @@ int SpeedItem::Update()
 			if (status_name == ITEM_PLAYER_SPEEDUP)
 				_player_speed = 0.09;
 			else if (status_name == ITEM_ARM_SPEEDUP)
-				_arm_speed = 0.3;
-			else if(status_name == ITEM_POWERDOWN)
+				_arm_speed = 0.15;
+			else if(status_name == "")
 			{
-				_effect_time = POWERDOWN_TIME;
-				_player_speed = 0.03;
+				AudioManager::Instance().PowerDownPlay();
 			}
+			status_name = ITEM_THUNDER;
 			if (status_name == ITEM_THUNDER)
 			{
 				_player_speed = 0.01;
@@ -124,7 +118,7 @@ int SpeedItem::Update()
 				}
 				MainCamera::Instance().TimeReset();
 			}
-			else
+			else if(status_name != "")
 			{
 				_hit_box->GetHitBoxTag(name)->GetPlayerBase()->GetItem(this, status_name);
 			}

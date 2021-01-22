@@ -88,6 +88,9 @@ protected:
 	Material _model_material;
 
 	const float offset_y = 0.5f;
+
+	//!
+	int Rainbow_wire = 0;
 private:
 	void Move(BaseInput* pad);
 	void InputMoveDirection(BaseInput* pad);
