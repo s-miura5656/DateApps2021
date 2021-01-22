@@ -101,7 +101,6 @@ int SpeedItem::Update()
 			{
 				AudioManager::Instance().PowerDownPlay();
 			}
-			status_name = ITEM_THUNDER;
 			if (status_name == ITEM_THUNDER)
 			{
 				_player_speed = 0.01;
