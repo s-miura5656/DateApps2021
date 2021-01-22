@@ -68,7 +68,7 @@ int MainScene::Update()
 	{
 		AudioManager::Instance().MainBgmPlay();
 	}
-	if (TimeManager::Instance().GetTimeLeft() < 30)
+	if (TimeManager::Instance().GetTimeLeft() < 30 && TimeManager::Instance().GetTransitionTimer() <= 0)
 	{
 		AudioManager::Instance().MainBgmStop();
 		AudioManager::Instance().SpeedUpMainBgmPlay();

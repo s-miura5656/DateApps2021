@@ -53,7 +53,7 @@ private:
 	bool _left_arrow_flag[PLAYER_COUNT_MAX];
 	bool _right_arrow_flag[PLAYER_COUNT_MAX];
 	bool _select_complete_flag[PLAYER_COUNT_MAX];
-	bool _game_start_flag = true;
+	bool _game_start_flag = false;
 	bool _player_rotation_flag[PLAYER_COUNT_MAX];
 
 	enum
