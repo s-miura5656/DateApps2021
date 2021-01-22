@@ -74,7 +74,15 @@ int SpeedItem::Update()
 				else
 					status_name = ITEM_POWERDOWN;
 				break;
-			case 1 || 2:
+			case 1:
+				if (items_probability >= 77)
+					status_name = ITEM_PLAYER_SPEEDUP;
+				else if (items_probability >= 34)
+					status_name = ITEM_ARM_SPEEDUP;
+				else
+					status_name = ITEM_POWERDOWN;
+				break;
+			case 2:
 				if (items_probability >= 77)
 					status_name = ITEM_PLAYER_SPEEDUP;
 				else if (items_probability >= 34)

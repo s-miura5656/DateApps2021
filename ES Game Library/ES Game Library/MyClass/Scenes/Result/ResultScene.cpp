@@ -84,7 +84,7 @@ bool ResultScene::Initialize()
 	_player_model->SetPosition(Vector3(-5, -3, 0));
 	_player_model->SetRotation(0, 180, 0);
 	_player_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
-	_player_model->SetTrackEnable(1, TRUE);
+	_player_model->SetTrackEnable(5, TRUE);
 
 	//!プレイヤーモデルのスケールの設定
 	_player_model_big_scale   = 1.0;
@@ -168,7 +168,7 @@ void ResultScene::Draw3D()
 	_shader->SetTexture("m_Texture", * _texture);
 	_shader->SetParameter("vp", vp);
 	_shader->SetTechnique("UnlitAnimationModel");
-	_player_model->SetTrackPosition(1, _animation_count);
+	_player_model->SetTrackPosition(5, _animation_count);
 	_animation_count += GameTimer.GetElapsedSecond();
 	_player_model->Draw(_shader);
 }
