@@ -130,7 +130,7 @@ void PlayerUi::Draw2D()
 			else if (_i_player_data->GetStatusTag(tag) == ITEM_THUNDER)
 			{
 				SpriteBatch.Draw(*item_icon, banner_position + Vector3(30, 130, 0), RectWH(192, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
-				SpriteBatch.DrawString(player_font, _T("THUNDER"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140),
+				SpriteBatch.DrawString(player_font, _T("びりびり状態"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140),
 					Color(255, 255, 255), Vector2(0.4, 0.4), Vector3(0, 0, 0), Vector3(0, 0, 0));
 			}
 			break;
@@ -177,10 +177,10 @@ void PlayerUi::Draw2D()
 	{
 		SpriteBatch.Draw(*joy_icon, banner_position + Vector3( 80, -125*1.1f, -1), RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 128, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.1f);
 	}
-	SpriteBatch.Draw(*ranking, player_pos + Vector3(-50 * 0.7, (-128 - 40) * 0.7, 0), RectWH((_i_player_data->GetRankNum(tag)) * 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+	
 	//! 開始十秒後に順位表示
-	if (seconds < 10) {
-		
+	if (seconds > 10) {
+		SpriteBatch.Draw(*ranking, player_pos + Vector3(-50 * 0.7, (-128 - 40) * 0.7, 0), RectWH((_i_player_data->GetRankNum(tag)) * 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
 	}
 }
 
@@ -260,7 +260,7 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 
 		//!  playerの座標に入手したポイントがたどり着いたとき 3p & 4p
 		if (player_index == 2 || player_index == 3) {
-			if (pointAnimation[i].position.y <= player_num.y + 3) {
+			if (pointAnimation[i].position.y <= player_num.y - 3) {
 				add_point += pointAnimation[i].point;
 				_font_size = 0.6 + ((float)(add_point - score) / (float)1000);
 				delta_point = (add_point - score) / GameTimer.GetFPS() * 4;

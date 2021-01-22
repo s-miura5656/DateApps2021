@@ -184,6 +184,19 @@ int SelectScene::Update()
 			//}
 		}
 	}
+
+	//!デバッグ
+	KeyboardState key = Keyboard->GetState();
+	if (key.IsKeyDown(Keys_Enter))
+	{
+		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+		{
+			std::string tag = PLAYER_TAG + to_string(i + 1);
+			SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
+		}
+		SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
+	}
+
 	if (_select_complete_flag[0] && _select_complete_flag[1] && _select_complete_flag[2] && _select_complete_flag[3])
 	{
 		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
