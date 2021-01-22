@@ -176,6 +176,9 @@ int SelectScene::Update()
 		{
 			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
+
+			if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
+				_game_start_flag = false;
 		}
 	}
 
@@ -188,8 +191,7 @@ int SelectScene::Update()
 			std::string tag = PLAYER_TAG + to_string(i + 1);
 			SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
 		}
-		//SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
-		_game_start_flag = true;
+		SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
 	}
 
 	if (_select_complete_flag[0] && _select_complete_flag[1] && _select_complete_flag[2] && _select_complete_flag[3])
