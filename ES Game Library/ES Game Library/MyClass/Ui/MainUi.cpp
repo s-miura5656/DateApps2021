@@ -51,6 +51,12 @@ bool MainUi::Initialize()
 	end_a = 1.0f;
 	font_size_e = 1.0f;
 
+	start_size = 1.0f;
+	start_a = 1.0f;
+	finsh_size = 1.0f;
+	finsh_a = 1.0f;
+	a_and_e = false;
+
 	score_pos[0] = Vector2(100, 40);
 	score_pos[1] = Vector2(320, 40);
 	score_pos[2] = Vector2(800, 40);
@@ -120,6 +126,31 @@ int MainUi::Update()
 	if (Countdown < 0) {
 		s_or_e = true;
 	}
+
+	if (Countdown == 0) {
+		a_and_e = true;
+	}
+	
+	//! S T A R T　のとき
+	if (a_and_e == true) {
+		start_size += 0.02f;
+	}
+	if (start_size >=1.2) {
+		start_a -= 0.02f;
+	}
+	if (start_a <= 0) {
+		start_a = 1.0f;
+		start_a = 1.0f;
+		a_and_e = false;
+	}
+
+	//! F I N S H のとき
+	if (TimeManager::Instance().GetTransitionTimer() > 0 && finsh_size <= 1.2f) {
+		finsh_size += 0.02f;
+	}
+	
+	
+
 
 	//! カウントダウンサイズのリセット
 	if (start_time == 180 || start_time == 120 || start_time == 60 || start_time == 0) {
@@ -230,13 +261,13 @@ void MainUi::Draw2D()
 	//! スタート描写
 	if (Countdown == 0) 
 	{
-		SpriteBatch.Draw(*start_end, Vector3(450, 340, 0), start_end_rect[s_or_e], (DWORD)White, Vector3(0, 0, 0), Vector3(192, 32, 0), 1.0f);
+		SpriteBatch.Draw(*start_end, Vector3(450, 340, 0), start_end_rect[s_or_e], start_a, Vector3(0, 0, 0), Vector3(192, 32, 0), start_size);
 	}
-
+	
 	//! 終了
 	if (TimeManager::Instance().GetTransitionTimer() > 0)
 	{
-		SpriteBatch.Draw(*start_end, Vector3(450, 340, 0), start_end_rect[s_or_e], (DWORD)White, Vector3(0, 0, 0), Vector3(192, 32, 0), 1.0f);
+		SpriteBatch.Draw(*start_end, Vector3(450, 340, 0), start_end_rect[s_or_e], finsh_a, Vector3(0, 0, 0), Vector3(192, 32, 0), finsh_size);
 	}
 	else if ((minutes == 0 && tens == 0) && ones <= 3)
 	{
