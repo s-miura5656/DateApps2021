@@ -54,7 +54,11 @@ public:
 	SPRITE number_sprite;//数字
 	RectWH number[11];
 
-	Color Danger;
+	SPRITE start_end;
+	bool s_or_e;
+	RectWH start_end_rect[2];
+
+	Color Danger;//赤点滅
 	bool Blinking;
 	int r, g, b;
 
@@ -63,12 +67,13 @@ public:
 	bool time_size_pp;
 	bool time_size_flag;
 
-
 	Color black;//黒
 	Color White;//白
 
 	FONT time_limit_font;
 	Vector3 Countdown_pos;
+	float cout_size;
+	int rt;
 
 	FONT back_count;
 	FONT front_count;
@@ -76,4 +81,14 @@ public:
 	int move_flag;
 	float font_size;
 	bool time_limit_decreasing;
+
+	int old_time;
+	float end_a;
+	float font_size_e;
+	//S T A R T !!とF I N S H !!
+	float start_size;
+	float start_a;
+	float finsh_size;
+	float finsh_a;
+	bool a_and_e;
 };

@@ -20,20 +20,20 @@ MainUi::~MainUi()
 
 bool MainUi::Initialize()
 {
-
 	//!file
-	time_limit_font   = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 50);
-	back_count        = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 95);
-	front_count       = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 90);
+	time_limit_font = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 50);
+	back_count = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 95);
+	front_count = ResouceManager::Instance().LordFontFile(_T("チェックアンドU-Foフォント"), 90);
 
-	time_banner       = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/time_2.png"));
-	number_sprite     = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber.png"));
+	time_banner = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/time_2.png"));
+	number_sprite = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber.png"));
+	start_end         = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/Start_finish.png"));
 
 	time_banner_pos = Vector3(640 - 125, 10, 1);
-	minutes_pos     = Vector3(530, 20, 0);
-	tens_place_pos  = Vector3(630, 20, 0);
-	ones_place_pos  = Vector3(690, 20, 0);
-	colon_pos       = Vector3(580, 20, 0);
+	minutes_pos = Vector3(530, 20, 0);
+	tens_place_pos = Vector3(630, 20, 0);
+	ones_place_pos = Vector3(690, 20, 0);
+	colon_pos = Vector3(580, 20, 0);
 
 	/*minutes_pos_v2_w    = Vector2(543, 23) + Vector2(0,100);
 	tens_place_pos_v2_w = Vector2(633, 23) + Vector2(0, 100);
@@ -43,25 +43,32 @@ bool MainUi::Initialize()
 	tens_place_pos_v2_b = Vector2(630, 20) + Vector2(0, 100);
 	ones_place_pos_v2_b = Vector2(680, 20) + Vector2(0, 100);*/
 
-	Countdown_pos   = Vector3(605, 345, 0);
+	Countdown_pos = Vector3(605, 345, -2000);
+	cout_size = 1.0f;
+	rt = 0;
+	s_or_e = false;
+	old_time = 0;
+	end_a = 1.0f;
+	font_size_e = 1.0f;
 
-	score_pos[0] = Vector2( 100,   40);
-	score_pos[1] = Vector2( 320,   40);
-	score_pos[2] = Vector2( 800,   40);
-	score_pos[3] = Vector2(1020,   40);
-	
-	speed_ui_pos[0] = Vector2(  10,  60);
-	speed_ui_pos[1] = Vector2(1025,  60);
-	speed_ui_pos[2] = Vector2(  10, 680);
+	start_size = 1.0f;
+	start_a = 1.0f;
+	finsh_size = 1.0f;
+	finsh_a = 1.0f;
+	a_and_e = false;
+
+	score_pos[0] = Vector2(100, 40);
+	score_pos[1] = Vector2(320, 40);
+	score_pos[2] = Vector2(800, 40);
+	score_pos[3] = Vector2(1020, 40);
+
+	speed_ui_pos[0] = Vector2(10, 60);
+	speed_ui_pos[1] = Vector2(1025, 60);
+	speed_ui_pos[2] = Vector2(10, 680);
 	speed_ui_pos[3] = Vector2(1025, 680);
 
-	/*color[0] = Color(255,   0,   0);
-	color[1] = Color(  0,   0, 255);
-	color[2] = Color(255, 255,   0);
-	color[3] = Color(  0, 255,   0);*/
-
-	black    = Color(0.f, 0.f, 0.f);
-	White    = Color(1.f, 1.f, 1.f);
+	black = Color(0.f, 0.f, 0.f);
+	White = Color(1.f, 1.f, 1.f);
 
 	time_size_pp = false;
 	time_limit_decreasing = false;
@@ -73,6 +80,11 @@ bool MainUi::Initialize()
 	for (int i = 0; i < _countof(number); i++)
 	{
 		number[i] = RectWH(i * 64, 0, 64, 64);
+	}
+
+	for (int i = 0; i < _countof(start_end_rect); i++) 
+	{
+		start_end_rect[i] = RectWH(i * 384, 0, 384, 64);
 	}
 
 	Danger = Color(255, 255, 255);
@@ -102,24 +114,89 @@ bool MainUi::Initialize()
 
 int MainUi::Update()
 {
-
 	for (auto&& pui : player_ui)
 		pui->Update();
 
-	int time_limit = TimeManager::Instance().GetTimeLeft();
+	float time_limit_f = TimeManager::Instance().GetTimeLeft();
+	int time_limit     = TimeManager::Instance().GetTimeLeft();
+	float start_time   = TimeManager::Instance().GetStartTime();
+	int Countdown      = TimeManager::Instance().Countdown();
 
+	//! S T A R T !!とF I N S H !!　の切り替え
+	if (Countdown < 0) {
+		s_or_e = true;
+	}
+
+	if (Countdown == 0) {
+		a_and_e = true;
+	}
+	
+	//! S T A R T　のとき
+	if (a_and_e == true) {
+		start_size += 0.02f;
+	}
+	if (start_size >=1.2) {
+		start_a -= 0.02f;
+	}
+	if (start_a <= 0) {
+		start_a = 1.0f;
+		start_a = 1.0f;
+		a_and_e = false;
+	}
+
+	//! F I N S H のとき
+	if (TimeManager::Instance().GetTransitionTimer() > 0 && finsh_size <= 1.2f) {
+		finsh_size += 0.02f;
+	}
+	
+	
+
+
+	//! カウントダウンサイズのリセット
+	if (start_time == 180 || start_time == 120 || start_time == 60 || start_time == 0) {
+		cout_size = 1.0f;
+		rt = 0;
+	}
+
+	//! カウントダウンの回転と縮小
+	if (start_time <= 30.0f && Countdown == 1) {
+		rt += 11;
+		cout_size -= 0.04;
+	}
+	else if (start_time <= 90.0f && Countdown == 2) {
+		rt += 11;
+		cout_size -= 0.04;
+	}
+	else if (start_time <= 150.0f && Countdown == 3) {
+		rt += 11;
+		cout_size -= 0.04;
+	}
+	
+	//! 終了カウントダウンリセット
+	if (old_time != time_limit) {
+		font_size_e = 1.0;
+		end_a = 1.0f;
+	}
+	//! 終了カウントダウンの拡大
+	for (int i = 1; i < 4; i++)
+	{
+		if (time_limit == i) {
+			font_size_e += 0.02;
+			end_a -= 0.01;
+			old_time = i;
+		}
+	}
+	
+	//! 60秒になったらタイマーの拡大
 	if (time_limit == 60) {
 		time_limit_decreasing = true;
 	}
-
 	if (time_limit_decreasing == true && font_size <= 1.5) {
 		font_size += time_size_up;
 	}
-
 	if (font_size >= 1.5) {
 		time_limit_decreasing = false;
 	}
-
 	if (font_size >= 0.8 && time_limit_decreasing == false) {
 		font_size -= time_size_down;
 	}
@@ -150,9 +227,10 @@ void MainUi::Draw2D()
 	for (auto& pui : player_ui)
 		pui->Draw2D();
 
-	float test = TimeManager::Instance().GetTimeLeft();
+	float time_limit_f = TimeManager::Instance().GetTimeLeft();
+	int time_limit = TimeManager::Instance().GetTimeLeft();
 	int minutes   = TimeManager::Instance().GetTimeMinutes();
-	int seconds   = TimeManager::Instance().GetTimeSeconds();
+	//int seconds   = TimeManager::Instance().GetTimeSeconds();
 	int ones      = TimeManager::Instance().GetTimeOnesPlace();
 	int tens      = TimeManager::Instance().GetTimeTensPlace();
 	int Countdown = TimeManager::Instance().Countdown();
@@ -171,34 +249,29 @@ void MainUi::Draw2D()
 	SpriteBatch.DrawString(time_limit_font, tens_place_pos_v2_w, White, Vector2(1.0f, 1.0f), Vector3(0, 0, 0), Vector3(0, 0, 0), _T("%d"), tens);
 	SpriteBatch.DrawString(time_limit_font, ones_place_pos_v2_w, White, Vector2(1.0f, 1.0f), Vector3(0, 0, 0), Vector3(0, 0, 0), _T("%d"), ones);*/
 
+	SpriteBatch.DrawString(time_limit_font, Vector2(0, 0), (DWORD)White, _T("%f"), time_limit_f);
 	SpriteBatch.Draw(*time_banner, time_banner_pos);
 
 	//! カウントダウン描写
 	if (Start > 0)
 	{
-		SpriteBatch.Draw(*number_sprite, Countdown_pos, number[Countdown]);
+		SpriteBatch.Draw(*number_sprite, Countdown_pos, number[Countdown], (DWORD)White, Vector3(0, 0, rt), Vector3( 32, 32, 0), cout_size);
 	}
 
-	//! スタート描写（影）
+	//! スタート描写
 	if (Countdown == 0) 
 	{
-		SpriteBatch.DrawString(back_count , Vector2(487, 340), black, _T("S T A R T !!"));
+		SpriteBatch.Draw(*start_end, Vector3(450, 340, 0), start_end_rect[s_or_e], start_a, Vector3(0, 0, 0), Vector3(192, 32, 0), start_size);
 	}
-
-	//! スタート描写（手前の文字）
-	if (Countdown == 0) 
-	{
-		SpriteBatch.DrawString(front_count, Vector2(500, 340), White, _T("S T A R T !!"));
-	}
-
+	
 	//! 終了
 	if (TimeManager::Instance().GetTransitionTimer() > 0)
 	{
-		SpriteBatch.DrawString(front_count, Vector2(500, 340), White, _T("F I N S H !!"));
+		SpriteBatch.Draw(*start_end, Vector3(450, 340, 0), start_end_rect[s_or_e], finsh_a, Vector3(0, 0, 0), Vector3(192, 32, 0), finsh_size);
 	}
 	else if ((minutes == 0 && tens == 0) && ones <= 3)
 	{
-		SpriteBatch.Draw(*number_sprite, Countdown_pos, number[ones]);
+		SpriteBatch.Draw(*number_sprite, Countdown_pos, number[ones], end_a, Vector3(0, 0, 0), Vector3(32, 32, 0), font_size_e);
 	}
 
 
