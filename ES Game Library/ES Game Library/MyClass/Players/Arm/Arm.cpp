@@ -93,7 +93,8 @@ bool Arm::Initialize()
 	_turn_flag = false;
 
 	//! texture
-	auto path = ConvertFilePath("Player/", _tag, ".png");
+	std::string arm_number = ARM_TAG + to_string(SceneManager::Instance().GetPlayerTexture(_player_tag));
+	auto path = ConvertFilePath("Player/Arm_texture/", arm_number, ".png");
 	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 
 	//! shader

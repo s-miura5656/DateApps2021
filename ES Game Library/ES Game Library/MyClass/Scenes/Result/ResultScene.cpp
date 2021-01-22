@@ -37,31 +37,17 @@ bool ResultScene::Initialize()
 	_player_model        = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 
 	//!ロボUI初期設定
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	std::string first_name = PLAYER_TAG + to_string(GetRankNum(0));
+	std::string player_number = PLAYER_TAG + to_string(SceneManager::Instance().GetPlayerTexture(first_name));
+	auto path = ConvertFilePath("Player/", player_number, ".png");
+	_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
+
+	for (int i = 1; i < PLAYER_COUNT_MAX; i++)
 	{
-		std::string tag = PLAYER_TAG + to_string(i + 1);
-		if (GetRankNum(i) == 1)
-		{
-			std::string player_number = PLAYER_TAG + to_string(SceneManager::Instance().GetPlayerTexture(tag));
-			auto path = ConvertFilePath("Player/", player_number, ".png");
-			_texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
-		}
-		else
-		{
-			switch (GetRankNum(i))
-			{
-			case 2:
-				_player_rectwh.push_back(128 * (SceneManager::Instance().GetPlayerTexture(tag) - 1));
-				break;
-			case 3:
-				_player_rectwh.push_back(128 * (SceneManager::Instance().GetPlayerTexture(tag) - 1));
-				break;
-			case 4:
-				_player_rectwh.push_back(128 * (SceneManager::Instance().GetPlayerTexture(tag) - 1));
-				break;
-			}
-		}
+		std::string name = PLAYER_TAG + to_string(GetRankNum(i));
+		_player_rectwh.push_back(128 * (SceneManager::Instance().GetPlayerTexture(name) - 1));
 	}
+
 	//! material
 	Material material;
 	material.Diffuse  = Color(1.0f, 1.0f, 1.0f); // 陰影のグラデーション 明るい部分
