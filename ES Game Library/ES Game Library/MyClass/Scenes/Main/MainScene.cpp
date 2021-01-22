@@ -64,11 +64,11 @@ int MainScene::Update()
 {
 
 	MainCamera::Instance().Update();
-	if (TimeManager::Instance().StartFlag() && TimeManager::Instance().GetTransitionTimer() <= 0 && TimeManager::Instance().GetTimeLeft() > 30)
+	if (TimeManager::Instance().StartFlag() && TimeManager::Instance().GetTransitionTimer() <= 0 && TimeManager::Instance().GetTimeLeft() >= 31)
 	{
 		AudioManager::Instance().MainBgmPlay();
 	}
-	if (TimeManager::Instance().GetTimeLeft() < 30 && TimeManager::Instance().GetTransitionTimer() <= 0)
+	if (TimeManager::Instance().GetTimeLeft() <= 31 && TimeManager::Instance().GetTransitionTimer() <= 0)
 	{
 		AudioManager::Instance().MainBgmStop();
 		AudioManager::Instance().SpeedUpMainBgmPlay();

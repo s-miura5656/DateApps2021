@@ -84,6 +84,7 @@ bool SelectScene::Initialize()
 	SceneCamera::Instance().SetPerspectiveFieldOfView(57, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 
 	_player_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
+	_player_model->SetTrackEnable(0, TRUE);
 	return true;
 }
 

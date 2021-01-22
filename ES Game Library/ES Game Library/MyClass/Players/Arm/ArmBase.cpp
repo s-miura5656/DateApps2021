@@ -134,7 +134,7 @@ void ArmBase::Draw3D()
 	//! ヒットボックスの座標指定と描画
 	_hit_box->SetModelPosition();
 	_hit_box->SetModelScale();
-	_hit_box->Draw3D();
+	//_hit_box->Draw3D();
 
 	//! エフェクトの座標指定と描画
 	Vector3 rotation = _transform.rotation;
