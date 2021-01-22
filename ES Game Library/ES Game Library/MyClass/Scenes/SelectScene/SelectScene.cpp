@@ -124,6 +124,20 @@ int SelectScene::Update()
 
 			if (pad->Stick(STICK_INFO::LEFT_STICK).x != 0)
 			{
+				auto a = std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x);
+
+				if (a)
+				{
+					_left_arrow_flag[i] = false;
+					_right_arrow_flag[i] = true;
+				}
+				else
+				{
+					_right_arrow_flag[i] = false;
+					_left_arrow_flag[i] = true;
+				}
+
+
 				// スティック倒して一定時間で次のカラーへ
 				_select_count[i]++;
 
@@ -135,6 +149,10 @@ int SelectScene::Update()
 
 					_select_count[i] = 0;
 				}
+			}
+			else
+			{
+               
 			}
 		}
 
@@ -154,7 +172,7 @@ int SelectScene::Update()
 		}
 
 		//! プレイヤー全員の選択が終わったらフラグで判断してメインシーンへ
-		if (_game_start_flag)
+		/*if (_game_start_flag)
 		{
 			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 			{
@@ -165,7 +183,7 @@ int SelectScene::Update()
 				}
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
 			}
-		}
+		}*/
 	}
 
 	return 0;
@@ -283,7 +301,7 @@ void SelectScene::ColorSelect(int player_number, BaseInput* pad)
 		else
 		{
 			_textures[_chara_select[player_number]]->SetFlag(true);
-			_left_arrow_flag[player_number] = false;
+			//_left_arrow_flag[player_number] = false;
 			break;
 		}
 	}
