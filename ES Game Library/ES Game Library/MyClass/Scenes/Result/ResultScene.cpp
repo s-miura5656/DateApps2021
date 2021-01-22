@@ -36,11 +36,10 @@ bool ResultScene::Initialize()
 	_shader  	         = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
 	_player_model        = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 
-	//!
+	//!ƒƒ{UI‰Šúİ’è
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string tag = PLAYER_TAG + to_string(i + 1);
-
 		if (GetRankNum(i) == 1)
 		{
 			std::string player_number = PLAYER_TAG + to_string(SceneManager::Instance().GetPlayerTexture(tag));
@@ -49,6 +48,18 @@ bool ResultScene::Initialize()
 		}
 		else
 		{
+			switch (GetRankNum(i))
+			{
+			case 2:
+				_player_rectwh.push_back(128 * (SceneManager::Instance().GetPlayerTexture(tag) - 1));
+				break;
+			case 3:
+				_player_rectwh.push_back(128 * (SceneManager::Instance().GetPlayerTexture(tag) - 1));
+				break;
+			case 4:
+				_player_rectwh.push_back(128 * (SceneManager::Instance().GetPlayerTexture(tag) - 1));
+				break;
+			}
 		}
 	}
 	//! material
@@ -142,7 +153,7 @@ void ResultScene::Draw2D()
 
 	for (int i = 0; i < PLAYER_COUNT_MAX - 1; i++)
 	{
-		SpriteBatch.Draw(*_robot_fece, Vector3(850, 120 + 205 * i, 10000),RectWH(128 * i,0, 128,128));
+		SpriteBatch.Draw(*_robot_fece, Vector3(850, 120 + 205 * i, 10000),RectWH(_player_rectwh[i],0, 128,128));
 		SpriteBatch.DrawString(_font, Vector2(980, 170 + 210 * (i)), Color(255, 0, 0), _T("%dpt"), GetPoints(i + 1));
 	}
 }

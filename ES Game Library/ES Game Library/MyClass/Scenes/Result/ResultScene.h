@@ -55,4 +55,5 @@ private:
 	Vector3               _background_position;
 	Vector3               _totitle_position;
 	std::vector<Vector3>  _player_rank_num_position;
+	std::vector<int>      _player_rectwh;
 };
