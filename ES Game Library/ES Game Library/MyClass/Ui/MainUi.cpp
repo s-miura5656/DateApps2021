@@ -150,9 +150,6 @@ int MainUi::Update()
 		finsh_size += 0.02f;
 	}
 	
-	
-
-
 	//! カウントダウンサイズのリセット
 	if (start_time == 180 || start_time == 120 || start_time == 60 || start_time == 0) {
 		cout_size = 1.0f;
@@ -250,7 +247,6 @@ void MainUi::Draw2D()
 	SpriteBatch.DrawString(time_limit_font, tens_place_pos_v2_w, White, Vector2(1.0f, 1.0f), Vector3(0, 0, 0), Vector3(0, 0, 0), _T("%d"), tens);
 	SpriteBatch.DrawString(time_limit_font, ones_place_pos_v2_w, White, Vector2(1.0f, 1.0f), Vector3(0, 0, 0), Vector3(0, 0, 0), _T("%d"), ones);*/
 
-	SpriteBatch.DrawString(time_limit_font, Vector2(0, 0), (DWORD)White, _T("%f"), time_limit_f);
 	SpriteBatch.Draw(*time_banner, time_banner_pos);
 
 	//! カウントダウン描写
