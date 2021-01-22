@@ -26,7 +26,7 @@ bool PlayerUi::Initialize(const Vector3& banner_pos, RectWH banner_rectWH)
 	banner_rw = banner_rectWH;
 	banner_status = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/status.png"));
 	item_icon = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/item_.png"));
-	joy_icon = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/icon01_.png"));
+	joy_icon = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/player0122.png"));
 	normal_icon = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/icon02_.png"));
 
 	ranking = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/runking.png"));
@@ -171,11 +171,11 @@ void PlayerUi::Draw2D()
 	//! 一位のとき
 	if (_i_player_data->GetRankNum(tag) + 1 == 1)
 	{
-		SpriteBatch.Draw(*joy_icon, banner_position + Vector3((10 * 1.5) + 80, -64 * 1.f, -1), RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.f);
+		SpriteBatch.Draw(*joy_icon, banner_position + Vector3( 90, -123, -1), RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.f);
 	}
 	else
 	{
-		SpriteBatch.Draw(*joy_icon, banner_position + Vector3((10 * 1.2) + 100, -64 * 1.2, -1), RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 128, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.2f);
+		SpriteBatch.Draw(*joy_icon, banner_position + Vector3( 80, -125*1.1f, -1), RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 128, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.1f);
 	}
 	SpriteBatch.Draw(*ranking, player_pos + Vector3(-50 * 0.7, (-128 - 40) * 0.7, 0), RectWH((_i_player_data->GetRankNum(tag)) * 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
 	//! 開始十秒後に順位表示

@@ -85,7 +85,7 @@ public:
 	int old_time;
 	float end_a;
 	float font_size_e;
-	//S T A R T !!とF I N S H !!
+	
 	float start_size;
 	float start_a;
 	float finsh_size;
