@@ -35,6 +35,7 @@ bool SelectScene::Initialize()
 	_left_arrow_dark = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
 	_right_arrow = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
 	_right_arrow_dark = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
+	_dark_screen = ResouceManager::Instance().LordSpriteFile(_T("Select/dark_screen.png"));
 
 	SPRITE texture;
 
@@ -173,15 +174,11 @@ int SelectScene::Update()
 		//! プレイヤー全員の選択が終わったらフラグで判断してメインシーンへ
 		if (_game_start_flag)
 		{
-			//if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
-			//{
-			//	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-			//	{
-			//		std::string tag = PLAYER_TAG + to_string(i + 1);
-			//		SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
-			//	}
-			//	SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
-			//}
+			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
+
+			if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
+				_game_start_flag = false;
 		}
 	}
 
@@ -204,7 +201,8 @@ int SelectScene::Update()
 			std::string tag = PLAYER_TAG + to_string(i + 1);
 			SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
 		}
-		SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
+
+		_game_start_flag = true;
 	}
 	return 0;
 
@@ -238,6 +236,9 @@ void SelectScene::Draw2D()
 			SpriteBatch.Draw(*_right_arrow, player_num + Vector3(5, 50, 9000), RectWH(256 * 2, 0, 256, 512));
 		else
 			SpriteBatch.Draw(*_right_arrow_dark, player_num + Vector3(5, 50, 9000), RectWH(256 * 3, 0, 256, 512));
+
+		if(_game_start_flag)
+			SpriteBatch.Draw(*_dark_screen, Vector3(0, 0, 8000), 0.2f);
 	}
 }
 

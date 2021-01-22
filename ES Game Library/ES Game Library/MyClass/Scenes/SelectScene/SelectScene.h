@@ -36,11 +36,10 @@ private:
 	SPRITE _left_arrow_dark;
 	SPRITE _right_arrow;
 	SPRITE _right_arrow_dark;
+	SPRITE _dark_screen;
 	ANIMATIONMODEL _player_model;
 
 	std::vector<PlayerTexture*> _textures;
-	//int _banners[TEXTURE_MAX];
-
 
 	int _select_count[PLAYER_COUNT_MAX];
 
