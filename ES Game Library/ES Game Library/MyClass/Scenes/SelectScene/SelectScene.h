@@ -22,7 +22,7 @@ private:
 
 	void ColorSelect(int player_number, BaseInput* pad);
 
-	enum { TEXTURE_MAX = 7 };
+	enum { TEXTURE_MAX = 8 };
 
 	EFFECT _shader;
 	SPRITE _texture[TEXTURE_MAX];
@@ -39,9 +39,12 @@ private:
 	ANIMATIONMODEL _player_model;
 
 	std::vector<PlayerTexture*> _textures;
+	//int _banners[TEXTURE_MAX];
+
 
 	int _select_count[PLAYER_COUNT_MAX];
 
+	float _banner_color[PLAYER_COUNT_MAX];
 	int _chara_select_seve[PLAYER_COUNT_MAX];
 	int _chara_select[PLAYER_COUNT_MAX];
 	float _player_position[PLAYER_COUNT_MAX];
@@ -60,7 +63,8 @@ private:
 		GREEN,
 		YELLOW,
 		LIGHTBLUE,
-		PINK,
+		ORANGE,
+		LIGHTGREEN,
 		PURPLE
 	};
 };

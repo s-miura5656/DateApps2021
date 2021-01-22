@@ -23,18 +23,18 @@ SelectScene::~SelectScene()
 
 bool SelectScene::Initialize()
 {
-	_bg_sprite = ResouceManager::Instance().LordSpriteFile(_T("Select/screen.png"));
-	_banner = ResouceManager::Instance().LordSpriteFile(_T("Select/character_02.png"));
-	_button_ready = ResouceManager::Instance().LordSpriteFile(_T("Select/button_redy02.png"));
-	_button_go = ResouceManager::Instance().LordSpriteFile(_T("Select/button_go02.png"));
+	_bg_sprite = ResouceManager::Instance().LordSpriteFile(_T("Select/BG.png"));
+	_banner = ResouceManager::Instance().LordSpriteFile(_T("Select/character.png"));
+	_button_ready = ResouceManager::Instance().LordSpriteFile(_T("Select/ready_button.png"));
+	_button_go = ResouceManager::Instance().LordSpriteFile(_T("Select/ok_button.png"));
 	_player_model = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 	_shader       = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
-	_chara_frame = ResouceManager::Instance().LordSpriteFile(_T("Select/character_frame.png"));
-	_button_frame = ResouceManager::Instance().LordSpriteFile(_T("Select/button_frame.png"));
-	_left_arrow = ResouceManager::Instance().LordSpriteFile(_T("Select/left_arrow.png"));
-	_left_arrow_dark = ResouceManager::Instance().LordSpriteFile(_T("Select/left_arrow_dark.png"));
-	_right_arrow = ResouceManager::Instance().LordSpriteFile(_T("Select/right_arrow.png"));
-	_right_arrow_dark = ResouceManager::Instance().LordSpriteFile(_T("Select/right_arrow_dark.png"));
+	//_chara_frame = ResouceManager::Instance().LordSpriteFile(_T("Select/character_frame.png"));
+	//_button_frame = ResouceManager::Instance().LordSpriteFile(_T("Select/button_frame.png"));
+	_left_arrow = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
+	_left_arrow_dark = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
+	_right_arrow = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
+	_right_arrow_dark = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
 
 	SPRITE texture;
 
@@ -54,10 +54,10 @@ bool SelectScene::Initialize()
 		_select_complete_flag[i] = false;
 		_chara_select[i] = i;
 		_textures[i]->SetFlag(true);
-		_chara_select_seve[i] = i;
 		_player_rotation[i] = 180.0f;
 		_player_rotation_flag[i] = false;
 		_select_count[i] = 0;
+		_banner_color[i] = i;
 	}
 
 	_player_position[0] = -3;
@@ -144,23 +144,21 @@ int SelectScene::Update()
 				if (_select_count[i] >= 10)
 				{
 					_textures[_chara_select[i]]->SetFlag(false);
+			
 					std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _chara_select[i]-- : _chara_select[i]++;
+					std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _banner_color[i]-- : _banner_color[i]++;
 					ColorSelect(i, pad);
 
 					_select_count[i] = 0;
 				}
 			}
-			else
-			{
-               
-			}
 		}
 
-		if (_chara_select[i] > TEXTURE_MAX - 1)
-			_chara_select[i] = 0;
+		if (_banner_color[i] > TEXTURE_MAX - 1)
+			_banner_color[i] = 0;
 
-		if (_chara_select[i] < 0)
-			_chara_select[i] = TEXTURE_MAX - 1;
+		if (_banner_color[i] < 0)
+			_banner_color[i] = TEXTURE_MAX - 1;
 
 		// ƒJƒ‰[Ä‘I‘ð
 		if (_select_complete_flag[i])
@@ -197,27 +195,27 @@ void SelectScene::Draw2D()
 	{
 		auto player_num = GraphicsDevice.WorldToScreen(Vector3(_player_position[i], 0, 0));
 		player_num.x += 100 + 300 * i;
-		SpriteBatch.Draw(*_banner, player_num + Vector3(0, 150, 9000), 1.0f);
+		SpriteBatch.Draw(*_banner, player_num + Vector3(0, 85, 9000), RectWH(256 * _chara_select[i], 0, 256, 512));
 		if (!_select_complete_flag[i])
 		{
-			SpriteBatch.Draw(*_chara_frame, player_num + Vector3(0, 195, 9000), 1.0f);
-			SpriteBatch.Draw(*_button_ready, player_num + Vector3(0, 400, 9000), 1.0f);
+			//SpriteBatch.Draw(*_chara_frame, player_num + Vector3(0, 195, 9000), 1.0f);
+			SpriteBatch.Draw(*_button_ready, player_num + Vector3(1, 420, 9000), 1.0f);
 		}
 		else
 		{
-			SpriteBatch.Draw(*_button_frame, player_num + Vector3(0, 400, 9000), 1.0f);
-			SpriteBatch.Draw(*_button_go, player_num + Vector3(0, 400, 9000), 1.0f);
+			//SpriteBatch.Draw(*_button_frame, player_num + Vector3(0, 400, 9000), 1.0f);
+			SpriteBatch.Draw(*_button_go, player_num + Vector3(1, 420, 9000), 1.0f);
 		}
 
 		if (_left_arrow_flag[i])
-			SpriteBatch.Draw(*_left_arrow, player_num + Vector3(0, 195, 9000), 1.0f);
+			SpriteBatch.Draw(*_left_arrow, player_num + Vector3(-5, 50, 9000), RectWH(0, 0, 256, 512));
 		else
-			SpriteBatch.Draw(*_left_arrow_dark, player_num + Vector3(0, 195, 9000), 1.0f);
+			SpriteBatch.Draw(*_left_arrow_dark, player_num + Vector3(-5, 50, 9000), RectWH(256, 0, 256, 512));
 
 		if (_right_arrow_flag[i])
-			SpriteBatch.Draw(*_right_arrow, player_num + Vector3(0, 195, 9000), 1.0f);
+			SpriteBatch.Draw(*_right_arrow, player_num + Vector3(5, 50, 9000), RectWH(256 * 2, 0, 256, 512));
 		else
-			SpriteBatch.Draw(*_right_arrow_dark, player_num + Vector3(0, 195, 9000), 1.0f);
+			SpriteBatch.Draw(*_right_arrow_dark, player_num + Vector3(5, 50, 9000), RectWH(256 * 3, 0, 256, 512));
 	}
 }
 
@@ -250,8 +248,12 @@ void SelectScene::Draw3D()
 			_shader->SetTexture("m_Texture", *_textures[LIGHTBLUE]->GetTexture());
 			break;
 
-		case PINK:
-			_shader->SetTexture("m_Texture", *_textures[PINK]->GetTexture());
+		case ORANGE:
+			_shader->SetTexture("m_Texture", *_textures[ORANGE]->GetTexture());
+			break;
+
+		case LIGHTGREEN:
+			_shader->SetTexture("m_Texture", *_textures[LIGHTGREEN]->GetTexture());
 			break;
 
 		case PURPLE:
@@ -301,8 +303,9 @@ void SelectScene::ColorSelect(int player_number, BaseInput* pad)
 		else
 		{
 			_textures[_chara_select[player_number]]->SetFlag(true);
-			//_left_arrow_flag[player_number] = false;
+
 			break;
 		}
 	}
 }
+
