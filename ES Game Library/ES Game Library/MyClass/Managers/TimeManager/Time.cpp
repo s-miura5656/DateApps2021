@@ -13,10 +13,10 @@ TimeManager::~TimeManager()
 
 void TimeManager::Initialize()
 {
-	limitTime  = 32.9f;
+	limitTime  = 120.9f;
 	time       = 0.0f;
 
-	startTime  = 180.0f;
+	startTime  = 181.0f;
 	countTime  = 3;
 
 	startFlag = false;
@@ -45,8 +45,11 @@ void TimeManager::Update()
 		}
 	}
 
-
 	startTime--;
+	
+	if (startTime == 180) {
+		countTime = 3;
+	}
 	if (startTime == 120) {
 		countTime = 2;
 	}
@@ -60,6 +63,8 @@ void TimeManager::Update()
 		countTime = -1;
 		startTime = -60;
 	}
+
+	
 
 	if (countTime == -1) {
 		startFlag = true;
@@ -114,7 +119,7 @@ int  TimeManager::Countdown()
 }
 
 //! @fn カウントダウン
-//! @return 制限時間をfloatで返す
+//! @return カウントダウンをfloatで返す
 float TimeManager::GetStartTime()
 {
 	return startTime;
