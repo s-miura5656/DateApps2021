@@ -163,7 +163,6 @@ int PlayerBase::Update()
 	{
 		_transform.position = _warp_other_pos;
 	}
-
 	SetCollisionPosition();
 	return 0;
 }

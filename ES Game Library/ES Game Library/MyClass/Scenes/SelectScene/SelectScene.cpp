@@ -86,6 +86,7 @@ bool SelectScene::Initialize()
 
 	_player_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
 	_player_model->SetTrackEnable(0, TRUE);
+	_player_model->SetTrackPosition(5, 0);
 	return true;
 }
 
