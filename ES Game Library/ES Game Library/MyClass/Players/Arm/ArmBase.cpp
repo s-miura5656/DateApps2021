@@ -35,7 +35,7 @@ int ArmBase::Update()
 		_arm_state = ArmEnum::PunchState::PUNCH;
 		_i_arm_Data->SetState(_tag, _arm_state);
 	}
-	else
+	else if(pad->Button(BUTTON_INFO::BUTTON_A) && _arm_state == ArmEnum::PunchState::PUNCH)
 	{
 		_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 		_i_arm_Data->SetState(_tag, _arm_state);
