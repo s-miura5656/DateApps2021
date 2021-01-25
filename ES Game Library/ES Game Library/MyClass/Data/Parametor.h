@@ -77,6 +77,6 @@ private:
 	void operator=(const MapParam&) = delete;
 
 	std::vector<cstring> _map_data;
-	std::vector<Vector3> _warp_position;
+	std::vector<int> _warp_suffix;
 	std::map<std::string,Vector3> _respawn_position;
 };

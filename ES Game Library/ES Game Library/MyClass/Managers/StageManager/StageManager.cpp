@@ -26,7 +26,7 @@ bool StageManager::Initialize()
 
 	_bg_movie->Play();
 
-	FILE* fp = fopen("MapSprite/Stage/map_C.csv", "r");
+	FILE* fp = fopen("MapSprite/Stage/map_B.csv", "r");
 
 	//マップデータを読み込む
 	char lordchar[CHAR_MAX + 1];
@@ -94,14 +94,6 @@ bool StageManager::Initialize()
 				_respawn->SetRotation(Vector3_Zero);
 				_respawn->SetScale(1.0f);
 				respawn_player_tag++;
-				break;
-			case 't':
-				tag = WARP_TAG + tag;
-				imap_data->SetWarp(Vector3(x, 0.1f, -z));
-				_stages.push_back(new Warp(tag));
-				_stages[_count]->SetPosition(Vector3(x, 0.1f, -z));
-				_stages[_count]->Initialize();
-				_count++;
 				break;
 			}
 		}

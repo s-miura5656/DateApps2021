@@ -152,8 +152,8 @@ public:
 	void SetData(std::vector<cstring> map_data) { MapParam::Instance()._map_data = map_data; }
 	std::vector<cstring> GetData() const { return MapParam::Instance()._map_data; }
 
-	void SetWarp(Vector3 warp_position) { MapParam::Instance()._warp_position.push_back(warp_position); }
-	std::vector<Vector3> GetWarp() const { return MapParam::Instance()._warp_position; }
+	void SetWarp(std::vector<int> warp_suffix) { MapParam::Instance()._warp_suffix = warp_suffix; }
+	std::vector<int> GetWarp() const { return MapParam::Instance()._warp_suffix; }
 
 	void SetRespawnPosition(std::string playertag, Vector3 respawn_position) { MapParam::Instance()._respawn_position.insert(std::make_pair(playertag,respawn_position)); }
 	static Vector3 GetRespawnPosition(std::string playertag)  { return MapParam::Instance()._respawn_position.at(playertag); }

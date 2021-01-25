@@ -17,6 +17,7 @@ public:
 	bool Initialize() override;
 	int Update() override;
 	void Draw3D() override;
+	bool GetFlag() { return flag; }
 private:
 	bool flag;
 };
