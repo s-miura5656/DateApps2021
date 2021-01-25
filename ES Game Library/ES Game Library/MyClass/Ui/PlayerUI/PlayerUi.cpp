@@ -49,12 +49,12 @@ int PlayerUi::Update()
 
 void PlayerUi::Draw2D()
 {
-	IPrayerData* i_player_data = new IPrayerData;
+	//IPrayerData* i_player_data = new IPrayerData;
 
 	SpriteBatch.Draw(*_banner_sprite, _banner_pos, _banner_rw);
 	SpriteBatch.Draw(*_banner_status, _banner_status_pos, _status_rw);
 
-	if (i_player_data->GetRankNum(tag) == FIRST)
+	if (_i_player_data->GetRankNum(tag) == FIRST)
 	{
 		SpriteBatch.Draw(*_player_icon, _player_icon_pos, _player_joy_icon_rw);
 	}
@@ -63,8 +63,8 @@ void PlayerUi::Draw2D()
 		SpriteBatch.Draw(*_player_icon, _player_icon_pos, _player_normal_icon_rw);
 	}
 
-	SpriteBatch.Draw(*ranking, player_pos,RectWH(i_player_data->GetRankNum(tag) * 128,0,128,128),
+	SpriteBatch.Draw(*ranking, player_pos,RectWH(_i_player_data->GetRankNum(tag) * 128,0,128,128),
 		(DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
 		
-	delete i_player_data;
+	//delete i_player_data;
 }

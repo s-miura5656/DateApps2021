@@ -40,6 +40,6 @@ UiParametor::UiParametor()
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		_player_ranking[i] = RectWH(128 * i, 0, 128, 128);
+		//_player_ranking[i] = RectWH(128 * i, 0, 128, 128);
 	}
 }
