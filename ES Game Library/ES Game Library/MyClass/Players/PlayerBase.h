@@ -23,7 +23,7 @@ public:
 	virtual void DrawAlpha3D();
 
 	virtual void GetItem(ItemBase* item,string item_tag);
-
+	virtual void Warp(Vector3 warppos);
 protected:
 	//! function
 	void DrawModel();
@@ -40,7 +40,6 @@ protected:
 	void InvincibleMode();
 	void ItemParameterTime();
 	void EffectDraw();
-
 	//! file
 	ANIMATIONMODEL		_model;
 	FONT				_font;
@@ -85,6 +84,7 @@ protected:
 	bool _move_flag       = false;
 	bool _death_flag      = false;
 	bool _turn_flag       = false;
+	bool _warp_flag       = false;
 
 	//! count
 	float _lerp_count           = 0.f;
@@ -98,6 +98,7 @@ protected:
 	int _new_point              = 0;
 	int _old_point              = 0;
 	int _status_time            = 0;
+	Vector3 _warp_other_pos     = Vector3_Zero;
 	//! animation_limit
 	float _shot_frame = 60.0f;
 

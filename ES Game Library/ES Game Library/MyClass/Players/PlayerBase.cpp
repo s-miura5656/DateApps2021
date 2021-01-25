@@ -143,6 +143,18 @@ int PlayerBase::Update()
 		}
 	}
 
+	if (_warp_flag)
+	{
+		if (_warp_other_pos != player_data->GetPosition(_tag))
+		{
+			Vector3 player_pos = player_data->GetPosition(_tag);
+			_index_num.x = player_pos.x;
+			_index_num.z = -player_pos.z;
+			player_data->SetIndexNum(_tag, _index_num);
+			_warp_flag = false;
+		}
+	}
+
 	SetCollisionPosition();
 	return 0;
 }
@@ -210,7 +222,20 @@ void PlayerBase::GetItem(ItemBase* item, string item_tag)
 	_powerup_count = 0;
 }
 #pragma endregion
-
+void PlayerBase::Warp(Vector3 warppos)
+{
+	if (!_warp_flag)
+	{
+		auto&& player_data = _i_player_data;
+		_transform.position = warppos;
+		_index_num.x = warppos.x;
+		_index_num.z = -warppos.z;
+		player_data->SetIndexNum(_tag, _index_num);
+		player_data->SetPosition(_tag, _transform.position);
+		_warp_other_pos = warppos;
+		_warp_flag = true;
+	}
+}
 #pragma region 描画関係
 //! @fn プレイヤーモデルの描画
 void PlayerBase::DrawModel()
