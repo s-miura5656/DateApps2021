@@ -29,6 +29,16 @@ int PlayerBase::Update()
 
 	DebugControll();
 
+	if (_warp_flag && _move_flag && player_data->GetState(_tag) == PlayerEnum::Animation::WAIT)
+	{
+		_warp_time++;
+		if (_warp_time >= 120)
+		{
+			_warp_time = 0;
+			_move_flag = false;
+		}
+	}
+
 	//! Ž€‚ñ‚Å‚éŽž‚Æ‚»‚¤‚Å‚È‚¢‚Æ‚«‚Ì”»’è
 	if (_death_flag)
 	{
@@ -143,16 +153,15 @@ int PlayerBase::Update()
 		}
 	}
 
-	if (_warp_flag)
+	if (_warp_flag &&_warp_other_pos != player_data->GetPosition(_tag) && player_data->GetState(_tag) == PlayerEnum::Animation::WAIT)
 	{
-		if (_warp_other_pos != player_data->GetPosition(_tag))
-		{
-			Vector3 player_pos = player_data->GetPosition(_tag);
-			_index_num.x = player_pos.x;
-			_index_num.z = -player_pos.z;
-			player_data->SetIndexNum(_tag, _index_num);
-			_warp_flag = false;
-		}
+		_warp_other_pos = Vector3_Zero;
+		_warp_flag = false;
+	}
+
+	if (_warp_other_pos == player_data->GetPosition(_tag))
+	{
+		_transform.position = _warp_other_pos;
 	}
 
 	SetCollisionPosition();
@@ -233,6 +242,8 @@ void PlayerBase::Warp(Vector3 warppos)
 		player_data->SetIndexNum(_tag, _index_num);
 		player_data->SetPosition(_tag, _transform.position);
 		_warp_other_pos = warppos;
+		_move_flag = true;
+		player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 		_warp_flag = true;
 	}
 }
@@ -256,6 +267,7 @@ void PlayerBase::DrawModel()
 	_shader->SetParameter("vp", vp);
 
 	_model->SetScale(_transform.scale * 1.25);
+
 	if (_i_player_data->GetState(_tag) != PlayerEnum::Animation::DAMAGE)
 	{
 		_shader->SetTechnique("FixAnimationModel");

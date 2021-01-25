@@ -88,6 +88,7 @@ protected:
 
 	//! count
 	float _lerp_count           = 0.f;
+	float _warp_time            = 0.f;
 	int _damage_hit_count       = 0;
 	double _animation_count     = 0;
 	int _shot_pending_count     = 0;
