@@ -26,7 +26,7 @@ bool StageManager::Initialize()
 
 	_bg_movie->Play();
 
-	FILE* fp = fopen("MapSprite/Stage/map_B_warp.csv", "r");
+	FILE* fp = fopen("MapSprite/Stage/map_C.csv", "r");
 
 	//マップデータを読み込む
 	char lordchar[CHAR_MAX + 1];
