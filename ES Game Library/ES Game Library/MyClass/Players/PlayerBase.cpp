@@ -36,9 +36,9 @@ int PlayerBase::Update()
 		{
 			_warp_time = 0;
 			_move_flag = false;
+			_warp_flag = false;
 		}
 	}
-
 	//! Ž€‚ñ‚Å‚éŽž‚Æ‚»‚¤‚Å‚È‚¢‚Æ‚«‚Ì”»’è
 	if (_death_flag)
 	{
@@ -152,17 +152,6 @@ int PlayerBase::Update()
 			InputMove(pad);
 		}
 	}
-
-	if (_warp_flag &&_warp_other_pos != player_data->GetPosition(_tag) && player_data->GetState(_tag) == PlayerEnum::Animation::WAIT)
-	{
-		_warp_other_pos = Vector3_Zero;
-		_warp_flag = false;
-	}
-
-	if (_warp_other_pos == player_data->GetPosition(_tag))
-	{
-		_transform.position = _warp_other_pos;
-	}
 	SetCollisionPosition();
 	return 0;
 }
@@ -232,7 +221,7 @@ void PlayerBase::GetItem(ItemBase* item, string item_tag)
 #pragma endregion
 void PlayerBase::Warp(Vector3 warppos)
 {
-	if (!_warp_flag)
+	if (!_warp_flag && _warp_other_pos == Vector3_Zero)
 	{
 		auto&& player_data = _i_player_data;
 		_transform.position = warppos;
@@ -368,6 +357,7 @@ void PlayerBase::Move()
 		_move_flag  = false;
 		_lerp_count = 0;
 		player_data->SetPosition(_tag, _transform.position);
+		_warp_other_pos = Vector3_Zero;
 	}
 }
 
