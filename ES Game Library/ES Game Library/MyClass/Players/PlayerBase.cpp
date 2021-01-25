@@ -97,7 +97,11 @@ int PlayerBase::Update()
 		else if (player_data->GetState(_tag) == PlayerEnum::Animation::SHOT)
 		{
 			_shot_pending_count++;
-
+			if (pad->Stick(STICK_INFO::LEFT_STICK) != STICK_CENTER)
+			{
+				InputAngle(pad);
+				player_data->SetAngle(_tag, _transform.rotation.y);
+			}
 			if (_shot_pending_count > player_data->GetShotRigorFrame(_tag))
 			{
 				player_data->SetState(_tag, PlayerEnum::Animation::ATTACK);
