@@ -99,6 +99,16 @@ int ResultScene::Update()
 		}
 	}
 
+	if (_small_score_scale[0] <= 0.5)
+	{
+		_random_time += GameTimer.GetElapsedSecond();
+		_random_number += 10;
+	}
+
+	if (_random_number >= 576)
+	{
+		_random_number = 0;
+	}
 	AudioManager::Instance().ResultBgmPlay();
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
@@ -128,15 +138,25 @@ void ResultScene::Draw2D()
 	SpriteBatch.Draw(*_background,_background_position);
 
 	SpriteBatch.Draw(*_light, Vector3(0, 0, 10000));
-
-	SpriteBatch.Draw(*_first_score_sprite, Vector3(150,600, 0), RectWH(0, (int)(GetPoints(0) / 1000) * 64, 64, 64),
-		(DWORD)Color_White, Vector3_Zero, Vector3(32, 32, 0), 1.5f);
-	SpriteBatch.Draw(*_first_score_sprite, Vector3(246, 600, 0), RectWH(0, (int)((GetPoints(0) % 1000) / 100) * 64, 64, 64),
-		(DWORD)Color_White, Vector3(0, 0, 0), Vector3(32, 32, 0), 1.5f);
-	SpriteBatch.Draw(*_first_score_sprite, Vector3(342, 600, 0), RectWH(0, (int)((GetPoints(0) % 1000) % 100 / 10) * 64, 64, 64),
-		(DWORD)Color_White, Vector3(0, 0, 0), Vector3(32, 32, 0), 1.5f);
-	SpriteBatch.Draw(*_first_score_sprite, Vector3(438, 600, 0), RectWH(0, (int)((GetPoints(0) % 1000) % 100 % 10) * 64, 64, 64),
-		(DWORD)Color_White, Vector3(0, 0, 0), Vector3(32, 32, 0), 1.5f);
+	if (_random_time >= 1.5)
+	{
+		SpriteBatch.Draw(*_first_score_sprite, Vector3(150, 600, 0), RectWH(0, (int)(GetPoints(0) / 1000) * 64, 64, 64),
+			(DWORD)Color_White, Vector3_Zero, Vector3(32, 32, 0), 1.5f);
+		SpriteBatch.Draw(*_first_score_sprite, Vector3(246, 600, 0), RectWH(0, (int)((GetPoints(0) % 1000) / 100) * 64, 64, 64),
+			(DWORD)Color_White, Vector3(0, 0, 0), Vector3(32, 32, 0), 1.5f);
+		SpriteBatch.Draw(*_first_score_sprite, Vector3(342, 600, 0), RectWH(0, (int)((GetPoints(0) % 1000) % 100 / 10) * 64, 64, 64),
+			(DWORD)Color_White, Vector3(0, 0, 0), Vector3(32, 32, 0), 1.5f);
+		SpriteBatch.Draw(*_first_score_sprite, Vector3(438, 600, 0), RectWH(0, (int)((GetPoints(0) % 1000) % 100 % 10) * 64, 64, 64),
+			(DWORD)Color_White, Vector3(0, 0, 0), Vector3(32, 32, 0), 1.5f);
+	}
+	else
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			SpriteBatch.Draw(*_first_score_sprite, Vector3(150 + 96 * i, 600, 0), RectWH(0, _random_number , 64, 64),
+				(DWORD)Color_White, Vector3_Zero, Vector3(32, 32, 0), 1.5f);
+		}
+	}
 	for (int i = 0; i < PLAYER_COUNT_MAX - 1 ; i++)
 	{
 		if (_small_score_scale[i] < 5.0f)

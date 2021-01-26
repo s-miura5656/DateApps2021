@@ -35,6 +35,7 @@ private:
 	ANIMATIONMODEL        _player_model;
 	int                   _arrival_count;
 	int                   _random_number = 0;
+	float                 _random_time = 0;
 	float                 _acceleration[PLAYER_COUNT_MAX - 1];
 	float                 _small_score_scale[PLAYER_COUNT_MAX - 1];
 	float                 _big_score_scale;
