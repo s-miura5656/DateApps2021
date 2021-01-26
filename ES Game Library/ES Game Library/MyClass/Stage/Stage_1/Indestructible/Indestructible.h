@@ -8,13 +8,15 @@
 
 #include"../../../../ESGLib.h"
 #include"../../StageBase.h"
-
+#include "../../../Data/IData.h"
 class Indestructible :public StageBase
 {
 public:
-	Indestructible();
+	Indestructible(std::string tag);
 	~Indestructible();
 	bool Initialize() override;
+	int Update() override;
 	void Draw3D() override;
 private:
+	std::unique_ptr<IArmData>		_i_arm_data;
 };
