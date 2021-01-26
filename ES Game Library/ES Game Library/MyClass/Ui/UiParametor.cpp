@@ -38,8 +38,5 @@ UiParametor::UiParametor()
 	_player_joy_icon_rectwh[PLAYER3] = RectWH(256, 0, 128, 128);
 	_player_joy_icon_rectwh[PLAYER4] = RectWH(384, 0, 128, 128);
 
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		//_player_ranking[i] = RectWH(128 * i, 0, 128, 128);
-	}
+	
 }
