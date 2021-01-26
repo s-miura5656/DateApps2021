@@ -197,8 +197,15 @@ void PlayerUi::RegisterPointAnimation(Vector3 player_num)
 		pointAnim.theta = 0.0f;
 		pointAnim.alpha = 1.0f;
 		pointAnimation.push_back(pointAnim);
+
+		for (int i = 0; i < pointAnimation.size(); ++i) {
+		add_point += pointAnimation[i].point;
+		_font_size = 0.6 + ((float)(add_point - score) / (float)1000);
+		delta_point = (add_point - score) / GameTimer.GetFPS() * 4;
+	     }
 	}
 	prev_rank_point = rank_point;
+	
 }
 
 void PlayerUi::MovePointAnimation(Vector3 player_num)
@@ -212,18 +219,19 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 	{
 		Vector3 bezier  = Vector3_Bezier(player_num, corner[0], corner[0], player_num + Vector3( -80, 0, 0), pointAnimation[i].theta);
 		Vector3 bezier2 = Vector3_Bezier(player_num, corner[1], corner[1], player_num + Vector3( -80, 0, 0), pointAnimation[i].theta);
-		pointAnimation[i].theta += 0.008;
+		Vector3 bezier3 = Vector3_Bezier(player_num + Vector3(-80,-30,0), player_num + Vector3(-80,-40,0), player_num + Vector3(-80, -40, 0), player_num + Vector3(-80, -60, 0), pointAnimation[i].theta);
+		pointAnimation[i].theta += 0.02;
 
 		//! 1pと2pのベジェ曲線
 		if (player_index == 0 || player_index == 1) {
-			pointAnimation[i].position.y = bezier.y;
-			pointAnimation[i].position.x = bezier.x;
+			pointAnimation[i].position.y = bezier3.y;
+			pointAnimation[i].position.x = bezier3.x;
 		}
 
 		//! 3pと4pのベジェ曲線
 		if (player_index == 2 || player_index == 3) {
-			pointAnimation[i].position.y = bezier2.y;
-			pointAnimation[i].position.x = bezier2.x;
+			pointAnimation[i].position.y = bezier3.y;
+			pointAnimation[i].position.x = bezier3.x;
 		}
 
 		pointAnimation[i].alpha -= 0.003;
@@ -250,23 +258,23 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 
 		//! playerの座標に入手したポイントがたどり着いたとき 1p & 2p
 		if (player_index == 0 || player_index == 1) {
-			if (pointAnimation[i].position.y >= player_num.y + 3) {
-				add_point += pointAnimation[i].point;
+			if (pointAnimation[i].position.y <= player_num.y - 61) {
+				/*add_point += pointAnimation[i].point;
 				_font_size = 0.6 + ((float)(add_point - score) / (float)1000);
-				delta_point = (add_point - score) / GameTimer.GetFPS() * 4;
+				delta_point = (add_point - score) / GameTimer.GetFPS() * 4;*/
 				pointAnimation.erase(pointAnimation.begin() + i);
 			}
 		}
 
 		//!  playerの座標に入手したポイントがたどり着いたとき 3p & 4p
-		if (player_index == 2 || player_index == 3) {
+		/*if (player_index == 2 || player_index == 3) {
 			if (pointAnimation[i].position.y <= player_num.y - 3) {
 				add_point += pointAnimation[i].point;
 				_font_size = 0.6 + ((float)(add_point - score) / (float)1000);
 				delta_point = (add_point - score) / GameTimer.GetFPS() * 4;
 				pointAnimation.erase(pointAnimation.begin() + i);
 			}
-		}
+		}*/
 	}
 }
 
