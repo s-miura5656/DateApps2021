@@ -94,8 +94,6 @@ int Block::Update()
 			std::unique_ptr<IArmData> arm_data = std::make_unique<IArmData>();
 			int state = arm_data->GetState(arm_tag);
 
-			auto i = arm_data->GetState(arm_tag);
-
 			if (state == ArmEnum::PunchState::RETURN_PUNCH)
 			{
 				return 0;
