@@ -32,7 +32,11 @@ bool PlayerUi::Initialize(int player)
 
 	ranking = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/runking.png"));
 	
-	
+	prev_rank_point = 0;
+
+
+
+
 	return true;
 }
 

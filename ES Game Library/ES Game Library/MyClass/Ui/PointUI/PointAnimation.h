@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../../ESGLib.h"
+#include "../../Data/IData.h"
 
 struct PointMove
 {
@@ -23,13 +24,15 @@ public:
 	PointAnimation();
 	~PointAnimation();
 
-	void RegisterPointAnimation(Vector3 player_pos);
+	void RegisterPointAnimation(Vector3 player_pos, std::string tag, int prev_rank_point);
 	void MovePointAnimation(Vector3 player_pos);
 
 private:
 
 	std::vector<PointMove> pointMove;
 	std::vector<Vector3> move_pos;
+
+	IPrayerData* _i_player_data;
 
 };
 
