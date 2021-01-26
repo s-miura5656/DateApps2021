@@ -134,8 +134,42 @@ int PlayerBase::Update()
 				//! ロケットパンチ発射切り替え
 				if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 				{
-					player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
-					player_data->SetPosition(_tag, _transform.position);
+					auto mapdata = _i_map_data->GetData();
+					auto index   = _i_player_data->GetIndexNum(_tag);
+					while (true)
+					{
+						if (player_data->GetAngle(_tag) == 90)
+						{
+							if (mapdata[index.z][index.x + 1] == 'i' || mapdata[index.z][index.x + 1] == 'w')
+							{
+								break;
+							}
+						}
+						else if (player_data->GetAngle(_tag) == 270)
+						{
+							if (mapdata[index.z][index.x - 1] == 'i' || mapdata[index.z][index.x - 1] == 'w')
+							{
+								break;
+							}
+						}
+						else if (player_data->GetAngle(_tag) == 180)
+						{
+							if (mapdata[index.z + 1][index.x] == 'i' || mapdata[index.z + 1][index.x] == 'w')
+							{
+								break;
+							}
+						}
+						else if (player_data->GetAngle(_tag) == 0)
+						{
+							if (mapdata[index.z - 1][index.x] == 'i' || mapdata[index.z - 1][index.x] == 'w')
+							{
+								break;
+							}
+						}
+						player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
+						player_data->SetPosition(_tag, _transform.position);
+						break;
+					}
 				}
 			}
 		}

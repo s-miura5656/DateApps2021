@@ -5,7 +5,7 @@
 #include "../../Data/WordsTable.h"
 #include "../../Data/StructList.h"
 #include "../ResouceManager/ResouceManager.h"
-
+#include "../SceneManager/SceneManager.h"
 StageManager::StageManager()
 {
 }
@@ -101,9 +101,23 @@ bool StageManager::Initialize()
 
 	imap_data->SetData(_mapdate);
 
-	_stages.push_back(new Indestructible);
+	_stages.push_back(new Indestructible("aaaa"));
+	_stages[_stages.size() - 1]->Initialize();
+	_stages[_stages.size() - 1]->SetPosition(Vector3(1, 0, -3));
+
+	_stages.push_back(new Indestructible("iiii"));
+	_stages[_stages.size() - 1]->Initialize();
+	_stages[_stages.size() - 1]->SetPosition(Vector3(13, 0, -9));
+
+	_stages.push_back(new Metal);
 	_stages[_stages.size() - 1]->Initialize();
 	_stages[_stages.size() - 1]->SetPosition(Vector3(7, 0, -6));
+
+	Material mat;
+	mat.Diffuse = Color(1.0f, 1.0f, 1.0f);
+	mat.Ambient = Color(0.25f, 0.25f, 0.25f);
+	mat.Specular = Color(1.0f, 1.0f, 1.0f);
+	_respawn->SetMaterial(mat);
 
 	delete imap_data;
 	delete iplayer_data;

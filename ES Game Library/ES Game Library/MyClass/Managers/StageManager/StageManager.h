@@ -9,6 +9,7 @@
 #include"../../Stage/Stage_1/Indestructible/Indestructible.h"
 #include"../../Stage/Stage_1/RotatingFloor/RotatingFloor .h"
 #include"../../Stage/Stage_1/Warp/Warp.h"
+#include"../../Stage/Stage_1/Metal/Metal.h"
 class StageBase;
 class HitBox;
 
