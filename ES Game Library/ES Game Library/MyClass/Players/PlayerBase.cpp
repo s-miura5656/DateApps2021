@@ -47,8 +47,7 @@ int PlayerBase::Update()
 			_index_num.z = -respawnpos.z;
 			player_data->SetIndexNum(_tag, _index_num);
 			player_data->SetPosition(_tag, _transform.position);
-			_i_player_data->SetParameter_PowerUp(_tag, false);
-			_i_player_data->SetParameter_PowerDown(_tag, false);
+
 		}
 	}
 	else
@@ -56,7 +55,7 @@ int PlayerBase::Update()
 		if (player_data->GetState(_tag) == PlayerEnum::Animation::DEATH)
 		{
 			DestroyArm();
-			_death_flag      = true;
+			_death_flag = true;
 			AudioManager::Instance().ExplosionPlay();
 			MainCamera::Instance().TimeReset();
 			player_data->SetInvincibleMode(_tag, true);
@@ -133,7 +132,7 @@ int PlayerBase::Update()
 				auto a = pad->Trigger(TRIGGER_INFO::LEFT_TRIGGER);
 
 				//! ロケットパンチ発射切り替え
-				if (pad->Button(BUTTON_INFO::BUTTON_B))
+				if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 				{
 					player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
 					player_data->SetPosition(_tag, _transform.position);

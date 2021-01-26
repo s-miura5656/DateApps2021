@@ -75,7 +75,7 @@ bool Player::Initialize()
 
 	//! effect
 	_destroy_effect->RegisterParticle(effect);
-	_destroy_effect->SetSpeed(1.0f);
+	_destroy_effect->SetSpeed(0.5f);
 	_destroy_effect->SetScale(3.0f);
 
 	_player_speedup_effect->RegisterParticle(playerspeedup);
