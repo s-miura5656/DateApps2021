@@ -41,7 +41,23 @@ int Indestructible::Update()
 	//当たり判定を破壊可能ブロックと同じポジションにする
 	if (_hit_box != nullptr)
 	_hit_box->SetHitBoxPosition(_position + Vector3(0, 1, 0));
-	_position.x += 0.5;
+	if (_position.x >= 13)
+	{
+		_speed *= -1;
+	}
+	else if(_position.x <= 1)
+	{
+		_speed *= -1;
+	}
+	_position.x += _speed;
+	if (_position.x < 1)
+	{
+		_position.x = 1;
+	}
+	if (_position.x > 13)
+	{
+		_position.x = 13;
+	}
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string arm_tag = ARM_TAG + std::to_string(i + 1);

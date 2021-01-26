@@ -19,4 +19,6 @@ public:
 	void Draw3D() override;
 private:
 	std::unique_ptr<IArmData>		_i_arm_data;
+	float                           _speed = 0.05;
+	bool                            _move_flag = false;
 };

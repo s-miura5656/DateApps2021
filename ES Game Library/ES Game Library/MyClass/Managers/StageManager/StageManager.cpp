@@ -103,7 +103,11 @@ bool StageManager::Initialize()
 
 	_stages.push_back(new Indestructible("aaaa"));
 	_stages[_stages.size() - 1]->Initialize();
-	_stages[_stages.size() - 1]->SetPosition(Vector3(1, 0, -2));
+	_stages[_stages.size() - 1]->SetPosition(Vector3(1, 0, -3));
+
+	_stages.push_back(new Indestructible("iiii"));
+	_stages[_stages.size() - 1]->Initialize();
+	_stages[_stages.size() - 1]->SetPosition(Vector3(13, 0, -9));
 
 	_stages.push_back(new Metal);
 	_stages[_stages.size() - 1]->Initialize();
