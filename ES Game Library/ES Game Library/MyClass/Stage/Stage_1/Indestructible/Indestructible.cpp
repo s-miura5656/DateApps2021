@@ -15,7 +15,7 @@ Indestructible::~Indestructible()
 bool Indestructible::Initialize()
 {
 	//Xファイルの読み込み
-	_model  = ResouceManager::Instance().LoadModelFile(_T("MapSprite/Stage/stage plan A_v2.X"));
+	_model  = ResouceManager::Instance().LoadModelFile(_T("MapSprite/Indestructible.X"));
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
 
 	//スケールの設定
@@ -25,7 +25,6 @@ bool Indestructible::Initialize()
 	_model_material.Diffuse  = Color(1.0f, 1.0f, 1.0f);
 	_model_material.Ambient  = Color(0.25f, 0.25f, 0.25f);
 	_model_material.Specular = Color(1.0f, 1.0f, 1.0f);
-
 	
 	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
 

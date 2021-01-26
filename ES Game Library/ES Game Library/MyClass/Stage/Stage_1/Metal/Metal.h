@@ -12,10 +12,9 @@
 class Metal :public StageBase
 {
 public:
-	Metal(std::string tag);
+	Metal();
 	~Metal();
 	bool Initialize() override;
-
-
+	void Draw3D() override;
 private:
 };
