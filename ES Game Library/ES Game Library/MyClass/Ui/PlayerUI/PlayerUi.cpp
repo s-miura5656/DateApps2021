@@ -234,8 +234,12 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 			pointAnimation[i].position.x = bezier3.x;
 		}
 
-		pointAnimation[i].alpha -= 0.003;
+		pointAnimation[i].alpha -= 0.03;
 
+		if (pointAnimation[i].alpha <= 0)
+		{
+			pointAnimation[i].alpha = 0;
+		}
 		////! バナーの座標に入手したポイントがたどり着いたとき 1p & 3p
 		//if (player_index == 0 || player_index == 2) {
 		//	if (pointAnimation[i].position.x <= banner_position.x + 100) {
