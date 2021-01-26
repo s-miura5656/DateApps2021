@@ -34,6 +34,8 @@ bool ResultScene::Initialize()
 	_shader  	         = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
 	_player_model        = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 	_score_sprite        = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber.png"));
+    _first_score_sprite  = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber_vertical.png"));
+
 	//!ÉçÉ{UIèâä˙ê›íË
 	std::string first_name = PLAYER_TAG + to_string(GetRankNum(0));
 
@@ -43,10 +45,11 @@ bool ResultScene::Initialize()
 
 	for (int i = 1; i < PLAYER_COUNT_MAX; i++)
 	{
+		_small_score_scale[i - 1] = 5.0f;
+		_acceleration[i - 1] = 0;
 		std::string name = PLAYER_TAG + to_string(GetRankNum(i));
 		_player_rectwh.push_back(128 * (SceneManager::Instance().GetPlayerTexture(name) - 1));
 	}
-
 	//! material
 	Material material;
 	material.Diffuse  = Color(1.0f, 1.0f, 1.0f); // âAâeÇÃÉOÉâÉfÅ[ÉVÉáÉì ñæÇÈÇ¢ïîï™
@@ -73,7 +76,7 @@ bool ResultScene::Initialize()
 
 	//îwåiÇÃç¿ïW
 	_background_position = Vector3(0, 0, 10000);
-
+	_big_score_scale = 300.0f;
 	return true;
 }
 
@@ -82,6 +85,20 @@ bool ResultScene::Initialize()
 */
 int ResultScene::Update()
 {
+	for (int i = 2; i > -1; i--)
+	{
+		if (i == 2)
+		{
+			_small_score_scale[i] -= 0.5;
+			_acceleration[i] += GameTimer.GetElapsedSecond();
+		}
+		else if (_acceleration[i + 1] >= 0.5)
+		{
+			_small_score_scale[i] -= 0.5;
+			_acceleration[i] += GameTimer.GetElapsedSecond();
+		}
+	}
+
 	AudioManager::Instance().ResultBgmPlay();
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
@@ -95,6 +112,11 @@ int ResultScene::Update()
 			SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TITLE);
 		}
 	}
+	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	{
+		if(_small_score_scale[i] <= 0.5)
+			_small_score_scale[i] = 0.5f;
+	}
 	return 0;
 }
 
@@ -107,24 +129,27 @@ void ResultScene::Draw2D()
 
 	SpriteBatch.Draw(*_light, Vector3(0, 0, 10000));
 
-	SpriteBatch.Draw(*_score_sprite, Vector3(150,600,0), RectWH((int)(GetRankNum(0) / 1000) * 64, 0, 64, 64),
+	SpriteBatch.Draw(*_first_score_sprite, Vector3(150,600, 0), RectWH(0, (int)(GetPoints(0) / 1000) * 64, 64, 64),
 		(DWORD)Color_White, Vector3_Zero, Vector3(32, 32, 0), 1.5f);
-
-	for (int i = 1; i < 4; i++)
+	SpriteBatch.Draw(*_first_score_sprite, Vector3(246, 600, 0), RectWH(0, (int)((GetPoints(0) % 1000) / 100) * 64, 64, 64),
+		(DWORD)Color_White, Vector3(0, 0, 0), Vector3(32, 32, 0), 1.5f);
+	SpriteBatch.Draw(*_first_score_sprite, Vector3(342, 600, 0), RectWH(0, (int)((GetPoints(0) % 1000) % 100 / 10) * 64, 64, 64),
+		(DWORD)Color_White, Vector3(0, 0, 0), Vector3(32, 32, 0), 1.5f);
+	SpriteBatch.Draw(*_first_score_sprite, Vector3(438, 600, 0), RectWH(0, (int)((GetPoints(0) % 1000) % 100 % 10) * 64, 64, 64),
+		(DWORD)Color_White, Vector3(0, 0, 0), Vector3(32, 32, 0), 1.5f);
+	for (int i = 0; i < PLAYER_COUNT_MAX - 1 ; i++)
 	{
-		SpriteBatch.Draw(*_score_sprite, Vector3(96 * i + 150, 600, 0), RectWH((int)((GetRankNum(0) % 1000) / 100) * 64, 0, 64, 64),
-			(DWORD)Color_White,Vector3_Zero, Vector3(32,32,0),1.5f);
-	}
-
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		SpriteBatch.Draw(*_robot_fece, Vector3(850, 120 + 205 * i, 10000), RectWH(_player_rectwh[i], 0, 128, 128));
-		SpriteBatch.Draw(*_score_sprite, Vector3(980, 175 + (210 * i), 0), RectWH((int)(GetRankNum(i) / 1000) * 64, 0, 64, 64),
-			(DWORD)Color_White, Vector3_Zero, Vector3(32, 32, 0), 0.5f);
-		for (int j = 1; j < PLAYER_COUNT_MAX; j++)
+		if (_small_score_scale[i] < 5.0f)
 		{
-			SpriteBatch.Draw(*_score_sprite, Vector3(980 + 32 * j, 175 + (210 * i), 0), RectWH((int)((GetRankNum(i) % 1000) / 100) * 64, 0, 64, 64),
-				(DWORD)Color_White, Vector3_Zero, Vector3(32, 32, 0), 0.5f);
+			SpriteBatch.Draw(*_robot_fece, Vector3(850, 120 + 205 * i, 10000), RectWH(_player_rectwh[i], 0, 128, 128));
+			SpriteBatch.Draw(*_score_sprite, Vector3(1012, 175 + (210 * i), 0), RectWH((int)(GetPoints(i + 1) / 1000) * 64, 0, 64, 64), 
+				(DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), _small_score_scale[i]);
+			SpriteBatch.Draw(*_score_sprite, Vector3(1044, 175 + (210 * i), 0), RectWH((int)((GetPoints(i + 1) % 1000) / 100) * 64, 0, 64, 64),
+				(DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), _small_score_scale[i]);
+			SpriteBatch.Draw(*_score_sprite, Vector3(1076, 175 + (210 * i), 0), RectWH((int)((GetPoints(i + 1) % 1000) % 100 / 10) * 64, 0, 64, 64),
+				(DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), _small_score_scale[i]);
+			SpriteBatch.Draw(*_score_sprite, Vector3(1108, 175 + (210 * i), 0), RectWH((int)((GetPoints(i + 1) % 1000) % 100 % 10) * 64, 0, 64, 64), 
+				(DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), _small_score_scale[i]);
 		}
 	}
 }

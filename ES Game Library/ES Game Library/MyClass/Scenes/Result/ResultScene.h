@@ -30,9 +30,14 @@ private:
 	SPRITE                _robot_fece;
 	SPRITE                _texture;
 	SPRITE                _score_sprite;
+	SPRITE                _first_score_sprite;
 	EFFECT                _shader;
 	ANIMATIONMODEL        _player_model;
 	int                   _arrival_count;
+	int                   _random_number = 0;
+	float                 _acceleration[PLAYER_COUNT_MAX - 1];
+	float                 _small_score_scale[PLAYER_COUNT_MAX - 1];
+	float                 _big_score_scale;
 	Vector3               _background_position;
 	std::vector<Vector3>  _player_rank_num_position;
 	std::vector<int>      _player_rectwh;
