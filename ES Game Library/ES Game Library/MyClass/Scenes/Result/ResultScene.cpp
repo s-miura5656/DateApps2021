@@ -67,6 +67,11 @@ bool ResultScene::Initialize()
 	SceneCamera::Instance().SetLookAt(camera_pos, look_pos, 0);
 	SceneCamera::Instance().SetPerspectiveFieldOfView(60.0f, (float)view.Width, (float)view.Height, 1.0f, 10000.0f);
 
+	for (int i = 0; i < 5; i++)
+	{
+		_player_model->SetTrackPosition(i, 0);
+	}
+
 	//!ƒvƒŒƒCƒ„[‚Ì‰ŠúÝ’è
 	_player_model->SetScale(5.0f);
 	_player_model->SetPosition(Vector3(-5, -3, 0));
