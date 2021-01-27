@@ -21,6 +21,8 @@ private:
 	bool GameStart();
 
 	void ColorSelect(int player_number, BaseInput* pad);
+	int ColorSelect2(int player_number, int direction);
+
 
 	enum { TEXTURE_MAX = 8 };
 
@@ -41,7 +43,7 @@ private:
 
 	int _select_count[PLAYER_COUNT_MAX];
 
-	float _banner_color[PLAYER_COUNT_MAX];
+	int _banner_color[PLAYER_COUNT_MAX];
 	int _chara_select_seve[PLAYER_COUNT_MAX];
 	int _chara_select[PLAYER_COUNT_MAX];
 	float _player_position[PLAYER_COUNT_MAX];
