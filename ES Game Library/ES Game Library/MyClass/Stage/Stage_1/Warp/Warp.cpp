@@ -53,7 +53,6 @@ int Warp::Update()
 				new_pos = Vector3(1, 0, -7);
 			}
 			_hit_box->GetHitBoxTag(player_tag)->GetPlayerBase()->Warp(new_pos);
-			return 0;
 		}
 	}
 

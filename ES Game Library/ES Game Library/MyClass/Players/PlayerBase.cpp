@@ -191,11 +191,6 @@ int PlayerBase::Update()
 				_move_punch = true;
 			}
 		}
-		if (_warp_flag && _warp_other_pos != player_data->GetPosition(_tag) && player_data->GetState(_tag) == PlayerEnum::Animation::WAIT)
-		{
-			_warp_other_pos = Vector3_Zero;
-			_warp_flag = false;
-		}
 
 		if (_warp_other_pos == player_data->GetPosition(_tag))
 		{
@@ -278,11 +273,11 @@ void PlayerBase::Warp(Vector3 warppos)
 		_transform.position = warppos;
 		_index_num.x = warppos.x;
 		_index_num.z = -warppos.z;
+		player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 		player_data->SetIndexNum(_tag, _index_num);
 		player_data->SetPosition(_tag, _transform.position);
 		_warp_other_pos = warppos;
 		_warp_flag = true;
-		player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
 		_move_flag = true;
 	}
 }
@@ -396,6 +391,7 @@ void PlayerBase::Move()
 	if (!_move_flag)
 		return;
 
+	_warp_other_pos = Vector3_Zero;
 	auto&& player_data = _i_player_data;
 
 	_transform.position = Vector3_Lerp(_old_pos, _new_pos, _lerp_count);
@@ -407,6 +403,8 @@ void PlayerBase::Move()
 		_move_flag  = false;
 		_lerp_count = 0;
 		player_data->SetPosition(_tag, _transform.position);
+		if (_warp_flag)
+			_warp_flag = false;
 		if (_move_punch)
 		{
 			player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
