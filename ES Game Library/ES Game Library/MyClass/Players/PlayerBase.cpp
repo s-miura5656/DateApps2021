@@ -29,6 +29,15 @@ int PlayerBase::Update()
 
 	DebugControll();
 
+	if (_warp_flag && _move_flag && player_data->GetState(_tag) == PlayerEnum::Animation::WAIT)
+	{
+		_warp_time++;
+		if (_warp_time >= 60)
+		{
+			_warp_time = 0;
+			_move_flag = false;
+		}
+	}
 	//! Ž€‚ñ‚Å‚éŽž‚Æ‚»‚¤‚Å‚È‚¢‚Æ‚«‚Ì”»’è
 	if (_death_flag)
 	{
@@ -177,6 +186,20 @@ int PlayerBase::Update()
 		if (player_data->GetState(_tag) == PlayerEnum::Animation::MOVE)
 		{
 			InputMove(pad);
+			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+			{
+				_move_punch = true;
+			}
+		}
+		if (_warp_flag && _warp_other_pos != player_data->GetPosition(_tag) && player_data->GetState(_tag) == PlayerEnum::Animation::WAIT)
+		{
+			_warp_other_pos = Vector3_Zero;
+			_warp_flag = false;
+		}
+
+		if (_warp_other_pos == player_data->GetPosition(_tag))
+		{
+			_transform.position = _warp_other_pos;
 		}
 	}
 
@@ -247,7 +270,22 @@ void PlayerBase::GetItem(ItemBase* item, string item_tag)
 	_powerup_count = 0;
 }
 #pragma endregion
-
+void PlayerBase::Warp(Vector3 warppos)
+{
+	if (!_warp_flag && _transform.position != _warp_other_pos)
+	{
+		auto&& player_data = _i_player_data;
+		_transform.position = warppos;
+		_index_num.x = warppos.x;
+		_index_num.z = -warppos.z;
+		player_data->SetIndexNum(_tag, _index_num);
+		player_data->SetPosition(_tag, _transform.position);
+		_warp_other_pos = warppos;
+		_warp_flag = true;
+		player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
+		_move_flag = true;
+	}
+}
 #pragma region •`‰æŠÖŒW
 //! @fn ƒvƒŒƒCƒ„[ƒ‚ƒfƒ‹‚Ì•`‰æ
 void PlayerBase::DrawModel()
@@ -369,6 +407,11 @@ void PlayerBase::Move()
 		_move_flag  = false;
 		_lerp_count = 0;
 		player_data->SetPosition(_tag, _transform.position);
+		if (_move_punch)
+		{
+			player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
+			_move_punch = false;
+		}
 	}
 }
 

@@ -23,7 +23,7 @@ public:
 	virtual void DrawAlpha3D();
 
 	virtual void GetItem(ItemBase* item,string item_tag);
-
+	virtual void Warp(Vector3 warppos);
 protected:
 	//! function
 	void DrawModel();
@@ -55,11 +55,12 @@ protected:
 	float _speed			 = 0.f;
 	float _move_speed		 = 0.f;
 	float _distance			 = FLT_MAX;
+	float _warp_time         = FLT_MAX;
 
 	//! position
 	Vector3 _old_pos		 = Vector3_Zero;
 	Vector3 _new_pos		 = Vector3_Zero;
-
+	Vector3 _warp_other_pos = Vector3_Zero;
 	//! pointer
 	std::unique_ptr<ArmBase>	                      _arm;
 	std::unique_ptr<HitBox>		                      _hit_box;
@@ -85,7 +86,8 @@ protected:
 	bool _move_flag       = false;
 	bool _death_flag      = false;
 	bool _turn_flag       = false;
-
+	bool _warp_flag       = false;
+	bool _move_punch      = false;
 	//! count
 	float _lerp_count           = 0.f;
 	int _damage_hit_count       = 0;
