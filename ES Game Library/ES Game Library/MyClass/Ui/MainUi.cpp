@@ -96,19 +96,19 @@ bool MainUi::Initialize()
 
 	// Player1
 	player_ui.push_back(new PlayerUi(0));
-	player_ui[0]->Initialize(Vector3(10, 150, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_1") - 1),0,256,64));
+	player_ui[0]->Initialize(Vector3(10, 130, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_1") - 1),0,256,128));
 
 	// Player2
 	player_ui.push_back(new PlayerUi(1));
-	player_ui[1]->Initialize(Vector3(1280 - 250, 150, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_2") - 1), 0, 256, 64));
+	player_ui[1]->Initialize(Vector3(1280 - 250, 130, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_2") - 1), 0, 256, 128));
 
 	// Player3
 	player_ui.push_back(new PlayerUi(2));
-	player_ui[2]->Initialize(Vector3(10, 450, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_3") - 1), 0, 256, 64));
+	player_ui[2]->Initialize(Vector3(10, 430, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_3") - 1), 0, 256, 128));
 
 	// Player4
 	player_ui.push_back(new PlayerUi(3));
-	player_ui[3]->Initialize(Vector3(1280 - 250, 450, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_4") - 1), 0, 256, 64));
+	player_ui[3]->Initialize(Vector3(1280 - 250, 430, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_4") - 1), 0, 256, 128));
 	
 	return true;
 }
