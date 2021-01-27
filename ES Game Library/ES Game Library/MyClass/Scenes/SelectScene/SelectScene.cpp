@@ -13,7 +13,6 @@ SelectScene::SelectScene()
 
 SelectScene::~SelectScene()
 {
-	AudioManager::Instance().TitleBgmStop();
 
 	//for (auto it = _textures.rend(); it != _textures.rbegin(); --it)
 	//{
@@ -29,8 +28,6 @@ bool SelectScene::Initialize()
 	_button_go = ResouceManager::Instance().LordSpriteFile(_T("Select/ok_button.png"));
 	_player_model = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 	_shader       = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
-	//_chara_frame = ResouceManager::Instance().LordSpriteFile(_T("Select/character_frame.png"));
-	//_button_frame = ResouceManager::Instance().LordSpriteFile(_T("Select/button_frame.png"));
 	_left_arrow = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
 	_left_arrow_dark = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
 	_right_arrow = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
@@ -59,7 +56,11 @@ bool SelectScene::Initialize()
 		_player_rotation_flag[i] = false;
 		_select_count[i] = 0;
 		_banner_color[i] = i;
+		_old_x_stick[i] = 0.0f;
 	}
+
+	_confirming_flag = false;
+	_game_start_flag = false;
 
 	_player_position[0] = -3;
 	_player_position[1] = -0.8;
@@ -86,6 +87,8 @@ bool SelectScene::Initialize()
 
 	_player_model->RegisterBoneMatricesByName(_shader, "WorldMatrixArray", "NumBones");
 	_player_model->SetTrackEnable(0, TRUE);
+	_player_model->SetTrackPosition(5, 0);
+
 	return true;
 }
 
@@ -98,14 +101,14 @@ int SelectScene::Update()
 		auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
 		pad->Refresh();
 
-		// カラー選択　関数作る
+		//! カラー選択　関数作る
 		if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 		{
 			_select_complete_flag[i] = true;
 			_player_rotation_flag[i] = true;
 		}
 
-		// 選択後モデル回転
+		//! 選択後モデル回転
 		if (_player_rotation_flag[i])
 			_player_rotation[i] += 10.0f;
 
@@ -115,9 +118,9 @@ int SelectScene::Update()
 		if (!_player_rotation_flag[i])
 			_player_rotation[i] = 180.0f;
 
-
 		if (!_select_complete_flag[i])
 		{
+			//! スティック入力に応じて矢印の描画
 			if (pad->Stick(STICK_INFO::LEFT_STICK).x == 0)
 			{
 				_left_arrow_flag[i] = true;
@@ -128,7 +131,7 @@ int SelectScene::Update()
 			{
 				auto a = std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x);
 
-				if (a)
+				/*if (a)
 				{
 					_left_arrow_flag[i] = false;
 					_right_arrow_flag[i] = true;
@@ -137,24 +140,45 @@ int SelectScene::Update()
 				{
 					_right_arrow_flag[i] = false;
 					_left_arrow_flag[i] = true;
-				}
+				}*/
 
-
-				// スティック倒して一定時間で次のカラーへ
+				//! スティック倒して一定時間で次のカラーへ
 				_select_count[i]++;
 
-				if (_select_count[i] >= 10)
-				{
-					_textures[_chara_select[i]]->SetFlag(false);
+				//if (_select_count[i] >= 10)
+				//{
+				_textures[_chara_select[i]]->SetFlag(false);
 			
-					std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _chara_select[i]-- : _chara_select[i]++;
-					std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _banner_color[i]-- : _banner_color[i]++;
+				//	std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _chara_select[i]-- : _chara_select[i]++;
+				//	std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _banner_color[i]-- : _banner_color[i]++;
+				//	ColorSelect(i, pad);
+
+				//	//_select_count[i] = 0;
+				//}
+//				if (_old_x_stick[i] <= 0.0f && pad->Stick(STICK_INFO::LEFT_STICK).x > 0.0f)
+				const auto STICK_DELTA = pad->Stick(STICK_INFO::LEFT_STICK).x - _old_x_stick[i];
+				if (STICK_DELTA >= Axis_Max / 8 && pad->Stick(STICK_INFO::LEFT_STICK).x >= Axis_Max * 0.90f)
+				{
+					_chara_select[i]++;
+					_banner_color[i]++;
 					ColorSelect(i, pad);
 
-					_select_count[i] = 0;
+					_right_arrow_flag[i] = false;
+					_left_arrow_flag[i] = true;
+				}
+//				else if (_old_x_stick[i] >= 0.0f && pad->Stick(STICK_INFO::LEFT_STICK).x < 0.0f)
+				else if (STICK_DELTA <= Axis_Min / 8 && pad->Stick(STICK_INFO::LEFT_STICK).x <= Axis_Min * 0.90f)
+				{
+					_chara_select[i]--;
+					_banner_color[i]--;
+					ColorSelect(i, pad);
+
+					_left_arrow_flag[i] = false;
+					_right_arrow_flag[i] = true;
 				}
 			}
 		}
+		_old_x_stick[i] = pad->Stick(STICK_INFO::LEFT_STICK).x;
 
 		if (_banner_color[i] > TEXTURE_MAX - 1)
 			_banner_color[i] = 0;
@@ -162,7 +186,7 @@ int SelectScene::Update()
 		if (_banner_color[i] < 0)
 			_banner_color[i] = TEXTURE_MAX - 1;
 
-		// カラー再選択
+		//! カラー再選択
 		if (_select_complete_flag[i])
 		{
 			if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
@@ -172,13 +196,37 @@ int SelectScene::Update()
 		}
 
 		//! プレイヤー全員の選択が終わったらフラグで判断してメインシーンへ
+		if (_select_complete_flag[0] && _select_complete_flag[1] && _select_complete_flag[2] && _select_complete_flag[3])
+		{
+			for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+			{
+				std::string tag = PLAYER_TAG + to_string(i + 1);
+				SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
+			}
+
+			_confirming_flag = true;
+		}
+
+		if (_confirming_flag)
+		{
+			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+				_game_start_flag = true;
+
+			if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
+			{
+				_confirming_flag = false;
+
+			}
+
+		}
+
 		if (_game_start_flag)
 		{
 			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+			{
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
-
-			if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
-				_game_start_flag = false;
+				AudioManager::Instance().TitleBgmStop();
+			}
 		}
 	}
 
@@ -191,19 +239,10 @@ int SelectScene::Update()
 			std::string tag = PLAYER_TAG + to_string(i + 1);
 			SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
 		}
-		SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
+		//SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
+		_confirming_flag = true;
 	}
 
-	if (_select_complete_flag[0] && _select_complete_flag[1] && _select_complete_flag[2] && _select_complete_flag[3])
-	{
-		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-		{
-			std::string tag = PLAYER_TAG + to_string(i + 1);
-			SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
-		}
-
-		_game_start_flag = true;
-	}
 	return 0;
 
 }
@@ -218,12 +257,10 @@ void SelectScene::Draw2D()
 		SpriteBatch.Draw(*_banner, player_num + Vector3(0, 85, 9000), RectWH(256 * _chara_select[i], 0, 256, 512));
 		if (!_select_complete_flag[i])
 		{
-			//SpriteBatch.Draw(*_chara_frame, player_num + Vector3(0, 195, 9000), 1.0f);
 			SpriteBatch.Draw(*_button_ready, player_num + Vector3(1, 420, 9000), 1.0f);
 		}
 		else
 		{
-			//SpriteBatch.Draw(*_button_frame, player_num + Vector3(0, 400, 9000), 1.0f);
 			SpriteBatch.Draw(*_button_go, player_num + Vector3(1, 420, 9000), 1.0f);
 		}
 
@@ -237,7 +274,7 @@ void SelectScene::Draw2D()
 		else
 			SpriteBatch.Draw(*_right_arrow_dark, player_num + Vector3(5, 50, 9000), RectWH(256 * 3, 0, 256, 512));
 
-		if(_game_start_flag)
+		if(_confirming_flag)
 			SpriteBatch.Draw(*_dark_screen, Vector3(0, 0, 8000), 0.2f);
 	}
 }

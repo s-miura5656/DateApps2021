@@ -128,7 +128,7 @@ bool StageManager::Initialize()
 }
 
 int StageManager::Update()
-{
+{/*
 	if (!fall_flag[0] && TimeManager::Instance().GetTimeLeft() <= 100)
 	{
 		for (int i = 0; i < 13; i++)
@@ -139,6 +139,7 @@ int StageManager::Update()
 		}
 		fall_flag[0] = true;
 	}
+
 	if (!fall_flag[1] && TimeManager::Instance().GetTimeLeft() <= 80)
 	{
 		for (int i = 0; i < 11; i++)
@@ -149,6 +150,7 @@ int StageManager::Update()
 		}
 		fall_flag[1] = true;
 	}
+
 	if (!fall_flag[2] && TimeManager::Instance().GetTimeLeft() <= 60)
 	{
 		for (int i = 0; i < 11; i++)
@@ -159,6 +161,7 @@ int StageManager::Update()
 		}
 		fall_flag[2] = true;
 	}
+
 	if (!fall_flag[3] && TimeManager::Instance().GetTimeLeft() <= 40)
 	{
 		for (int i = 0; i < 13; i++)
@@ -168,8 +171,18 @@ int StageManager::Update()
 			_stages[_stages.size() - 1]->SetPosition(Vector3(13 - i, 10 + (0.5 * i), -11));
 		}
 		fall_flag[3] = true;
-	}
+	}*/
 
+	if (!fall_flag[2] && TimeManager::Instance().GetTimeLeft() <= 60)
+	{
+		for (int i = 1; i < 10; i++)
+		{
+			_stages.push_back(new Indestructible(std::to_string(i)));
+			_stages[_stages.size() - 1]->Initialize();
+			_stages[_stages.size() - 1]->SetPosition(Vector3(7, 10 + (0.5 * i), -1 - i));
+		}
+		fall_flag[2] = true;
+	}
 	if(_bg_movie->IsComplete())
 	_bg_movie->Replay();
 	_random_fall_time++;

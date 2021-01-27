@@ -1521,7 +1521,7 @@
                           </Sphere>
                         </GenerationLocationValues>
                         <RendererCommonValues>
-                          <ColorTexture>../../../../Downloads/old ステージ/2021年1月22日/Content/Effect/damage_effect01/Fire4.png</ColorTexture>
+                          <ColorTexture>Fire4.png</ColorTexture>
                           <AlphaBlend>2</AlphaBlend>
                           <FadeOutType>1</FadeOutType>
                           <FadeOut>
@@ -2617,8 +2617,7 @@
                             <End>
                               <Y>
                                 <Center>10</Center>
-                                <Max>12</Max>
-                                <Min>8</Min>
+                                <Max>20</Max>
                               </Y>
                             </End>
                             <StartSpeed>30</StartSpeed>
@@ -2751,7 +2750,7 @@
                           </Sphere>
                         </GenerationLocationValues>
                         <RendererCommonValues>
-                          <ColorTexture>../../../../Downloads/金曜ビルド2021年1月4日：岩井/金曜ビルド2021年1月4日：岩井/Content/Effect/damage_effect01/Fire4.png</ColorTexture>
+                          <ColorTexture>Fire4.png</ColorTexture>
                           <AlphaBlend>2</AlphaBlend>
                           <FadeOutType>1</FadeOutType>
                           <FadeOut>
@@ -3570,6 +3569,7 @@
                 </Color_FCurve>
               </Model>
             </DrawingValues>
+            <IsRendered>False</IsRendered>
             <Name>ball_explosion_red</Name>
             <Children />
           </Node>
@@ -3859,16 +3859,22 @@
             </Color_FCurve>
           </Model>
         </DrawingValues>
+        <IsRendered>False</IsRendered>
         <Name>shock_blake</Name>
         <Children />
       </Node>
       <Node>
         <CommonValues>
           <Life>
-            <Center>40</Center>
-            <Max>40</Max>
-            <Min>40</Min>
+            <Center>50</Center>
+            <Max>50</Max>
+            <Min>50</Min>
           </Life>
+          <GenerationTime>
+            <Center>0.5</Center>
+            <Max>0.5</Max>
+            <Min>0.5</Min>
+          </GenerationTime>
           <GenerationTimeOffset>
             <Center>15</Center>
             <Max>15</Max>
@@ -3884,10 +3890,11 @@
               <Min>15.7</Min>
             </Start>
             <End>
-              <Center>50</Center>
-              <Max>50</Max>
-              <Min>50</Min>
+              <Center>296</Center>
+              <Max>296</Max>
+              <Min>296</Min>
             </End>
+            <EndSpeed>-20</EndSpeed>
           </SingleEasing>
         </ScalingValues>
         <RendererCommonValues>
@@ -3895,9 +3902,17 @@
           <AlphaBlend>2</AlphaBlend>
           <FadeOutType>1</FadeOutType>
           <FadeOut>
-            <Frame>15</Frame>
+            <Frame>30</Frame>
           </FadeOut>
         </RendererCommonValues>
+        <DrawingValues>
+          <Sprite>
+            <ColorAll_Fixed>
+              <G>181</G>
+              <B>181</B>
+            </ColorAll_Fixed>
+          </Sprite>
+        </DrawingValues>
         <Name>explosion_white</Name>
         <Children />
       </Node>
@@ -4708,19 +4723,19 @@
                         <Value>4</Value>
                       </MaxGeneration>
                       <Life>
-                        <Center>60</Center>
-                        <Max>65</Max>
-                        <Min>55</Min>
+                        <Center>50</Center>
+                        <Max>55</Max>
+                        <Min>45</Min>
                       </Life>
                       <GenerationTime>
-                        <Center>2.00001</Center>
-                        <Max>4.00001</Max>
+                        <Center>0.5</Center>
+                        <Max>1.5</Max>
                         <Min>1E-05</Min>
                       </GenerationTime>
                       <GenerationTimeOffset>
-                        <Center>18</Center>
-                        <Max>18</Max>
-                        <Min>18</Min>
+                        <Center>14</Center>
+                        <Max>14</Max>
+                        <Min>14</Min>
                       </GenerationTimeOffset>
                     </CommonValues>
                     <LocationValues>
@@ -4735,9 +4750,9 @@
                         </Start>
                         <End>
                           <Y>
-                            <Center>30</Center>
-                            <Max>32</Max>
-                            <Min>28</Min>
+                            <Center>60</Center>
+                            <Max>62</Max>
+                            <Min>58</Min>
                           </Y>
                         </End>
                         <StartSpeed>30</StartSpeed>
@@ -5127,6 +5142,61 @@
             </Children>
           </Node>
         </Children>
+      </Node>
+      <Node>
+        <CommonValues>
+          <Life>
+            <Center>80</Center>
+            <Max>80</Max>
+            <Min>80</Min>
+          </Life>
+          <GenerationTime>
+            <Center>5</Center>
+            <Max>5</Max>
+            <Min>5</Min>
+          </GenerationTime>
+          <GenerationTimeOffset>
+            <Center>15</Center>
+            <Max>15</Max>
+            <Min>15</Min>
+          </GenerationTimeOffset>
+        </CommonValues>
+        <ScalingValues>
+          <Type>4</Type>
+          <SingleEasing>
+            <Start>
+              <Center>20</Center>
+              <Max>20</Max>
+              <Min>20</Min>
+            </Start>
+            <End>
+              <Center>40</Center>
+              <Max>40</Max>
+              <Min>40</Min>
+            </End>
+          </SingleEasing>
+        </ScalingValues>
+        <RendererCommonValues>
+          <ColorTexture>Particle02.png</ColorTexture>
+          <AlphaBlend>2</AlphaBlend>
+          <FadeIn>
+            <Frame>20</Frame>
+          </FadeIn>
+          <FadeOutType>1</FadeOutType>
+          <FadeOut>
+            <Frame>20</Frame>
+          </FadeOut>
+        </RendererCommonValues>
+        <DrawingValues>
+          <Sprite>
+            <ColorAll_Fixed>
+              <G>238</G>
+              <B>154</B>
+            </ColorAll_Fixed>
+          </Sprite>
+        </DrawingValues>
+        <Name>Node</Name>
+        <Children />
       </Node>
     </Children>
   </Root>
