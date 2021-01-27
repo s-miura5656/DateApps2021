@@ -40,4 +40,5 @@ private:
 	int                         _time = 0;
 	float                       _rotation = 0;
 	std::vector<Vector3>        _random_block_position;
+	bool fall_flag[4];
 };

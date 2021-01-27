@@ -30,12 +30,12 @@ int ArmBase::Update()
 	}
 
 	//! ƒA[ƒ€‚Ì”­Ëó‘Ô‚Ì”»’è
-	if (pad->ButtonDown(BUTTON_INFO::BUTTON_B) && _arm_state == ArmEnum::PunchState::PUNCH)
+	if (pad->Button(BUTTON_INFO::BUTTON_B) && _arm_state == ArmEnum::PunchState::PUNCH)
 	{
-		_arm_state = ArmEnum::PunchState::PUNCH;
-		_i_arm_Data->SetState(_tag, _arm_state);
+		//_arm_state = ArmEnum::PunchState::PUNCH;
+		//_i_arm_Data->SetState(_tag, _arm_state);
 	}
-	else if(pad->Button(BUTTON_INFO::BUTTON_A) && _arm_state == ArmEnum::PunchState::PUNCH)
+	if(pad->ButtonDown(BUTTON_INFO::BUTTON_B) && _arm_state == ArmEnum::PunchState::PUNCH)
 	{
 		_arm_state = ArmEnum::PunchState::RETURN_PUNCH;
 		_i_arm_Data->SetState(_tag, _arm_state);

@@ -47,6 +47,7 @@ bool CrownRotation::Initialize()
 
 int CrownRotation::Update()
 {
+	return 0;
 	auto param_list = _i_player_data->GetAllParametor();
 	
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)

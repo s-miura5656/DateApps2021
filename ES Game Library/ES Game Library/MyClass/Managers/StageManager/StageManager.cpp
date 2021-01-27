@@ -6,6 +6,7 @@
 #include "../../Data/StructList.h"
 #include "../ResouceManager/ResouceManager.h"
 #include "../SceneManager/SceneManager.h"
+#include "../TimeManager/Time.h"
 StageManager::StageManager()
 {
 }
@@ -101,14 +102,6 @@ bool StageManager::Initialize()
 
 	imap_data->SetData(_mapdate);
 
-	_stages.push_back(new Indestructible("aaaa"));
-	_stages[_stages.size() - 1]->Initialize();
-	_stages[_stages.size() - 1]->SetPosition(Vector3(1, 0, -3));
-
-	_stages.push_back(new Indestructible("iiii"));
-	_stages[_stages.size() - 1]->Initialize();
-	_stages[_stages.size() - 1]->SetPosition(Vector3(13, 0, -9));
-
 	_stages.push_back(new Metal);
 	_stages[_stages.size() - 1]->Initialize();
 	_stages[_stages.size() - 1]->SetPosition(Vector3(7, 0, -6));
@@ -126,11 +119,57 @@ bool StageManager::Initialize()
 	_random_item[0] = POWOR_ITEM_TAG;
 	_random_item[1] = SPEED_ITEM_TAG;
 	_random_item[2] = HITPOINT_ITEM_TAG;
+
+	for (int i = 0; i < 4; i++)
+	{
+		fall_flag[i] = false;
+	}
 	return true;
 }
 
 int StageManager::Update()
 {
+	if (!fall_flag[0] && TimeManager::Instance().GetTimeLeft() <= 100)
+	{
+		for (int i = 0; i < 13; i++)
+		{
+			_stages.push_back(new Indestructible(std::to_string(i)));
+			_stages[_stages.size() - 1]->Initialize();
+			_stages[_stages.size() - 1]->SetPosition(Vector3(1 + i, 10 + (0.5 * i), -1));
+		}
+		fall_flag[0] = true;
+	}
+	if (!fall_flag[1] && TimeManager::Instance().GetTimeLeft() <= 80)
+	{
+		for (int i = 0; i < 11; i++)
+		{
+			_stages.push_back(new Indestructible(std::to_string(i)));
+			_stages[_stages.size() - 1]->Initialize();
+			_stages[_stages.size() - 1]->SetPosition(Vector3(13, 10 + (0.5 * i), -1 - i));
+		}
+		fall_flag[1] = true;
+	}
+	if (!fall_flag[2] && TimeManager::Instance().GetTimeLeft() <= 60)
+	{
+		for (int i = 0; i < 11; i++)
+		{
+			_stages.push_back(new Indestructible(std::to_string(i)));
+			_stages[_stages.size() - 1]->Initialize();
+			_stages[_stages.size() - 1]->SetPosition(Vector3(1, 10 + (0.5 * i), -1 - i));
+		}
+		fall_flag[2] = true;
+	}
+	if (!fall_flag[3] && TimeManager::Instance().GetTimeLeft() <= 40)
+	{
+		for (int i = 0; i < 13; i++)
+		{
+			_stages.push_back(new Indestructible(std::to_string(i)));
+			_stages[_stages.size() - 1]->Initialize();
+			_stages[_stages.size() - 1]->SetPosition(Vector3(13 - i, 10 + (0.5 * i), -11));
+		}
+		fall_flag[3] = true;
+	}
+
 	if(_bg_movie->IsComplete())
 	_bg_movie->Replay();
 	_random_fall_time++;

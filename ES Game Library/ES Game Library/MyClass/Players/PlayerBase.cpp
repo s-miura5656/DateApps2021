@@ -573,7 +573,7 @@ void PlayerBase::EffectDraw()
 	if (_status_tag == "")
 		return;
 	
-	_effect.at(_status_tag)->SetPosition(_transform.position + Vector3_Up);
+	_effect.at(_status_tag)->SetPosition(_transform.position);
 	if(_status_tag == ITEM_ARM_SPEEDUP)
 		_effect.at(_status_tag)->SetPosition(_transform.position + Vector3(0,0.5,0));
 	_effect.at(_status_tag)->SetRotation(Vector3(-15, 0, 0));

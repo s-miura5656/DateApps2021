@@ -39,8 +39,8 @@ bool Player::Initialize()
 	_model                 = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 	_shader		           = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
 	auto&& effect          = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damage_effect02.efk"));
-	auto&& playerspeedup   = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Aura_A/aura_A_01.efk"));
-	auto&& armspeedup      = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/punch_up_effect/punch_up_effect.efk"));
+	auto&& playerspeedup   = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Speedup_Aura_01/speedup_aura_01.efk"));
+	auto&& armspeedup      = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Arm_Aura/arm_aura_01.efk"));
 	auto&& powerdown       = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/DebuffAura/debuff_aura_01.efk"));
 	auto&& thunder         = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Thunder_Aura/thunder_aura.efk"));
 
@@ -90,7 +90,7 @@ bool Player::Initialize()
 
 	_thunder_effect->RegisterParticle(thunder);
 	_thunder_effect->SetNomalEffect();
-	_thunder_effect->SetScale(0.5f);
+	_thunder_effect->SetScale(1.0f);
 
 	_effect.insert(std::make_pair(ITEM_PLAYER_SPEEDUP, std::move(_player_speedup_effect)));
 	_effect.insert(std::make_pair(ITEM_ARM_SPEEDUP, std::move(_arm_speedup_effect)));

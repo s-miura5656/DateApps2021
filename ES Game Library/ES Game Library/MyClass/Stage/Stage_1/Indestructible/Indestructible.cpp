@@ -41,44 +41,19 @@ int Indestructible::Update()
 	//当たり判定を破壊可能ブロックと同じポジションにする
 	if (_hit_box != nullptr)
 	_hit_box->SetHitBoxPosition(_position + Vector3(0, 1, 0));
-	if (_position.x >= 13)
-	{
-		_speed *= -1;
-	}
-	else if(_position.x <= 1)
-	{
-		_speed *= -1;
-	}
-	_position.x += _speed;
-	if (_position.x < 1)
-	{
-		_position.x = 1;
-	}
-	if (_position.x > 13)
-	{
-		_position.x = 13;
-	}
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		std::string arm_tag = ARM_TAG + std::to_string(i + 1);
 
-		float distance = Vector3_Distance(_i_arm_data->GetPosition(arm_tag), _position);
+	_position.y += -0.1;
+	if (_position.y <= 0)
+	{
+		std::unique_ptr<IMapData> map_data = std::make_unique<IMapData>();
+		auto data = map_data->GetData();
 
-		if (!_hit_box->Tag_Sarch(arm_tag))
-			continue;
+		int x = fabsf(_position.x);
+		int z = fabsf(_position.z);
 
-		if (_hit_box->IsHitObjectsSquare(arm_tag))
-		{
-			std::unique_ptr<IArmData> arm_data = std::make_unique<IArmData>();
-			int state = arm_data->GetState(arm_tag);
-
-			if (state == ArmEnum::PunchState::RETURN_PUNCH)
-			{
-				return 0;
-			}
-
-			arm_data->SetState(arm_tag, ArmEnum::PunchState::RETURN_PUNCH);
-		}
+		data[z][x] = 'i';
+		map_data->SetData(data);
+		_position.y = 0;
 	}
 	return 0;
 }
