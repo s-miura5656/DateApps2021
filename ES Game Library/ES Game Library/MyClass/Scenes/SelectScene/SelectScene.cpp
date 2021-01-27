@@ -44,6 +44,7 @@ bool SelectScene::Initialize()
 		auto path = ConvertFilePath("Player/", PLAYER_TAG + std::to_string(i + 1), ".png");
 		texture = ResouceManager::Instance().LordSpriteFile(path.c_str());
 		_textures[i]->SetTexture(texture);
+		_textures[i]->SetFlag(false);
 	}
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
@@ -57,6 +58,8 @@ bool SelectScene::Initialize()
 		_select_count[i] = 0;
 		_banner_color[i] = i;
 		_old_x_stick[i] = 0.0f;
+		_left_arrow_flag[i] = false;
+		_right_arrow_flag[i] = false;
 	}
 
 	_confirming_flag = false;
@@ -143,11 +146,10 @@ int SelectScene::Update()
 				}*/
 
 				//! スティック倒して一定時間で次のカラーへ
-				_select_count[i]++;
+				//_select_count[i]++;
 
 				//if (_select_count[i] >= 10)
 				//{
-				_textures[_chara_select[i]]->SetFlag(false);
 			
 				//	std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _chara_select[i]-- : _chara_select[i]++;
 				//	std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _banner_color[i]-- : _banner_color[i]++;
@@ -155,13 +157,17 @@ int SelectScene::Update()
 
 				//	//_select_count[i] = 0;
 				//}
+
 //				if (_old_x_stick[i] <= 0.0f && pad->Stick(STICK_INFO::LEFT_STICK).x > 0.0f)
 				const auto STICK_DELTA = pad->Stick(STICK_INFO::LEFT_STICK).x - _old_x_stick[i];
 				if (STICK_DELTA >= Axis_Max / 8 && pad->Stick(STICK_INFO::LEFT_STICK).x >= Axis_Max * 0.90f)
 				{
-					_chara_select[i]++;
-					_banner_color[i]++;
-					ColorSelect(i, pad);
+//					_chara_select[i]++;
+//					_banner_color[i]++;
+//					ColorSelect(i, pad);
+
+					_textures[_chara_select[i]]->SetFlag(false);
+					_banner_color[i] = ColorSelect2(i, +1);
 
 					_right_arrow_flag[i] = false;
 					_left_arrow_flag[i] = true;
@@ -169,22 +175,25 @@ int SelectScene::Update()
 //				else if (_old_x_stick[i] >= 0.0f && pad->Stick(STICK_INFO::LEFT_STICK).x < 0.0f)
 				else if (STICK_DELTA <= Axis_Min / 8 && pad->Stick(STICK_INFO::LEFT_STICK).x <= Axis_Min * 0.90f)
 				{
-					_chara_select[i]--;
-					_banner_color[i]--;
-					ColorSelect(i, pad);
+//					_chara_select[i]--;
+//					_banner_color[i]--;
+//					ColorSelect(i, pad);
+					_textures[_chara_select[i]]->SetFlag(false);
+					_banner_color[i] = ColorSelect2(i, -1);
 
 					_left_arrow_flag[i] = false;
 					_right_arrow_flag[i] = true;
 				}
 			}
 		}
+
 		_old_x_stick[i] = pad->Stick(STICK_INFO::LEFT_STICK).x;
 
-		if (_banner_color[i] > TEXTURE_MAX - 1)
-			_banner_color[i] = 0;
+		//if (_banner_color[i] > TEXTURE_MAX - 1)
+		//	_banner_color[i] = 0;
 
-		if (_banner_color[i] < 0)
-			_banner_color[i] = TEXTURE_MAX - 1;
+		//if (_banner_color[i] < 0)
+		//	_banner_color[i] = TEXTURE_MAX - 1;
 
 		//! カラー再選択
 		if (_select_complete_flag[i])
@@ -369,3 +378,25 @@ void SelectScene::ColorSelect(int player_number, BaseInput* pad)
 	}
 }
 
+int SelectScene::ColorSelect2(int player_number, int direction)
+{
+	int select_color = _chara_select[player_number] + direction;
+	while (true)
+	{
+		if (select_color < 0)
+			select_color = _textures.size() - 1;
+		else if (select_color >= _textures.size())
+			select_color = 0;
+
+		if (!_textures[select_color]->IsFlag())
+		{
+			_chara_select[player_number] = select_color;
+			_textures[select_color]->SetFlag(true);
+			break;
+		}
+
+		select_color += direction;
+	}
+
+	return select_color;
+}
