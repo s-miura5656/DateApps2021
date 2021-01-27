@@ -35,8 +35,9 @@ void PointAnimation::MovePointAnimation(Vector3 player_pos)
 	//! 入手ポイントの移動
 	for (int i = 0; i < pointMove.size(); ++i)
 	{
-		Vector3 bezier = Vector3_Bezier(player_pos, corner[0], corner[0], banner_position + Vector3(100, 40, 0), pointMove[i].theta);
-		Vector3 bezier2 = Vector3_Bezier(player_pos, corner[1], corner[1], banner_position + Vector3(0, 0, 0), pointMove[i].theta);
+		//Vector3 bezier = Vector3_Bezier(player_pos, corner[0], corner[0], banner_position + Vector3(100, 40, 0), pointMove[i].theta);
+		//Vector3 bezier2 = Vector3_Bezier(player_pos, corner[1], corner[1], banner_position + Vector3(0, 0, 0), pointMove[i].theta);
+		Vector3 bezier = Vector3_Bezier(player_pos, player_pos, player_pos, player_pos, pointMove[i].theta);
 		pointMove[i].theta += 0.008;
 
 		//! 1pと2pのベジェ曲線
