@@ -112,6 +112,13 @@ bool StageManager::Initialize()
 	mat.Specular = Color(1.0f, 1.0f, 1.0f);
 	_respawn->SetMaterial(mat);
 
+	_stages.push_back(new Warp(WARP_TAG + std::to_string(17)));
+	_stages[_stages.size() - 1]->Initialize();
+	_stages[_stages.size() - 1]->SetPosition(Vector3(1, 0.1, -7));
+	_stages.push_back(new Warp(WARP_TAG + std::to_string(137)));
+	_stages[_stages.size() - 1]->Initialize();
+	_stages[_stages.size() - 1]->SetPosition(Vector3(13, 0.1, -7));
+
 	delete imap_data;
 	delete iplayer_data;
 

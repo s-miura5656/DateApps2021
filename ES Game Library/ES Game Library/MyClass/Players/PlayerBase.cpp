@@ -216,13 +216,28 @@ void PlayerBase::Draw3D()
 		_destroy_effect->SetPosition(_transform.position + Vector3_Up);
 		_destroy_effect->PlayOneShot();
 		_destroy_effect->Draw();
+		_respawn_effect->SetPosition(IMapData::GetRespawnPosition(_tag) + Vector3_Up);
+		_respawn_effect->SetRotation(Vector3(-15, 0, 0));
+		_respawn_effect->PlayOneShot();
+		_respawn_effect->Draw();
 	}
 	else
 	{
+		if (_warp_flag && _warp_other_pos == _transform.position)
+		{
+			_warp_effect->SetPosition(_transform.position + Vector3_Up);
+			_warp_effect->SetRotation(Vector3(-15, 0, 0));
+			_warp_effect->PlayOneShot();
+			_warp_effect->Draw();
+		}
+		else
+		{
+			_warp_effect->Stop();
+		}
 		EffectDraw();
 
 		_destroy_effect->Stop();
-		
+		_respawn_effect->Stop();
 		ChangeAnimation();
 
 		DrawModel();
@@ -234,6 +249,7 @@ void PlayerBase::Draw3D()
 		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
 		{
 			_smoke_effect->SetPosition(_transform.position + Vector3_Up);
+			_smoke_effect->SetRotation(Vector3(15, 0, 0));
 			_smoke_effect->PlayOneShot();
 			_smoke_effect->Draw();
 		}

@@ -69,6 +69,8 @@ protected:
 	std::unique_ptr<IMapData>                         _i_map_data;
 	std::unique_ptr<ParticleSystem>                   _destroy_effect;
 	std::unique_ptr<ParticleSystem>                   _smoke_effect;
+	std::unique_ptr<ParticleSystem>                   _respawn_effect;
+	std::unique_ptr<ParticleSystem>                   _warp_effect;
 	std::unique_ptr<ParticleSystem>                   _player_speedup_effect;
 	std::unique_ptr<ParticleSystem>                   _arm_speedup_effect;
 	std::unique_ptr<ParticleSystem>                   _powerdown_effect;
