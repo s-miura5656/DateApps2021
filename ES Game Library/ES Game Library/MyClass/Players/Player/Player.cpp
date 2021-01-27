@@ -13,6 +13,7 @@ Player::Player(std::string tag)
 	
 	_hit_box.reset(new HitBox());
 	_destroy_effect.reset(new ParticleSystem);
+	_smoke_effect.reset(new ParticleSystem);
 	_player_speedup_effect.reset(new ParticleSystem);
 	_arm_speedup_effect.reset(new ParticleSystem);
 	_powerdown_effect.reset(new ParticleSystem);
@@ -39,6 +40,7 @@ bool Player::Initialize()
 	_model                 = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 	_shader		           = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
 	auto&& effect          = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damege_0127.efk"));
+	auto&& smoke           = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Robot_Smoke/robot_smoke_01.efk"));
 	auto&& playerspeedup   = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Speedup_Aura_01/speedup_aura_01.efk"));
 	auto&& armspeedup      = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Arm_Aura/arm_aura_02.efk"));
 	auto&& powerdown       = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/DebuffAura/debuff_aura_01.efk"));
@@ -77,6 +79,10 @@ bool Player::Initialize()
 	_destroy_effect->RegisterParticle(effect);
 	_destroy_effect->SetSpeed(1.0f);
 	_destroy_effect->SetScale(3.0f);
+
+	_smoke_effect->RegisterParticle(smoke);
+	_destroy_effect->SetSpeed(1.0f);
+	_destroy_effect->SetScale(0.5f);
 
 	_player_speedup_effect->RegisterParticle(playerspeedup);
 	_player_speedup_effect->SetNomalEffect();

@@ -32,7 +32,7 @@ void MainCamera::Shake()
 		return;
 	}
 
-	float x = 7 + ((60 / _time) * _num) * 0.01;
+	float x = 7 + ((60 / _time) * _num) * 0.015;
 
 	_time++;
 	_num *= -1;

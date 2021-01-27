@@ -112,13 +112,6 @@ bool StageManager::Initialize()
 	mat.Specular = Color(1.0f, 1.0f, 1.0f);
 	_respawn->SetMaterial(mat);
 
-	_stages.push_back(new Warp(WARP_TAG + std::to_string(17)));
-	_stages[_stages.size() - 1]->Initialize();
-	_stages[_stages.size() - 1]->SetPosition(Vector3(1, 0.1, -7));
-	_stages.push_back(new Warp(WARP_TAG + std::to_string(137)));
-	_stages[_stages.size() - 1]->Initialize();
-	_stages[_stages.size() - 1]->SetPosition(Vector3(13, 0.1, -7));
-
 	delete imap_data;
 	delete iplayer_data;
 
@@ -182,14 +175,25 @@ int StageManager::Update()
 
 	if (!fall_flag[2] && TimeManager::Instance().GetTimeLeft() <= 60)
 	{
+		_stages.push_back(new Warp(WARP_TAG + std::to_string(17)));
+		_stages[_stages.size() - 1]->Initialize();
+		_stages[_stages.size() - 1]->SetPosition(Vector3(1, 0.1, -7));
+		_stages.push_back(new Warp(WARP_TAG + std::to_string(137)));
+		_stages[_stages.size() - 1]->Initialize();
+		_stages[_stages.size() - 1]->SetPosition(Vector3(13, 0.1, -7));
+		fall_flag[2] = true;
+	}
+	if (!fall_flag[3] && TimeManager::Instance().GetTimeLeft() <= 90)
+	{
 		for (int i = 1; i < 10; i++)
 		{
 			_stages.push_back(new Indestructible(std::to_string(i)));
 			_stages[_stages.size() - 1]->Initialize();
 			_stages[_stages.size() - 1]->SetPosition(Vector3(7, 10 + (0.5 * i), -1 - i));
 		}
-		fall_flag[2] = true;
+		fall_flag[3] = true;
 	}
+
 	if(_bg_movie->IsComplete())
 	_bg_movie->Replay();
 	_random_fall_time++;

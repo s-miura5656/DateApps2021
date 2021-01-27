@@ -283,14 +283,14 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 		//}
 
 		//! playerの座標に入手したポイントがたどり着いたとき 1p & 2p
-		if (player_index == 0 || player_index == 1) {
+		//if (player_index == 0 || player_index == 1) {
 			if (pointAnimation[i].position.y <= player_num.y - 81) {
 				/*add_point += pointAnimation[i].point;
 				_font_size = 0.6 + ((float)(add_point - score) / (float)1000);
 				delta_point = (add_point - score) / GameTimer.GetFPS() * 4;*/
 				pointAnimation.erase(pointAnimation.begin() + i);
 			}
-		}
+		//}
 
 		//!  playerの座標に入手したポイントがたどり着いたとき 3p & 4p
 		/*if (player_index == 2 || player_index == 3) {

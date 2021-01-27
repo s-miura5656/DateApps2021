@@ -134,6 +134,7 @@ void AudioManager::GameEndWhistlePlay()
 {
 	if (_whistle_flag)
 		return;
+	if (!_titlebgm->IsPlaying())
 	_whistle->Play();
 	_whistle_flag = true;
 }

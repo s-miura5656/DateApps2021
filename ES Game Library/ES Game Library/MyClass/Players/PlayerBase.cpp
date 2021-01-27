@@ -231,7 +231,16 @@ void PlayerBase::Draw3D()
 		_hit_box->SetModelScale();
 		
 //		_hit_box->Draw3D();
-		
+		if (_i_player_data->GetState(_tag) == PlayerEnum::Animation::ATTACK)
+		{
+			_smoke_effect->SetPosition(_transform.position + Vector3_Up);
+			_smoke_effect->PlayOneShot();
+			_smoke_effect->Draw();
+		}
+		else
+		{
+			_smoke_effect->Stop();
+		}
 		if (_arm != nullptr)
 		{
 			_arm->Draw3D();
