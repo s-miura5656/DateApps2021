@@ -22,6 +22,12 @@ void PointAnimation::RegisterPointAnimation(Vector3 player_pos, std::string tag,
 		pointAnim.theta = 0.0f;
 		pointAnim.alpha = 1.0f;
 		pointMove.push_back(pointAnim);
+
+		for (int i = 0; i < pointMove.size(); ++i) {
+			add_point += pointMove[i].point;
+			_font_size = 0.5 + ((float)(add_point - score) / (float)1000);
+			delta_point = (add_point - score) / GameTimer.GetFPS() * 4;
+		}
 	}
 	prev_rank_point = rank_point;
 }
