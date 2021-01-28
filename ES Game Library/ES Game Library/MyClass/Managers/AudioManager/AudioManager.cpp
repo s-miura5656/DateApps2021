@@ -20,6 +20,7 @@ bool AudioManager::Initialize()
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Item/thunder.wav"), _thunder, MAX_PLAY, false);
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/select.wav"), _select, MAX_PLAY, false);
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Cancel.wav"), _cancel, MAX_PLAY, false);
+	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/warp.wav"), _warp, MAX_PLAY, false);
 	_whistle        = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/whistle.wav"));
 	_signal         = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/signal.wav"));
 	_titlebgm       = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/title.wav"));
@@ -124,6 +125,17 @@ void AudioManager::PowerDownPlay()
 void AudioManager::ThunderPlay()
 {
 	for (auto& sound : _thunder)
+	{
+		if (!sound->IsPlaying())
+		{
+			sound->Play();
+			break;
+		}
+	}
+}
+void AudioManager::WarpPlay()
+{
+	for (auto& sound : _warp)
 	{
 		if (!sound->IsPlaying())
 		{

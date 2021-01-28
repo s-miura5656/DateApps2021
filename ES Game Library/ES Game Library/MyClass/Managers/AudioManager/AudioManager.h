@@ -27,6 +27,8 @@ public:
 	void PowerDownPlay();
 	//! サンダー取得音
 	void ThunderPlay();
+	//! ワープ音
+	void WarpPlay();
 	//!メイン終了ホイッスル
 	void GameEndWhistlePlay();
 	//!タイトルBGMの開始
@@ -66,6 +68,7 @@ private:
 	SOUND _thunder[MAX_PLAY];
 	SOUND _select[MAX_PLAY];
 	SOUND _cancel[MAX_PLAY];
+	SOUND _warp[MAX_PLAY];
 	SOUND _whistle;
 	SOUND _signal;
 	MUSIC _titlebgm;

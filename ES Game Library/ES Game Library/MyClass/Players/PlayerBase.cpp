@@ -304,6 +304,7 @@ void PlayerBase::Warp(Vector3 warppos)
 		_warp_effect->SetPosition(_transform.position + Vector3_Up);
 		_warp_effect->SetRotation(Vector3(-15, 0, 0));
 		_warp_effect->PlayOneShot();
+		AudioManager::Instance().WarpPlay();
 	}
 }
 #pragma region •`‰æŠÖŒW
@@ -330,7 +331,10 @@ void PlayerBase::DrawModel()
 	{
 		_shader->SetTechnique("FixAnimationModel");
 
-		if (!_i_player_data->GetInvincibleMode(_tag))
+		if (_warp_flag && _move_flag)
+		{
+		}
+		else if (!_i_player_data->GetInvincibleMode(_tag))
 		{
 			_model->Draw(_shader);
 		}
