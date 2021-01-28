@@ -93,6 +93,4 @@ public:
 	bool a_and_e;
 
 	SPRITE fall_block;
-	float fall_block_alpha = 1.0f;
-	float fall_block_size = 0.f;
 };

@@ -272,12 +272,6 @@ void MainUi::Draw2D()
 	{
 		SpriteBatch.Draw(*number_sprite, Countdown_pos, number[ones], end_a, Vector3(0, 0, 0), Vector3(32, 32, 0), font_size_e);
 	}
-
-	if (fall_block_size <= 1.0f)
-	{
-		fall_block_size += 0.03;
-		SpriteBatch.Draw(*fall_block, Vector3(390 ,110 , 0), 1.0f, Vector3(0, 0, 0), Vector3(250, 250, 0), fall_block_size);
-	}
 }
 
 void MainUi::ColorBlinking()
