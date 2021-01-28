@@ -185,21 +185,21 @@ void StageManager::Draw3D()
 	{
 		_stages[i]->Draw3D();
 	}
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-	{
-		std::string tag = PLAYER_TAG + std::to_string(i + 1);
-		Material mat;
-		mat.Diffuse = Color(1.0f, 1.0f, 1.0f);
-		mat.Ambient = Color(1.0f, 1.0f, 1.0f);
-		mat.Specular = Color(1.0f, 1.0f, 1.0f);
-		_respawn->SetMaterial(mat);
-		_rotation += 3;
-		if (_rotation >= 360)
-			_rotation = 0;
-		_respawn->SetRotation(Vector3(0, _rotation, 0));
-		_respawn->SetPosition(IMapData::GetRespawnPosition(tag));
-		_respawn->Draw();
-	}
+	//for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	//{
+	//	std::string tag = PLAYER_TAG + std::to_string(i + 1);
+	//	Material mat;
+	//	mat.Diffuse = Color(1.0f, 1.0f, 1.0f);
+	//	mat.Ambient = Color(1.0f, 1.0f, 1.0f);
+	//	mat.Specular = Color(1.0f, 1.0f, 1.0f);
+	//	_respawn->SetMaterial(mat);
+	//	_rotation += 3;
+	//	if (_rotation >= 360)
+	//		_rotation = 0;
+	//	_respawn->SetRotation(Vector3(0, _rotation, 0));
+	//	_respawn->SetPosition(IMapData::GetRespawnPosition(tag));
+	//	_respawn->Draw();
+	//}
 }
 
 void StageManager::DrawAlpha3D()
