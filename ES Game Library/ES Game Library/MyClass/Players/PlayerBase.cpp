@@ -43,6 +43,12 @@ int PlayerBase::Update()
 	{
 		_respawn_time++;
 
+		if (_respawn_time > 120)
+		{
+			_respawn_effect->SetPosition(IMapData::GetRespawnPosition(_tag) + Vector3_Up);
+			_respawn_effect->SetRotation(Vector3(-15, 0, 0));
+			_respawn_effect->PlayOneShot();
+		}
 		if (_respawn_time > RESPAWN_TIME)
 		{
 			player_data->SetHitPoint(_tag, RESPAWN_HITPOINT);
@@ -210,16 +216,13 @@ void PlayerBase::Draw2D()
 
 void PlayerBase::Draw3D()
 {
+	_respawn_effect->Draw();
 	//! Ž€‚ñ‚Å‚éŽž‚Æ‚»‚¤‚Å‚È‚¢‚Æ‚«‚Ì”»’è
 	if (_death_flag)
 	{
 		_destroy_effect->SetPosition(_transform.position + Vector3_Up);
 		_destroy_effect->PlayOneShot();
 		_destroy_effect->Draw();
-		_respawn_effect->SetPosition(IMapData::GetRespawnPosition(_tag) + Vector3_Up);
-		_respawn_effect->SetRotation(Vector3(-15, 0, 0));
-		_respawn_effect->PlayOneShot();
-		_respawn_effect->Draw();
 	}
 	else
 	{

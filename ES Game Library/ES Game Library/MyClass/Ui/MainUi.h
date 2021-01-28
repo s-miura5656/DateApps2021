@@ -92,5 +92,4 @@ public:
 	float finsh_a;
 	bool a_and_e;
 
-	SPRITE fall_block;
 };

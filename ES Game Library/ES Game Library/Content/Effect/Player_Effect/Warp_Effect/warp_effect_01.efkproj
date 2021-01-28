@@ -6,7 +6,7 @@
       <Node>
         <CommonValues>
           <MaxGeneration>
-            <Infinite>True</Infinite>
+            <Value>3</Value>
           </MaxGeneration>
           <Life>
             <Center>30</Center>
@@ -173,7 +173,7 @@
       <Node>
         <CommonValues>
           <MaxGeneration>
-            <Infinite>True</Infinite>
+            <Value>3</Value>
           </MaxGeneration>
           <GenerationTime>
             <Center>20</Center>
@@ -210,9 +210,9 @@
             <Outer_Easing>
               <End>
                 <X>
-                  <Center>1</Center>
-                  <Max>1</Max>
-                  <Min>1</Min>
+                  <Center>0.5</Center>
+                  <Max>0.5</Max>
+                  <Min>0.5</Min>
                 </X>
               </End>
             </Outer_Easing>
@@ -220,9 +220,9 @@
             <Inner_Easing>
               <End>
                 <X>
-                  <Center>5</Center>
-                  <Max>5</Max>
-                  <Min>5</Min>
+                  <Center>2.5</Center>
+                  <Max>2.5</Max>
+                  <Min>2.5</Min>
                 </X>
               </End>
             </Inner_Easing>
@@ -286,7 +286,7 @@
       <Node>
         <CommonValues>
           <MaxGeneration>
-            <Infinite>True</Infinite>
+            <Value>3</Value>
           </MaxGeneration>
           <Life>
             <Center>50</Center>

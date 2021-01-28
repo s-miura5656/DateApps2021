@@ -30,8 +30,6 @@ bool MainUi::Initialize()
 	number_sprite = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber.png"));
 	start_end         = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/Start_finish.png"));
 
-	fall_block = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/blinking.png"));
-
 	time_banner_pos = Vector3(640 - 125, 10, 1);
 	minutes_pos = Vector3(530, 20, 0);
 	tens_place_pos = Vector3(630, 20, 0);

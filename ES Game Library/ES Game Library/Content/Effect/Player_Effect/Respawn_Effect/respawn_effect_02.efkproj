@@ -6,7 +6,7 @@
       <Node>
         <CommonValues>
           <MaxGeneration>
-            <Infinite>True</Infinite>
+            <Value>5</Value>
           </MaxGeneration>
           <Life>
             <Center>30</Center>
@@ -41,8 +41,7 @@
           </PVA>
         </RotationValues>
         <RendererCommonValues>
-          <ColorTexture>Shock_wave_ring004.png</ColorTexture>
-          <AlphaBlend>2</AlphaBlend>
+          <ColorTexture>Star.png</ColorTexture>
           <FadeInType>1</FadeInType>
           <FadeIn>
             <Frame>4</Frame>
@@ -56,7 +55,7 @@
         <DrawingValues>
           <Type>4</Type>
           <Ring>
-            <VertexCount>8</VertexCount>
+            <VertexCount>30</VertexCount>
             <Outer>2</Outer>
             <Outer_Fixed>
               <Location>
@@ -66,26 +65,26 @@
             <Outer_Easing>
               <Start>
                 <X>
-                  <Center>1</Center>
-                  <Max>1</Max>
-                  <Min>1</Min>
+                  <Center>0.8</Center>
+                  <Max>0.8</Max>
+                  <Min>0.8</Min>
                 </X>
                 <Y>
-                  <Center>1</Center>
-                  <Max>1</Max>
-                  <Min>1</Min>
+                  <Center>0.5</Center>
+                  <Max>0.5</Max>
+                  <Min>0.5</Min>
                 </Y>
               </Start>
               <End>
                 <X>
-                  <Center>1.5</Center>
-                  <Max>1.5</Max>
-                  <Min>1.5</Min>
+                  <Center>1</Center>
+                  <Max>1</Max>
+                  <Min>1</Min>
                 </X>
                 <Y>
-                  <Center>6</Center>
-                  <Max>6</Max>
-                  <Min>6</Min>
+                  <Center>1</Center>
+                  <Max>1</Max>
+                  <Min>1</Min>
                 </Y>
               </End>
               <EndSpeed>-30</EndSpeed>
@@ -99,16 +98,16 @@
             <Inner_Easing>
               <Start>
                 <X>
-                  <Center>1</Center>
-                  <Max>1</Max>
-                  <Min>1</Min>
+                  <Center>0.4</Center>
+                  <Max>0.4</Max>
+                  <Min>0.4</Min>
                 </X>
               </Start>
               <End>
                 <X>
-                  <Center>1.5</Center>
-                  <Max>1.5</Max>
-                  <Min>1.5</Min>
+                  <Center>0.7</Center>
+                  <Max>0.7</Max>
+                  <Min>0.7</Min>
                 </X>
               </End>
               <EndSpeed>-30</EndSpeed>
@@ -145,9 +144,9 @@
               </A>
             </OuterColor_Random>
             <CenterColor_Fixed>
-              <R>14</R>
-              <G>199</G>
-              <B>181</B>
+              <R>128</R>
+              <G>222</G>
+              <B>118</B>
             </CenterColor_Fixed>
             <CenterColor_Random>
               <R>
@@ -174,7 +173,7 @@
       <Node>
         <CommonValues>
           <MaxGeneration>
-            <Infinite>True</Infinite>
+            <Value>5</Value>
           </MaxGeneration>
           <GenerationTime>
             <Center>20</Center>
@@ -211,9 +210,9 @@
             <Outer_Easing>
               <End>
                 <X>
-                  <Center>1</Center>
-                  <Max>1</Max>
-                  <Min>1</Min>
+                  <Center>0.5</Center>
+                  <Max>0.5</Max>
+                  <Min>0.5</Min>
                 </X>
               </End>
             </Outer_Easing>
@@ -221,9 +220,9 @@
             <Inner_Easing>
               <End>
                 <X>
-                  <Center>5</Center>
-                  <Max>5</Max>
-                  <Min>5</Min>
+                  <Center>2.5</Center>
+                  <Max>2.5</Max>
+                  <Min>2.5</Min>
                 </X>
               </End>
             </Inner_Easing>
@@ -272,8 +271,8 @@
               </End>
             </OuterColor_Easing>
             <CenterColor_Fixed>
-              <R>101</R>
-              <B>210</B>
+              <R>178</R>
+              <B>163</B>
             </CenterColor_Fixed>
             <InnerColor_Fixed>
               <R>254</R>
@@ -281,97 +280,99 @@
             </InnerColor_Fixed>
           </Ring>
         </DrawingValues>
-        <IsRendered>False</IsRendered>
         <Name>ring</Name>
         <Children />
       </Node>
       <Node>
         <CommonValues>
           <MaxGeneration>
-            <Infinite>True</Infinite>
+            <Value>5</Value>
           </MaxGeneration>
+          <Life>
+            <Center>30</Center>
+            <Max>30</Max>
+            <Min>30</Min>
+          </Life>
           <GenerationTime>
-            <Center>2</Center>
-            <Max>2</Max>
-            <Min>2</Min>
+            <Center>10</Center>
+            <Max>10</Max>
+            <Min>10</Min>
           </GenerationTime>
         </CommonValues>
-        <LocationValues>
-          <Type>2</Type>
-          <Easing>
-            <End>
-              <Y>
-                <Center>1</Center>
-                <Max>1</Max>
-                <Min>1</Min>
-              </Y>
-            </End>
-            <StartSpeed>30</StartSpeed>
-          </Easing>
-        </LocationValues>
-        <ScalingValues>
-          <Type>2</Type>
-          <Easing>
-            <Start>
-              <X>
-                <Center>0.2</Center>
-                <Max>0.2</Max>
-                <Min>0.2</Min>
-              </X>
-              <Y>
-                <Center>0.2</Center>
-                <Max>0.2</Max>
-                <Min>0.2</Min>
-              </Y>
-              <Z>
-                <Center>0.2</Center>
-                <Max>0.2</Max>
-                <Min>0.2</Min>
-              </Z>
-            </Start>
-            <End>
-              <X>
-                <Center>0.8</Center>
-                <Max>0.8</Max>
-                <Min>0.8</Min>
-              </X>
-              <Y>
-                <Center>0.8</Center>
-                <Max>0.8</Max>
-                <Min>0.8</Min>
-              </Y>
-              <Z>
-                <Center>0.8</Center>
-                <Max>0.8</Max>
-                <Min>0.8</Min>
-              </Z>
-            </End>
-            <StartSpeed>30</StartSpeed>
-            <EndSpeed>-30</EndSpeed>
-          </Easing>
-        </ScalingValues>
-        <GenerationLocationValues>
-          <Type>3</Type>
-          <Circle>
-            <AxisDirection>1</AxisDirection>
-            <Radius>
-              <Center>1</Center>
-              <Max>1</Max>
-              <Min>1</Min>
-            </Radius>
-            <Type>1</Type>
-          </Circle>
-        </GenerationLocationValues>
+        <RotationValues>
+          <Fixed>
+            <Rotation>
+              <X>-90</X>
+            </Rotation>
+          </Fixed>
+        </RotationValues>
         <RendererCommonValues>
-          <ColorTexture>triangle.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
-          <FadeInType>1</FadeInType>
           <FadeOutType>1</FadeOutType>
           <FadeOut>
-            <Frame>800</Frame>
+            <Frame>20</Frame>
           </FadeOut>
         </RendererCommonValues>
-        <Name>Node</Name>
+        <DrawingValues>
+          <Type>4</Type>
+          <Ring>
+            <Outer>2</Outer>
+            <Outer_Fixed>
+              <Location>
+                <X>1</X>
+              </Location>
+            </Outer_Fixed>
+            <Outer_Easing>
+              <Start>
+                <X>
+                  <Center>0.9</Center>
+                  <Max>0.9</Max>
+                  <Min>0.9</Min>
+                </X>
+              </Start>
+              <End>
+                <X>
+                  <Center>1</Center>
+                  <Max>1</Max>
+                  <Min>1</Min>
+                </X>
+                <Y>
+                  <Center>1.5</Center>
+                  <Max>1.5</Max>
+                  <Min>1.5</Min>
+                </Y>
+              </End>
+            </Outer_Easing>
+            <Inner>2</Inner>
+            <Inner_Easing>
+              <Start>
+                <X>
+                  <Center>0.4</Center>
+                  <Max>0.4</Max>
+                  <Min>0.4</Min>
+                </X>
+              </Start>
+              <End>
+                <X>
+                  <Center>0.5</Center>
+                  <Max>0.5</Max>
+                  <Min>0.5</Min>
+                </X>
+                <Y>
+                  <Center>1.5</Center>
+                  <Max>1.5</Max>
+                  <Min>1.5</Min>
+                </Y>
+              </End>
+            </Inner_Easing>
+            <CenterColor_Fixed>
+              <R>180</R>
+              <G>244</G>
+              <B>180</B>
+            </CenterColor_Fixed>
+          </Ring>
+        </DrawingValues>
+        <Name>ring02</Name>
         <Children />
       </Node>
     </Children>

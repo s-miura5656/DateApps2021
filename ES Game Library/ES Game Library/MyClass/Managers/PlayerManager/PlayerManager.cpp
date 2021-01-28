@@ -70,7 +70,7 @@ bool PlayerManager::Initialize()
 
 int PlayerManager::Update()
 {
-	if (TimeManager::Instance().StartFlag())
+	if (TimeManager::Instance().StartFlag() && TimeManager::Instance().GetTransitionTimer() <= 0)
 	{
 		RankingSort();
 

@@ -6,7 +6,7 @@
       <Node>
         <CommonValues>
           <MaxGeneration>
-            <Infinite>True</Infinite>
+            <Value>5</Value>
           </MaxGeneration>
           <Life>
             <Center>30</Center>
@@ -173,7 +173,7 @@
       <Node>
         <CommonValues>
           <MaxGeneration>
-            <Infinite>True</Infinite>
+            <Value>5</Value>
           </MaxGeneration>
           <GenerationTime>
             <Center>20</Center>
@@ -188,6 +188,9 @@
             </Rotation>
           </Fixed>
         </RotationValues>
+        <ScalingValues>
+          <Type>1</Type>
+        </ScalingValues>
         <RendererCommonValues>
           <FadeInType>1</FadeInType>
           <FadeIn>
@@ -207,9 +210,9 @@
             <Outer_Easing>
               <End>
                 <X>
-                  <Center>1</Center>
-                  <Max>1</Max>
-                  <Min>1</Min>
+                  <Center>0.5</Center>
+                  <Max>0.5</Max>
+                  <Min>0.5</Min>
                 </X>
               </End>
             </Outer_Easing>
@@ -217,9 +220,9 @@
             <Inner_Easing>
               <End>
                 <X>
-                  <Center>5</Center>
-                  <Max>5</Max>
-                  <Min>5</Min>
+                  <Center>2.5</Center>
+                  <Max>2.5</Max>
+                  <Min>2.5</Min>
                 </X>
               </End>
             </Inner_Easing>
@@ -279,14 +282,11 @@
         </DrawingValues>
         <Name>ring</Name>
         <Children />
-        <ScalingValues>
-          <Type>1</Type>
-        </ScalingValues>
       </Node>
       <Node>
         <CommonValues>
           <MaxGeneration>
-            <Infinite>True</Infinite>
+            <Value>5</Value>
           </MaxGeneration>
           <Life>
             <Center>35</Center>
@@ -299,6 +299,24 @@
             <Min>10</Min>
           </GenerationTime>
         </CommonValues>
+        <LocationValues>
+          <Easing>
+            <Start>
+              <Y>
+                <Center>1</Center>
+                <Max>1</Max>
+                <Min>1</Min>
+              </Y>
+            </Start>
+            <End>
+              <Y>
+                <Center>2</Center>
+                <Max>2</Max>
+                <Min>2</Min>
+              </Y>
+            </End>
+          </Easing>
+        </LocationValues>
         <RotationValues>
           <Fixed>
             <Rotation>
@@ -387,24 +405,6 @@
         </DrawingValues>
         <Name>Node</Name>
         <Children />
-        <LocationValues>
-          <Easing>
-            <Start>
-              <Y>
-                <Center>1</Center>
-                <Max>1</Max>
-                <Min>1</Min>
-              </Y>
-            </Start>
-            <End>
-              <Y>
-                <Center>2</Center>
-                <Max>2</Max>
-                <Min>2</Min>
-              </Y>
-            </End>
-          </Easing>
-        </LocationValues>
       </Node>
     </Children>
   </Root>
