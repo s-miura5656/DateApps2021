@@ -18,6 +18,8 @@ bool AudioManager::Initialize()
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Item/powerup.wav"), _powerup, MAX_PLAY, false);
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Item/noitem.wav"), _powerdown, MAX_PLAY, false);
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Item/thunder.wav"), _thunder, MAX_PLAY, false);
+	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/select.wav"), _select, MAX_PLAY, false);
+	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/Cancel.wav"), _cancel, MAX_PLAY, false);
 	_whistle        = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/whistle.wav"));
 	_signal         = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/signal.wav"));
 	_titlebgm       = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/title.wav"));
@@ -176,4 +178,26 @@ void AudioManager::ResultBgmPlay()
 void AudioManager::ResultBgmStop()
 {
 	_resultbgm->Stop();
+}
+void AudioManager::SelectPlay()
+{
+	for (auto& sound : _select)
+	{
+		if (!sound->IsPlaying())
+		{
+			sound->Play();
+			break;
+		}
+	}
+}
+void AudioManager::CancelPlay()
+{
+	for (auto& sound : _cancel)
+	{
+		if (!sound->IsPlaying())
+		{
+			sound->Play();
+			break;
+		}
+	}
 }

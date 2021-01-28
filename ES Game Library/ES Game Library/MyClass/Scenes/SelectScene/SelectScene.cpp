@@ -5,7 +5,6 @@
 #include "../../Managers/InputManager/InputManager.h"
 #include "../../Data/IData.h"
 #include"../../Managers/AudioManager/AudioManager.h"
-
 SelectScene::SelectScene()
 {
 
@@ -112,6 +111,8 @@ int SelectScene::Update()
 		//! カラー選択　関数作る
 		if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 		{
+			if (!_select_complete_flag[i])
+				AudioManager::Instance().SelectPlay();
 			_select_complete_flag[i] = true;
 			_player_rotation_flag[i] = true;
 		}
@@ -205,6 +206,7 @@ int SelectScene::Update()
 		{
 			if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
 			{
+				AudioManager::Instance().CancelPlay();
 				_select_complete_flag[i] = false;
 			}
 		}
@@ -224,12 +226,15 @@ int SelectScene::Update()
 		if (_confirming_flag)
 		{
 			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+			{
 				_game_start_flag = true;
+				AudioManager::Instance().SelectPlay();
+			}
 
 			if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
 			{
 				_confirming_flag = false;
-
+				AudioManager::Instance().CancelPlay();
 			}
 
 		}
@@ -239,6 +244,7 @@ int SelectScene::Update()
 			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 			{
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
+				AudioManager::Instance().SelectPlay();
 				AudioManager::Instance().TitleBgmStop();
 			}
 		}

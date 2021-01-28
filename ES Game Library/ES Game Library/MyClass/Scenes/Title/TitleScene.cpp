@@ -4,6 +4,7 @@
 #include"../../Managers/SceneManager/SceneManager.h"
 #include"../../Managers/ResouceManager/ResouceManager.h"
 #include"../../Managers/AudioManager/AudioManager.h"
+#include"../../Managers/AudioManager/AudioManager.h"
 TitleScene::TitleScene()
 {
 }
@@ -118,6 +119,7 @@ int TitleScene::TitleLanding()
 
 			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 			{
+				AudioManager::Instance().SelectPlay();
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::SELECT);
 			}
 			_demo_scene_count++;
@@ -180,6 +182,9 @@ void TitleScene::DemoMove()
 	
 	if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 	{
+		AudioManager::Instance().SelectPlay();
+		_title_logo_position = Vector3(65.0f, -200.0f, +100.0f);
+		_title_logo_alpha = 0.3f;
 		_demo_move_flag = false;
 		_demo_movie->Pause();
 		_play_count += 1;

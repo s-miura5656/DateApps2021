@@ -45,6 +45,10 @@ public:
 	void ResultBgmPlay();
 	//!リザルトBGMの終了
 	void ResultBgmStop();
+	//!
+	void SelectPlay();
+	//!
+	void CancelPlay();
 	//! シングルトンオブジェクトを他で呼び出す時の記述
 	static AudioManager& Instance() {
 		static AudioManager instance;
@@ -60,6 +64,8 @@ private:
 	SOUND _powerup[MAX_PLAY];
 	SOUND _powerdown[MAX_PLAY];
 	SOUND _thunder[MAX_PLAY];
+	SOUND _select[MAX_PLAY];
+	SOUND _cancel[MAX_PLAY];
 	SOUND _whistle;
 	SOUND _signal;
 	MUSIC _titlebgm;
