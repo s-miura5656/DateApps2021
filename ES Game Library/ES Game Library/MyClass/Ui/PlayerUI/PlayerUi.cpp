@@ -1,6 +1,7 @@
-#include "PlayerUi.h"
+#include"PlayerUi.h"
 #include "../../Managers/ResouceManager/ResouceManager.h"
 #include "../../Managers/SceneManager/SceneManager.h"
+
 SPRITE PlayerUi::score_font = nullptr;
 FONT  PlayerUi::player_font = nullptr;
 
@@ -22,6 +23,7 @@ PlayerUi::~PlayerUi()
 bool PlayerUi::Initialize(const Vector3& banner_pos, RectWH banner_rectWH)
 {
 	banner_sprite = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/banner_0127.png"));
+	banner_sprite_2 = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/banner_0128_h.png"));
 	banner_position = banner_pos;
 	banner_rw = banner_rectWH;
 	banner_status = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/status.png"));
@@ -102,7 +104,14 @@ int PlayerUi::Update()
 
 void PlayerUi::Draw2D()
 {
-	SpriteBatch.Draw(*banner_sprite, banner_position, banner_rw);
+	if (player_index == 0 || player_index == 2) {
+		SpriteBatch.Draw(*banner_sprite, banner_position, banner_rw);
+	}
+	else
+	{
+		SpriteBatch.Draw(*banner_sprite_2, banner_position, banner_rw);
+	}
+
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		std::string name = PLAYER_TAG + std::to_string(i + 1);
@@ -191,13 +200,16 @@ void PlayerUi::Draw2D()
 
 
 	//! 一位のとき
-	if (_i_player_data->GetRankNum(tag) + 1 == 1)
+	if (seconds < 10){
+		SpriteBatch.Draw(*joy_icon, banner_position + Vector3(92, -100 * 1.1f, 1), RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 128, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.1f);
+	}
+	else if (_i_player_data->GetRankNum(tag) + 1 == 1)
 	{
-		SpriteBatch.Draw(*joy_icon, banner_position + Vector3(100, -97, -1), RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.f);
+		SpriteBatch.Draw(*joy_icon, banner_position + Vector3(100, -97, 1), RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.f);
 	}
 	else
 	{
-		SpriteBatch.Draw(*joy_icon, banner_position + Vector3( 92, -100*1.1f, -1), RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 128, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.1f);
+		SpriteBatch.Draw(*joy_icon, banner_position + Vector3( 92, -100*1.1f, 1), RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 128, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.1f);
 	}
 	
 	//! 開始十秒後に順位表示
