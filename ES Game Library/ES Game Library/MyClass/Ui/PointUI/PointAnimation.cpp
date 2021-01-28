@@ -9,6 +9,17 @@ PointAnimation::~PointAnimation()
 {
 }
 
+void PointAnimation::Intialize()
+{
+	prev_rank_point = 0;
+
+	add_point = 0;
+	delta_point = 0;
+	lost_point = 0;
+	_font_size = 0.6;
+    lost_flag = false;
+}
+
 void PointAnimation::RegisterPointAnimation(Vector3 player_pos, std::string tag, int prev_rank_point)
 {
 	auto rank_point = _i_player_data->GetRankingPoint(tag);
@@ -23,11 +34,11 @@ void PointAnimation::RegisterPointAnimation(Vector3 player_pos, std::string tag,
 		pointAnim.alpha = 1.0f;
 		pointMove.push_back(pointAnim);
 
-		for (int i = 0; i < pointMove.size(); ++i) {
+		/*for (int i = 0; i < pointMove.size(); ++i) {
 			add_point += pointMove[i].point;
 			_font_size = 0.5 + ((float)(add_point - score) / (float)1000);
 			delta_point = (add_point - score) / GameTimer.GetFPS() * 4;
-		}
+		}*/
 	}
 	prev_rank_point = rank_point;
 }

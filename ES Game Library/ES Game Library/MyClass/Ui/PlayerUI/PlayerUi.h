@@ -55,6 +55,7 @@ private:
 	Vector3  _banner_status_pos;
 	SPRITE  _banner_status;//各プレイヤーのステータスバナー
 	RectWH  _status_rw;
+
 	SPRITE  _item_icon;//各プレイヤーのステータスアイコン
 
 	enum RANKING //順位
@@ -62,15 +63,15 @@ private:
 	SPRITE  ranking;
 	
 
-	//static SPRITE  score_font;//各プレイヤーのスコア
-	//int score;
-
-	int prev_rank_point;
+	static SPRITE  score_font;//各プレイヤーのスコア
+	int score;
+	float _font_size;
+	//int prev_rank_point;
 	//Vector3 corner[2];
 	//int add_point;
 	//int delta_point;
 	//int lost_point;
-	//float _font_size = 0.6;
+	
 	//bool lost_flag;
 
 	//int ranking_timer;
