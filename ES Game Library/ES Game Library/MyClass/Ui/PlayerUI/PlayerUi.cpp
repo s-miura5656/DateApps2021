@@ -179,22 +179,22 @@ void PlayerUi::Draw2D()
 	SpriteElement se;
 	se = score_font;
 
-	se.position = banner_position + Vector3((10 * _font_size) + 90, 55, -1);
+	se.position = banner_position + Vector3((10 * _font_size) + 90, 57, -1);
 	se.srcRect = RectWH((int)(score / 1000) * 64, 0, 64, 64);
 	se.anchorPoint = Vector3(32 * _font_size, 32 * _font_size, 0);
 //	se.anchorPoint = Vector3(32, 32, 0);
 	se.SetScale(_font_size);
 	SpriteBatch.Draw(se);
 
-	se.position = banner_position + Vector3((74 * _font_size) + 90, 55, -1);
+	se.position = banner_position + Vector3((74 * _font_size) + 90, 57, -1);
 	se.srcRect = RectWH((int)((score % 1000) / 100) * 64, 0, 64, 64);
 	SpriteBatch.Draw(se);
 
-	se.position = banner_position + Vector3((138 * _font_size) + 90, 55, -1);
+	se.position = banner_position + Vector3((138 * _font_size) + 90, 57, -1);
 	se.srcRect = RectWH((int)((score % 1000) % 100 / 10) * 64, 0, 64, 64);
 	SpriteBatch.Draw(se);
 
-	se.position = banner_position + Vector3((204 * _font_size) + 90, 55, -1);
+	se.position = banner_position + Vector3((204 * _font_size) + 90, 57, -1);
 	se.srcRect = RectWH((int)((score % 1000) % 100 % 10) * 64, 0, 64, 64);
 	SpriteBatch.Draw(se);
 
