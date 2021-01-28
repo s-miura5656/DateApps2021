@@ -28,6 +28,8 @@ private:
 	Vector3 banner_position;//各プレイヤーのバナー
 	SPRITE  banner_sprite;//各プレイヤーのバナー
 	SPRITE  banner_sprite_2;
+	Vector3 icon_pos_n1;
+	Vector3 icon_pos;
 	SPRITE  banner_status;//各プレイヤーのバナー
 	SPRITE  item_icon;//各プレイヤーのバナー
 	RectWH  banner_rw;
@@ -39,12 +41,12 @@ private:
 	static SPRITE  score_font;//各プレイヤーのスコア
 	int score;
 	int prev_rank_point;
-	Vector3 corner[2];
+//	Vector3 corner[2];
 	int add_point;
 	int delta_point;
-	int lost_point;
+//	int lost_point;
 	float _font_size = 0.6;
-	bool lost_flag;
+//	bool lost_flag;
 
 	int ranking_timer;
 	

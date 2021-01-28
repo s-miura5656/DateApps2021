@@ -102,7 +102,7 @@ bool MainUi::Initialize()
 
 	// Player2
 	player_ui.push_back(new PlayerUi(1));
-	player_ui[1]->Initialize(Vector3(1280 - 250, 130, -10), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_2") - 1), 0, 256, 128));
+	player_ui[1]->Initialize(Vector3(1010, 130, -10), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_2") - 1), 0, 256, 128));
 
 	// Player3
 	player_ui.push_back(new PlayerUi(2));
@@ -110,7 +110,7 @@ bool MainUi::Initialize()
 
 	// Player4
 	player_ui.push_back(new PlayerUi(3));
-	player_ui[3]->Initialize(Vector3(1280 - 250, 430, -10), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_4") - 1), 0, 256, 128));
+	player_ui[3]->Initialize(Vector3(1010, 430, -10), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_4") - 1), 0, 256, 128));
 	
 	return true;
 }
@@ -164,12 +164,6 @@ int MainUi::Update()
 			cout_size += 0.03;
 		}
 	}
-	/*else if (Countdown == 2) {
-		cout_size += 0.03;
-	}
-	else if (Countdown == 3) {
-		cout_size += 0.03;
-	}*/
 	
 	//! 終了カウントダウンリセット
 	if (old_time != time_limit) {
