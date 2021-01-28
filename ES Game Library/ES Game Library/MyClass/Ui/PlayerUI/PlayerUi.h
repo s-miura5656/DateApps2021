@@ -63,7 +63,7 @@ private:
 	SPRITE  ranking;
 	
 
-	static SPRITE  score_font;//各プレイヤーのスコア
+	SPRITE  score_font;//各プレイヤーのスコア
 	int score;
 	float _font_size;
 	//int prev_rank_point;
