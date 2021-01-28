@@ -17,6 +17,7 @@ public:
 	void DrawAlpha3D() override {}
 	int TitleLanding();
 	int OperationButton();
+	void DemoMove();
 
 
 private:
@@ -26,19 +27,23 @@ private:
 	SPRITE _robot;
 	SPRITE _operation_button;
 	SPRITE _tutorial;
+
+	MEDIA _demo_movie;
 	
 
-	float title_logo_alpha;
-	float operation_button_alpha;
-	int demo_scene_count;
+	float _title_logo_alpha;
+	float _operation_button_alpha;
+	int _demo_scene_count;
+	int _play_count;
+	bool _movie_flag;
 
 	//! flag
-	bool button_flashing_flag;
-	bool button_push_flag;
-	bool tutorial_flag;
-	bool demo_scene_flag;
+	bool _button_flashing_flag;
+	bool _button_push_flag;
+	bool _tutorial_flag;
+	bool _demo_move_flag;
 
-	Vector3 title_logo_position;
-	Vector2 title_logo_scale;
-	Vector2 operation_button_scale;
+	Vector3 _title_logo_position;
+	Vector2 _title_logo_scale;
+	Vector2 _operation_button_scale;
 };
