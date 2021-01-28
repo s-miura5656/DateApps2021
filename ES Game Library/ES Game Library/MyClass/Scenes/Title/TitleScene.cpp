@@ -24,21 +24,28 @@ bool TitleScene::Initialize()
 	_robot              = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/robot.png"));
 	_operation_button   = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/b_button.png"));
 
+	MediaManager.Attach(GraphicsDevice);
+	_demo_movie = ResouceManager::Instance().LordMediaFile(_T("TitleSprite/BG.wmv"));
+
+
 	//! タイトルロゴのパラメーターのセット
-	title_logo_alpha    = 0.3f;
-	title_logo_position = Vector3(65.0f, -200.0f, +100.0f);
-	title_logo_scale    = Vector2(1.0f, 1.0f);
+	_title_logo_alpha    = 0.3f;
+	_title_logo_position = Vector3(65.0f, -200.0f, +100.0f);
+	_title_logo_scale    = Vector2(1.0f, 1.0f);
 
 	//! オペレーションボタン画像のパラメーターのセット
-	operation_button_alpha = 1.0f;
-	operation_button_scale = Vector2(0.9f, 0.9f);
+	_operation_button_alpha = 1.0f;
+	_operation_button_scale = Vector2(0.9f, 0.9f);
 
-	demo_scene_count = 0;
+	_demo_scene_count = 0;
+	_play_count = 0;
+	_movie_flag = false;
 
-	button_flashing_flag   = true;
-	button_push_flag       = false;
-	tutorial_flag          = false;
-	demo_scene_flag        = false;
+
+	_button_flashing_flag   = true;
+	_button_push_flag       = false;
+	_tutorial_flag          = false;
+	_demo_move_flag        = false;
 
 	Viewport view       = GraphicsDevice.GetViewport();
 	Vector3 _camera_pos = Vector3(0, 0, -10);
@@ -54,6 +61,7 @@ int TitleScene::Update()
 {
 	TitleLanding();
 	OperationButton();
+
 	AudioManager::Instance().TitleBgmPlay();
 	return 0;
 }
@@ -65,20 +73,25 @@ int TitleScene::Update()
 */
 void TitleScene::Draw2D()
 {
-
-	SpriteBatch.Draw(*_background, Vector3(0.0f, 0.0f, 10000.0f));
-
-	SpriteBatch.Draw(*_title_logo, Vector3(title_logo_position), title_logo_alpha, Vector3_Zero,
-		             Vector3_Zero, Vector2(title_logo_scale));
-
-	//! ボタン入力を受け付けるフラグがtrueの時に描画する
-	if (button_push_flag)
+	if (!_demo_move_flag)
 	{
-		SpriteBatch.Draw(*_operation_button, Vector3(410.0f, 340.0f, 100.0f), operation_button_alpha, Vector3_Zero,
-			Vector3_Zero, Vector2(operation_button_scale));
+		SpriteBatch.Draw(*_background, Vector3(0.0f, 0.0f, 10000.0f));
+
+		SpriteBatch.Draw(*_title_logo, Vector3(_title_logo_position), _title_logo_alpha, Vector3_Zero,
+			Vector3_Zero, Vector2(_title_logo_scale));
+
+		SpriteBatch.Draw(*_robot, Vector3(0.0f, 0.0f, 9000.0f));
 	}
 
-	SpriteBatch.Draw(*_robot, Vector3(0.0f, 0.0f, 100.0f));
+	//! ボタン入力を受け付けるフラグがtrueの時に描画する
+	if (_button_push_flag)
+	{
+		SpriteBatch.Draw(*_operation_button, Vector3(410.0f, 340.0f, 7000.0f), _operation_button_alpha, Vector3_Zero,
+			Vector3_Zero, Vector2(_operation_button_scale));
+	}
+
+	if(_demo_move_flag)
+	SpriteBatch.Draw(*_demo_movie, Vector3(0, 0, 8000), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0),Vector2(1.0f, 1.0f));
 }
 
 void TitleScene::Draw3D()
@@ -92,27 +105,32 @@ int TitleScene::TitleLanding()
 	auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(1));
 	pad->Refresh();
 	
-	title_logo_position.y += 4.0f;
-
-	//! タイトルロゴが落ち切った時にボタン入力を受け付ける
-	if (title_logo_position.y >= 125.0f)
+	if (!_demo_move_flag)
 	{
-		title_logo_alpha      = 1.0f;
-		title_logo_position.y = 125.0f;
-		button_push_flag      = true;
+		_title_logo_position.y += 4.0f;
 
-		if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+		//! タイトルロゴが落ち切った時にボタン入力を受け付ける
+		if (_title_logo_position.y >= 125.0f)
 		{
-			SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::SELECT);
+			_title_logo_alpha = 1.0f;
+			_title_logo_position.y = 125.0f;
+			_button_push_flag = true;
+
+			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+			{
+				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::SELECT);
+			}
+			_demo_scene_count++;
 		}
-		demo_scene_count++;
+	}
+	if (_demo_scene_count >= 200)
+	{
+		_demo_move_flag = true;
+		_demo_scene_count = 0;
 	}
 
-	if(demo_scene_count >= 100)
-	{ 
-		//SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::DEMOMOVIE);
-	}
-
+	if(_demo_move_flag)
+		DemoMove();
 
 
 	return 0;
@@ -122,28 +140,51 @@ int TitleScene::TitleLanding()
 int TitleScene::OperationButton()
 {
 	//! ボタン入力を受け付けるフラグがtrueの時、描画されている画像を点滅させる
-	if (button_push_flag)
+	if (_button_push_flag)
 	{
-		if (button_flashing_flag)
+		if (_button_flashing_flag)
 		{
-			operation_button_alpha -= 0.04f;
+			_operation_button_alpha -= 0.04f;
 
-			if (operation_button_alpha <= 0.0f)
+			if (_operation_button_alpha <= 0.0f)
 			{
-				button_flashing_flag = !button_flashing_flag;
+				_button_flashing_flag = !_button_flashing_flag;
 			}
 		}
 		else
 		{
-			operation_button_alpha += 0.04f;
+			_operation_button_alpha += 0.04f;
 
-			if (operation_button_alpha >= 1.0f)
+			if (_operation_button_alpha >= 1.0f)
 			{
-				button_flashing_flag = !button_flashing_flag;
+				_button_flashing_flag = !_button_flashing_flag;
 			}
 		}
 	}
 
 	return 0;
+}
+
+void TitleScene::DemoMove()
+{
+	auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(1));
+	
+	if (_play_count > 0) {
+		if(!_movie_flag) {
+			_demo_movie->Replay();
+			_movie_flag = true;
+		}
+	}
+	else
+	    _demo_movie->Play();
+	
+	if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+	{
+		_demo_move_flag = false;
+		_demo_movie->Pause();
+		_play_count += 1;
+		_movie_flag = false;
+	}
+
 }
 
