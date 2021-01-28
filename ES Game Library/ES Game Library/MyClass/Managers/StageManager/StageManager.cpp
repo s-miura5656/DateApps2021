@@ -135,70 +135,17 @@ bool StageManager::Initialize()
 }
 
 int StageManager::Update()
-{/*
-	if (!fall_flag[0] && TimeManager::Instance().GetTimeLeft() <= 100)
-	{
-		for (int i = 0; i < 13; i++)
-		{
-			_stages.push_back(new Indestructible(std::to_string(i)));
-			_stages[_stages.size() - 1]->Initialize();
-			_stages[_stages.size() - 1]->SetPosition(Vector3(1 + i, 10 + (0.5 * i), -1));
-		}
-		fall_flag[0] = true;
-	}
+{
 
-	if (!fall_flag[1] && TimeManager::Instance().GetTimeLeft() <= 80)
-	{
-		for (int i = 0; i < 11; i++)
-		{
-			_stages.push_back(new Indestructible(std::to_string(i)));
-			_stages[_stages.size() - 1]->Initialize();
-			_stages[_stages.size() - 1]->SetPosition(Vector3(13, 10 + (0.5 * i), -1 - i));
-		}
-		fall_flag[1] = true;
-	}
-
-	if (!fall_flag[2] && TimeManager::Instance().GetTimeLeft() <= 60)
-	{
-		for (int i = 0; i < 11; i++)
-		{
-			_stages.push_back(new Indestructible(std::to_string(i)));
-			_stages[_stages.size() - 1]->Initialize();
-			_stages[_stages.size() - 1]->SetPosition(Vector3(1, 10 + (0.5 * i), -1 - i));
-		}
-		fall_flag[2] = true;
-	}
-
-	if (!fall_flag[3] && TimeManager::Instance().GetTimeLeft() <= 40)
-	{
-		for (int i = 0; i < 13; i++)
-		{
-			_stages.push_back(new Indestructible(std::to_string(i)));
-			_stages[_stages.size() - 1]->Initialize();
-			_stages[_stages.size() - 1]->SetPosition(Vector3(13 - i, 10 + (0.5 * i), -11));
-		}
-		fall_flag[3] = true;
-	}*/
-
-	if (!fall_flag[2] && TimeManager::Instance().GetTimeLeft() <= 60)
-	{
-		_stages.push_back(new Warp(WARP_TAG + std::to_string(17)));
-		_stages[_stages.size() - 1]->Initialize();
-		_stages[_stages.size() - 1]->SetPosition(Vector3(1, 0.1, -7));
-		_stages.push_back(new Warp(WARP_TAG + std::to_string(137)));
-		_stages[_stages.size() - 1]->Initialize();
-		_stages[_stages.size() - 1]->SetPosition(Vector3(13, 0.1, -7));
-		fall_flag[2] = true;
-	}
-	if (!fall_flag[3] && TimeManager::Instance().GetTimeLeft() <= 90)
+	if (!fall_flag[0] && TimeManager::Instance().GetTimeLeft() <= FALL_BLOCK_TIME)
 	{
 		for (int i = 1; i < 10; i++)
 		{
 			_stages.push_back(new Indestructible(std::to_string(i)));
 			_stages[_stages.size() - 1]->Initialize();
-			_stages[_stages.size() - 1]->SetPosition(Vector3(7, 10 + (0.5 * i), -1 - i));
+			_stages[_stages.size() - 1]->SetPosition(Vector3(7, 10 + (1 * i), -1 - i));
 		}
-		fall_flag[3] = true;
+		fall_flag[0] = true;
 	}
 
 	if(_bg_movie->IsComplete())

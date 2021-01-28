@@ -70,6 +70,7 @@ bool ResultScene::Initialize()
 	for (int i = 0; i < 5; i++)
 	{
 		_player_model->SetTrackPosition(i, 0);
+		_player_model->SetTrackEnable(i, false);
 	}
 
 	//!ƒvƒŒƒCƒ„[‚Ì‰Šúİ’è

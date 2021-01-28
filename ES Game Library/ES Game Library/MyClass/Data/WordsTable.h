@@ -71,6 +71,8 @@ static const int WEAK_PROBABILITY_NUMBER = 50;
 //!何秒経過後にリザルトへ遷移するか
 static const int RESULT_GO_TIME = 3;
 
+//!残り何秒になったらブロックを降らすか
+static const int FALL_BLOCK_TIME = 60;
 namespace PlayerEnum {
 	enum Personality { NORMAL, ARM_RANGE, ARM_SPEED, PLAYER_MOVE_SPEED, PLAYER_DEFENCE, PLAYER_KING,PERSONALITY_MAX};
 

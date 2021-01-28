@@ -43,7 +43,7 @@ int Indestructible::Update()
 	_hit_box->SetHitBoxPosition(_position + Vector3(0, 1, 0));
 
 	_position.y += -0.1;
-	if (_position.y <= 0)
+	if (_position.y <= 0.3)
 	{
 		std::unique_ptr<IMapData> map_data = std::make_unique<IMapData>();
 		auto data = map_data->GetData();
@@ -53,7 +53,7 @@ int Indestructible::Update()
 
 		data[z][x] = 'i';
 		map_data->SetData(data);
-		_position.y = 0;
+		_position.y = 0.3;
 	}
 	return 0;
 }

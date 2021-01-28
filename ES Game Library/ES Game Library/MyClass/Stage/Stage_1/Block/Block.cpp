@@ -127,6 +127,26 @@ int Block::Update()
 			return 1;
 		}
 	}
+	if (_position.x == 7)
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			std::string indestuctible = std::to_string(i + 1);
+
+			if (!_hit_box->Tag_Sarch(indestuctible))
+				continue;
+
+			if (_hit_box->IsHitObjectsSquare(indestuctible))
+			{
+			_effect->SetPosition(_position + Vector3_Up * 0.5f);
+			_effect->PlayOneShot();
+
+			AudioManager::Instance().DestructionPlay();
+
+			return 1;
+			}
+		}
+	}
 	return 0;
 }
 

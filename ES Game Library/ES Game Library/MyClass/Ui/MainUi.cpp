@@ -30,6 +30,8 @@ bool MainUi::Initialize()
 	number_sprite = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber.png"));
 	start_end         = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/Start_finish.png"));
 
+	fall_block = ResouceManager::Instance().LordSpriteFile(_T("BannerFrameSprite/blinking.png"));
+
 	time_banner_pos = Vector3(640 - 125, 10, 1);
 	minutes_pos = Vector3(530, 20, 0);
 	tens_place_pos = Vector3(630, 20, 0);
@@ -271,7 +273,11 @@ void MainUi::Draw2D()
 		SpriteBatch.Draw(*number_sprite, Countdown_pos, number[ones], end_a, Vector3(0, 0, 0), Vector3(32, 32, 0), font_size_e);
 	}
 
-
+	if (fall_block_size <= 1.0f)
+	{
+		fall_block_size += 0.03;
+		SpriteBatch.Draw(*fall_block, Vector3(390 ,110 , 0), 1.0f, Vector3(0, 0, 0), Vector3(250, 250, 0), fall_block_size);
+	}
 }
 
 void MainUi::ColorBlinking()

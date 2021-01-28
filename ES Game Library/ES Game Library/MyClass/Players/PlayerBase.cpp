@@ -225,9 +225,6 @@ void PlayerBase::Draw3D()
 	{
 		if (_warp_flag && _warp_other_pos == _transform.position)
 		{
-			_warp_effect->SetPosition(_transform.position + Vector3_Up);
-			_warp_effect->SetRotation(Vector3(-15, 0, 0));
-			_warp_effect->PlayOneShot();
 			_warp_effect->Draw();
 		}
 		else
@@ -304,6 +301,9 @@ void PlayerBase::Warp(Vector3 warppos)
 		_warp_other_pos = warppos;
 		_warp_flag = true;
 		_move_flag = true;
+		_warp_effect->SetPosition(_transform.position + Vector3_Up);
+		_warp_effect->SetRotation(Vector3(-15, 0, 0));
+		_warp_effect->PlayOneShot();
 	}
 }
 #pragma region •`‰æŠÖŒW

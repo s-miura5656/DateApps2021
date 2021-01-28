@@ -55,7 +55,7 @@ protected:
 	float _speed			 = 0.f;
 	float _move_speed		 = 0.f;
 	float _distance			 = FLT_MAX;
-	float _warp_time         = FLT_MAX;
+	float _warp_time         = 0.f;
 
 	//! position
 	Vector3 _old_pos		 = Vector3_Zero;
