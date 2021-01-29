@@ -36,14 +36,6 @@ bool MainUi::Initialize()
 	ones_place_pos = Vector3(690, 20, 0);
 	colon_pos = Vector3(580, 20, 0);
 
-	/*minutes_pos_v2_w    = Vector2(543, 23) + Vector2(0,100);
-	tens_place_pos_v2_w = Vector2(633, 23) + Vector2(0, 100);
-	ones_place_pos_v2_w = Vector2(683, 23) + Vector2(0, 100);
-
-	minutes_pos_v2_b    = Vector2(540, 20) + Vector2(0, 100);
-	tens_place_pos_v2_b = Vector2(630, 20) + Vector2(0, 100);
-	ones_place_pos_v2_b = Vector2(680, 20) + Vector2(0, 100);*/
-
 	Countdown_pos = Vector3(605, 345, -2000);
 	cout_size = 1.0f;
 	rt = 0;
@@ -96,19 +88,19 @@ bool MainUi::Initialize()
 
 	// Player1
 	player_ui.push_back(new PlayerUi(0));
-	player_ui[0]->Initialize(Vector3(10, 130, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_1") - 1),0,256,128));
+	player_ui[0]->Initialize(Vector3(10, 130, -10), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_1") - 1),0,256,128));
 
 	// Player2
 	player_ui.push_back(new PlayerUi(1));
-	player_ui[1]->Initialize(Vector3(1280 - 250, 130, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_2") - 1), 0, 256, 128));
+	player_ui[1]->Initialize(Vector3(1010, 130, -10), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_2") - 1), 0, 256, 128));
 
 	// Player3
 	player_ui.push_back(new PlayerUi(2));
-	player_ui[2]->Initialize(Vector3(10, 430, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_3") - 1), 0, 256, 128));
+	player_ui[2]->Initialize(Vector3(10, 430, -10), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_3") - 1), 0, 256, 128));
 
 	// Player4
 	player_ui.push_back(new PlayerUi(3));
-	player_ui[3]->Initialize(Vector3(1280 - 250, 430, 1), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_4") - 1), 0, 256, 128));
+	player_ui[3]->Initialize(Vector3(1010, 430, -10), RectWH(256 * (SceneManager::Instance().GetPlayerTexture("Player_4") - 1), 0, 256, 128));
 	
 	return true;
 }
@@ -157,17 +149,10 @@ int MainUi::Update()
 	}
 
 	//! カウントダウンの回転と縮小
-	if (start_time <= 30.0f && Countdown == 1) {
-		rt += 11;
-		cout_size -= 0.04;
-	}
-	else if (start_time <= 90.0f && Countdown == 2) {
-		rt += 11;
-		cout_size -= 0.04;
-	}
-	else if (start_time <= 150.0f && Countdown == 3) {
-		rt += 11;
-		cout_size -= 0.04;
+	for (int i = 1;i < 4;i++) {
+		if (Countdown == i) {
+			cout_size += 0.03;
+		}
 	}
 	
 	//! 終了カウントダウンリセット
@@ -252,7 +237,7 @@ void MainUi::Draw2D()
 	//! カウントダウン描写
 	if (Start > 0)
 	{
-		SpriteBatch.Draw(*number_sprite, Countdown_pos, number[Countdown], (DWORD)White, Vector3(0, 0, rt), Vector3( 32, 32, 0), cout_size);
+		SpriteBatch.Draw(*number_sprite, Countdown_pos, number[Countdown], (DWORD)White, Vector3(0, 0, 0), Vector3( 32, 32, 0), cout_size);
 	}
 
 	//! スタート描写

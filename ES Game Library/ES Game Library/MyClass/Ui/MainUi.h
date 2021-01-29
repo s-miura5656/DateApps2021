@@ -34,22 +34,12 @@ public:
 
 	Vector2 speed_ui_pos[PLAYER_COUNT_MAX];//各プレイヤーのスピード
 
-//	Color color[PLAYER_COUNT_MAX];//各プレイヤーの色指定
-
 	SPRITE time_banner;//タイムバナー
 	Vector3 time_banner_pos;
 	Vector3 minutes_pos;
 	Vector3 tens_place_pos;
 	Vector3 ones_place_pos;
 	Vector3 colon_pos;
-	
-	/*Vector2 minutes_pos_v2_b;
-	Vector2 tens_place_pos_v2_b;
-	Vector2 ones_place_pos_v2_b;
-
-	Vector2 minutes_pos_v2_w;
-	Vector2 tens_place_pos_v2_w;
-	Vector2 ones_place_pos_v2_w;*/
 
 	SPRITE number_sprite;//数字
 	RectWH number[11];
