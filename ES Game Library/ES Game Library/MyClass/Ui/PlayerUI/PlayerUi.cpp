@@ -120,25 +120,25 @@ void PlayerUi::Draw2D()
 			//SpriteBatch.Draw(*banner_status, banner_position + Vector3(0, 74, 0), RectWH(256 * (SceneManager::Instance().GetPlayerTexture(tag) - 1 ),0,256,128));
 			if (_i_player_data->GetStatusTag(tag) == ITEM_PLAYER_SPEEDUP)
 			{
-				SpriteBatch.Draw(*item_icon, banner_position + Vector3(37, 40, 0), RectWH(0, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+				SpriteBatch.Draw(*item_icon, banner_position + Vector3(37, 40, -1), RectWH(0, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
 				/*SpriteBatch.DrawString(player_font, _T("移動速度アップ！"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140),
 					Color(255, 255, 255), Vector2(0.4, 0.4), Vector3(0, 0, 0), Vector3(0, 0, 0));*/
 			}
 			else if (_i_player_data->GetStatusTag(tag) == ITEM_ARM_SPEEDUP)
 			{
-				SpriteBatch.Draw(*item_icon, banner_position + Vector3(37, 40, 0), RectWH( 64, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+				SpriteBatch.Draw(*item_icon, banner_position + Vector3(37, 40, -1), RectWH( 64, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
 				/*SpriteBatch.DrawString(player_font, _T("アームの速度アップ！"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140),
 					Color(255, 255, 255), Vector2(0.4, 0.4), Vector3(0, 0, 0), Vector3(0, 0, 0));*/
 			}
 			else if (_i_player_data->GetStatusTag(tag) == ITEM_POWERDOWN)
 			{
-				SpriteBatch.Draw(*item_icon, banner_position + Vector3(37, 40, 0), RectWH(128, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+				SpriteBatch.Draw(*item_icon, banner_position + Vector3(37, 40, -1), RectWH(128, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
 				/*SpriteBatch.DrawString(player_font, _T("ステータスダウン"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140),
 					Color(255, 255, 255), Vector2(0.4, 0.4), Vector3(0, 0, 0), Vector3(0, 0, 0));*/
 			}
 			else if (_i_player_data->GetStatusTag(tag) == ITEM_THUNDER)
 			{
-				SpriteBatch.Draw(*item_icon, banner_position + Vector3(37, 40, 0), RectWH(192, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
+				SpriteBatch.Draw(*item_icon, banner_position + Vector3(37, 40, -1), RectWH(192, 0, 64, 64), 1.0f, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
 				/*SpriteBatch.DrawString(player_font, _T("びりびり状態"), Vector2(banner_position.x, banner_position.y) + Vector2(75, 140),
 					Color(255, 255, 255), Vector2(0.4, 0.4), Vector3(0, 0, 0), Vector3(0, 0, 0));*/
 			}
