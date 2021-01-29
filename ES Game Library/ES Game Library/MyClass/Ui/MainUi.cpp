@@ -38,14 +38,6 @@ bool MainUi::Initialize()
 	ones_place_pos = Vector3(690, 20, 0);
 	colon_pos = Vector3(580, 20, 0);
 
-	/*minutes_pos_v2_w    = Vector2(543, 23) + Vector2(0,100);
-	tens_place_pos_v2_w = Vector2(633, 23) + Vector2(0, 100);
-	ones_place_pos_v2_w = Vector2(683, 23) + Vector2(0, 100);
-
-	minutes_pos_v2_b    = Vector2(540, 20) + Vector2(0, 100);
-	tens_place_pos_v2_b = Vector2(630, 20) + Vector2(0, 100);
-	ones_place_pos_v2_b = Vector2(680, 20) + Vector2(0, 100);*/
-
 	Countdown_pos = Vector3(605, 345, -2000);
 	cout_size = 1.0f;
 	rt = 0;

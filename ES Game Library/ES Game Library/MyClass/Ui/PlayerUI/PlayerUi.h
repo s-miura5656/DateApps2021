@@ -41,12 +41,9 @@ private:
 	static SPRITE  score_font;//各プレイヤーのスコア
 	int score;
 	int prev_rank_point;
-//	Vector3 corner[2];
 	int add_point;
 	int delta_point;
-//	int lost_point;
 	float _font_size = 0.6;
-//	bool lost_flag;
 
 	int ranking_timer;
 	
@@ -61,6 +58,7 @@ private:
 
 	std::unique_ptr<IPrayerData> _i_player_data;
 	std::unique_ptr<IArmData>    _i_arm_data;
+
 public:
 	PlayerUi() {}
 	PlayerUi(const int player_no);

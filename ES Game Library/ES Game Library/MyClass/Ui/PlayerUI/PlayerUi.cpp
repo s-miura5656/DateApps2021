@@ -42,9 +42,6 @@ bool PlayerUi::Initialize(const Vector3& banner_pos, RectWH banner_rectWH)
 	score = 0;
 	prev_rank_point = 0;
 
-	/*corner[0] = Vector3( 640,   0, 0);
-	corner[1] = Vector3( 640, 720, 0);*/
-
 	if (player_index == 1 || player_index == 3) {
 		icon_pos = Vector3(122, -110, 1);
 		icon_pos_n1 = Vector3(130, -97, 1);
@@ -57,9 +54,7 @@ bool PlayerUi::Initialize(const Vector3& banner_pos, RectWH banner_rectWH)
 	
 	add_point = 0;
 	delta_point = 0;
-	/*lost_point = 0;
-	lost_flag = false;*/
-
+	
 	ranking_timer = 10;
 
 	player_pos = Vector3_Zero;
@@ -182,7 +177,6 @@ void PlayerUi::Draw2D()
 	se.position = banner_position + Vector3((10 * _font_size) + 90, 57, -1);
 	se.srcRect = RectWH((int)(score / 1000) * 64, 0, 64, 64);
 	se.anchorPoint = Vector3(32 * _font_size, 32 * _font_size, 0);
-//	se.anchorPoint = Vector3(32, 32, 0);
 	se.SetScale(_font_size);
 	SpriteBatch.Draw(se);
 
@@ -256,25 +250,11 @@ void PlayerUi::MovePointAnimation(Vector3 player_num)
 	//! 入手ポイントの移動
 	for (int i = 0; i < pointAnimation.size(); ++i)
 	{
-//		Vector3 bezier  = Vector3_Bezier(player_num, corner[0], corner[0], player_num + Vector3( -80, 0, 0), pointAnimation[i].theta);
-//		Vector3 bezier2 = Vector3_Bezier(player_num, corner[1], corner[1], player_num + Vector3( -80, 0, 0), pointAnimation[i].theta);
-		Vector3 bezier3 = Vector3_Bezier(player_num + Vector3(-10,-10,0), player_num + Vector3(-10,-20,0), player_num + Vector3(-10, -20, 0), player_num + Vector3(-10, -40, 0), pointAnimation[i].theta);
+    	Vector3 bezier3 = Vector3_Bezier(player_num + Vector3(-10,-10,0), player_num + Vector3(-10,-20,0), player_num + Vector3(-10, -20, 0), player_num + Vector3(-10, -40, 0), pointAnimation[i].theta);
 		pointAnimation[i].theta += 0.01;
 
 		pointAnimation[i].position.y = bezier3.y;
 		pointAnimation[i].position.x = bezier3.x;
-
-		////! 1pと2pのベジェ曲線
-		//if (player_index == 0 || player_index == 1) {
-		//	pointAnimation[i].position.y = bezier3.y;
-		//	pointAnimation[i].position.x = bezier3.x;
-		//}
-
-		////! 3pと4pのベジェ曲線
-		//if (player_index == 2 || player_index == 3) {
-		//	pointAnimation[i].position.y = bezier3.y;
-		//	pointAnimation[i].position.x = bezier3.x;
-		//}
 
 		pointAnimation[i].alpha -= 0.03;
 
