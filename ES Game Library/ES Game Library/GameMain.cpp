@@ -63,11 +63,7 @@ void GameMain::Draw()
 	//GraphicsDevice.SetRenderTarget(hdr);
 	//GraphicsDevice.Clear(Color_Black);
 
-	SpriteBatch.Begin();
-
-	SceneManager::Instance().Draw2D();
-
-	SpriteBatch.End();
+	
 
 	SceneManager::Instance().Draw3D();
 
@@ -76,7 +72,11 @@ void GameMain::Draw()
 	SceneManager::Instance().DrawAlpha3D();
 	GraphicsDevice.SetRenderState(CullMode_CullCounterClockwiseFace);
 	GraphicsDevice.EndAlphaBlend();
+	SpriteBatch.Begin();
 
+	SceneManager::Instance().Draw2D();
+
+	SpriteBatch.End();
 	Effekseer.SetCamera(SceneCamera::Instance().GetCamera());
 	Effekseer.Draw();
 
