@@ -223,7 +223,7 @@ void PlayerBase::Draw3D()
 	}
 	else
 	{
-		if (_warp_flag && _warp_other_pos == _transform.position)
+		if (_warp_flag && _warp_other_pos != Vector3_Zero)
 		{
 			_warp_effect->Draw();
 		}
@@ -540,7 +540,7 @@ void PlayerBase::DestroyArm()
 void PlayerBase::DebugControll()
 {
 	KeyboardBuffer keybuffer = Keyboard->GetBuffer();
-	KeyboardState keystate   = Keyboard->GetState();
+	KeyboardState  keystate   = Keyboard->GetState();
 
 
 	//! ƒA[ƒ€‚Ì”ò‚Ô‘¬“x’²®
@@ -651,5 +651,7 @@ void PlayerBase::EffectDraw()
 		_effect.at(_status_tag)->SetPosition(_transform.position + Vector3(0,0.5,0));
 	_effect.at(_status_tag)->SetRotation(Vector3(-15, 0, 0));
 	_effect.at(_status_tag)->PlayOneShot();
+	if (_warp_flag && _move_flag)
+		_effect.at(_status_tag)->SetPosition(_transform.position + Vector3(0, 9999, 0));
 	_effect.at(_status_tag)->Draw();
 }
