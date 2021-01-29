@@ -87,7 +87,7 @@ void TitleScene::Draw2D()
 	//! ボタン入力を受け付けるフラグがtrueの時に描画する
 	if (_button_push_flag)
 	{
-		SpriteBatch.Draw(*_operation_button, Vector3(410.0f, 340.0f, 7000.0f), _operation_button_alpha, Vector3_Zero,
+		SpriteBatch.Draw(*_operation_button, Vector3(410.0f, 540.0f, 7000.0f), _operation_button_alpha, Vector3_Zero,
 			Vector3_Zero, Vector2(_operation_button_scale));
 	}
 
@@ -183,7 +183,7 @@ void TitleScene::DemoMove()
 	if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 	{
 		AudioManager::Instance().SelectPlay();
-		_title_logo_position = Vector3(65.0f, -200.0f, +100.0f);
+		_title_logo_position = Vector3(0.0f, -200.0f, 100.0f);
 		_title_logo_alpha = 0.3f;
 		_demo_move_flag = false;
 		_demo_movie->Pause();

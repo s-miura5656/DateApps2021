@@ -37,8 +37,8 @@ protected:
 	std::unique_ptr<HitBox> _hit_box;
 
 	bool Removeflag = false;
-	float _rotation = 0.f;
-	float _scale = 1.5f;
+	static float _rotation;
+	float _scale = 1.75f;
 	IMapData* _map_data;
 
 	int _effect_time;

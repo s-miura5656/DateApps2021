@@ -31,6 +31,7 @@ private:
 	ItemCounter*                _itemcounter;
 	std::vector<StageBase*>	    _stages;
 	std::vector<cstring>		_mapdate; //! マップデータの読み込み
+	SPRITE                      _teture;
 	MEDIA                       _bg_movie;
 	MODEL                       _respawn;
 	string                      _random_item[3];

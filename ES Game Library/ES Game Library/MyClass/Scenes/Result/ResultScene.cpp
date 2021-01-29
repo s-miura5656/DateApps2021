@@ -6,13 +6,15 @@
 #include "../../Data/MyAlgorithm.h"
 #include "../../Data/IData.h"
 #include "../../Managers/AudioManager/AudioManager.h"
+#include "../../ParticleSystem/Particle.h"
 ResultScene::ResultScene()
 {
-
+	_effect.reset(new ParticleSystem);
 }
 
 ResultScene::~ResultScene()
 {
+	_effect.reset();
 	SceneManager::Instance().ClearPlayerTexture();
 }
 
@@ -35,6 +37,7 @@ bool ResultScene::Initialize()
 	_player_model        = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
 	_score_sprite        = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber.png"));
     _first_score_sprite  = ResouceManager::Instance().LordSpriteFile(_T("NumberSprite/namber_vertical.png"));
+	auto&& effect        = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Confetti/confetti_01.efk"));
 
 	//!ƒƒ{UI‰Šúİ’è
 	std::string first_name = PLAYER_TAG + to_string(GetRankNum(0));
@@ -83,6 +86,13 @@ bool ResultScene::Initialize()
 	//”wŒi‚ÌÀ•W
 	_background_position = Vector3(0, 0, 10000);
 	_big_score_scale = 300.0f;
+
+	//! effect
+	_effect->RegisterParticle(effect);
+	_effect->SetSpeed(1.0f);
+	_effect->SetScale(2.0f);
+	_effect->SetPosition(Vector3(-5, -1.5, 0));
+	_effect->SetRotation(Vector3(0, 0, 0));
 	return true;
 }
 
@@ -116,16 +126,23 @@ int ResultScene::Update()
 		_random_number = 0;
 	}
 	AudioManager::Instance().ResultBgmPlay();
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	if (_random_time >= 1.5)
 	{
-		auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
-		pad->Refresh();
-		if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
+		_effect->PlayOneShot();
+	}
+	if (_random_time >= 3.5) 
+	{
+		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 		{
-			AudioManager::Instance().ResultBgmStop();
-			_player_model->SetTrackPosition(5, 0);
-			_player_model->SetTrackEnable(5, false);
-			SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TITLE);
+			auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
+			pad->Refresh();
+			if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
+			{
+				AudioManager::Instance().ResultBgmStop();
+				_player_model->SetTrackPosition(5, 0);
+				_player_model->SetTrackEnable(5, false);
+				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TITLE);
+			}
 		}
 	}
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
@@ -193,6 +210,7 @@ void ResultScene::Draw3D()
 	_player_model->SetTrackPosition(5, _animation_count);
 	_animation_count += GameTimer.GetElapsedSecond();
 	_player_model->Draw(_shader);
+	_effect->Draw();
 }
 /*
 * @fn “¯’…‚Ì”‚ğ”‚¦‚é

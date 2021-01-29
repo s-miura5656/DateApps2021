@@ -1,5 +1,7 @@
 #include "Itembase.hpp"
 
+float ItemBase::_rotation = 0.0f;
+
 bool ItemBase::Initialize()
 {
 	return true;

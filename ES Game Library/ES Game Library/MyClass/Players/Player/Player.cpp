@@ -43,8 +43,8 @@ bool Player::Initialize()
 	_shader		           = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
 	auto&& effect          = ResouceManager::Instance().LordEffekseerFile(_T("Effect/damage_effect01/damege_0127.efk"));
 	auto&& smoke           = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Robot_Smoke/robot_smoke_02.efk"));
-	auto&& respawn         = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Respawn_Effect/respawn_effect_01.efk"));
-	auto&& warp            = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Warp_Effect/warp_effect_01.efk"));
+	auto&& respawn         = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Respawn_Effect/respawn_effect_03.efk"));
+	auto&& warp            = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Warp_Effect/warp_effect_02.efk"));
 	auto&& playerspeedup   = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Speedup_Aura_01/speedup_aura_01.efk"));
 	auto&& armspeedup      = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/Arm_Aura/arm_aura_02.efk"));
 	auto&& powerdown       = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/DebuffAura/debuff_aura_01.efk"));
@@ -90,11 +90,11 @@ bool Player::Initialize()
 
 	_respawn_effect->RegisterParticle(respawn);
 	_respawn_effect->SetSpeed(1.0f);
-	_respawn_effect->SetScale(1.0f);
+	_respawn_effect->SetScale(3.0f);
 
 	_warp_effect->RegisterParticle(warp);
 	_warp_effect->SetSpeed(1.0f);
-	_warp_effect->SetScale(1.0f);
+	_warp_effect->SetScale(3.0f);
 
 	_player_speedup_effect->RegisterParticle(playerspeedup);
 	_player_speedup_effect->SetNomalEffect();

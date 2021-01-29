@@ -87,11 +87,11 @@ bool StageManager::Initialize()
 			case 'p':
 				tag = PLAYER_TAG + std::to_string(player_num);
 				iplayer_data->SetPosition(tag, Vector3(x, 0, -z));
+				imap_data->SetRespawnPosition(tag, Vector3(x, 0, -z));
 				player_num++;
 				break;
 			case 'r':
 				tag = PLAYER_TAG + std::to_string(respawn_player_tag);
-				imap_data->SetRespawnPosition(tag,Vector3(x,0,-z));
 				_respawn->SetRotation(Vector3_Zero);
 				_respawn->SetScale(1.0f);
 				respawn_player_tag++;
@@ -111,13 +111,6 @@ bool StageManager::Initialize()
 	mat.Ambient = Color(0.25f, 0.25f, 0.25f);
 	mat.Specular = Color(1.0f, 1.0f, 1.0f);
 	_respawn->SetMaterial(mat);
-
-	_stages.push_back(new Warp(WARP_TAG + std::to_string(17)));
-	_stages[_stages.size() - 1]->Initialize();
-	_stages[_stages.size() - 1]->SetPosition(Vector3(1, 0.1, -7));
-	_stages.push_back(new Warp(WARP_TAG + std::to_string(137)));
-	_stages[_stages.size() - 1]->Initialize();
-	_stages[_stages.size() - 1]->SetPosition(Vector3(13, 0.1, -7));
 
 	delete imap_data;
 	delete iplayer_data;
@@ -145,6 +138,12 @@ int StageManager::Update()
 			_stages[_stages.size() - 1]->Initialize();
 			_stages[_stages.size() - 1]->SetPosition(Vector3(7, 10 + (1 * i), -1 - i));
 		}
+		_stages.push_back(new Warp(WARP_TAG + std::to_string(17)));
+		_stages[_stages.size() - 1]->Initialize();
+		_stages[_stages.size() - 1]->SetPosition(Vector3(1, 10, -6));
+		_stages.push_back(new Warp(WARP_TAG + std::to_string(137)));
+		_stages[_stages.size() - 1]->Initialize();
+		_stages[_stages.size() - 1]->SetPosition(Vector3(13, 10, -6));
 		fall_flag[0] = true;
 	}
 

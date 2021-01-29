@@ -81,7 +81,7 @@ namespace PlayerEnum {
 
 	enum PunchType { UNCLASP_PUNCH, SET_PUNCH, PUNCH_MAX };
 
-	//enum { DEATH, ALIVE };
+	enum FrontAngle { FRONT = 180, BACK = 0, LEFT = 270, RIGHT = 90 };
 }
 
 namespace ArmEnum {

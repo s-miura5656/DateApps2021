@@ -3,6 +3,8 @@
 #include "../BaseScene.h"
 #include"../../Data/IData.h"
 
+class ParticleSystem;
+
 class ResultScene : public BaseScene
 {
 public:
@@ -21,6 +23,7 @@ private:
 	void                  ArrivalCount();
 	int                   GetRankNum(int);
 	int                   GetPoints(int);
+	std::unique_ptr<ParticleSystem>_effect;
 	SPRITE                _player_rank_num;
 	SPRITE                _background;
 	SPRITE                _totitle;

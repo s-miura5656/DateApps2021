@@ -170,8 +170,8 @@ void Block::Draw3D()
 void Block::DrawAlpha3D()
 {
 	Material mat;
-	mat.Diffuse = Color(0.5f, 0.5f, 0.5f);
-	mat.Ambient = Color(1.0f, 1.0f, 1.0f);
+	mat.Diffuse = Color(0.25f, 0.25f, 0.25f);
+	mat.Ambient = Color(0.25f, 0.25f, 0.25f);
 	mat.Specular = Color(0.5f, 0.5f, 0.5f);
 
 	if (_item_in_flag)
