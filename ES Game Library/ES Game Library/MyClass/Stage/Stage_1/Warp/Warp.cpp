@@ -42,7 +42,7 @@ bool Warp::Initialize()
 }
 int Warp::Update()
 {
-	_position.y -= 0.01;
+	_position.y += -0.1;
 	if (_position.y <= 0.1)
 	{
 		_position.y = 0.1;
@@ -87,17 +87,20 @@ void Warp::Draw3D()
 	_shader->SetTechnique("FixModel_S0");
 	_model->Draw(_shader);
 
-	auto pos = _position;
-	pos.y = 0.5;
-	_warp_effect->SetPosition(pos);
-	_warp_effect->SetRotation(Vector3(-15, 0, 0));
-	_warp_effect->PlayOneShot();
-	_warp_effect->Draw();
-	effect_time++;
-	if (effect_time >= 120)
+	if (_position.y <= 0.1)
 	{
-		effect_time = 0;
-		_warp_effect->Stop();
+		auto pos = _position;
+		pos.y = 0.5;
+		_warp_effect->SetPosition(pos);
+		_warp_effect->SetRotation(Vector3(-15, 0, 0));
+		_warp_effect->PlayOneShot();
+		_warp_effect->Draw();
+		effect_time++;
+		if (effect_time >= 120)
+		{
+			effect_time = 0;
+			_warp_effect->Stop();
+		}
 	}
 }
 
