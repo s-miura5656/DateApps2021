@@ -32,9 +32,15 @@ int PlayerBase::Update()
 	if (_warp_flag && _move_flag && player_data->GetState(_tag) == PlayerEnum::Animation::WAIT)
 	{
 		_warp_time++;
+		_warp_pos += 0.05;
+		if (_warp_pos >= 0)
+		{
+			_warp_pos = 0;
+		}
 		if (_warp_time >= 60)
 		{
 			_warp_time = 0;
+			_warp_pos = -1;
 			_move_flag = false;
 		}
 	}
@@ -333,6 +339,13 @@ void PlayerBase::DrawModel()
 
 		if (!_i_player_data->GetInvincibleMode(_tag))
 		{
+			if (_warp_flag && _move_flag && _transform.position == _warp_other_pos)
+			{
+				auto pos = _transform.position;
+				pos.y = _warp_pos;
+				_model->SetPosition(pos);
+				_model->Rotation(Vector3(0, _warp_pos * 300, 0));
+			}
 			_model->Draw(_shader);
 		}
 		else if(_invincible_count % 7 == 0)
@@ -441,11 +454,6 @@ void PlayerBase::Move()
 
 void PlayerBase::InputMoveDirection(BaseInput* pad)
 {
-	KeyboardState key = Keyboard->GetState();
-	if (key.IsKeyDown(Keys_A))
-	{
-		int a = 0;
-	}
 	if (_move_flag)
 		return;
 

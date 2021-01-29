@@ -38,7 +38,7 @@ protected:
 
 	bool Removeflag = false;
 	float _rotation = 0.f;
-	float _scale = 1.5f;
+	float _scale = 1.75f;
 	IMapData* _map_data;
 
 	int _effect_time;

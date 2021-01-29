@@ -116,16 +116,19 @@ int ResultScene::Update()
 		_random_number = 0;
 	}
 	AudioManager::Instance().ResultBgmPlay();
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	if (_random_time >= 3.5) 
 	{
-		auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
-		pad->Refresh();
-		if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
+		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 		{
-			AudioManager::Instance().ResultBgmStop();
-			_player_model->SetTrackPosition(5, 0);
-			_player_model->SetTrackEnable(5, false);
-			SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TITLE);
+			auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
+			pad->Refresh();
+			if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
+			{
+				AudioManager::Instance().ResultBgmStop();
+				_player_model->SetTrackPosition(5, 0);
+				_player_model->SetTrackEnable(5, false);
+				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::TITLE);
+			}
 		}
 	}
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)

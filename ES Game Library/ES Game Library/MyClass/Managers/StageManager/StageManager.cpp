@@ -87,11 +87,11 @@ bool StageManager::Initialize()
 			case 'p':
 				tag = PLAYER_TAG + std::to_string(player_num);
 				iplayer_data->SetPosition(tag, Vector3(x, 0, -z));
+				imap_data->SetRespawnPosition(tag, Vector3(x, 0, -z));
 				player_num++;
 				break;
 			case 'r':
 				tag = PLAYER_TAG + std::to_string(respawn_player_tag);
-				imap_data->SetRespawnPosition(tag,Vector3(x,0,-z));
 				_respawn->SetRotation(Vector3_Zero);
 				_respawn->SetScale(1.0f);
 				respawn_player_tag++;

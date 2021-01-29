@@ -103,6 +103,8 @@ protected:
 	int _new_point              = 0;
 	int _old_point              = 0;
 	int _status_time            = 0;
+	float _warp_pos             = -1;
+
 	//! animation_limit
 	float _shot_frame = 60.0f;
 

@@ -9,9 +9,9 @@
             <Value>3</Value>
           </MaxGeneration>
           <Life>
-            <Center>30</Center>
-            <Max>30</Max>
-            <Min>30</Min>
+            <Center>20</Center>
+            <Max>20</Max>
+            <Min>20</Min>
           </Life>
           <GenerationTime>
             <Center>10</Center>
@@ -40,15 +40,22 @@
             </Rotation>
           </PVA>
         </RotationValues>
+        <ScalingValues>
+          <Fixed>
+            <Scale>
+              <X>0.6</X>
+              <Y>0.6</Y>
+              <Z>0.6</Z>
+            </Scale>
+          </Fixed>
+        </ScalingValues>
         <RendererCommonValues>
           <ColorTexture>Star.png</ColorTexture>
+          <AlphaBlend>2</AlphaBlend>
           <FadeInType>1</FadeInType>
-          <FadeIn>
-            <Frame>4</Frame>
-          </FadeIn>
           <FadeOutType>1</FadeOutType>
           <FadeOut>
-            <Frame>16</Frame>
+            <Frame>10</Frame>
             <EndSpeed>-20</EndSpeed>
           </FadeOut>
         </RendererCommonValues>
@@ -65,9 +72,9 @@
             <Outer_Easing>
               <Start>
                 <X>
-                  <Center>0.8</Center>
-                  <Max>0.8</Max>
-                  <Min>0.8</Min>
+                  <Center>0.2</Center>
+                  <Max>0.2</Max>
+                  <Min>0.2</Min>
                 </X>
                 <Y>
                   <Center>1</Center>
@@ -82,9 +89,9 @@
                   <Min>1</Min>
                 </X>
                 <Y>
-                  <Center>6</Center>
-                  <Max>6</Max>
-                  <Min>6</Min>
+                  <Center>2</Center>
+                  <Max>2</Max>
+                  <Min>2</Min>
                 </Y>
               </End>
               <EndSpeed>-30</EndSpeed>
@@ -96,13 +103,6 @@
               </Location>
             </Inner_Fixed>
             <Inner_Easing>
-              <Start>
-                <X>
-                  <Center>0.8</Center>
-                  <Max>0.8</Max>
-                  <Min>0.8</Min>
-                </X>
-              </Start>
               <End>
                 <X>
                   <Center>1</Center>
@@ -172,13 +172,15 @@
       </Node>
       <Node>
         <CommonValues>
-          <MaxGeneration>
-            <Value>3</Value>
-          </MaxGeneration>
+          <Life>
+            <Center>50</Center>
+            <Max>50</Max>
+            <Min>50</Min>
+          </Life>
           <GenerationTime>
-            <Center>20</Center>
-            <Max>20</Max>
-            <Min>20</Min>
+            <Center>10</Center>
+            <Max>10</Max>
+            <Min>10</Min>
           </GenerationTime>
         </CommonValues>
         <RotationValues>
@@ -189,16 +191,23 @@
           </Fixed>
         </RotationValues>
         <ScalingValues>
-          <Type>1</Type>
+          <Fixed>
+            <Scale>
+              <X>0.6</X>
+              <Y>0.6</Y>
+              <Z>0.6</Z>
+            </Scale>
+          </Fixed>
         </ScalingValues>
         <RendererCommonValues>
+          <AlphaBlend>2</AlphaBlend>
           <FadeInType>1</FadeInType>
           <FadeIn>
-            <Frame>30</Frame>
+            <Frame>20</Frame>
           </FadeIn>
           <FadeOutType>1</FadeOutType>
           <FadeOut>
-            <Frame>90</Frame>
+            <Frame>30</Frame>
             <StartSpeed>30</StartSpeed>
             <EndSpeed>10</EndSpeed>
           </FadeOut>
@@ -220,9 +229,9 @@
             <Inner_Easing>
               <End>
                 <X>
-                  <Center>2.5</Center>
-                  <Max>2.5</Max>
-                  <Min>2.5</Min>
+                  <Center>1</Center>
+                  <Max>1</Max>
+                  <Min>1</Min>
                 </X>
               </End>
             </Inner_Easing>
@@ -271,8 +280,9 @@
               </End>
             </OuterColor_Easing>
             <CenterColor_Fixed>
-              <R>202</R>
-              <G>163</G>
+              <R>134</R>
+              <G>95</G>
+              <B>207</B>
             </CenterColor_Fixed>
             <InnerColor_Fixed>
               <R>254</R>
@@ -293,11 +303,6 @@
             <Max>50</Max>
             <Min>50</Min>
           </Life>
-          <GenerationTime>
-            <Center>10</Center>
-            <Max>10</Max>
-            <Min>10</Min>
-          </GenerationTime>
         </CommonValues>
         <LocationValues>
           <Easing>
@@ -324,6 +329,15 @@
             </Rotation>
           </Fixed>
         </RotationValues>
+        <ScalingValues>
+          <Fixed>
+            <Scale>
+              <X>0.6</X>
+              <Y>0.6</Y>
+              <Z>0.6</Z>
+            </Scale>
+          </Fixed>
+        </ScalingValues>
         <RendererCommonValues>
           <ColorTexture>Shock_wave_ring003.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
@@ -344,9 +358,9 @@
             <Outer_Easing>
               <Start>
                 <X>
-                  <Center>0.8</Center>
-                  <Max>0.8</Max>
-                  <Min>0.8</Min>
+                  <Center>0.5</Center>
+                  <Max>0.5</Max>
+                  <Min>0.5</Min>
                 </X>
                 <Y>
                   <Center>1</Center>
@@ -361,9 +375,9 @@
                   <Min>1</Min>
                 </X>
                 <Y>
-                  <Center>4</Center>
-                  <Max>4</Max>
-                  <Min>4</Min>
+                  <Center>2</Center>
+                  <Max>2</Max>
+                  <Min>2</Min>
                 </Y>
               </End>
               <EndSpeed>-30</EndSpeed>
@@ -377,9 +391,9 @@
             <Inner_Easing>
               <Start>
                 <X>
-                  <Center>0.8</Center>
-                  <Max>0.8</Max>
-                  <Min>0.8</Min>
+                  <Center>0.5</Center>
+                  <Max>0.5</Max>
+                  <Min>0.5</Min>
                 </X>
               </Start>
               <End>
