@@ -3,6 +3,7 @@
 #include "../../Players/PlayerBase.h"
 #include "../../Scenes/Main/Camera/MainCamera.h"
 #include "../../Managers/AudioManager/AudioManager.h"
+
 SpeedItem::SpeedItem(Vector3 position, std::string name)
 {
 	this->_position = position;
@@ -53,7 +54,6 @@ bool SpeedItem::Initialize()
 
 int SpeedItem::Update()
 {
-	RotationItem();
 	if (_position.y <= 0)
 		_position.y = 0;
 	else

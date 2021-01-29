@@ -28,7 +28,8 @@ bool ItemManager::Initialize()
 
 int ItemManager::Update()
 {
-	std::for_each(item_base.begin(), item_base.end(), [](ItemBase* itembase) { itembase->Update(); });
+
+	std::for_each(item_base.begin(), item_base.end(), [](ItemBase* itembase) { itembase->Update(); if(item_base[0] == itembase)item_base[0]->RotationItem(); });
 
 	auto end = std::remove_if(item_base.begin(), item_base.end(), [](ItemBase* itembase) {return itembase->IsFlag() == true; });
 	item_base.erase(end, item_base.end());
