@@ -11,10 +11,12 @@ Warp::Warp(std::string tag)
 	_hit_box->Init();
 	_hit_box->Settags(tag);
 	_hit_box->SetHitBox(1, 1, 1);
+	_warp_effect.reset(new ParticleSystem);
 }
 
 Warp::~Warp()
 {
+	_warp_effect.reset();
 	_hit_box.reset();
 }
 
@@ -23,7 +25,11 @@ bool Warp::Initialize()
 	//Xファイルの読み込み
 	_model = ResouceManager::Instance().LoadModelFile(_T("MapSprite/warp.X"));
 	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
+	auto&& warp = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/DebuffAura/debuff_aura_01.efk"));
 
+	_warp_effect->RegisterParticle(warp);
+	_warp_effect->SetSpeed(0.3f);
+	_warp_effect->SetScale(0.45f);
 	//スケールの設定
 	_model->SetScale(_scale);
 	//マテリアルの設定
@@ -80,5 +86,18 @@ void Warp::Draw3D()
 	_shader->SetParameter("eye_pos", camera.GetPosition());
 	_shader->SetTechnique("FixModel_S0");
 	_model->Draw(_shader);
+
+	auto pos = _position;
+	pos.y = 0.5;
+	_warp_effect->SetPosition(pos);
+	_warp_effect->SetRotation(Vector3(-15, 0, 0));
+	_warp_effect->PlayOneShot();
+	_warp_effect->Draw();
+	effect_time++;
+	if (effect_time >= 120)
+	{
+		effect_time = 0;
+		_warp_effect->Stop();
+	}
 }
 
