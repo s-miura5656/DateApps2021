@@ -31,7 +31,7 @@ bool TitleScene::Initialize()
 
 	//! タイトルロゴのパラメーターのセット
 	_title_logo_alpha    = 0.3f;
-	_title_logo_position = Vector3(65.0f, -200.0f, +100.0f);
+	_title_logo_position = Vector3(0.0f, -200.0f, +100.0f);
 	_title_logo_scale    = Vector2(1.0f, 1.0f);
 
 	//! オペレーションボタン画像のパラメーターのセット
@@ -81,7 +81,7 @@ void TitleScene::Draw2D()
 		SpriteBatch.Draw(*_title_logo, Vector3(_title_logo_position), _title_logo_alpha, Vector3_Zero,
 			Vector3_Zero, Vector2(_title_logo_scale));
 
-		SpriteBatch.Draw(*_robot, Vector3(0.0f, 0.0f, 9000.0f));
+		//SpriteBatch.Draw(*_robot, Vector3(0.0f, 0.0f, 9000.0f));
 	}
 
 	//! ボタン入力を受け付けるフラグがtrueの時に描画する
@@ -111,10 +111,10 @@ int TitleScene::TitleLanding()
 		_title_logo_position.y += 4.0f;
 
 		//! タイトルロゴが落ち切った時にボタン入力を受け付ける
-		if (_title_logo_position.y >= 125.0f)
+		if (_title_logo_position.y >= 0.0f)
 		{
 			_title_logo_alpha = 1.0f;
-			_title_logo_position.y = 125.0f;
+			_title_logo_position.y = 0.0f;
 			_button_push_flag = true;
 
 			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))

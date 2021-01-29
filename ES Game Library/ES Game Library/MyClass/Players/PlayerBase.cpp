@@ -331,10 +331,7 @@ void PlayerBase::DrawModel()
 	{
 		_shader->SetTechnique("FixAnimationModel");
 
-		if (_warp_flag && _move_flag)
-		{
-		}
-		else if (!_i_player_data->GetInvincibleMode(_tag))
+		if (!_i_player_data->GetInvincibleMode(_tag))
 		{
 			_model->Draw(_shader);
 		}
@@ -444,6 +441,11 @@ void PlayerBase::Move()
 
 void PlayerBase::InputMoveDirection(BaseInput* pad)
 {
+	KeyboardState key = Keyboard->GetState();
+	if (key.IsKeyDown(Keys_A))
+	{
+		int a = 0;
+	}
 	if (_move_flag)
 		return;
 
@@ -458,6 +460,7 @@ void PlayerBase::InputMoveDirection(BaseInput* pad)
 
 	int old_index_x = _index_num.x;
 	int old_index_z = _index_num.z;
+
 
 	if (abs_x > abs_z) 
 	{

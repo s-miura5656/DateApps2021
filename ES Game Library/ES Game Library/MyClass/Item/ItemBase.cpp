@@ -23,7 +23,8 @@ void ItemBase::Draw3D()
 	//_box->SetPosition(_position);
 	_model->SetScale(_scale);
 	_model->SetPosition(_position + Vector3(0, 0.5, 0));
-	_model->SetRotation(Vector3(30, _rotation, 0));
+	_model->SetRotation(Vector3(30, 0, 0));
+	_model->Rotation(Vector3(0, -_rotation, 0));
 	_model->Draw();
 	_hit_box->SetHitBoxPosition(_position);
 	//_box->Draw();

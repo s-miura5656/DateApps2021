@@ -32,7 +32,7 @@ bool SelectScene::Initialize()
 	_right_arrow = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
 	_right_arrow_dark = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
 	_dark_screen = ResouceManager::Instance().LordSpriteFile(_T("Select/dark_screen.png"));
-
+	_ready_to_fight = ResouceManager::Instance().LordSpriteFile(_T("Select/ready_to_fight.png"));
 	SPRITE texture;
 
 	for (int i = 0; i < TEXTURE_MAX; i++)
@@ -294,8 +294,11 @@ void SelectScene::Draw2D()
 		else
 			SpriteBatch.Draw(*_right_arrow_dark, player_num + Vector3(5, 50, 9000), RectWH(256 * 3, 0, 256, 512));
 
-		if(_confirming_flag)
+		if (_confirming_flag)
+		{
 			SpriteBatch.Draw(*_dark_screen, Vector3(0, 0, 8000), 0.2f);
+			SpriteBatch.Draw(*_ready_to_fight, Vector3(0, 0, 8000));
+		}
 	}
 }
 

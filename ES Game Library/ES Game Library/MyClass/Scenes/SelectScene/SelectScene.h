@@ -37,6 +37,7 @@ private:
 	SPRITE _right_arrow;
 	SPRITE _right_arrow_dark;
 	SPRITE _dark_screen;
+	SPRITE _ready_to_fight;
 	ANIMATIONMODEL _player_model;
 
 	std::vector<PlayerTexture*> _textures;
