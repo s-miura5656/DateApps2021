@@ -64,10 +64,10 @@ bool SelectScene::Initialize()
 	_confirming_flag = false;
 	_game_start_flag = false;
 
-	_player_position[0] = -3;
-	_player_position[1] = -0.8;
-	_player_position[2] = 1.4;
-	_player_position[3] = 3.6;
+	_player_position[0] = -3.3;
+	_player_position[1] = -1.1;
+	_player_position[2] = 1.1;
+	_player_position[3] = 3.3;
 
 	Light light;
 	light.Type = Light_Directional;
@@ -140,50 +140,18 @@ int SelectScene::Update()
 			{
 				auto a = std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x);
 
-				/*if (a)
-				{
-					_left_arrow_flag[i] = false;
-					_right_arrow_flag[i] = true;
-				}
-				else
-				{
-					_right_arrow_flag[i] = false;
-					_left_arrow_flag[i] = true;
-				}*/
-
-				//! スティック倒して一定時間で次のカラーへ
-				//_select_count[i]++;
-
-				//if (_select_count[i] >= 10)
-				//{
-			
-				//	std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _chara_select[i]-- : _chara_select[i]++;
-				//	std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _banner_color[i]-- : _banner_color[i]++;
-				//	ColorSelect(i, pad);
-
-				//	//_select_count[i] = 0;
-				//}
-
-//				if (_old_x_stick[i] <= 0.0f && pad->Stick(STICK_INFO::LEFT_STICK).x > 0.0f)
 				const auto STICK_DELTA = pad->Stick(STICK_INFO::LEFT_STICK).x - _old_x_stick[i];
 				if (STICK_DELTA >= Axis_Max / 8 && pad->Stick(STICK_INFO::LEFT_STICK).x >= Axis_Max * 0.90f)
 				{
-//					_chara_select[i]++;
-//					_banner_color[i]++;
-//					ColorSelect(i, pad);
-
 					_textures[_chara_select[i]]->SetFlag(false);
 					_banner_color[i] = ColorSelect2(i, +1);
 
 					_right_arrow_flag[i] = false;
 					_left_arrow_flag[i] = true;
 				}
-//				else if (_old_x_stick[i] >= 0.0f && pad->Stick(STICK_INFO::LEFT_STICK).x < 0.0f)
+
 				else if (STICK_DELTA <= Axis_Min / 8 && pad->Stick(STICK_INFO::LEFT_STICK).x <= Axis_Min * 0.90f)
 				{
-//					_chara_select[i]--;
-//					_banner_color[i]--;
-//					ColorSelect(i, pad);
 					_textures[_chara_select[i]]->SetFlag(false);
 					_banner_color[i] = ColorSelect2(i, -1);
 
@@ -194,12 +162,6 @@ int SelectScene::Update()
 		}
 
 		_old_x_stick[i] = pad->Stick(STICK_INFO::LEFT_STICK).x;
-
-		//if (_banner_color[i] > TEXTURE_MAX - 1)
-		//	_banner_color[i] = 0;
-
-		//if (_banner_color[i] < 0)
-		//	_banner_color[i] = TEXTURE_MAX - 1;
 
 		//! カラー再選択
 		if (_select_complete_flag[i])
@@ -273,7 +235,7 @@ void SelectScene::Draw2D()
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
 		auto player_num = GraphicsDevice.WorldToScreen(Vector3(_player_position[i], 0, 0));
-		player_num.x += 100 + 300 * i;
+		player_num.x += 60 + 300 * i;
 		SpriteBatch.Draw(*_banner, player_num + Vector3(0, 85, 9000), RectWH(256 * _chara_select[i], 0, 256, 512));
 		if (!_select_complete_flag[i])
 		{
@@ -285,19 +247,19 @@ void SelectScene::Draw2D()
 		}
 
 		if (_left_arrow_flag[i])
-			SpriteBatch.Draw(*_left_arrow, player_num + Vector3(-5, 50, 9000), RectWH(0, 0, 256, 512));
+			SpriteBatch.Draw(*_left_arrow, player_num + Vector3(0, 50, 9000), RectWH(0, 0, 256, 512));
 		else
-			SpriteBatch.Draw(*_left_arrow_dark, player_num + Vector3(-5, 50, 9000), RectWH(256, 0, 256, 512));
+			SpriteBatch.Draw(*_left_arrow_dark, player_num + Vector3(0, 50, 9000), RectWH(256, 0, 256, 512));
 
 		if (_right_arrow_flag[i])
-			SpriteBatch.Draw(*_right_arrow, player_num + Vector3(5, 50, 9000), RectWH(256 * 2, 0, 256, 512));
+			SpriteBatch.Draw(*_right_arrow, player_num + Vector3(1, 50, 9000), RectWH(256 * 2, 0, 256, 512));
 		else
-			SpriteBatch.Draw(*_right_arrow_dark, player_num + Vector3(5, 50, 9000), RectWH(256 * 3, 0, 256, 512));
+			SpriteBatch.Draw(*_right_arrow_dark, player_num + Vector3(1, 50, 9000), RectWH(256 * 3, 0, 256, 512));
 
 		if (_confirming_flag)
 		{
-			SpriteBatch.Draw(*_dark_screen, Vector3(0, 0, 8000), 0.2f);
-			SpriteBatch.Draw(*_ready_to_fight, Vector3(0, 0, 8000));
+			SpriteBatch.Draw(*_dark_screen, Vector3(0, 0, 0), 0.2f);
+			SpriteBatch.Draw(*_ready_to_fight, Vector3(0, 0, 0));
 		}
 	}
 }
