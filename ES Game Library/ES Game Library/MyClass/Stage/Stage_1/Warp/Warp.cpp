@@ -87,7 +87,7 @@ void Warp::Draw3D()
 	_shader->SetTechnique("FixModel_S0");
 	_model->Draw(_shader);
 
-	if (_position.y <= 0.1)
+	if (_position.y <= 0.2)
 	{
 		auto pos = _position;
 		pos.y = 0.5;
