@@ -18,5 +18,5 @@ public:
 	int Update() override;
 	void Draw3D() override;
 private:
-	bool flag;
+	EFFECT _shader;
 };
