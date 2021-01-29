@@ -151,9 +151,7 @@ int MainUi::Update()
 	//! カウントダウンの回転と縮小
 	for (int i = 1;i < 4;i++) {
 		if (Countdown == i) {
-			if (cout_size <= 1.8) {
-				cout_size += 0.02;
-			}
+			cout_size += 0.03;
 		}
 	}
 	
