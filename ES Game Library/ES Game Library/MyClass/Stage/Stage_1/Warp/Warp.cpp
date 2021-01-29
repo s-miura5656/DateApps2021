@@ -32,27 +32,32 @@ bool Warp::Initialize()
 }
 int Warp::Update()
 {
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	_position.y -= 0.01;
+	if (_position.y <= 0.1)
 	{
-		std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
-
-		if (!_hit_box->Tag_Sarch(player_tag))
+		_position.y = 0.1;
+		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 		{
-			continue;
-		}
+			std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
 
-		if (_hit_box->IsHitObjectsSquare(player_tag))
-		{
-			Vector3 new_pos = Vector3(0, 0, 0);
-			if (_position.x == 1)
+			if (!_hit_box->Tag_Sarch(player_tag))
 			{
-				new_pos = Vector3(13, 0.1, -7);
+				continue;
 			}
-			else if (_position.x == 13)
+
+			if (_hit_box->IsHitObjectsSquare(player_tag))
 			{
-				new_pos = Vector3(1, 0, -7);
+				Vector3 new_pos = Vector3(0, 0, 0);
+				if (_position.x == 1)
+				{
+					new_pos = Vector3(13, 0, -6);
+				}
+				else if (_position.x == 13)
+				{
+					new_pos = Vector3(1, 0, -6);
+				}
+				_hit_box->GetHitBoxTag(player_tag)->GetPlayerBase()->Warp(new_pos);
 			}
-			_hit_box->GetHitBoxTag(player_tag)->GetPlayerBase()->Warp(new_pos);
 		}
 	}
 
