@@ -1,9 +1,11 @@
 #include"PlayerUi.h"
 #include "../../Managers/ResouceManager/ResouceManager.h"
 #include "../../Managers/SceneManager/SceneManager.h"
+#include "../../Ui/MainUi.h"
 
-SPRITE PlayerUi::score_font = nullptr;
-FONT  PlayerUi::player_font = nullptr;
+SPRITE  PlayerUi::score_font = nullptr;
+FONT    PlayerUi::player_font = nullptr;
+MainUi* PlayerUi::mainui = nullptr;
 
 PlayerUi::PlayerUi(const int player_no) : player_index(player_no)
 {
@@ -174,21 +176,21 @@ void PlayerUi::Draw2D()
 	SpriteElement se;
 	se = score_font;
 
-	se.position = banner_position + Vector3((10 * _font_size) + 90, 57, -1);
+	se.anchorPoint = Vector3(32 * _font_size + 90, 32 * _font_size, 0);
+	se.position = banner_position + Vector3((10 * _font_size) + 135, 57, -1);
 	se.srcRect = RectWH((int)(score / 1000) * 64, 0, 64, 64);
-	se.anchorPoint = Vector3(32 * _font_size, 32 * _font_size, 0);
 	se.SetScale(_font_size);
 	SpriteBatch.Draw(se);
 
-	se.position = banner_position + Vector3((74 * _font_size) + 90, 57, -1);
+	se.position = banner_position + Vector3((74 * _font_size) + 135, 57, -1);
 	se.srcRect = RectWH((int)((score % 1000) / 100) * 64, 0, 64, 64);
 	SpriteBatch.Draw(se);
 
-	se.position = banner_position + Vector3((138 * _font_size) + 90, 57, -1);
+	se.position = banner_position + Vector3((138 * _font_size) + 135, 57, -1);
 	se.srcRect = RectWH((int)((score % 1000) % 100 / 10) * 64, 0, 64, 64);
 	SpriteBatch.Draw(se);
 
-	se.position = banner_position + Vector3((204 * _font_size) + 90, 57, -1);
+	se.position = banner_position + Vector3((204 * _font_size) + 135, 57, -1);
 	se.srcRect = RectWH((int)((score % 1000) % 100 % 10) * 64, 0, 64, 64);
 	SpriteBatch.Draw(se);
 
@@ -197,8 +199,9 @@ void PlayerUi::Draw2D()
 	//SpriteBatch.Draw(*score_font, banner_position + Vector3((138 * _font_size) + 70, 40, -1), RectWH((int)((score % 1000) % 100 / 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(32 * _font_size, 32 * _font_size, 0), _font_size);
 	//SpriteBatch.Draw(*score_font, banner_position + Vector3((204 * _font_size) + 70, 40, -1), RectWH((int)((score % 1000) % 100 % 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(32 * _font_size, 32 * _font_size, 0), _font_size);
 
+	//bool start_or_end = MainUi::GetGameState();
 	//! 一位のとき
-	if (seconds <= 10) {
+	if (seconds <= 10 && seconds <= 110) {
 		SpriteBatch.Draw(*joy_icon, banner_position + icon_pos, RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 128, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.1f);
 	}
 	else if (_i_player_data->GetRankNum(tag) + 1 == 1)
@@ -211,7 +214,7 @@ void PlayerUi::Draw2D()
 	}
 
 	//! 開始十秒後に順位表示
-	if (seconds >= 10) {
+	if (seconds >= 10 && mainui->GetGameState() ==false) {
 		SpriteBatch.Draw(*ranking, player_pos + Vector3(-60 * 0.7, (-128 - 40) * 0.7, 0), RectWH((_i_player_data->GetRankNum(tag)) * 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
 	}
 }
