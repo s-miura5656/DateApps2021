@@ -136,7 +136,7 @@ int PlayerBase::Update()
 				if (pad->Stick(STICK_INFO::LEFT_STICK) != STICK_CENTER)
 				{
 					InputAngle(pad);
-					player_data->SetAngle(_tag, _transform.rotation.y);
+					//player_data->SetAngle(_tag, _transform.rotation.y);
 					player_data->SetState(_tag, PlayerEnum::Animation::MOVE);
 				}
 				else
@@ -372,7 +372,7 @@ void PlayerBase::DrawModel()
 
 	_model->SetRotation(_transform.rotation);
 
-	_i_player_data->SetAngle(_tag, _transform.rotation.y);
+	//_i_player_data->SetAngle(_tag, _transform.rotation.y);
 	_i_player_data->SetPosition(_tag, _transform.position);
 	_model->SetScale(_transform.scale);
 
@@ -470,15 +470,96 @@ void PlayerBase::InputMoveDirection(BaseInput* pad)
 	int old_index_z = _index_num.z;
 
 
-	if (abs_x > abs_z) 
+	// 軸の倒れている方向を決定する
+	// 1.上下と左右の割合が1/3未満は斜めとみなさない
+	if (abs_x / abs_z < 0.333333f || abs_z / abs_x < 0.333333f)
 	{
-		std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _index_num.x-- : _index_num.x++;
-		_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
+		if (abs_x > abs_z)
+		{
+			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _index_num.x-- : _index_num.x++;
+			_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
+		}
+		else if (abs_x < abs_z)
+		{
+			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z++ : _index_num.z--;
+			_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
+		}
 	}
-	else if (abs_x < abs_z) 
+	// 斜めに倒されている
+	else
 	{
-		std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z++ : _index_num.z--;
-		_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
+		// 進行方向ではない軸の方向に行けるか調べる
+		const int angle = (int)_i_player_data->GetAngle(_tag);
+		if (angle % 180 == 0)
+		{
+			// 前後を向いているので、左右を調べる
+			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _index_num.x-- : _index_num.x++;
+			_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
+			if (map_data[_index_num.z][_index_num.x] == 'i' ||
+				map_data[_index_num.z][_index_num.x] == 'w' ||
+				map_data[_index_num.z][_index_num.x] == 'b' ||
+				map_data[_index_num.z][_index_num.x] == 'd' ||
+				map_data[_index_num.z][_index_num.x] == 's')
+			{
+				_index_num.x = old_index_x;
+				_index_num.z = old_index_z;
+
+				std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z++ : _index_num.z--;
+				_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
+			}
+
+		}
+		else
+		{
+			// 左右を向いているので、前後を調べる
+			std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z++ : _index_num.z--;
+			_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
+			if (map_data[_index_num.z][_index_num.x] == 'i' ||
+				map_data[_index_num.z][_index_num.x] == 'w' ||
+				map_data[_index_num.z][_index_num.x] == 'b' ||
+				map_data[_index_num.z][_index_num.x] == 'd' ||
+				map_data[_index_num.z][_index_num.x] == 's')
+			{
+				_index_num.x = old_index_x;
+				_index_num.z = old_index_z;
+
+				std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _index_num.x-- : _index_num.x++;
+				_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
+			}
+
+		}
+	}
+
+	//if (abs_x > abs_z) 
+	//{
+	//	std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).x) ? _index_num.x-- : _index_num.x++;
+	//	_index_num.x = (int)Clamp(_index_num.x, 0, map_data[_index_num.z].size() - 1);
+	//}
+	//else if (abs_x < abs_z) 
+	//{
+	//	std::signbit(pad->Stick(STICK_INFO::LEFT_STICK).y) ? _index_num.z++ : _index_num.z--;
+	//	_index_num.z = (int)Clamp(_index_num.z, 0, map_data.size() - 1);
+	//}
+	if (_index_num.x > old_index_x)
+	{
+		player_data->SetAngle(_tag, FrontAngle::RIGHT);
+		_transform.rotation.y = FrontAngle::RIGHT;
+	}
+	else if (_index_num.x < old_index_x)
+	{
+		player_data->SetAngle(_tag, FrontAngle::LEFT);
+		_transform.rotation.y = FrontAngle::LEFT;
+	}
+	else if (_index_num.z > old_index_z)
+	{
+		player_data->SetAngle(_tag, FrontAngle::FRONT);
+		_transform.rotation.y = FrontAngle::FRONT;
+	}
+	else if (_index_num.z < old_index_z)
+	{
+		player_data->SetAngle(_tag, FrontAngle::BACK);
+		_transform.rotation.y = FrontAngle::BACK;
+
 	}
 
 	if (map_data[_index_num.z][_index_num.x] != 'i' &&
@@ -498,6 +579,8 @@ void PlayerBase::InputMoveDirection(BaseInput* pad)
 	}
 
 	_old_pos = _transform.position;
+	
+
 }
 
 //! @fn 方向の入力
