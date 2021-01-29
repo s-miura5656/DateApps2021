@@ -117,15 +117,26 @@ int SelectScene::Update()
 			_player_rotation_flag[i] = true;
 		}
 
-		//! ‘I‘ðŒãƒ‚ƒfƒ‹‰ñ“]
-		if (_player_rotation_flag[i])
-			_player_rotation[i] += 10.0f;
+		if (_select_complete_flag[i])
+		{
+			if (pad->Stick(STICK_INFO::LEFT_STICK).x != 0)
+			{
+				_player_rotation[i] += pad->Stick(STICK_INFO::LEFT_STICK).x / 10000;
+			}
+		}
+		if (_player_rotation[i] >= 360)
+		{
+			_player_rotation[i] = 0;
+		}
+		////! ‘I‘ðŒãƒ‚ƒfƒ‹‰ñ“]
+		//if (_player_rotation_flag[i])
+		//	_player_rotation[i] += 10.0f;
 
-		if (_player_rotation[i] >= 500.0f)
-			_player_rotation_flag[i] = false;
+		//if (_player_rotation[i] >= 500.0f)
+		//	_player_rotation_flag[i] = false;
 
-		if (!_player_rotation_flag[i])
-			_player_rotation[i] = 180.0f;
+		//if (!_player_rotation_flag[i])
+		//	_player_rotation[i] = 180.0f;
 
 		if (!_select_complete_flag[i])
 		{
