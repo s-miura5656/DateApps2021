@@ -130,22 +130,22 @@ bool StageManager::Initialize()
 int StageManager::Update()
 {
 
-	if (!fall_flag[0] && TimeManager::Instance().GetTimeLeft() <= 110)
-	{
-		for (int i = 1; i < 10; i++)
-		{
-			_stages.push_back(new Indestructible(std::to_string(i)));
-			_stages[_stages.size() - 1]->Initialize();
-			_stages[_stages.size() - 1]->SetPosition(Vector3(7, 10 + (1 * i), -1 - i));
-		}
-		_stages.push_back(new Warp(WARP_TAG + std::to_string(17)));
-		_stages[_stages.size() - 1]->Initialize();
-		_stages[_stages.size() - 1]->SetPosition(Vector3(1, 10, -6));
-		_stages.push_back(new Warp(WARP_TAG + std::to_string(137)));
-		_stages[_stages.size() - 1]->Initialize();
-		_stages[_stages.size() - 1]->SetPosition(Vector3(13, 10, -6));
-		fall_flag[0] = true;
-	}
+	//if (!fall_flag[0] && TimeManager::Instance().GetTimeLeft() <= FALL_BLOCK_TIME)
+	//{
+	//	for (int i = 1; i < 10; i++)
+	//	{
+	//		_stages.push_back(new Indestructible(std::to_string(i)));
+	//		_stages[_stages.size() - 1]->Initialize();
+	//		_stages[_stages.size() - 1]->SetPosition(Vector3(7, 10 + (1 * i), -1 - i));
+	//	}
+	//	_stages.push_back(new Warp(WARP_TAG + std::to_string(17)));
+	//	_stages[_stages.size() - 1]->Initialize();
+	//	_stages[_stages.size() - 1]->SetPosition(Vector3(1, 10, -6));
+	//	_stages.push_back(new Warp(WARP_TAG + std::to_string(137)));
+	//	_stages[_stages.size() - 1]->Initialize();
+	//	_stages[_stages.size() - 1]->SetPosition(Vector3(13, 10, -6));
+	//	fall_flag[0] = true;
+	//}
 
 	if(_bg_movie->IsComplete())
 	_bg_movie->Replay();

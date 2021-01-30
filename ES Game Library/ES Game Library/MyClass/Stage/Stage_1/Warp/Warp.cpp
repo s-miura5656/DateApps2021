@@ -43,7 +43,7 @@ bool Warp::Initialize()
 int Warp::Update()
 {
 	_position.y += -0.1;
-	if (_position.y <= 0.1)
+	if (_position.y <= 0.2)
 	{
 		_position.y = 0.1;
 		for (int i = 0; i < PLAYER_COUNT_MAX; i++)

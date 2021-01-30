@@ -117,7 +117,7 @@ int TitleScene::TitleLanding()
 			_title_logo_position.y = 0.0f;
 			_button_push_flag = true;
 
-			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+			if (pad->Button(BUTTON_INFO::BUTTON_B))
 			{
 				AudioManager::Instance().SelectPlay();
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::SELECT);
