@@ -40,11 +40,30 @@ int Indestructible::Update()
 {
 	//当たり判定を破壊可能ブロックと同じポジションにする
 	if (_hit_box != nullptr)
-	_hit_box->SetHitBoxPosition(_position + Vector3(0, 1, 0));
+	_hit_box->SetHitBoxPosition(_position);
 
 	_position.y += -0.1;
 	if (_position.y <= 0.3)
 	{
+		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+		{
+			std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
+
+			//!プレイヤーとの接触時にプレイヤーを倒す
+			if (_hit_box->IsHitObjectsSquare(player_tag))
+			{
+				std::unique_ptr<IPrayerData> playerdata = std::make_unique<IPrayerData>();
+				if (!playerdata->GetInvincibleMode(player_tag))
+				{
+					playerdata->SetState(player_tag, PlayerEnum::Animation::DEATH);
+					if (playerdata->GetRankingPoint(player_tag) >= 300)
+						playerdata->SetRankingPoint(player_tag, playerdata->GetRankingPoint(player_tag) - 300);
+					else
+						playerdata->SetRankingPoint(player_tag, 0);
+				}
+			}
+
+		}
 		std::unique_ptr<IMapData> map_data = std::make_unique<IMapData>();
 		auto data = map_data->GetData();
 

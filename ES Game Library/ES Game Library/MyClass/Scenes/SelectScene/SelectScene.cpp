@@ -224,7 +224,7 @@ int SelectScene::Update()
 
 		if (_game_start_flag)
 		{
-			if (pad->Button(BUTTON_INFO::BUTTON_B))
+			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 			{
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
 				AudioManager::Instance().SelectPlay();
