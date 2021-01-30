@@ -30,11 +30,11 @@ private:
 
 	MEDIA _demo_movie;
 	
-
 	float _title_logo_alpha;
 	float _operation_button_alpha;
 	int _demo_scene_count;
 	int _play_count;
+	int _movie_time_count;
 	bool _movie_flag;
 
 	//! flag
