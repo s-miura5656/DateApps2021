@@ -26,7 +26,7 @@ bool TitleScene::Initialize()
 	_operation_button   = ResouceManager::Instance().LordSpriteFile(_T("TitleSprite/b_button.png"));
 
 	MediaManager.Attach(GraphicsDevice);
-	_demo_movie = ResouceManager::Instance().LordMediaFile(_T("TitleSprite/BG.wmv"));
+	_demo_movie = ResouceManager::Instance().LordMediaFile(_T("TitleSprite/gameplay.wmv"));
 
 
 	//! タイトルロゴのパラメーターのセット

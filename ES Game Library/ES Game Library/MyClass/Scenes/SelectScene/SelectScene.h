@@ -24,6 +24,7 @@ private:
 	int ColorSelect2(int player_number, int direction);
 
 	double _animation_count = 0;
+	double _jumpanimation_count = 0;
 
 	enum { TEXTURE_MAX = 8 };
 

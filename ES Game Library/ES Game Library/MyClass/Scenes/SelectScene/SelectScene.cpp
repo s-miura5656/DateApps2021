@@ -26,7 +26,7 @@ bool SelectScene::Initialize()
 	_button_ready = ResouceManager::Instance().LordSpriteFile(_T("Select/ready_button.png"));
 	_button_go = ResouceManager::Instance().LordSpriteFile(_T("Select/ok_button.png"));
 	_player_model = ResouceManager::Instance().LoadAnimationModelFile(_T("Player/Robo_animation.X"));
-	_shader       = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
+	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/AnimationStandardShader.hlsl"));
 	_left_arrow = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
 	_left_arrow_dark = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
 	_right_arrow = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
@@ -48,7 +48,7 @@ bool SelectScene::Initialize()
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 	{
-		_player_button_flag[i]   = true;
+		_player_button_flag[i] = true;
 		_select_complete_flag[i] = false;
 		_chara_select[i] = i;
 		_textures[i]->SetFlag(true);
@@ -103,8 +103,6 @@ int SelectScene::Update()
 	AudioManager::Instance().TitleBgmPlay();
 
 	//_player_model->SetTrackEnable(0, false);
-	_player_model->SetTrackPosition(0, 0);
-	
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
 	{
@@ -114,9 +112,20 @@ int SelectScene::Update()
 		//! カラー選択　関数作る
 		if (pad->Button(BUTTON_INFO::BUTTON_B))
 		{
+			bool animflag = false;
+			for (int j = 0; j < PLAYER_COUNT_MAX; j++)
+			{
+				if (i == j)
+					continue;
+				if (_select_complete_flag[j])
+					animflag = true;
+			}
 			if (!_select_complete_flag[i])
+			{
 				AudioManager::Instance().SelectPlay();
-
+				if (!animflag)
+					_jumpanimation_count = 0;
+			}
 			_select_complete_flag[i] = true;
 			_player_rotation_flag[i] = true;
 		}
@@ -125,10 +134,17 @@ int SelectScene::Update()
 		{
 			if (pad->Stick(STICK_INFO::LEFT_STICK).x != 0)
 			{
-				_player_rotation[i] += pad->Stick(STICK_INFO::LEFT_STICK).x / 10000;
+				_player_rotation[i] += -pad->Stick(STICK_INFO::LEFT_STICK).x / 10000;
 			}
 		}
-		
+		if (_player_rotation[i] > 360)
+		{
+			_player_rotation[i] = 0;
+		}
+		if (_player_rotation[i] < 0)
+		{
+			_player_rotation[i] = 360;
+		}
 		if (!_select_complete_flag[i])
 		{
 			//! スティック入力に応じて矢印の描画
@@ -168,6 +184,8 @@ int SelectScene::Update()
 		//! カラー再選択
 		if (_select_complete_flag[i])
 		{
+			_left_arrow_flag[i] = true;
+			_right_arrow_flag[i] = true;
 			if (pad->Button(BUTTON_INFO::BUTTON_A))
 			{
 				AudioManager::Instance().CancelPlay();
@@ -310,16 +328,36 @@ void SelectScene::Draw3D()
 		}
 
 		_player_model->SetScale(1.0f);
-		_player_model->SetPosition(Vector3(_player_position[i], 0, 0));
+		_player_model->SetPosition(Vector3(_player_position[i], -0.1, 0));
 		_player_model->SetRotation(0, _player_rotation[i], 0);
 
 		Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
 		_shader->SetParameter("vp", vp);
 		_shader->SetTechnique("UnlitAnimationModel");
-		_player_model->SetTrackPosition(0, _animation_count);
-		_animation_count += GameTimer.GetElapsedSecond() / 2;
+
+		if (!_confirming_flag)
+		{
+			if (!_select_complete_flag[i])
+			{
+
+				_player_model->SetTrackEnable(0, TRUE);
+				_player_model->SetTrackEnable(5, false);
+				_player_model->SetTrackPosition(0, _animation_count);
+			}
+			else
+			{
+
+				_player_model->SetTrackEnable(0, false);
+				_player_model->SetTrackEnable(5, TRUE);
+				if (_jumpanimation_count >= 1.3f)
+					_jumpanimation_count = 0;
+				_player_model->SetTrackPosition(5, _jumpanimation_count);
+			}
+		}
 		_player_model->Draw(_shader);
 	}
+	_animation_count += GameTimer.GetElapsedSecond();
+	_jumpanimation_count += GameTimer.GetElapsedSecond();
 }
 
 bool SelectScene::GameStart()
@@ -381,3 +419,4 @@ int SelectScene::ColorSelect2(int player_number, int direction)
 
 	return select_color;
 }
+
