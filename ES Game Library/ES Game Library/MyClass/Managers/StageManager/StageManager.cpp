@@ -130,7 +130,7 @@ bool StageManager::Initialize()
 int StageManager::Update()
 {
 
-	if (!fall_flag[0] && TimeManager::Instance().GetTimeLeft() <= 110)
+	if (!fall_flag[0] && TimeManager::Instance().GetTimeLeft() <= FALL_BLOCK_TIME)
 	{
 		for (int i = 1; i < 10; i++)
 		{
