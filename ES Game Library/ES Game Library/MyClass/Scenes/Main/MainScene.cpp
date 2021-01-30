@@ -84,7 +84,11 @@ int MainScene::Update()
 	else
 	{
 		AudioManager::Instance().SpeedUpMainBgmStop();
-		AudioManager::Instance().GameEndWhistlePlay();
+		if (!_whistle_flag) 
+		{
+			AudioManager::Instance().GameEndWhistlePlay();
+			_whistle_flag = false;
+		}
 		_managers[3]->Update();
 	}
 

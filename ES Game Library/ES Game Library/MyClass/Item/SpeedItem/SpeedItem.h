@@ -16,4 +16,5 @@ public:
 
 private:
 	float _rotation;
+	string _tag = "";
 };

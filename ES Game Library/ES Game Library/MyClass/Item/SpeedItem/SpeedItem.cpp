@@ -6,11 +6,10 @@
 
 SpeedItem::SpeedItem(Vector3 position, std::string name)
 {
+	_position = Vector3(0,9999,0);
 	this->_position = position;
+	_tag = name;
 	_hit_box.reset(new HitBox());
-	_hit_box->Init();
-	_hit_box->Settags(name);
-	_hit_box->SetHitBox(1, 1, 1);
 	_i_player_data = new IPrayerData;
 	_i_arm_data = new IArmData;
 	_map_data = new IMapData;
@@ -49,6 +48,12 @@ bool SpeedItem::Initialize()
 
 	_model->SetMaterial(material);
 	_model->SetScale(1.25f);
+
+	_hit_box->Init();
+	_hit_box->Settags(_tag);
+	_hit_box->SetHitBoxPosition(_position);
+	_hit_box->SetHitBox(1, 1, 1);
+
 	return true;
 }
 
@@ -132,6 +137,6 @@ int SpeedItem::Update()
 			_map_data->SetData(data);
 		}
 	}
-
+	_hit_box->SetHitBoxPosition(_position);
 	return 0;
 }
