@@ -23,6 +23,7 @@ private:
 	void ColorSelect(int player_number, BaseInput* pad);
 	int ColorSelect2(int player_number, int direction);
 
+	double _animation_count = 0;
 
 	enum { TEXTURE_MAX = 8 };
 
@@ -41,8 +42,6 @@ private:
 	ANIMATIONMODEL _player_model;
 
 	std::vector<PlayerTexture*> _textures;
-
-	int _select_count[PLAYER_COUNT_MAX];
 
 	int _banner_color[PLAYER_COUNT_MAX];
 	int _chara_select_seve[PLAYER_COUNT_MAX];

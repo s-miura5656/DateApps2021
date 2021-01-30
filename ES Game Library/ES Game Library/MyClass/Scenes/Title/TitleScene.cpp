@@ -41,12 +41,13 @@ bool TitleScene::Initialize()
 	_demo_scene_count = 0;
 	_play_count = 0;
 	_movie_flag = false;
+	_movie_time_count = 0;
 
 
 	_button_flashing_flag   = true;
 	_button_push_flag       = false;
 	_tutorial_flag          = false;
-	_demo_move_flag        = false;
+	_demo_move_flag         = false;
 
 	Viewport view       = GraphicsDevice.GetViewport();
 	Vector3 _camera_pos = Vector3(0, 0, -10);
@@ -116,13 +117,13 @@ int TitleScene::TitleLanding()
 			_title_logo_alpha = 1.0f;
 			_title_logo_position.y = 0.0f;
 			_button_push_flag = true;
+			_demo_scene_count++;
 
 			if (pad->Button(BUTTON_INFO::BUTTON_B))
 			{
 				AudioManager::Instance().SelectPlay();
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::SELECT);
 			}
-			_demo_scene_count++;
 		}
 	}
 	if (_demo_scene_count >= 200)
@@ -171,14 +172,27 @@ void TitleScene::DemoMove()
 {
 	auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(1));
 	
-	if (_play_count > 0) {
-		if(!_movie_flag) {
+	_movie_time_count++;
+
+	if (_movie_time_count >= 300)
+	{
+		_demo_move_flag = false;
+		_movie_flag = false;
+		_movie_time_count = 0;
+	}
+
+	if (_play_count > 0) 
+	{
+		if(!_movie_flag) 
+		{
 			_demo_movie->Replay();
 			_movie_flag = true;
 		}
 	}
 	else
-	    _demo_movie->Play();
+	{
+		_demo_movie->Play();
+	}
 	
 	if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 	{

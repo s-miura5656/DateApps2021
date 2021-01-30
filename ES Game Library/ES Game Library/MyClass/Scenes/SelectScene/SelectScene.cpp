@@ -54,7 +54,6 @@ bool SelectScene::Initialize()
 		_textures[i]->SetFlag(true);
 		_player_rotation[i] = 180.0f;
 		_player_rotation_flag[i] = false;
-		_select_count[i] = 0;
 		_banner_color[i] = i;
 		_old_x_stick[i] = 0.0f;
 		_left_arrow_flag[i] = false;
@@ -103,16 +102,21 @@ int SelectScene::Update()
 {
 	AudioManager::Instance().TitleBgmPlay();
 
+	//_player_model->SetTrackEnable(0, false);
+	_player_model->SetTrackPosition(0, 0);
+	
+
 	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
 	{
 		auto pad = InputManager::Instance().GetGamePad(PLAYER_TAG + std::to_string(i + 1));
 		pad->Refresh();
 
 		//! カラー選択　関数作る
-		if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+		if (pad->Button(BUTTON_INFO::BUTTON_B))
 		{
 			if (!_select_complete_flag[i])
 				AudioManager::Instance().SelectPlay();
+
 			_select_complete_flag[i] = true;
 			_player_rotation_flag[i] = true;
 		}
@@ -124,20 +128,7 @@ int SelectScene::Update()
 				_player_rotation[i] += pad->Stick(STICK_INFO::LEFT_STICK).x / 10000;
 			}
 		}
-		if (_player_rotation[i] >= 360)
-		{
-			_player_rotation[i] = 0;
-		}
-		////! 選択後モデル回転
-		//if (_player_rotation_flag[i])
-		//	_player_rotation[i] += 10.0f;
-
-		//if (_player_rotation[i] >= 500.0f)
-		//	_player_rotation_flag[i] = false;
-
-		//if (!_player_rotation_flag[i])
-		//	_player_rotation[i] = 180.0f;
-
+		
 		if (!_select_complete_flag[i])
 		{
 			//! スティック入力に応じて矢印の描画
@@ -177,9 +168,10 @@ int SelectScene::Update()
 		//! カラー再選択
 		if (_select_complete_flag[i])
 		{
-			if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
+			if (pad->Button(BUTTON_INFO::BUTTON_A))
 			{
 				AudioManager::Instance().CancelPlay();
+				_player_rotation[i] = 180;
 				_select_complete_flag[i] = false;
 			}
 		}
@@ -198,13 +190,13 @@ int SelectScene::Update()
 
 		if (_confirming_flag)
 		{
-			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+			if (pad->Button(BUTTON_INFO::BUTTON_B))
 			{
 				_game_start_flag = true;
 				AudioManager::Instance().SelectPlay();
 			}
 
-			if (pad->ButtonDown(BUTTON_INFO::BUTTON_A))
+			if (pad->Button(BUTTON_INFO::BUTTON_A))
 			{
 				_confirming_flag = false;
 				AudioManager::Instance().CancelPlay();
@@ -214,7 +206,7 @@ int SelectScene::Update()
 
 		if (_game_start_flag)
 		{
-			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+			if (pad->Button(BUTTON_INFO::BUTTON_B))
 			{
 				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
 				AudioManager::Instance().SelectPlay();
@@ -324,6 +316,8 @@ void SelectScene::Draw3D()
 		Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
 		_shader->SetParameter("vp", vp);
 		_shader->SetTechnique("UnlitAnimationModel");
+		_player_model->SetTrackPosition(0, _animation_count);
+		_animation_count += GameTimer.GetElapsedSecond() / 2;
 		_player_model->Draw(_shader);
 	}
 }
