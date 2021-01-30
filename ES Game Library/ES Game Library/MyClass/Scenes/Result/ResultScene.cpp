@@ -196,7 +196,7 @@ void ResultScene::Draw2D()
 	{
 		if (_small_score_scale[i] < 5.0f)
 		{
-			SpriteBatch.Draw(*_robot_fece, Vector3(850, 100 + 205 * i, 10000), RectWH(_player_rectwh[i], 0, 128, 128));
+			SpriteBatch.Draw(*_robot_fece, Vector3(850, 105 + 205 * i, 10000), RectWH(_player_rectwh[i], 0, 128, 128));
 			SpriteBatch.Draw(*_score_sprite, Vector3(1012, 155 + (210 * i), 0), RectWH((int)(GetPoints(i + 1) / 1000) * 64, 0, 64, 64), 
 				(DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), _small_score_scale[i]);
 			SpriteBatch.Draw(*_score_sprite, Vector3(1044, 155 + (210 * i), 0), RectWH((int)((GetPoints(i + 1) % 1000) / 100) * 64, 0, 64, 64),
