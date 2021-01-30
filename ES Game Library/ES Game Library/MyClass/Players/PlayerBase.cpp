@@ -586,6 +586,42 @@ void PlayerBase::InputMoveDirection(BaseInput* pad)
 //! @fn •ûŒü‚Ì“ü—Í
 void PlayerBase::InputAngle(BaseInput* pad)
 {
+	auto&& map_data = _i_map_data->GetData();
+	auto&& player_data = _i_player_data;
+	auto index = _i_player_data->GetIndexNum(_tag);
+	auto angle = AngleClamp(AngleCalculating(pad->Stick(STICK_INFO::LEFT_STICK).x, pad->Stick(STICK_INFO::LEFT_STICK).y));
+	if (player_data->GetState(_tag) == PlayerEnum::Animation::SHOT)
+	{
+		if (angle == 90)
+		{
+			if (map_data[index.z][index.x + 1] == 'i' || map_data[index.z][index.x + 1] == 'w')
+			{
+				return;
+			}
+		}
+		else if (angle == 270)
+		{
+			if (map_data[index.z][index.x - 1] == 'i' || map_data[index.z][index.x - 1] == 'w')
+			{
+				return;
+			}
+		}
+		else if (angle == 180)
+		{
+			if (map_data[index.z + 1][index.x] == 'i' || map_data[index.z + 1][index.x] == 'w')
+			{
+				return;
+			}
+		}
+		else if (angle == 0)
+		{
+			if (map_data[index.z - 1][index.x] == 'i' || map_data[index.z - 1][index.x] == 'w')
+			{
+				return;
+			}
+		}
+	}
+
 	_transform.rotation.y = AngleCalculating(pad->Stick(STICK_INFO::LEFT_STICK).x, pad->Stick(STICK_INFO::LEFT_STICK).y);
 	_transform.rotation.y = AngleClamp(_transform.rotation.y);
 
