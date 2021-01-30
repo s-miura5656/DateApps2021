@@ -40,6 +40,8 @@ private:
 	SPRITE _right_arrow_dark;
 	SPRITE _dark_screen;
 	SPRITE _ready_to_fight;
+	SPRITE _tutorial;
+	SPRITE _tutorial_button;
 	ANIMATIONMODEL _player_model;
 
 	std::vector<PlayerTexture*> _textures;
@@ -58,7 +60,7 @@ private:
 	bool _game_start_flag;
 	float _time = 0.f;
 	float _old_x_stick[PLAYER_COUNT_MAX];
-
+	float tutorial_time = 0.0f;
 	enum
 	{
 		RED,

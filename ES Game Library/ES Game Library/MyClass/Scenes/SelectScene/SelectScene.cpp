@@ -33,6 +33,8 @@ bool SelectScene::Initialize()
 	_right_arrow_dark = ResouceManager::Instance().LordSpriteFile(_T("Select/arrow.png"));
 	_dark_screen = ResouceManager::Instance().LordSpriteFile(_T("Select/dark_screen.png"));
 	_ready_to_fight = ResouceManager::Instance().LordSpriteFile(_T("Select/ready_to_fight.png"));
+	_tutorial = ResouceManager::Instance().LordSpriteFile(_T("Select/tutorial.png"));
+	_tutorial_button = ResouceManager::Instance().LordSpriteFile(_T("Select/b_button2.png"));
 	SPRITE texture;
 
 	for (int i = 0; i < TEXTURE_MAX; i++)
@@ -206,7 +208,7 @@ int SelectScene::Update()
 			_confirming_flag = true;
 		}
 
-		if (_confirming_flag)
+		if (_confirming_flag &&!_game_start_flag)
 		{
 			if (_time >= 20)
 			{
@@ -225,20 +227,26 @@ int SelectScene::Update()
 			}
 			_time++;
 		}
-
 		if (_game_start_flag)
 		{
-			for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+			if (tutorial_time >= 120)
 			{
-				std::string tag = PLAYER_TAG + to_string(i + 1);
-				SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
+				if (pad->Button(BUTTON_INFO::BUTTON_B))
+				{
+					for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+					{
+						std::string tag = PLAYER_TAG + to_string(i + 1);
+						SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
+					}
+					SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
+					AudioManager::Instance().SelectPlay();
+					AudioManager::Instance().TitleBgmStop();
+				}
+
 			}
-			SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
-			AudioManager::Instance().SelectPlay();
-			AudioManager::Instance().TitleBgmStop();
+			tutorial_time += 0.25;
 		}
 	}
-
 	//!デバッグ
 	KeyboardState key = Keyboard->GetState();
 	if (key.IsKeyDown(Keys_Enter))
@@ -287,6 +295,14 @@ void SelectScene::Draw2D()
 		{
 			SpriteBatch.Draw(*_dark_screen, Vector3(0, 0, 0), 0.2f);
 			SpriteBatch.Draw(*_ready_to_fight, Vector3(0, 0, 0));
+		}
+		if (_game_start_flag)
+		{
+			SpriteBatch.Draw(*_tutorial, Vector3(0, 0, 0));
+			if (tutorial_time >= 120)
+			{
+				SpriteBatch.Draw(*_tutorial_button, Vector3(990, 640, 0));
+			}
 		}
 	}
 }
