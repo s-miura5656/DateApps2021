@@ -208,28 +208,34 @@ int SelectScene::Update()
 
 		if (_confirming_flag)
 		{
-			if (pad->Button(BUTTON_INFO::BUTTON_B))
+			if (_time >= 20)
 			{
-				_game_start_flag = true;
-				AudioManager::Instance().SelectPlay();
-			}
+				if (pad->Button(BUTTON_INFO::BUTTON_B))
+				{
+					_game_start_flag = true;
+					AudioManager::Instance().SelectPlay();
+				}
 
-			if (pad->Button(BUTTON_INFO::BUTTON_A))
-			{
-				_confirming_flag = false;
-				AudioManager::Instance().CancelPlay();
+				if (pad->Button(BUTTON_INFO::BUTTON_A))
+				{
+					_confirming_flag = false;
+					_time = 0;
+					AudioManager::Instance().CancelPlay();
+				}
 			}
-
+			_time++;
 		}
 
 		if (_game_start_flag)
 		{
-			if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+			for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 			{
-				SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
-				AudioManager::Instance().SelectPlay();
-				AudioManager::Instance().TitleBgmStop();
+				std::string tag = PLAYER_TAG + to_string(i + 1);
+				SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
 			}
+			SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
+			AudioManager::Instance().SelectPlay();
+			AudioManager::Instance().TitleBgmStop();
 		}
 	}
 
@@ -240,7 +246,7 @@ int SelectScene::Update()
 		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 		{
 			std::string tag = PLAYER_TAG + to_string(i + 1);
-			SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
+			//SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
 		}
 		//SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
 		_confirming_flag = true;

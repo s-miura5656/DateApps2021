@@ -56,7 +56,7 @@ private:
 	bool _player_rotation_flag[PLAYER_COUNT_MAX];
 	bool _confirming_flag;
 	bool _game_start_flag;
-
+	float _time = 0.f;
 	float _old_x_stick[PLAYER_COUNT_MAX];
 
 	enum

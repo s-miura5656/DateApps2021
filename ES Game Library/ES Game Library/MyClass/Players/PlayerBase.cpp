@@ -150,7 +150,15 @@ int PlayerBase::Update()
 				auto a = pad->Trigger(TRIGGER_INFO::LEFT_TRIGGER);
 
 				//! ロケットパンチ発射切り替え
-				if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
+				if (_time < 1)
+				{
+					if (pad->Button(BUTTON_INFO::BUTTON_B))
+					{
+						player_data->SetState(_tag, PlayerEnum::Animation::SHOT);
+						player_data->SetPosition(_tag, _transform.position);
+					}
+				}
+				else if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 				{
 					auto mapdata = _i_map_data->GetData();
 					auto index   = _i_player_data->GetIndexNum(_tag);
@@ -206,7 +214,7 @@ int PlayerBase::Update()
 			_transform.position = _warp_other_pos;
 		}
 	}
-
+	_time++;
 	SetCollisionPosition();
 	return 0;
 }
