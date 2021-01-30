@@ -10,18 +10,6 @@ SelectScene::SelectScene()
 
 }
 
-#include "SelectScene.h"
-#include "../../Managers/SceneManager/SceneManager.h"
-#include "../../Managers/ResouceManager/ResouceManager.h"
-#include "../../Data/MyAlgorithm.h"
-#include "../../Managers/InputManager/InputManager.h"
-#include "../../Data/IData.h"
-#include"../../Managers/AudioManager/AudioManager.h"
-SelectScene::SelectScene()
-{
-
-}
-
 SelectScene::~SelectScene()
 {
 
