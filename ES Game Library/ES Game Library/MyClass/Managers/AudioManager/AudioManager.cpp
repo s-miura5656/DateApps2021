@@ -23,11 +23,12 @@ bool AudioManager::Initialize()
 	SoundDevice.CreateSharedSoundFromFile(_T("Audio/SoundEffect/warp.wav"), _warp, MAX_PLAY, false);
 	_whistle        = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/whistle.wav"));
 	_signal         = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/signal.wav"));
+	_dramroll       = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/dramroll.wav"));
+	_cracker        = ResouceManager::Instance().LordSoundFile(_T("Audio/SoundEffect/cracker.wav"));
 	_titlebgm       = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/title.wav"));
 	_mainbgm        = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/main.wav"));
 	_speedupmainbgm = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/mainspeedup.wav"));
 	_resultbgm      = ResouceManager::Instance().LordMusicFile(_T("Audio/Bgm/result.wav"));
-
 	return true;
 }
 void AudioManager::GameStartWhistlePlay()
@@ -151,6 +152,16 @@ void AudioManager::GameEndWhistlePlay()
 	if (!_whistle->IsPlaying())
 	_whistle->Play();
 	_whistle_flag = true;
+}
+void AudioManager::CrackerPlay()
+{
+	if (!_cracker->IsPlaying())
+		_cracker->Play();
+}
+void AudioManager::DramRollPlay()
+{
+	if (!_dramroll->IsPlaying())
+		_dramroll->Play();
 }
 void AudioManager::TitleBgmPlay()
 {

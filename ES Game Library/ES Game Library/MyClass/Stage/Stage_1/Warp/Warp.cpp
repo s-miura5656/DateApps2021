@@ -3,6 +3,7 @@
 #include "../../../Managers/ResouceManager/ResouceManager.h"
 #include "../../../Data/IData.h"
 #include "../../../Players/PlayerBase.h"
+#include "../../../Managers/SceneManager/SceneManager.h"
 Warp::Warp(std::string tag)
 {
 	_model = nullptr;
@@ -10,10 +11,12 @@ Warp::Warp(std::string tag)
 	_hit_box->Init();
 	_hit_box->Settags(tag);
 	_hit_box->SetHitBox(1, 1, 1);
+	_warp_effect.reset(new ParticleSystem);
 }
 
 Warp::~Warp()
 {
+	_warp_effect.reset();
 	_hit_box.reset();
 }
 
@@ -21,6 +24,12 @@ bool Warp::Initialize()
 {
 	//Xファイルの読み込み
 	_model = ResouceManager::Instance().LoadModelFile(_T("MapSprite/warp.X"));
+	_shader = ResouceManager::Instance().LordEffectFile(_T("HLSL/StandardShader.hlsl"));
+	auto&& warp = ResouceManager::Instance().LordEffekseerFile(_T("Effect/Player_Effect/DebuffAura/debuff_aura_01.efk"));
+
+	_warp_effect->RegisterParticle(warp);
+	_warp_effect->SetSpeed(0.3f);
+	_warp_effect->SetScale(0.45f);
 	//スケールの設定
 	_model->SetScale(_scale);
 	//マテリアルの設定
@@ -28,31 +37,37 @@ bool Warp::Initialize()
 
 	_hit_box->SetHitBoxPosition(_position);
 
+	_shader->SetParameter("light_dir", SceneLight::Instance().GetLight().Direction);
 	return _model != nullptr;
 }
 int Warp::Update()
 {
-	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	_position.y += -0.1;
+	if (_position.y <= 0.2)
 	{
-		std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
-
-		if (!_hit_box->Tag_Sarch(player_tag))
+		_position.y = 0.1;
+		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
 		{
-			continue;
-		}
+			std::string player_tag = PLAYER_TAG + std::to_string(i + 1);
 
-		if (_hit_box->IsHitObjectsSquare(player_tag))
-		{
-			Vector3 new_pos = Vector3(0, 0, 0);
-			if (_position.x == 1)
+			if (!_hit_box->Tag_Sarch(player_tag))
 			{
-				new_pos = Vector3(13, 0.1, -7);
+				continue;
 			}
-			else if (_position.x == 13)
+
+			if (_hit_box->IsHitObjectsSquare(player_tag))
 			{
-				new_pos = Vector3(1, 0, -7);
+				Vector3 new_pos = Vector3(0, 0, 0);
+				if (_position.x == 1)
+				{
+					new_pos = Vector3(13, 0, -6);
+				}
+				else if (_position.x == 13)
+				{
+					new_pos = Vector3(1, 0, -6);
+				}
+				_hit_box->GetHitBoxTag(player_tag)->GetPlayerBase()->Warp(new_pos);
 			}
-			_hit_box->GetHitBoxTag(player_tag)->GetPlayerBase()->Warp(new_pos);
 		}
 	}
 
@@ -63,6 +78,29 @@ void Warp::Draw3D()
 {
 	_hit_box->SetHitBoxPosition(_position);
 	_model->SetPosition(_position);
-	_model->Draw();
+
+	auto camera = SceneCamera::Instance().GetCamera();
+	Matrix world = _model->GetWorldMatrix();
+	_shader->SetParameter("model_ambient", _model_material.Ambient);
+	_shader->SetParameter("wvp", world * camera.GetViewProjectionMatrix());
+	_shader->SetParameter("eye_pos", camera.GetPosition());
+	_shader->SetTechnique("FixModel_S0");
+	_model->Draw(_shader);
+
+	if (_position.y <= 0.2)
+	{
+		auto pos = _position;
+		pos.y = 0.5;
+		_warp_effect->SetPosition(pos);
+		_warp_effect->SetRotation(Vector3(-15, 0, 0));
+		_warp_effect->PlayOneShot();
+		_warp_effect->Draw();
+		effect_time++;
+		if (effect_time >= 120)
+		{
+			effect_time = 0;
+			_warp_effect->Stop();
+		}
+	}
 }
 

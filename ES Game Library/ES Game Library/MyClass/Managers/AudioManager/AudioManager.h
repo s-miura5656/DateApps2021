@@ -51,6 +51,10 @@ public:
 	void SelectPlay();
 	//!
 	void CancelPlay();
+	//!
+	void DramRollPlay();
+	//!
+	void CrackerPlay();
 	//! シングルトンオブジェクトを他で呼び出す時の記述
 	static AudioManager& Instance() {
 		static AudioManager instance;
@@ -71,6 +75,8 @@ private:
 	SOUND _warp[MAX_PLAY];
 	SOUND _whistle;
 	SOUND _signal;
+	SOUND _dramroll;
+	SOUND _cracker;
 	MUSIC _titlebgm;
 	MUSIC _mainbgm;
 	MUSIC _speedupmainbgm;

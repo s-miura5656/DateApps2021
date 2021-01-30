@@ -117,6 +117,9 @@ int ResultScene::Update()
 
 	if (_small_score_scale[0] <= 0.5)
 	{
+		if (!_dramroll_flag)
+			AudioManager::Instance().DramRollPlay();
+		_dramroll_flag = true;
 		_random_time += GameTimer.GetElapsedSecond();
 		_random_number += 10;
 	}
@@ -128,7 +131,16 @@ int ResultScene::Update()
 	AudioManager::Instance().ResultBgmPlay();
 	if (_random_time >= 1.5)
 	{
+		if(!_cracker_flag)
+		AudioManager::Instance().CrackerPlay();
+		_cracker_flag = true;
 		_effect->PlayOneShot();
+		_effect_time++;
+		if (_effect_time >= 160)
+		{
+			_effect->Stop();
+			_effect_time = 0;
+		}
 	}
 	if (_random_time >= 3.5) 
 	{
@@ -160,7 +172,7 @@ void ResultScene::Draw2D()
 {
 	SpriteBatch.Draw(*_background,_background_position);
 
-	SpriteBatch.Draw(*_light, Vector3(0, 0, 10000));
+	//SpriteBatch.Draw(*_light, Vector3(0, 0, 10000));
 	if (_random_time >= 1.5)
 	{
 		SpriteBatch.Draw(*_first_score_sprite, Vector3(150, 600, 0), RectWH(0, (int)(GetPoints(0) / 1000) * 64, 64, 64),
@@ -184,14 +196,14 @@ void ResultScene::Draw2D()
 	{
 		if (_small_score_scale[i] < 5.0f)
 		{
-			SpriteBatch.Draw(*_robot_fece, Vector3(850, 120 + 205 * i, 10000), RectWH(_player_rectwh[i], 0, 128, 128));
-			SpriteBatch.Draw(*_score_sprite, Vector3(1012, 175 + (210 * i), 0), RectWH((int)(GetPoints(i + 1) / 1000) * 64, 0, 64, 64), 
+			SpriteBatch.Draw(*_robot_fece, Vector3(850, 100 + 205 * i, 10000), RectWH(_player_rectwh[i], 0, 128, 128));
+			SpriteBatch.Draw(*_score_sprite, Vector3(1012, 155 + (210 * i), 0), RectWH((int)(GetPoints(i + 1) / 1000) * 64, 0, 64, 64), 
 				(DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), _small_score_scale[i]);
-			SpriteBatch.Draw(*_score_sprite, Vector3(1044, 175 + (210 * i), 0), RectWH((int)((GetPoints(i + 1) % 1000) / 100) * 64, 0, 64, 64),
+			SpriteBatch.Draw(*_score_sprite, Vector3(1044, 155 + (210 * i), 0), RectWH((int)((GetPoints(i + 1) % 1000) / 100) * 64, 0, 64, 64),
 				(DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), _small_score_scale[i]);
-			SpriteBatch.Draw(*_score_sprite, Vector3(1076, 175 + (210 * i), 0), RectWH((int)((GetPoints(i + 1) % 1000) % 100 / 10) * 64, 0, 64, 64),
+			SpriteBatch.Draw(*_score_sprite, Vector3(1076, 155 + (210 * i), 0), RectWH((int)((GetPoints(i + 1) % 1000) % 100 / 10) * 64, 0, 64, 64),
 				(DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), _small_score_scale[i]);
-			SpriteBatch.Draw(*_score_sprite, Vector3(1108, 175 + (210 * i), 0), RectWH((int)((GetPoints(i + 1) % 1000) % 100 % 10) * 64, 0, 64, 64), 
+			SpriteBatch.Draw(*_score_sprite, Vector3(1108, 155 + (210 * i), 0), RectWH((int)((GetPoints(i + 1) % 1000) % 100 % 10) * 64, 0, 64, 64),
 				(DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), _small_score_scale[i]);
 		}
 	}
@@ -201,16 +213,18 @@ void ResultScene::Draw2D()
 */
 void ResultScene::Draw3D()
 {
-	Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
-	SceneCamera::Instance().SetSceneCamera();
+	if (_random_time >= 1.5) {
+		Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
+		SceneCamera::Instance().SetSceneCamera();
 
-	_shader->SetTexture("m_Texture", *_texture);
-	_shader->SetParameter("vp", vp);
-	_shader->SetTechnique("UnlitAnimationModel");
-	_player_model->SetTrackPosition(5, _animation_count);
-	_animation_count += GameTimer.GetElapsedSecond();
-	_player_model->Draw(_shader);
-	_effect->Draw();
+		_shader->SetTexture("m_Texture", *_texture);
+		_shader->SetParameter("vp", vp);
+		_shader->SetTechnique("UnlitAnimationModel");
+		_player_model->SetTrackPosition(5, _animation_count);
+		_animation_count += GameTimer.GetElapsedSecond();
+		_player_model->Draw(_shader);
+		_effect->Draw();
+	}
 }
 /*
 * @fn “¯’…‚Ì”‚ğ”‚¦‚é

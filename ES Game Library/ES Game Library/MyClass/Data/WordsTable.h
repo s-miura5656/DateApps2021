@@ -57,7 +57,7 @@ static const int INVINCIBLE_FRAME = 120;
 static const int FALL_BLOCK_COUNT = 10;
 
 //!ランダムで降ってくるブロックの頻度
-static const int FALL_BLOCK_INTERVAL = 90;
+static const int FALL_BLOCK_INTERVAL = 900;
 
 //!いつまで強化されているかparameter_change_count
 static const int POWERUP_TIME = 600;
@@ -81,7 +81,7 @@ namespace PlayerEnum {
 
 	enum PunchType { UNCLASP_PUNCH, SET_PUNCH, PUNCH_MAX };
 
-	//enum { DEATH, ALIVE };
+	enum FrontAngle { FRONT = 180, BACK = 0, LEFT = 270, RIGHT = 90 };
 }
 
 namespace ArmEnum {

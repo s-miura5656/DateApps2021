@@ -198,7 +198,7 @@ void PlayerUi::Draw2D()
 	//SpriteBatch.Draw(*score_font, banner_position + Vector3((204 * _font_size) + 70, 40, -1), RectWH((int)((score % 1000) % 100 % 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(32 * _font_size, 32 * _font_size, 0), _font_size);
 
 	//! 一位のとき
-	if (seconds <= 10) {
+	if (seconds <= 10 || seconds <= 110) {
 		SpriteBatch.Draw(*joy_icon, banner_position + icon_pos, RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 128, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.1f);
 	}
 	else if (_i_player_data->GetRankNum(tag) + 1 == 1)
@@ -211,7 +211,7 @@ void PlayerUi::Draw2D()
 	}
 
 	//! 開始十秒後に順位表示
-	if (seconds >= 10) {
+	if (seconds >= 10 || seconds <= 110) {
 		SpriteBatch.Draw(*ranking, player_pos + Vector3(-60 * 0.7, (-128 - 40) * 0.7, 0), RectWH((_i_player_data->GetRankNum(tag)) * 128, 0, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 0.7f);
 	}
 }
