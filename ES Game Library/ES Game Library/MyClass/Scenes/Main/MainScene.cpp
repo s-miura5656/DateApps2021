@@ -87,7 +87,7 @@ int MainScene::Update()
 		if (!_whistle_flag) 
 		{
 			AudioManager::Instance().GameEndWhistlePlay();
-			_whistle_flag = false;
+			_whistle_flag = true;
 		}
 		_managers[3]->Update();
 	}
