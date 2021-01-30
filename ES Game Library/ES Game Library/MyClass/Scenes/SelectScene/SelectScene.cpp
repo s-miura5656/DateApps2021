@@ -103,8 +103,6 @@ int SelectScene::Update()
 	AudioManager::Instance().TitleBgmPlay();
 
 	//_player_model->SetTrackEnable(0, false);
-	_player_model->SetTrackPosition(0, 0);
-	
 
 	for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
 	{
@@ -115,8 +113,9 @@ int SelectScene::Update()
 		if (pad->Button(BUTTON_INFO::BUTTON_B))
 		{
 			if (!_select_complete_flag[i])
+			{
 				AudioManager::Instance().SelectPlay();
-
+			}
 			_select_complete_flag[i] = true;
 			_player_rotation_flag[i] = true;
 		}
@@ -323,10 +322,30 @@ void SelectScene::Draw3D()
 		Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
 		_shader->SetParameter("vp", vp);
 		_shader->SetTechnique("UnlitAnimationModel");
-		_player_model->SetTrackPosition(0, _animation_count);
-		_animation_count += GameTimer.GetElapsedSecond() / 2;
+
+		if (!_confirming_flag)
+		{
+			if (!_select_complete_flag[i])
+			{
+				
+				_player_model->SetTrackEnable(0, TRUE);
+				_player_model->SetTrackEnable(5, false);
+				_player_model->SetTrackPosition(0, _animation_count);
+			}
+			else
+			{
+				
+				_player_model->SetTrackEnable(0, false);
+				_player_model->SetTrackEnable(5, TRUE);
+				if (_jumpanimation_count >= 1.3f)
+					_jumpanimation_count = 0;
+				_player_model->SetTrackPosition(5, _jumpanimation_count);
+			}
+		}
 		_player_model->Draw(_shader);
 	}
+	_animation_count += GameTimer.GetElapsedSecond();
+	_jumpanimation_count += GameTimer.GetElapsedSecond();
 }
 
 bool SelectScene::GameStart()
