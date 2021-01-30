@@ -47,4 +47,5 @@ private:
 	std::vector<int>      _player_rectwh;
 	bool                  _cracker_flag = false;
 	bool                  _dramroll_flag = false;
+	float    _effect_time = 0.0f;
 };

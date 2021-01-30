@@ -86,9 +86,9 @@
         <ScalingValues>
           <Fixed>
             <Scale>
-              <X>0.5</X>
-              <Y>0.5</Y>
-              <Z>0.5</Z>
+              <X>0.3</X>
+              <Y>0.3</Y>
+              <Z>0.3</Z>
             </Scale>
           </Fixed>
         </ScalingValues>
@@ -197,9 +197,9 @@
         <ScalingValues>
           <Fixed>
             <Scale>
-              <X>0.1</X>
-              <Y>0.5</Y>
-              <Z>0.1</Z>
+              <X>0.08</X>
+              <Y>0.3</Y>
+              <Z>0.08</Z>
             </Scale>
           </Fixed>
         </ScalingValues>

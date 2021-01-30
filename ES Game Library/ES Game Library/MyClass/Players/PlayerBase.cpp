@@ -740,6 +740,8 @@ void PlayerBase::EffectDraw()
 	_effect.at(_status_tag)->SetPosition(_transform.position);
 	if(_status_tag == ITEM_ARM_SPEEDUP)
 		_effect.at(_status_tag)->SetPosition(_transform.position + Vector3(0,0.5,0));
+	if (_status_tag == ITEM_THUNDER)
+		_effect.at(_status_tag)->SetPosition(_transform.position + Vector3(0,1,0));
 	_effect.at(_status_tag)->SetRotation(Vector3(-15, 0, 0));
 	_effect.at(_status_tag)->PlayOneShot();
 	if (_warp_flag && _move_flag)

@@ -135,6 +135,12 @@ int ResultScene::Update()
 		AudioManager::Instance().CrackerPlay();
 		_cracker_flag = true;
 		_effect->PlayOneShot();
+		_effect_time++;
+		if (_effect_time >= 160)
+		{
+			_effect->Stop();
+			_effect_time = 0;
+		}
 	}
 	if (_random_time >= 3.5) 
 	{
@@ -207,16 +213,18 @@ void ResultScene::Draw2D()
 */
 void ResultScene::Draw3D()
 {
-	Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
-	SceneCamera::Instance().SetSceneCamera();
+	if (_random_time >= 1.5) {
+		Matrix vp = SceneCamera::Instance().GetCamera()->GetViewProjectionMatrix();
+		SceneCamera::Instance().SetSceneCamera();
 
-	_shader->SetTexture("m_Texture", *_texture);
-	_shader->SetParameter("vp", vp);
-	_shader->SetTechnique("UnlitAnimationModel");
-	_player_model->SetTrackPosition(5, _animation_count);
-	_animation_count += GameTimer.GetElapsedSecond();
-	_player_model->Draw(_shader);
-	_effect->Draw();
+		_shader->SetTexture("m_Texture", *_texture);
+		_shader->SetParameter("vp", vp);
+		_shader->SetTechnique("UnlitAnimationModel");
+		_player_model->SetTrackPosition(5, _animation_count);
+		_animation_count += GameTimer.GetElapsedSecond();
+		_player_model->Draw(_shader);
+		_effect->Draw();
+	}
 }
 /*
 * @fn “¯’…‚Ì”‚ð”‚¦‚é
