@@ -125,10 +125,17 @@ int SelectScene::Update()
 		{
 			if (pad->Stick(STICK_INFO::LEFT_STICK).x != 0)
 			{
-				_player_rotation[i] += pad->Stick(STICK_INFO::LEFT_STICK).x / 10000;
+				_player_rotation[i] += -pad->Stick(STICK_INFO::LEFT_STICK).x / 10000;
 			}
 		}
-		
+		if (_player_rotation[i] > 360)
+		{
+			_player_rotation[i] = 0;
+		}
+		if (_player_rotation[i] < 0)
+		{
+			_player_rotation[i] = 360;
+		}
 		if (!_select_complete_flag[i])
 		{
 			//! スティック入力に応じて矢印の描画
