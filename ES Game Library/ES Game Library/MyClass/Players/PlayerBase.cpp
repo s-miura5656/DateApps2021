@@ -53,16 +53,19 @@ int PlayerBase::Update()
 		{
 			player_data->SetHitPoint(_tag, RESPAWN_HITPOINT);
 			player_data->SetState(_tag, PlayerEnum::Animation::WAIT);
-			_respawn_time = 0;
 			_death_flag = false;
-			_move_flag  = false;
+			_move_flag = false;
 			auto respawnpos = IMapData::GetRespawnPosition(_tag);
 			_transform.position = respawnpos;
 			_index_num.x = respawnpos.x;
 			_index_num.z = -respawnpos.z;
 			player_data->SetIndexNum(_tag, _index_num);
 			player_data->SetPosition(_tag, _transform.position);
-
+			player_data->SetSpeed(_tag, 0.05f);
+			_i_arm_Data->SetGoSpeed(_arm_tag, 0.1f);
+			_status_tag = "";
+			player_data->SetStatusTag(_tag, _status_tag);
+			_respawn_time = 0;
 		}
 	}
 	else

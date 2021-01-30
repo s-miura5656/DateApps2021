@@ -198,7 +198,7 @@ void PlayerUi::Draw2D()
 	//SpriteBatch.Draw(*score_font, banner_position + Vector3((204 * _font_size) + 70, 40, -1), RectWH((int)((score % 1000) % 100 % 10) * 64, 0, 64, 64), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(32 * _font_size, 32 * _font_size, 0), _font_size);
 
 	//! ˆêˆÊ‚Ì‚Æ‚«
-	if (seconds <= 10 || seconds <= 110) {
+	if (TimeManager::Instance().GetTimeLeft() >= 110) {
 		SpriteBatch.Draw(*joy_icon, banner_position + icon_pos, RectWH(SceneManager::Instance().GetPlayerTexture(tag) * 128 - 128, 128, 128, 128), (DWORD)Color_White, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.1f);
 	}
 	else if (_i_player_data->GetRankNum(tag) + 1 == 1)
