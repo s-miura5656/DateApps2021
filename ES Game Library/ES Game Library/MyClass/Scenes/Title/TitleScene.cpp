@@ -134,8 +134,6 @@ int TitleScene::TitleLanding()
 
 	if(_demo_move_flag)
 		DemoMove();
-
-
 	return 0;
 }
 
@@ -174,14 +172,21 @@ void TitleScene::DemoMove()
 	
 	_movie_time_count++;
 
-	if (_movie_time_count >= 300)
+	if (!_movie_flag)
 	{
+		_demo_movie->Replay();
+		_movie_flag = true;
+	}
+
+	if (_demo_movie->IsComplete())
+	{
+		_title_logo_position = Vector3(0.0f, -200.0f, 100.0f);
+		_title_logo_alpha = 0.3f;
 		_demo_move_flag = false;
 		_movie_flag = false;
 		_movie_time_count = 0;
 	}
-
-	if (_play_count > 0) 
+	/*if (_play_count > 0) 
 	{
 		if(!_movie_flag) 
 		{
@@ -193,14 +198,14 @@ void TitleScene::DemoMove()
 	{
 		_demo_movie->Play();
 	}
-	
+	*/
 	if (pad->ButtonDown(BUTTON_INFO::BUTTON_B))
 	{
 		AudioManager::Instance().SelectPlay();
 		_title_logo_position = Vector3(0.0f, -200.0f, 100.0f);
 		_title_logo_alpha = 0.3f;
 		_demo_move_flag = false;
-		_demo_movie->Pause();
+	    //_demo_movie->Pause();
 		_play_count += 1;
 		_movie_flag = false;
 	}
