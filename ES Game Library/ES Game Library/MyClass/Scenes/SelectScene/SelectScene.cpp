@@ -21,7 +21,7 @@ SelectScene::~SelectScene()
 
 bool SelectScene::Initialize()
 {
-	_bg_sprite = ResouceManager::Instance().LordSpriteFile(_T("Select/BG.png"));
+	_bg_sprite = ResouceManager::Instance().LordSpriteFile(_T("Select/BG_0131.png"));
 	_banner = ResouceManager::Instance().LordSpriteFile(_T("Select/character.png"));
 	_button_ready = ResouceManager::Instance().LordSpriteFile(_T("Select/ready_button.png"));
 	_button_go = ResouceManager::Instance().LordSpriteFile(_T("Select/ok_button.png"));
