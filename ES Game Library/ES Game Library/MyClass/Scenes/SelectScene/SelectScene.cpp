@@ -248,17 +248,17 @@ int SelectScene::Update()
 		}
 	}
 	//!デバッグ
-	KeyboardState key = Keyboard->GetState();
-	if (key.IsKeyDown(Keys_Enter))
-	{
-		for (int i = 0; i < PLAYER_COUNT_MAX; i++)
-		{
-			std::string tag = PLAYER_TAG + to_string(i + 1);
-			//SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
-		}
-		//SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
-		_confirming_flag = true;
-	}
+	//KeyboardState key = Keyboard->GetState();
+	//if (key.IsKeyDown(Keys_Enter))
+	//{
+	//	for (int i = 0; i < PLAYER_COUNT_MAX; i++)
+	//	{
+	//		std::string tag = PLAYER_TAG + to_string(i + 1);
+	//		//SceneManager::Instance().SetPlayerTexture(tag, _chara_select[i]);
+	//	}
+	//	//SceneManager::Instance().SetSceneNumber(SceneManager::SceneState::MAIN);
+	//	_confirming_flag = true;
+	//}
 
 	return 0;
 

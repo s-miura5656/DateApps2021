@@ -483,7 +483,7 @@ int ArmBase::PointCalculation(std::string other_player_tag)
 {
 	auto player_data = _i_player_data.get();
 
-	int point = 300;
+	int point = 500;
 	if (player_data->GetRankingPoint(other_player_tag) < point)
 	{
 		point = player_data->GetRankingPoint(other_player_tag);
